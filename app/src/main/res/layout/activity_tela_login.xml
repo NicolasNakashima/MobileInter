@@ -12,25 +12,32 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Insira suas informações"
+        android:textColor="#000000"
+        android:textSize="20sp"
         android:textStyle="bold"
-        tools:layout_editor_absoluteX="120dp"
-        tools:layout_editor_absoluteY="128dp" />
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/toolbar"
+        app:layout_constraintVertical_bias="0.053" />
 
     <com.google.android.material.textfield.TextInputLayout
-        android:layout_width="334dp"
+        android:layout_width="268dp"
         android:layout_height="58dp"
-        tools:layout_editor_absoluteX="39dp"
-        tools:layout_editor_absoluteY="229dp">
+        tools:layout_editor_absoluteX="25dp"
+        tools:layout_editor_absoluteY="236dp">
 
         <com.google.android.material.textfield.TextInputEditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="E-mail:" />
+            android:hint="E-mail:"
+            android:textColor="#000000" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
-        android:layout_width="326dp"
-        android:layout_height="60dp"
+        android:id="@+id/textInputLayout"
+        android:layout_width="268dp"
+        android:layout_height="58dp"
         tools:layout_editor_absoluteX="33dp"
         tools:layout_editor_absoluteY="351dp">
 
@@ -45,8 +52,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:clickable="true"
-        android:text="Esqueceu sua senha"
+        android:text="@string/esqueceu_senha"
         android:textColor="#384384"
+        android:textSize="15sp"
         android:textStyle="bold"
         tools:layout_editor_absoluteX="39dp"
         tools:layout_editor_absoluteY="492dp" />
@@ -56,8 +64,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:background="@drawable/style_button1"
-        android:text="Button"
-        tools:layout_editor_absoluteX="144dp"
+        android:text="Entrar"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         tools:layout_editor_absoluteY="583dp" />
 
     <Button
@@ -65,19 +74,21 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:background="@drawable/style_button2"
-        android:text="Button"
-        tools:layout_editor_absoluteX="152dp"
+        android:text="Cadastrar"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         tools:layout_editor_absoluteY="688dp" />
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar"
-        android:layout_width="419dp"
+        android:layout_width="match_parent"
         android:layout_height="70dp"
         android:background="?attr/colorPrimary"
         android:backgroundTint="#FAC552"
         android:minHeight="?attr/actionBarSize"
         android:theme="?attr/actionBarTheme"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -89,14 +100,21 @@
         android:textColor="#5A2D03"
         android:textSize="23sp"
         android:textStyle="bold"
-        tools:layout_editor_absoluteX="168dp"
-        tools:layout_editor_absoluteY="19dp" />
+        app:layout_constraintBottom_toBottomOf="@+id/toolbar"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/toolbar"
+        app:layout_constraintVertical_bias="0.487" />
 
     <ImageView
         android:id="@+id/imageView4"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:srcCompat="@drawable/Seta"
-        tools:layout_editor_absoluteX="16dp"
-        tools:layout_editor_absoluteY="16dp" />
+        android:layout_width="48dp"
+        android:layout_height="42dp"
+        app:layout_constraintBottom_toBottomOf="@+id/toolbar"
+        app:layout_constraintEnd_toEndOf="@+id/toolbar"
+        app:layout_constraintHorizontal_bias="0.072"
+        app:layout_constraintStart_toStartOf="@+id/toolbar"
+        app:layout_constraintTop_toTopOf="@+id/toolbar"
+        app:layout_constraintVertical_bias="0.571"
+        app:srcCompat="@drawable/Seta" />
 </androidx.constraintlayout.widget.ConstraintLayout>
