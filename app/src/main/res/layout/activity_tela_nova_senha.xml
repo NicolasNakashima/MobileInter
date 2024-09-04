@@ -49,18 +49,6 @@
         app:layout_constraintTop_toTopOf="@+id/toolbar"
         app:layout_constraintVertical_bias="0.487" />
 
-    <ImageView
-        android:id="@+id/imageView4"
-        android:layout_width="48dp"
-        android:layout_height="42dp"
-        app:layout_constraintBottom_toBottomOf="@+id/toolbar"
-        app:layout_constraintEnd_toEndOf="@+id/toolbar"
-        app:layout_constraintHorizontal_bias="0.072"
-        app:layout_constraintStart_toStartOf="@+id/toolbar"
-        app:layout_constraintTop_toTopOf="@+id/toolbar"
-        app:layout_constraintVertical_bias="0.571"
-        app:srcCompat="@drawable/Seta" />
-
     <com.google.android.material.textfield.TextInputLayout
         android:layout_width="268dp"
         android:layout_height="58dp"
@@ -128,5 +116,13 @@
         android:text="Cancelar"
         tools:layout_editor_absoluteX="154dp"
         tools:layout_editor_absoluteY="692dp" />
+
+    <ImageView
+        android:id="@+id/voltar_login"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:srcCompat="@drawable/Seta"
+        tools:layout_editor_absoluteX="24dp"
+        tools:layout_editor_absoluteY="19dp" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
