@@ -16,9 +16,6 @@
             android:name=".tela_home"
             android:exported="false" />
         <activity
-            android:name=".tela_novaSenha"
-            android:exported="false" />
-        <activity
             android:name=".tela_nova_senha"
             android:exported="false" />
         <activity
