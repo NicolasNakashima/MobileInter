@@ -7,4 +7,24 @@
     android:layout_height="match_parent"
     tools:context=".tela_home">
 
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar2"
+        android:layout_width="397dp"
+        android:layout_height="87dp"
+        android:background="?attr/colorPrimary"
+        android:minHeight="?attr/actionBarSize"
+        android:theme="?attr/actionBarTheme"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <com.google.android.material.navigation.NavigationView
+        android:layout_width="397dp"
+        android:layout_height="76dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
+
+    </com.google.android.material.navigation.NavigationView>
+
 </androidx.constraintlayout.widget.ConstraintLayout>

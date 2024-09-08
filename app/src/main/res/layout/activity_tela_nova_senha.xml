@@ -9,7 +9,7 @@
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar"
-        android:layout_width="match_parent"
+        android:layout_width="397dp"
         android:layout_height="70dp"
         android:background="?attr/colorPrimary"
         android:backgroundTint="#FAC552"
@@ -33,7 +33,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/toolbar"
-        app:layout_constraintVertical_bias="0.053" />
+        app:layout_constraintVertical_bias="0.052" />
 
     <TextView
         android:id="@+id/textView4"
@@ -41,88 +41,127 @@
         android:layout_height="wrap_content"
         android:text="Nova senha"
         android:textColor="#5A2D03"
-        android:textSize="23sp"
+        android:textSize="24sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="@+id/toolbar"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/toolbar"
-        app:layout_constraintVertical_bias="0.487" />
+        app:layout_constraintVertical_bias="0.479" />
 
     <com.google.android.material.textfield.TextInputLayout
-        android:layout_width="268dp"
-        android:layout_height="58dp"
+        android:id="@+id/textInputLayout10"
+        android:layout_width="314dp"
+        android:layout_height="65dp"
         android:background="@drawable/style_boxinput"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.48"
+        app:layout_constraintHorizontal_bias="0.493"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView2"
-        app:layout_constraintVertical_bias="0.095">
+        app:layout_constraintVertical_bias="0.101">
 
         <com.google.android.material.textfield.TextInputEditText
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="E-mail:" />
+            android:layout_width="313dp"
+            android:layout_height="53dp"
+            android:background="@null"
+            android:hint="E-mail:"
+            android:paddingLeft="16dp"
+            android:paddingBottom="10dp"
+            android:textColor="#000000"
+            android:textColorHint="#000000"
+            android:textStyle="bold" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
-        android:layout_width="268dp"
-        android:layout_height="58dp"
-        android:layout_marginBottom="420dp"
+        android:id="@+id/textInputLayout11"
+        android:layout_width="314dp"
+        android:layout_height="65dp"
         android:background="@drawable/style_boxinput"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.496"
-        app:layout_constraintStart_toStartOf="parent">
+        app:layout_constraintHorizontal_bias="0.493"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textInputLayout10"
+        app:layout_constraintVertical_bias="0.081">
 
         <com.google.android.material.textfield.TextInputEditText
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="Nova senha:" />
+            android:layout_width="313dp"
+            android:layout_height="53dp"
+            android:background="@null"
+            android:hint="Nova senha:"
+            android:paddingLeft="16dp"
+            android:paddingBottom="10dp"
+            android:textColor="#000000"
+            android:textColorHint="#000000"
+            android:textStyle="bold" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/textInputLayout6"
-        android:layout_width="268dp"
-        android:layout_height="58dp"
-        android:layout_marginBottom="304dp"
+        android:layout_width="314dp"
+        android:layout_height="65dp"
         android:background="@drawable/style_boxinput"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.496"
-        app:layout_constraintStart_toStartOf="parent">
+        app:layout_constraintHorizontal_bias="0.493"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textInputLayout11"
+        app:layout_constraintVertical_bias="0.104">
 
         <com.google.android.material.textfield.TextInputEditText
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="Confirme a senha:" />
+            android:layout_width="313dp"
+            android:layout_height="53dp"
+            android:background="@null"
+            android:hint="Confirme a senha:"
+            android:paddingLeft="16dp"
+            android:paddingBottom="10dp"
+            android:textColor="#000000"
+            android:textColorHint="#000000"
+            android:textStyle="bold" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <Button
         android:id="@+id/btn_atualizar_senha"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="240dp"
+        android:layout_height="50dp"
         android:background="@drawable/style_button1"
         android:text="Atualizar senha"
-        tools:layout_editor_absoluteX="132dp"
-        tools:layout_editor_absoluteY="575dp" />
+        android:textColor="#ffffff"
+        android:textSize="15sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.496"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textInputLayout6"
+        app:layout_constraintVertical_bias="0.375" />
 
     <Button
         android:id="@+id/btn_cancelar_atualizar_senha"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="240dp"
+        android:layout_height="50dp"
         android:background="@drawable/style_button2"
         android:text="Cancelar"
-        tools:layout_editor_absoluteX="154dp"
-        tools:layout_editor_absoluteY="692dp" />
+        android:textSize="15sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.496"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btn_atualizar_senha"
+        app:layout_constraintVertical_bias="0.296" />
 
     <ImageView
         android:id="@+id/voltar_login"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:srcCompat="@drawable/Seta"
-        tools:layout_editor_absoluteX="24dp"
-        tools:layout_editor_absoluteY="19dp" />
+        android:layout_width="55dp"
+        android:layout_height="41dp"
+        app:layout_constraintBottom_toBottomOf="@+id/toolbar"
+        app:layout_constraintEnd_toEndOf="@+id/toolbar"
+        app:layout_constraintHorizontal_bias="0.043"
+        app:layout_constraintStart_toStartOf="@+id/toolbar"
+        app:layout_constraintTop_toTopOf="@+id/toolbar"
+        app:layout_constraintVertical_bias="0.551"
+        app:srcCompat="@drawable/seta_retorno" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -25,13 +25,13 @@
             android:name=".tela_login"
             android:exported="false" />
         <activity
-            android:name=".tela_inicial"
+            android:name=".MainActivity"
             android:exported="false" />
         <activity
             android:name=".tela_produto"
             android:exported="false" />
         <activity
-            android:name=".MainActivity"
+            android:name=".tela_inicial"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
