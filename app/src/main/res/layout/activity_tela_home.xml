@@ -19,6 +19,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <com.google.android.material.navigation.NavigationView
+        android:id="@+id/nav_view"
         android:layout_width="397dp"
         android:layout_height="76dp"
         app:layout_constraintBottom_toBottomOf="parent"
