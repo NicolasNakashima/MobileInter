@@ -3,6 +3,7 @@ package com.example.khiata;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 
 import androidx.activity.EdgeToEdge;
@@ -14,6 +15,8 @@ import androidx.core.view.WindowInsetsCompat;
 public class tela_cadastro extends AppCompatActivity {
 
     ImageView cadastro_voltar_inicio;
+
+    Button btn_cadastrar, btn_ir_para_login;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,6 +34,26 @@ public class tela_cadastro extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(tela_cadastro.this, tela_inicial.class);
+                startActivity(intent);
+            }
+        });
+
+
+        btn_cadastrar = findViewById(R.id.btn_cadastrar);
+        btn_cadastrar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(tela_cadastro.this, tela_home.class);
+                startActivity(intent);
+            }
+        });
+
+
+        btn_ir_para_login = findViewById(R.id.btn_ir_para_login);
+        btn_ir_para_login.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(tela_cadastro.this, tela_login.class);
                 startActivity(intent);
             }
         });
