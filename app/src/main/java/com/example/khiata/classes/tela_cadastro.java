@@ -1,4 +1,4 @@
-package com.example.khiata;
+package com.example.khiata.classes;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -11,6 +11,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
+
+import com.example.khiata.R;
 
 public class tela_cadastro extends AppCompatActivity {
 
@@ -43,7 +45,7 @@ public class tela_cadastro extends AppCompatActivity {
         btn_cadastrar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(tela_cadastro.this, tela_home.class);
+                Intent intent = new Intent(tela_cadastro.this, MainActivity.class);
                 startActivity(intent);
             }
         });

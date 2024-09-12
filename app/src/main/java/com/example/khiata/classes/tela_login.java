@@ -1,4 +1,4 @@
-package com.example.khiata;
+package com.example.khiata.classes;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -12,6 +12,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
+
+import com.example.khiata.R;
 
 public class tela_login extends AppCompatActivity {
 
@@ -42,7 +44,7 @@ public class tela_login extends AppCompatActivity {
         btn_login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(tela_login.this, tela_home.class);
+                Intent intent = new Intent(tela_login.this, MainActivity.class);
                 startActivity(intent);
             }
         });
