@@ -1,4 +1,4 @@
-package com.example.khiata.classes;
+package com.example.khiata.activities_classes;
 
 import android.os.Bundle;
 

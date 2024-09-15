@@ -5,7 +5,7 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".classes.tela_nova_senha">
+    tools:context=".activities_classes.tela_nova_senha">
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar"
@@ -27,7 +27,7 @@
         android:gravity="center"
         android:text="Insira suas informações para uma nova senha"
         android:textColor="#000000"
-        android:textSize="20sp"
+        android:textSize="22sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

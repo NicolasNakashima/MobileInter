@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#384384"
-    tools:context=".classes.tela_inicial">
+    tools:context=".activities_classes.tela_inicial">
 
     <ImageView
         android:id="@+id/imageView2"

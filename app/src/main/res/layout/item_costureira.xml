@@ -9,8 +9,8 @@
     app:cardCornerRadius="30dp">
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="212dp"
-        android:layout_height="302dp">
+        android:layout_width="200dp"
+        android:layout_height="250dp">
 
         <TextView
             android:id="@+id/textView8"
@@ -22,10 +22,9 @@
             android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.497"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/imageView6"
-            app:layout_constraintVertical_bias="0.114" />
+            app:layout_constraintVertical_bias="0.203" />
 
         <Button
             android:id="@+id/btn_perfil_costureira"
@@ -38,20 +37,21 @@
             android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.51"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textView8"
-            app:layout_constraintVertical_bias="0.21" />
+            app:layout_constraintVertical_bias="0.434" />
 
         <ImageView
             android:id="@+id/imageView6"
-            android:layout_width="96dp"
-            android:layout_height="87dp"
+            android:layout_width="108dp"
+            android:layout_height="95dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.497"
+            app:layout_constraintHorizontal_bias="0.496"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.096"
+            app:layout_constraintVertical_bias="0.093"
             app:srcCompat="@drawable/img_costureira" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>

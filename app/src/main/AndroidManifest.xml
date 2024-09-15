@@ -13,22 +13,22 @@
         android:theme="@style/Theme.Khiata"
         tools:targetApi="31">
         <activity
-            android:name=".classes.tela_nova_senha"
+            android:name=".activities_classes.tela_nova_senha"
             android:exported="false" />
         <activity
-            android:name=".classes.tela_cadastro"
+            android:name=".activities_classes.tela_cadastro"
             android:exported="false" />
         <activity
-            android:name=".classes.tela_login"
+            android:name=".activities_classes.tela_login"
             android:exported="false" />
         <activity
-            android:name=".classes.MainActivity"
+            android:name=".activities_classes.MainActivity"
             android:exported="false" />
         <activity
-            android:name=".classes.tela_produto"
+            android:name=".activities_classes.tela_produto"
             android:exported="false" />
         <activity
-            android:name=".classes.tela_inicial"
+            android:name=".activities_classes.tela_inicial"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
