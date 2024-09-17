@@ -3,8 +3,6 @@ package com.example.khiata.fragments;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,10 +12,10 @@ import com.example.khiata.R;
 
 /**
  * A simple {@link Fragment} subclass.
- * Use the {@link fragment_tela_home#newInstance} factory method to
+ * Use the {@link fragment_tela_perfil#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class fragment_tela_home extends Fragment {
+public class fragment_tela_perfil extends Fragment {
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -28,7 +26,7 @@ public class fragment_tela_home extends Fragment {
     private String mParam1;
     private String mParam2;
 
-    public fragment_tela_home() {
+    public fragment_tela_perfil() {
         // Required empty public constructor
     }
 
@@ -38,11 +36,11 @@ public class fragment_tela_home extends Fragment {
      *
      * @param param1 Parameter 1.
      * @param param2 Parameter 2.
-     * @return A new instance of fragment fragment_tela_home.
+     * @return A new instance of fragment fragment_tela_perfil.
      */
     // TODO: Rename and change types and number of parameters
-    public static fragment_tela_home newInstance(String param1, String param2) {
-        fragment_tela_home fragment = new fragment_tela_home();
+    public static fragment_tela_perfil newInstance(String param1, String param2) {
+        fragment_tela_perfil fragment = new fragment_tela_perfil();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
@@ -59,20 +57,10 @@ public class fragment_tela_home extends Fragment {
         }
     }
 
-    RecyclerView costureiras_recomendas, produtos_recomendados;
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-
-        View view = inflater.inflate(R.layout.fragment_tela_home, container, false);
-
-        costureiras_recomendas = view.findViewById(R.id.costureiras_recomendas);
-        produtos_recomendados = view.findViewById(R.id.produtos_recomendados);
-
-        costureiras_recomendas.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
-
-        return view;
+        return inflater.inflate(R.layout.fragment_tela_perfil, container, false);
     }
 }
