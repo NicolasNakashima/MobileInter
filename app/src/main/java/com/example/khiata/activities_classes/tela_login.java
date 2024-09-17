@@ -12,14 +12,17 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
+import androidx.fragment.app.FragmentTransaction;
 
 import com.example.khiata.R;
+import com.example.khiata.fragments.fragment_tela_home;
 
 public class tela_login extends AppCompatActivity {
 
     TextView esqueceu_senha;
     Button btn_login, btn_ir_para_cadastro;
     ImageView login_voltar_inicio;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
