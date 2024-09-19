@@ -48,4 +48,149 @@
         app:layout_constraintTop_toTopOf="@+id/toolbar2"
         app:layout_constraintVertical_bias="0.461" />
 
+    <ScrollView
+        android:layout_width="391dp"
+        android:layout_height="721dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/toolbar2">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <ImageView
+                android:id="@+id/imageView13"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="40dp"
+                android:src="@drawable/foto_perfil" />
+
+            <ImageView
+                android:id="@+id/imageView14"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:src="@drawable/icon_camera" />
+
+            <TextView
+                android:id="@+id/textView15"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Marcia Campos"
+                android:textAlignment="center"
+                android:textColor="#000000"
+                android:textSize="27sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/textView16"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="E-mail:"
+                android:textColor="#000000" />
+
+            <TextView
+                android:id="@+id/textView17"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/style_boxinput"
+                android:padding="10dp"
+                android:text="marcica@gmail.com "
+                android:textColor="#000000"
+                android:textSize="17sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/textView18"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="CPF:"
+                android:textColor="#000000" />
+
+            <TextView
+                android:id="@+id/textView19"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/style_boxinput"
+                android:padding="10dp"
+                android:text="TextView"
+                android:textColor="#000000"
+                android:textSize="17sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/textView20"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Data de Nascimento:"
+                android:textColor="#000000" />
+
+            <TextView
+                android:id="@+id/textView21"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/style_boxinput"
+                android:padding="10dp"
+                android:text="TextView"
+                android:textColor="#000000"
+                android:textSize="17sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/textView22"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Telefone:"
+                android:textColor="#000000" />
+
+            <TextView
+                android:id="@+id/textView23"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/style_boxinput"
+                android:padding="10dp"
+                android:text="TextView"
+                android:textColor="#000000"
+                android:textSize="17sp"
+                android:textStyle="bold" />
+
+            <Button
+                android:id="@+id/button"
+                android:layout_width="331dp"
+                android:layout_height="wrap_content"
+                android:background="@drawable/style_button1"
+                android:text="Endereços" />
+
+            <Button
+                android:id="@+id/button2"
+                android:layout_width="332dp"
+                android:layout_height="wrap_content"
+                android:background="@drawable/style_button1"
+                android:text="Editar perfil" />
+
+            <Button
+                android:id="@+id/button3"
+                android:layout_width="334dp"
+                android:layout_height="wrap_content"
+                android:background="@drawable/style_button1"
+                android:text="Tornar-se costureira" />
+
+            <Button
+                android:id="@+id/button4"
+                android:layout_width="334dp"
+                android:layout_height="wrap_content"
+                android:background="@drawable/style_button1"
+                android:text="Adquirir Premium" />
+
+            <Button
+                android:id="@+id/button5"
+                android:layout_width="332dp"
+                android:layout_height="wrap_content"
+                android:background="@drawable/style_button1"
+                android:text="Sair" />
+        </LinearLayout>
+    </ScrollView>
+
 </androidx.constraintlayout.widget.ConstraintLayout>
