@@ -61,23 +61,36 @@
             android:gravity="center"
             android:orientation="vertical">
 
-            <ImageView
-                android:id="@+id/imageView13"
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/cardView"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="40dp"
-                android:src="@drawable/foto_perfil" />
+                android:layout_height="match_parent">
 
-            <ImageView
-                android:id="@+id/imageView14"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:src="@drawable/icon_camera" />
+                <ImageView
+                    android:id="@+id/imageView13"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/foto_perfil"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent" />
+
+                <ImageView
+                    android:id="@+id/imageView14"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="80dp"
+                    android:src="@drawable/icon_camera"
+                    app:layout_constraintBottom_toBottomOf="@+id/imageView13"
+                    app:layout_constraintEnd_toEndOf="@+id/imageView13"
+                    app:layout_constraintStart_toStartOf="@+id/imageView13" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
             <TextView
-                android:id="@+id/textView15"
+                android:id="@+id/nome_user"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="35dp"
                 android:text="Marcia Campos"
                 android:textAlignment="center"
                 android:textColor="#000000"
@@ -88,15 +101,17 @@
                 android:id="@+id/textView16"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="32dp"
                 android:text="E-mail:"
                 android:textColor="#000000" />
 
             <TextView
                 android:id="@+id/textView17"
-                android:layout_width="match_parent"
+                android:layout_width="351dp"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
                 android:background="@drawable/style_boxinput"
-                android:padding="10dp"
+                android:padding="12dp"
                 android:text="marcica@gmail.com "
                 android:textColor="#000000"
                 android:textSize="17sp"
@@ -106,6 +121,7 @@
                 android:id="@+id/textView18"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
                 android:text="CPF:"
                 android:textColor="#000000" />
 
@@ -113,9 +129,10 @@
                 android:id="@+id/textView19"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
                 android:background="@drawable/style_boxinput"
-                android:padding="10dp"
-                android:text="TextView"
+                android:padding="12dp"
+                android:text="567.543.232-88"
                 android:textColor="#000000"
                 android:textSize="17sp"
                 android:textStyle="bold" />
@@ -124,6 +141,7 @@
                 android:id="@+id/textView20"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
                 android:text="Data de Nascimento:"
                 android:textColor="#000000" />
 
@@ -131,9 +149,10 @@
                 android:id="@+id/textView21"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
                 android:background="@drawable/style_boxinput"
-                android:padding="10dp"
-                android:text="TextView"
+                android:padding="12dp"
+                android:text="24/10/1977"
                 android:textColor="#000000"
                 android:textSize="17sp"
                 android:textStyle="bold" />
@@ -142,6 +161,7 @@
                 android:id="@+id/textView22"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
                 android:text="Telefone:"
                 android:textColor="#000000" />
 
@@ -149,47 +169,64 @@
                 android:id="@+id/textView23"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
                 android:background="@drawable/style_boxinput"
-                android:padding="10dp"
-                android:text="TextView"
+                android:padding="12dp"
+                android:text="55+ (11) 99567-8765"
                 android:textColor="#000000"
                 android:textSize="17sp"
                 android:textStyle="bold" />
 
             <Button
                 android:id="@+id/button"
-                android:layout_width="331dp"
+                android:layout_width="254dp"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="40dp"
                 android:background="@drawable/style_button1"
-                android:text="Endereços" />
+                android:text="Endereços"
+                android:textColor="#ffffff"
+                android:textStyle="bold" />
 
             <Button
                 android:id="@+id/button2"
                 android:layout_width="332dp"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="27dp"
                 android:background="@drawable/style_button1"
-                android:text="Editar perfil" />
+                android:text="Editar perfil"
+                android:textColor="#ffffff"
+                android:textStyle="bold" />
 
             <Button
                 android:id="@+id/button3"
                 android:layout_width="334dp"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="27dp"
                 android:background="@drawable/style_button1"
-                android:text="Tornar-se costureira" />
+                android:text="Tornar-se costureira"
+                android:textColor="#ffffff"
+                android:textStyle="bold" />
 
             <Button
                 android:id="@+id/button4"
                 android:layout_width="334dp"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="27dp"
                 android:background="@drawable/style_button1"
-                android:text="Adquirir Premium" />
+                android:text="Adquirir Premium"
+                android:textColor="#ffffff"
+                android:textStyle="bold" />
 
             <Button
                 android:id="@+id/button5"
                 android:layout_width="332dp"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="27dp"
+                android:layout_marginBottom="20dp"
                 android:background="@drawable/style_button1"
-                android:text="Sair" />
+                android:text="Sair"
+                android:textColor="#ffffff"
+                android:textStyle="bold" />
         </LinearLayout>
     </ScrollView>
 

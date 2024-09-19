@@ -29,7 +29,7 @@
         app:layout_constraintStart_toStartOf="parent" />
 
     <ImageView
-        android:id="@+id/imageView8"
+        android:id="@+id/btn_lateral_menu"
         android:layout_width="46dp"
         android:layout_height="47dp"
         android:layout_marginStart="20dp"
@@ -39,38 +39,38 @@
         app:srcCompat="@drawable/navigation_menu_lateral" />
 
     <ImageView
-        android:id="@+id/imageView9"
+        android:id="@+id/btn_navigation_favoritos"
         android:layout_width="55dp"
         android:layout_height="50dp"
         android:layout_marginStart="22dp"
         android:layout_marginTop="12dp"
-        app:layout_constraintStart_toEndOf="@+id/imageView8"
+        app:layout_constraintStart_toEndOf="@+id/btn_lateral_menu"
         app:layout_constraintTop_toBottomOf="@+id/frame_conteudo"
         app:srcCompat="@drawable/navigation_favoritos" />
 
     <ImageView
-        android:id="@+id/imageView10"
+        android:id="@+id/btn_navigation_home"
         android:layout_width="55dp"
         android:layout_height="50dp"
         android:layout_marginTop="12dp"
-        app:layout_constraintEnd_toStartOf="@+id/imageView11"
+        app:layout_constraintEnd_toStartOf="@+id/btn_navigation_compras"
         app:layout_constraintHorizontal_bias="0.577"
-        app:layout_constraintStart_toEndOf="@+id/imageView9"
+        app:layout_constraintStart_toEndOf="@+id/btn_navigation_favoritos"
         app:layout_constraintTop_toBottomOf="@+id/frame_conteudo"
         app:srcCompat="@drawable/navigation_home" />
 
     <ImageView
-        android:id="@+id/imageView11"
+        android:id="@+id/btn_navigation_compras"
         android:layout_width="55dp"
         android:layout_height="50dp"
         android:layout_marginTop="12dp"
         android:layout_marginEnd="20dp"
-        app:layout_constraintEnd_toStartOf="@+id/imageView12"
+        app:layout_constraintEnd_toStartOf="@+id/btn_navigation_perfil"
         app:layout_constraintTop_toBottomOf="@+id/frame_conteudo"
         app:srcCompat="@drawable/navigation_compras" />
 
     <ImageView
-        android:id="@+id/imageView12"
+        android:id="@+id/btn_navigation_perfil"
         android:layout_width="55dp"
         android:layout_height="50dp"
         android:layout_marginTop="12dp"
