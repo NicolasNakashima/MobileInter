@@ -4,10 +4,13 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
@@ -16,6 +19,12 @@ import androidx.fragment.app.FragmentTransaction;
 
 import com.example.khiata.R;
 import com.example.khiata.fragments.fragment_tela_home;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException;
+import com.google.firebase.auth.FirebaseAuthInvalidUserException;
 
 public class tela_login extends AppCompatActivity {
 
@@ -47,8 +56,36 @@ public class tela_login extends AppCompatActivity {
         btn_login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(tela_login.this, MainActivity.class);
-                startActivity(intent);
+                //Pegando o email e a senha digitados
+                String txtEmail = ((EditText) findViewById(R.id.editLoginEmail)).getText().toString();
+                String txtSenha = ((EditText) findViewById(R.id.editLoginSenha)).getText().toString();
+
+                FirebaseAuth autenticar = FirebaseAuth.getInstance();
+                //Autenticar usuario
+                autenticar.signInWithEmailAndPassword(txtEmail, txtSenha)
+                    .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                        @Override
+                        public void onComplete(@NonNull Task<AuthResult> task) {
+                            if(task.isSuccessful()){
+                                //Abrir tela home se login bem sucedido
+                                Intent intent = new Intent(tela_login.this, MainActivity.class);
+                                startActivity(intent);
+                            } else{
+                                //Exibir mensagem de erro
+                                String msgErro="";
+                                try{
+                                    throw task.getException();
+                                } catch (FirebaseAuthInvalidUserException e){
+                                    msgErro = "Email inválido";
+                                } catch (FirebaseAuthInvalidCredentialsException e){
+                                    msgErro = "Senha inválida";
+                                } catch (Exception e){
+                                    msgErro = "Erro ao autenticar: " + e.getMessage();
+                                }
+                                Toast.makeText(tela_login.this, msgErro, Toast.LENGTH_SHORT).show();
+                            }
+                        }
+                    });
             }
         });
 

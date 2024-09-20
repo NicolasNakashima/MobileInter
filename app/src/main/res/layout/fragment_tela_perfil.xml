@@ -6,7 +6,6 @@
     android:layout_height="match_parent"
     tools:context=".fragments.fragment_tela_perfil"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:background="#FFFFFF">
 
     <androidx.appcompat.widget.Toolbar

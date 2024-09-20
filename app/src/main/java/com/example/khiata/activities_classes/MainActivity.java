@@ -47,7 +47,9 @@ public class MainActivity extends AppCompatActivity {
         btn_navigation_perfil.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+                transaction.replace(R.id.frame_conteudo, fragment_tela_perfil);
+                transaction.commit();
             }
         });
 
