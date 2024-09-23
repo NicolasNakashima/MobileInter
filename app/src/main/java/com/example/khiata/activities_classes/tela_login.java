@@ -1,7 +1,9 @@
 package com.example.khiata.activities_classes;
 
+import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -71,18 +73,93 @@ public class tela_login extends AppCompatActivity {
                                 Intent intent = new Intent(tela_login.this, MainActivity.class);
                                 startActivity(intent);
                             } else{
-                                //Exibir mensagem de erro
-                                String msgErro="";
+                                //Casos de erro
                                 try{
                                     throw task.getException();
                                 } catch (FirebaseAuthInvalidUserException e){
-                                    msgErro = "Email inválido";
+                                    //Cria um dialog
+                                    Dialog dialog = new Dialog(tela_login.this);
+
+                                    //Infla o layout do pop-up
+                                    LayoutInflater inflater = getLayoutInflater();
+                                    View popupView = inflater.inflate(R.layout.popup_mensagem, null);
+
+                                    //Captura os elementos do pop-up
+                                    TextView msgPopup = popupView.findViewById(R.id.msg_popup);
+                                    msgPopup.setText("Usuário ou senha inválidos. Tente novamente.");
+                                    ImageView imgPopup = popupView.findViewById(R.id.img_popup);
+                                    imgPopup.setImageResource(R.drawable.icon_pop_alert);
+                                    Button btnPopup = popupView.findViewById(R.id.btn_popup);
+                                    btnPopup.setOnClickListener(new View.OnClickListener() {
+                                        @Override
+                                        public void onClick(View v) {
+                                            dialog.cancel();
+                                        }
+                                    });
+
+                                    //Define o layout inflado como conteúdo do Dialog
+                                    dialog.setContentView(popupView);
+                                    dialog.setCancelable(true); //Permite fechar ao clicar fora do pop-up
+
+                                    //Exibe o dialog
+                                    dialog.show();
+
                                 } catch (FirebaseAuthInvalidCredentialsException e){
-                                    msgErro = "Senha inválida";
+                                    //Cria um dialog
+                                    Dialog dialog = new Dialog(tela_login.this);
+
+                                    //Infla o layout do pop-up
+                                    LayoutInflater inflater = getLayoutInflater();
+                                    View popupView = inflater.inflate(R.layout.popup_mensagem, null);
+
+                                    //Captura os elementos do pop-up
+                                    TextView msgPopup = popupView.findViewById(R.id.msg_popup);
+                                    msgPopup.setText("Usuário ou senha inválidos. Tente novamente.");
+                                    ImageView imgPopup = popupView.findViewById(R.id.img_popup);
+                                    imgPopup.setImageResource(R.drawable.icon_pop_alert);
+                                    Button btnPopup = popupView.findViewById(R.id.btn_popup);
+                                    btnPopup.setOnClickListener(new View.OnClickListener() {
+                                        @Override
+                                        public void onClick(View v) {
+                                            dialog.cancel();
+                                        }
+                                    });
+
+                                    //Define o layout inflado como conteúdo do Dialog
+                                    dialog.setContentView(popupView);
+                                    dialog.setCancelable(true); //Permite fechar ao clicar fora do pop-up
+
+                                    //Exibe o dialog
+                                    dialog.show();
+
                                 } catch (Exception e){
-                                    msgErro = "Erro ao autenticar: " + e.getMessage();
+                                    //Cria um dialog
+                                    Dialog dialog = new Dialog(tela_login.this);
+
+                                    //Infla o layout do pop-up
+                                    LayoutInflater inflater = getLayoutInflater();
+                                    View popupView = inflater.inflate(R.layout.popup_mensagem, null);
+
+                                    //Captura os elementos do pop-up
+                                    TextView msgPopup = popupView.findViewById(R.id.msg_popup);
+                                    msgPopup.setText("Erro ao autenticar: " + e.getMessage());
+                                    ImageView imgPopup = popupView.findViewById(R.id.img_popup);
+                                    imgPopup.setImageResource(R.drawable.icon_pop_alert);
+                                    Button btnPopup = popupView.findViewById(R.id.btn_popup);
+                                    btnPopup.setOnClickListener(new View.OnClickListener() {
+                                        @Override
+                                        public void onClick(View v) {
+                                            dialog.cancel();
+                                        }
+                                    });
+
+                                    //Define o layout inflado como conteúdo do Dialog
+                                    dialog.setContentView(popupView);
+                                    dialog.setCancelable(true); //Permite fechar ao clicar fora do pop-up
+
+                                    //Exibe o dialog
+                                    dialog.show();
                                 }
-                                Toast.makeText(tela_login.this, msgErro, Toast.LENGTH_SHORT).show();
                             }
                         }
                     });
