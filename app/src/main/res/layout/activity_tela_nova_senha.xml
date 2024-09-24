@@ -50,7 +50,7 @@
         app:layout_constraintVertical_bias="0.479" />
 
     <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/textInputLayout10"
+        android:id="@+id/editCodigoEmail"
         android:layout_width="314dp"
         android:layout_height="65dp"
         android:background="@drawable/style_boxinput"
@@ -62,10 +62,11 @@
         app:layout_constraintVertical_bias="0.101">
 
         <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/editEmail"
             android:layout_width="313dp"
             android:layout_height="53dp"
             android:background="@null"
-            android:hint="E-mail:"
+            android:hint="Código de verificação:"
             android:paddingLeft="16dp"
             android:paddingBottom="10dp"
             android:textColor="#000000"
@@ -82,10 +83,11 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.493"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textInputLayout10"
+        app:layout_constraintTop_toBottomOf="@+id/editCodigoEmail"
         app:layout_constraintVertical_bias="0.081">
 
         <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/editNovaSenha"
             android:layout_width="313dp"
             android:layout_height="53dp"
             android:background="@null"
@@ -110,6 +112,7 @@
         app:layout_constraintVertical_bias="0.104">
 
         <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/editConfirmarSenha"
             android:layout_width="313dp"
             android:layout_height="53dp"
             android:background="@null"

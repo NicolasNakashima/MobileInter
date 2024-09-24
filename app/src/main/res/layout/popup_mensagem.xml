@@ -6,16 +6,16 @@
     android:layout_height="wrap_content"
     android:layout_margin="5dp"
     android:layout_marginTop="10dp"
-    app:cardCornerRadius="5dp">
+    app:cardCornerRadius="10dp">
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="375dp"
-        android:layout_height="380dp">
+        android:layout_width="350dp"
+        android:layout_height="390dp">
 
         <TextView
             android:id="@+id/msg_popup"
-            android:layout_width="261dp"
-            android:layout_height="73dp"
+            android:layout_width="264dp"
+            android:layout_height="85dp"
             android:layout_marginTop="32dp"
             android:text="Usuário cadastrado com sucesso!"
             android:textAlignment="center"
@@ -28,14 +28,16 @@
 
         <Button
             android:id="@+id/btn_popup"
-            android:layout_width="168dp"
-            android:layout_height="49dp"
-            android:layout_marginTop="40dp"
+            android:layout_width="185dp"
+            android:layout_height="53dp"
+            android:layout_marginTop="28dp"
             android:background="@drawable/style_button1"
             android:text="Fechar"
             android:textColor="#ffffff"
+            android:textSize="15sp"
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.503"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/msg_popup" />
 
@@ -45,7 +47,6 @@
             android:layout_height="139dp"
             android:layout_marginTop="16dp"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.497"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:srcCompat="@drawable/icon_pop_sucesso" />
