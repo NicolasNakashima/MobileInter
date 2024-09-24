@@ -33,6 +33,7 @@ public class tela_login extends AppCompatActivity {
     TextView esqueceu_senha;
     Button btn_login, btn_ir_para_cadastro;
     ImageView login_voltar_inicio;
+    FirebaseAuth auth = FirebaseAuth.getInstance();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,15 +46,28 @@ public class tela_login extends AppCompatActivity {
             return insets;
         });
 
-        //Botão para tela de esqueci minha senha
-        esqueceu_senha = findViewById(R.id.esqueceu_senha);
-        esqueceu_senha.setOnClickListener(new View.OnClickListener() {
+
+        //Botão para ir para tela de cadastro
+        btn_ir_para_cadastro = findViewById(R.id.btn_ir_para_cadastro);
+        btn_ir_para_cadastro.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(tela_login.this, tela_nova_senha.class);
+                Intent intent = new Intent(tela_login.this, tela_cadastro.class);
                 startActivity(intent);
             }
         });
+
+
+        //Botão para voltar para tela inicial
+        login_voltar_inicio = findViewById(R.id.login_voltar_inicio);
+        login_voltar_inicio.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(tela_login.this, tela_inicial.class);
+                startActivity(intent);
+            }
+        });
+
 
         //Botão para login
         btn_login = findViewById(R.id.btn_login);
@@ -94,9 +108,8 @@ public class tela_login extends AppCompatActivity {
                     dialog.show();
                 }
                 else{
-                    FirebaseAuth autenticar = FirebaseAuth.getInstance();
-                    //Autenticar usuario
-                    autenticar.signInWithEmailAndPassword(txtEmail, txtSenha)
+                    //Autenticando o usuário
+                    auth.signInWithEmailAndPassword(txtEmail, txtSenha)
                         .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                             @Override
                             public void onComplete(@NonNull Task<AuthResult> task) {
@@ -109,14 +122,11 @@ public class tela_login extends AppCompatActivity {
                                     try{
                                         throw task.getException();
                                     } catch (FirebaseAuthInvalidUserException e){
-                                        //Cria um dialog
                                         Dialog dialog = new Dialog(tela_login.this);
 
-                                        //Infla o layout do pop-up
                                         LayoutInflater inflater = getLayoutInflater();
                                         View popupView = inflater.inflate(R.layout.popup_mensagem, null);
 
-                                        //Captura os elementos do pop-up
                                         TextView msgPopup = popupView.findViewById(R.id.msg_popup);
                                         msgPopup.setText("Usuário ou senha inválidos. Tente novamente.");
                                         ImageView imgPopup = popupView.findViewById(R.id.img_popup);
@@ -129,22 +139,17 @@ public class tela_login extends AppCompatActivity {
                                             }
                                         });
 
-                                        //Define o layout inflado como conteúdo do Dialog
                                         dialog.setContentView(popupView);
-                                        dialog.setCancelable(true); //Permite fechar ao clicar fora do pop-up
+                                        dialog.setCancelable(true);
 
-                                        //Exibe o dialog
                                         dialog.show();
 
                                     } catch (FirebaseAuthInvalidCredentialsException e){
-                                        //Cria um dialog
                                         Dialog dialog = new Dialog(tela_login.this);
 
-                                        //Infla o layout do pop-up
                                         LayoutInflater inflater = getLayoutInflater();
                                         View popupView = inflater.inflate(R.layout.popup_mensagem, null);
 
-                                        //Captura os elementos do pop-up
                                         TextView msgPopup = popupView.findViewById(R.id.msg_popup);
                                         msgPopup.setText("Usuário ou senha inválidos. Tente novamente.");
                                         ImageView imgPopup = popupView.findViewById(R.id.img_popup);
@@ -157,22 +162,17 @@ public class tela_login extends AppCompatActivity {
                                             }
                                         });
 
-                                        //Define o layout inflado como conteúdo do Dialog
                                         dialog.setContentView(popupView);
                                         dialog.setCancelable(true); //Permite fechar ao clicar fora do pop-up
 
-                                        //Exibe o dialog
                                         dialog.show();
 
                                     } catch (Exception e){
-                                        //Cria um dialog
                                         Dialog dialog = new Dialog(tela_login.this);
 
-                                        //Infla o layout do pop-up
                                         LayoutInflater inflater = getLayoutInflater();
                                         View popupView = inflater.inflate(R.layout.popup_mensagem, null);
 
-                                        //Captura os elementos do pop-up
                                         TextView msgPopup = popupView.findViewById(R.id.msg_popup);
                                         msgPopup.setText("Erro ao autenticar: " + e.getMessage());
                                         ImageView imgPopup = popupView.findViewById(R.id.img_popup);
@@ -185,11 +185,9 @@ public class tela_login extends AppCompatActivity {
                                             }
                                         });
 
-                                        //Define o layout inflado como conteúdo do Dialog
                                         dialog.setContentView(popupView);
                                         dialog.setCancelable(true); //Permite fechar ao clicar fora do pop-up
 
-                                        //Exibe o dialog
                                         dialog.show();
                                     }
                                 }
@@ -199,23 +197,91 @@ public class tela_login extends AppCompatActivity {
             }
         });
 
-        //Botão para ir para tela de cadastro
-        btn_ir_para_cadastro = findViewById(R.id.btn_ir_para_cadastro);
-        btn_ir_para_cadastro.setOnClickListener(new View.OnClickListener() {
+        //Botão para caso o usuário esqueça a senha
+        esqueceu_senha = findViewById(R.id.esqueceu_senha);
+        esqueceu_senha.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(tela_login.this, tela_cadastro.class);
-                startActivity(intent);
-            }
-        });
+                //Pegando o E-mail digitado
+                String txtEmail = ((EditText) findViewById(R.id.editLoginEmail)).getText().toString();
 
-        //Botão para voltar para tela inicial
-        login_voltar_inicio = findViewById(R.id.login_voltar_inicio);
-        login_voltar_inicio.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(tela_login.this, tela_inicial.class);
-                startActivity(intent);
+                if(txtEmail.isEmpty()){
+                    Dialog dialog = new Dialog(tela_login.this);
+
+                    LayoutInflater inflater = getLayoutInflater();
+                    View popupView = inflater.inflate(R.layout.popup_mensagem, null);
+
+                    TextView msgPopup = popupView.findViewById(R.id.msg_popup);
+                    msgPopup.setText("Por favor, insira seu e-mail antes de definir uma nova senha.");
+                    ImageView imgPopup = popupView.findViewById(R.id.img_popup);
+                    imgPopup.setImageResource(R.drawable.icon_pop_alert);
+                    Button btnPopup = popupView.findViewById(R.id.btn_popup);
+                    btnPopup.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            dialog.cancel();
+                        }
+                    });
+
+                    dialog.setContentView(popupView);
+                    dialog.setCancelable(true);
+
+                    dialog.show();
+                }
+                else{
+                    auth.sendPasswordResetEmail(txtEmail)
+                            .addOnCompleteListener(new OnCompleteListener<Void>() {
+                                @Override
+                                public void onComplete(@NonNull Task<Void> task) {
+                                    if(task.isSuccessful()){
+                                        Dialog dialog = new Dialog(tela_login.this);
+
+                                        LayoutInflater inflater = getLayoutInflater();
+                                        View popupView = inflater.inflate(R.layout.popup_mensagem, null);
+
+                                        TextView msgPopup = popupView.findViewById(R.id.msg_popup);
+                                        msgPopup.setText("Por favor, insira seu e-mail antes de definir uma nova senha.");
+                                        ImageView imgPopup = popupView.findViewById(R.id.img_popup);
+                                        imgPopup.setImageResource(R.drawable.icon_pop_alert);
+                                        Button btnPopup = popupView.findViewById(R.id.btn_popup);
+                                        btnPopup.setOnClickListener(new View.OnClickListener() {
+                                            @Override
+                                            public void onClick(View v) {
+                                                Intent intent = new Intent(tela_login.this, tela_nova_senha.class);
+                                                startActivity(intent);
+                                                dialog.cancel();
+                                            }
+                                        });
+
+                                        dialog.setContentView(popupView);
+
+                                        dialog.show();
+                                    } else{
+                                        Dialog dialog = new Dialog(tela_login.this);
+
+                                        LayoutInflater inflater = getLayoutInflater();
+                                        View popupView = inflater.inflate(R.layout.popup_mensagem, null);
+
+                                        TextView msgPopup = popupView.findViewById(R.id.msg_popup);
+                                        msgPopup.setText("Ocorreu um erro ao enviar um e-mail para definir sua nova senha. Tente novamente.");
+                                        ImageView imgPopup = popupView.findViewById(R.id.img_popup);
+                                        imgPopup.setImageResource(R.drawable.icon_pop_alert);
+                                        Button btnPopup = popupView.findViewById(R.id.btn_popup);
+                                        btnPopup.setOnClickListener(new View.OnClickListener() {
+                                            @Override
+                                            public void onClick(View v) {
+                                                dialog.cancel();
+                                            }
+                                        });
+
+                                        dialog.setContentView(popupView);
+                                        dialog.setCancelable(true);
+
+                                        dialog.show();
+                                    }
+                                }
+                            });
+                }
             }
         });
     }
