@@ -28,6 +28,17 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException;
 import com.google.firebase.auth.FirebaseAuthInvalidUserException;
 
+import java.util.Properties;
+import javax.mail.Message;
+import javax.mail.MessagingException;
+import javax.mail.PasswordAuthentication;
+import javax.mail.Session;
+import javax.mail.Transport;
+import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeMessage;
+
+import java.util.Random;
+
 public class tela_login extends AppCompatActivity {
 
     TextView esqueceu_senha;
@@ -228,61 +239,67 @@ public class tela_login extends AppCompatActivity {
 
                     dialog.show();
                 }
-                else{
-                    auth.sendPasswordResetEmail(txtEmail)
-                            .addOnCompleteListener(new OnCompleteListener<Void>() {
-                                @Override
-                                public void onComplete(@NonNull Task<Void> task) {
-                                    if(task.isSuccessful()){
-                                        Dialog dialog = new Dialog(tela_login.this);
+                else {
+                    String codigoDeVerificacao = gerarCodigo();
 
-                                        LayoutInflater inflater = getLayoutInflater();
-                                        View popupView = inflater.inflate(R.layout.popup_mensagem, null);
+                    enviarEmail(txtEmail, "webv", codigoDeVerificacao);
 
-                                        TextView msgPopup = popupView.findViewById(R.id.msg_popup);
-                                        msgPopup.setText("Por favor, insira seu e-mail antes de definir uma nova senha.");
-                                        ImageView imgPopup = popupView.findViewById(R.id.img_popup);
-                                        imgPopup.setImageResource(R.drawable.icon_pop_alert);
-                                        Button btnPopup = popupView.findViewById(R.id.btn_popup);
-                                        btnPopup.setOnClickListener(new View.OnClickListener() {
-                                            @Override
-                                            public void onClick(View v) {
-                                                Intent intent = new Intent(tela_login.this, tela_nova_senha.class);
-                                                startActivity(intent);
-                                                dialog.cancel();
-                                            }
-                                        });
-
-                                        dialog.setContentView(popupView);
-
-                                        dialog.show();
-                                    } else{
-                                        Dialog dialog = new Dialog(tela_login.this);
-
-                                        LayoutInflater inflater = getLayoutInflater();
-                                        View popupView = inflater.inflate(R.layout.popup_mensagem, null);
-
-                                        TextView msgPopup = popupView.findViewById(R.id.msg_popup);
-                                        msgPopup.setText("Ocorreu um erro ao enviar um e-mail para definir sua nova senha. Tente novamente.");
-                                        ImageView imgPopup = popupView.findViewById(R.id.img_popup);
-                                        imgPopup.setImageResource(R.drawable.icon_pop_alert);
-                                        Button btnPopup = popupView.findViewById(R.id.btn_popup);
-                                        btnPopup.setOnClickListener(new View.OnClickListener() {
-                                            @Override
-                                            public void onClick(View v) {
-                                                dialog.cancel();
-                                            }
-                                        });
-
-                                        dialog.setContentView(popupView);
-                                        dialog.setCancelable(true);
-
-                                        dialog.show();
-                                    }
-                                }
-                            });
                 }
             }
         });
+    }
+
+    //Função para gerar um PIN aleatório
+    public String gerarCodigo(){
+        Random random = new Random();
+        StringBuilder pin = new StringBuilder();
+        String [] numeros = {"0", "1", "2", "3", "4", "5", "6", "7", "8", "9"};
+        String [] letras = {"a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z"};
+        for (int i = 0; i < 6; i++){
+            if (random.nextInt(2) == 1){
+                pin.append(numeros[random.nextInt(numeros.length)]);
+            }
+            else {
+                pin.append(letras[random.nextInt(letras.length)]);
+            }
+        }
+        return pin.toString();
+    }
+
+    public static void enviarEmail(final String emailDestino, final String assunto, final String mensagem) {
+        // Configurações para o envio do e-mail
+        final String username = "hcarvalhocampos2008@gmail.com"; // seu e-mail
+        final String password = "@Mamute@2008"; // senha ou senha de aplicativo
+
+        Properties props = new Properties();
+        props.put("mail.smtp.auth", "true");
+        props.put("mail.smtp.starttls.enable", "true");
+        props.put("mail.smtp.host", "smtp.gmail.com");
+        props.put("mail.smtp.port", "587");
+
+        // Cria a sessão com autenticação
+        Session session = Session.getInstance(props,
+                new javax.mail.Authenticator() {
+                    protected PasswordAuthentication getPasswordAuthentication() {
+                        return new PasswordAuthentication(username, password);
+                    }
+                });
+
+        try {
+            // Cria a mensagem de e-mail
+            Message message = new MimeMessage(session);
+            message.setFrom(new InternetAddress(username));
+            message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(emailDestino));
+            message.setSubject(assunto);
+            message.setText(mensagem);
+
+            // Envia o e-mail
+            Transport.send(message);
+
+            System.out.println("E-mail enviado com sucesso!");
+
+        } catch (MessagingException e) {
+            throw new RuntimeException(e);
+        }
     }
 }

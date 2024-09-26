@@ -63,7 +63,8 @@
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/cardView"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:layout_height="match_parent"
+                android:layout_marginTop="20dp">
 
                 <ImageView
                     android:id="@+id/imageView13"
@@ -100,6 +101,7 @@
                 android:id="@+id/textView16"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginLeft="18dp"
                 android:layout_marginTop="32dp"
                 android:text="E-mail:"
                 android:textColor="#000000" />
@@ -120,13 +122,14 @@
                 android:id="@+id/textView18"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginLeft="18dp"
                 android:layout_marginTop="12dp"
                 android:text="CPF:"
                 android:textColor="#000000" />
 
             <TextView
                 android:id="@+id/textView19"
-                android:layout_width="match_parent"
+                android:layout_width="351dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
                 android:background="@drawable/style_boxinput"
@@ -140,13 +143,14 @@
                 android:id="@+id/textView20"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginLeft="18dp"
                 android:layout_marginTop="12dp"
                 android:text="Data de Nascimento:"
                 android:textColor="#000000" />
 
             <TextView
                 android:id="@+id/textView21"
-                android:layout_width="match_parent"
+                android:layout_width="351dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
                 android:background="@drawable/style_boxinput"
@@ -160,13 +164,14 @@
                 android:id="@+id/textView22"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginLeft="18dp"
                 android:layout_marginTop="12dp"
                 android:text="Telefone:"
                 android:textColor="#000000" />
 
             <TextView
                 android:id="@+id/textView23"
-                android:layout_width="match_parent"
+                android:layout_width="351dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
                 android:background="@drawable/style_boxinput"
@@ -188,7 +193,7 @@
 
             <Button
                 android:id="@+id/button2"
-                android:layout_width="332dp"
+                android:layout_width="254dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="27dp"
                 android:background="@drawable/style_button1"
@@ -198,7 +203,7 @@
 
             <Button
                 android:id="@+id/button3"
-                android:layout_width="334dp"
+                android:layout_width="254dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="27dp"
                 android:background="@drawable/style_button1"
@@ -208,7 +213,7 @@
 
             <Button
                 android:id="@+id/button4"
-                android:layout_width="334dp"
+                android:layout_width="254dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="27dp"
                 android:background="@drawable/style_button1"
@@ -218,7 +223,7 @@
 
             <Button
                 android:id="@+id/button5"
-                android:layout_width="332dp"
+                android:layout_width="254dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="27dp"
                 android:layout_marginBottom="20dp"

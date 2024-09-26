@@ -54,16 +54,5 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <androidx.appcompat.widget.Toolbar
-            android:id="@+id/footer"
-            android:layout_width="396dp"
-            android:layout_height="71dp"
-            android:background="?attr/colorPrimary"
-            android:backgroundTint="#FFFFFF"
-            android:minHeight="?attr/actionBarSize"
-            android:theme="?attr/actionBarTheme"
-            tools:layout_editor_absoluteX="-3dp"
-            tools:layout_editor_absoluteY="706dp" />
-
     </androidx.constraintlayout.widget.ConstraintLayout>
 </ScrollView>

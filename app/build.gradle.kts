@@ -49,4 +49,7 @@ dependencies {
 
     // Glide
     implementation("com.github.bumptech.glide:glide:4.14.2")
+
+    implementation ("com.sun.mail:android-mail:1.6.5")
+    implementation ("com.sun.mail:android-activation:1.6.5")
 }
