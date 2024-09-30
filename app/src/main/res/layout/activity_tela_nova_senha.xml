@@ -5,7 +5,7 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".activities_classes.tela_nova_senha">
+    tools:context=".classes.tela_nova_senha">
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar"

@@ -1,4 +1,4 @@
-package com.example.khiata.activities_classes;
+package com.example.khiata.classes;
 
 import android.app.Dialog;
 import android.content.Intent;
@@ -9,7 +9,6 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
 import androidx.annotation.NonNull;
@@ -17,25 +16,14 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
-import androidx.fragment.app.FragmentTransaction;
 
 import com.example.khiata.R;
-import com.example.khiata.fragments.fragment_tela_home;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException;
 import com.google.firebase.auth.FirebaseAuthInvalidUserException;
-
-import java.util.Properties;
-import javax.mail.Message;
-import javax.mail.MessagingException;
-import javax.mail.PasswordAuthentication;
-import javax.mail.Session;
-import javax.mail.Transport;
-import javax.mail.internet.InternetAddress;
-import javax.mail.internet.MimeMessage;
 
 import java.util.Random;
 
@@ -242,7 +230,7 @@ public class tela_login extends AppCompatActivity {
                 else {
                     String codigoDeVerificacao = gerarCodigo();
 
-                    enviarEmail(txtEmail, "webv", codigoDeVerificacao);
+                    EmailSender.enviarEmail(txtEmail, "webv", codigoDeVerificacao);
 
                 }
             }
@@ -264,42 +252,5 @@ public class tela_login extends AppCompatActivity {
             }
         }
         return pin.toString();
-    }
-
-    public static void enviarEmail(final String emailDestino, final String assunto, final String mensagem) {
-        // Configurações para o envio do e-mail
-        final String username = "hcarvalhocampos2008@gmail.com"; // seu e-mail
-        final String password = "@Mamute@2008"; // senha ou senha de aplicativo
-
-        Properties props = new Properties();
-        props.put("mail.smtp.auth", "true");
-        props.put("mail.smtp.starttls.enable", "true");
-        props.put("mail.smtp.host", "smtp.gmail.com");
-        props.put("mail.smtp.port", "587");
-
-        // Cria a sessão com autenticação
-        Session session = Session.getInstance(props,
-                new javax.mail.Authenticator() {
-                    protected PasswordAuthentication getPasswordAuthentication() {
-                        return new PasswordAuthentication(username, password);
-                    }
-                });
-
-        try {
-            // Cria a mensagem de e-mail
-            Message message = new MimeMessage(session);
-            message.setFrom(new InternetAddress(username));
-            message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(emailDestino));
-            message.setSubject(assunto);
-            message.setText(mensagem);
-
-            // Envia o e-mail
-            Transport.send(message);
-
-            System.out.println("E-mail enviado com sucesso!");
-
-        } catch (MessagingException e) {
-            throw new RuntimeException(e);
-        }
     }
 }

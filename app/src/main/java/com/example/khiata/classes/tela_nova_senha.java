@@ -1,4 +1,4 @@
-package com.example.khiata.activities_classes;
+package com.example.khiata.classes;
 
 import android.app.Dialog;
 import android.content.Intent;
