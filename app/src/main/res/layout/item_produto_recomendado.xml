@@ -24,7 +24,7 @@
             app:srcCompat="@drawable/img_produto" />
 
         <TextView
-            android:id="@+id/textView9"
+            android:id="@+id/titulo_produto"
             android:layout_width="224dp"
             android:layout_height="41dp"
             android:text="Blusa Tricot Manga Longa Inverno Cores Tendência"
@@ -39,7 +39,7 @@
             app:layout_constraintVertical_bias="0.132" />
 
         <TextView
-            android:id="@+id/textView10"
+            android:id="@+id/preco_produto"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="R$ 36.99"
@@ -50,7 +50,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.127"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView9"
+            app:layout_constraintTop_toBottomOf="@+id/titulo_produto"
             app:layout_constraintVertical_bias="0.218" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
