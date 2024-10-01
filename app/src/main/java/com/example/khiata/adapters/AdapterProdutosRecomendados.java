@@ -33,6 +33,11 @@ public class AdapterProdutosRecomendados extends RecyclerView.Adapter<AdapterPro
 
     @Override
     public void onBindViewHolder(@NonNull AdapterProdutosRecomendados.MeuViewHolder holder, int position) {
+        TextView titulo_produto = holder.titulo_produto;
+        TextView preco_produto = holder.preco_produto;
+
+        titulo_produto.setText(produtos.get(position).getTitulo());
+        preco_produto.setText("R$ " + String.valueOf(produtos.get(position).getPreco()));
 
     }
 

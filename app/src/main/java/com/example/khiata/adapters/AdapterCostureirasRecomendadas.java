@@ -34,7 +34,8 @@ public class AdapterCostureirasRecomendadas extends RecyclerView.Adapter<Adapter
 
     @Override
     public void onBindViewHolder(@NonNull AdapterCostureirasRecomendadas.MeuViewHolder holder, int position) {
-
+        TextView nome_costureira = holder.nome_costureira;
+        nome_costureira.setText(costureiras.get(position).getNome());
     }
 
     @Override

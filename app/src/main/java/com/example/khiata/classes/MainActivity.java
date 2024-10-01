@@ -1,9 +1,14 @@
 package com.example.khiata.classes;
 
 import android.app.Dialog;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.ImageView;
 
 import androidx.activity.EdgeToEdge;
@@ -98,6 +103,15 @@ public class MainActivity extends AppCompatActivity {
                 View menu_lateral = inflater.inflate(R.layout.menu_lateral, null);
                 dialog.setContentView(menu_lateral);
                 dialog.setCancelable(true);
+
+                // Pega a janela do Dialog para ajustar o posicionamento
+                Window window = dialog.getWindow();
+                if (window != null) {
+                    window.setLayout(WindowManager.LayoutParams.WRAP_CONTENT, WindowManager.LayoutParams.MATCH_PARENT); // Ajuste para a largura desejada
+                    window.setGravity(Gravity.START); // Alinhar o menu à esquerda
+                    window.setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT)); // Remove espaços ao redor
+                }
+
                 dialog.show();
             }
         });

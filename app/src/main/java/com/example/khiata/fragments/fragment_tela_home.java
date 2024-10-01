@@ -68,8 +68,9 @@ public class fragment_tela_home extends Fragment {
     }
 
     RecyclerView costureiras_recomendas, produtos_recomendados;
-    List<Costureira> listaCostureira = new ArrayList();
+
     List<Produto> listaProdutos = new ArrayList();
+    List<Costureira> listaCostureira = new ArrayList();
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -80,27 +81,32 @@ public class fragment_tela_home extends Fragment {
 
         costureiras_recomendas = view.findViewById(R.id.costureiras_recomendas);
 
-        AdapterCostureirasRecomendadas costureirasRecomendadas = new AdapterCostureirasRecomendadas(listaCostureira);
-        costureiras_recomendas.setAdapter(costureirasRecomendadas);
-        costureiras_recomendas.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
-
         try{
             listaCostureira.add(new Costureira("Maria"));
+            listaCostureira.add(new Costureira("Joana"));
         } catch (Exception e){
             throw new RuntimeException(e);
         }
 
+        AdapterCostureirasRecomendadas costureirasRecomendadas = new AdapterCostureirasRecomendadas(listaCostureira);
+        costureiras_recomendas.setAdapter(costureirasRecomendadas);
+        costureiras_recomendas.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
+
+
+
         produtos_recomendados = view.findViewById(R.id.produtos_recomendados);
+
+        try{
+            listaProdutos.add(new Produto("Blusa Tricot Manga Longa Inverno Cores Tendência",35.99));
+            listaProdutos.add(new Produto("edtrfgyuhiy",35.99));
+        } catch (Exception e){
+            throw new RuntimeException(e);
+        }
 
         AdapterProdutosRecomendados produtosRecomendados = new AdapterProdutosRecomendados(listaProdutos);
         produtos_recomendados.setAdapter(produtosRecomendados);
         produtos_recomendados.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
 
-        try{
-            listaProdutos.add(new Produto("Blusa Tricot Manga Longa Inverno Cores Tendência",35.99));
-        } catch (Exception e){
-            throw new RuntimeException(e);
-        }
 
 
         return view;
