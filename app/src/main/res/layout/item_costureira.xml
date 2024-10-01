@@ -13,7 +13,7 @@
         android:layout_height="250dp">
 
         <TextView
-            android:id="@+id/textView8"
+            android:id="@+id/nome_costureira"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Nome"
@@ -39,7 +39,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.51"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView8"
+            app:layout_constraintTop_toBottomOf="@+id/nome_costureira"
             app:layout_constraintVertical_bias="0.434" />
 
         <ImageView
