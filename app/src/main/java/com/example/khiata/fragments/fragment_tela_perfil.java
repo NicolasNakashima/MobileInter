@@ -1,5 +1,6 @@
 package com.example.khiata.fragments;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -10,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
+import com.example.khiata.classes.CameraPerfil;
 import com.example.khiata.fragments.fragment_tela_home;
 import com.example.khiata.R;
 
@@ -61,7 +63,7 @@ public class fragment_tela_perfil extends Fragment {
     }
 
 
-    ImageView voltar_home;
+    ImageView voltar_home, btn_tirar_foto, foto_perfil;
     private fragment_tela_home fragment_tela_home = new fragment_tela_home();
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -78,6 +80,16 @@ public class fragment_tela_perfil extends Fragment {
                 transaction.commit();
             }
         });
+
+        btn_tirar_foto = view.findViewById(R.id.btn_tirar_foto);
+        btn_tirar_foto.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getContext(), CameraPerfil.class);
+                startActivity(intent);
+            }
+        });
+
         return view;
     }
 }

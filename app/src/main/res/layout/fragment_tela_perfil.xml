@@ -67,7 +67,7 @@
                 android:layout_marginTop="20dp">
 
                 <ImageView
-                    android:id="@+id/imageView13"
+                    android:id="@+id/foto_perfil"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:src="@drawable/foto_perfil"
@@ -76,14 +76,14 @@
                     app:layout_constraintStart_toStartOf="parent" />
 
                 <ImageView
-                    android:id="@+id/imageView14"
+                    android:id="@+id/btn_tirar_foto"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="80dp"
                     android:src="@drawable/icon_camera"
-                    app:layout_constraintBottom_toBottomOf="@+id/imageView13"
-                    app:layout_constraintEnd_toEndOf="@+id/imageView13"
-                    app:layout_constraintStart_toStartOf="@+id/imageView13" />
+                    app:layout_constraintBottom_toBottomOf="@+id/foto_perfil"
+                    app:layout_constraintEnd_toEndOf="@+id/foto_perfil"
+                    app:layout_constraintStart_toStartOf="@+id/foto_perfil" />
             </androidx.constraintlayout.widget.ConstraintLayout>
 
             <TextView
