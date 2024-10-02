@@ -14,7 +14,7 @@
         android:background="#FAC552">
 
         <Button
-            android:id="@+id/byn_adquirir_premium"
+            android:id="@+id/btn_adquirir_premium"
             android:layout_width="238dp"
             android:layout_height="51dp"
             android:layout_marginTop="20dp"
