@@ -1,8 +1,10 @@
 package com.example.khiata.fragments;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
@@ -10,10 +12,17 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.example.khiata.classes.CameraPerfil;
 import com.example.khiata.fragments.fragment_tela_home;
 import com.example.khiata.R;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -65,6 +74,11 @@ public class fragment_tela_perfil extends Fragment {
 
     ImageView voltar_home, btn_tirar_foto, foto_perfil;
     private fragment_tela_home fragment_tela_home = new fragment_tela_home();
+
+    // Obtém a referência do Firebase Storage
+    FirebaseStorage storage = FirebaseStorage.getInstance();
+    StorageReference storageRef = storage.getReference();
+    FirebaseAuth auth = FirebaseAuth.getInstance();
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -78,6 +92,22 @@ public class fragment_tela_perfil extends Fragment {
                 FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
                 transaction.replace(R.id.frame_conteudo, fragment_tela_home);
                 transaction.commit();
+            }
+        });
+
+
+        foto_perfil = view.findViewById(R.id.foto_perfil);
+        String userEmail = auth.getCurrentUser().getEmail();
+        StorageReference profileRef = storageRef.child("khiata_perfis/foto_"+userEmail+".jpg");
+        profileRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+            @Override
+            public void onSuccess(Uri uri) {
+                Glide.with(getContext()).load(uri).into(foto_perfil);
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                Toast.makeText(getContext(), "Falha ao obter URL da imagem"+ e.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
 

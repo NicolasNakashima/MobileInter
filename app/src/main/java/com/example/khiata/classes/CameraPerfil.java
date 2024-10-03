@@ -159,13 +159,11 @@ public class CameraPerfil extends AppCompatActivity {
             return;
         }
 
-        String userName = auth.getCurrentUser().getEmail();
-
         //Definir nome e caminho da imagem
 //        String name = new SimpleDateFormat(userName, Locale.US).format(System.currentTimeMillis());
-        String name = userName;
+        String userEmail = auth.getCurrentUser().getEmail(); // Nome de Usuário atualmente logado
         ContentValues contentValues = new ContentValues();
-        contentValues.put(MediaStore.MediaColumns.DISPLAY_NAME, name);
+        contentValues.put(MediaStore.MediaColumns.DISPLAY_NAME, userEmail);
         contentValues.put(MediaStore.MediaColumns.MIME_TYPE, "image/jpeg");
         contentValues.put(MediaStore.MediaColumns.RELATIVE_PATH, "Pictures/CameraXGaleria");
 
@@ -206,7 +204,7 @@ public class CameraPerfil extends AppCompatActivity {
                     foto.setImageURI(outputFileResults.getSavedUri());
                     foto.setVisibility(View.VISIBLE);
                     Toast.makeText(getBaseContext(), "Imagem salva", Toast.LENGTH_SHORT).show();
-                    database.uploadFoto(getBaseContext(), foto, docData, userName);
+                    database.uploadFoto(getBaseContext(), foto, docData, userEmail);
 
 //                    // Iniciar a MainActivity e carregar o fragmento de perfil
 //                    Intent intent = new Intent(getBaseContext(), MainActivity.class);
