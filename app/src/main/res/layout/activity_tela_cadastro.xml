@@ -92,6 +92,7 @@
                 app:layout_constraintVertical_bias="0.033">
 
                 <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/novoNome"
                     android:layout_width="313dp"
                     android:layout_height="53dp"
                     android:background="@null"
@@ -117,6 +118,7 @@
                 app:layout_constraintVertical_bias="0.043">
 
                 <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/novoEmail"
                     android:layout_width="313dp"
                     android:layout_height="53dp"
                     android:background="@null"
@@ -142,6 +144,7 @@
                 app:layout_constraintVertical_bias="0.045">
 
                 <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/novoCPF"
                     android:layout_width="313dp"
                     android:layout_height="53dp"
                     android:background="@null"
@@ -167,6 +170,7 @@
                 app:layout_constraintVertical_bias="0.057">
 
                 <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/novoPhone"
                     android:layout_width="313dp"
                     android:layout_height="53dp"
                     android:background="@null"
@@ -192,10 +196,11 @@
                 app:layout_constraintVertical_bias="0.052">
 
                 <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/novaIdade"
                     android:layout_width="313dp"
                     android:layout_height="53dp"
                     android:background="@null"
-                    android:hint="Data de nascimento: DD/MM/AAAA"
+                    android:hint="Idade:"
                     android:paddingLeft="16dp"
                     android:paddingBottom="10dp"
                     android:textColor="#000000"
@@ -217,6 +222,7 @@
                 app:layout_constraintVertical_bias="0.116">
 
                 <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/novaSenha"
                     android:layout_width="313dp"
                     android:layout_height="53dp"
                     android:background="@null"
@@ -239,6 +245,7 @@
                 app:layout_constraintStart_toStartOf="parent">
 
                 <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/confirmNovaSenha"
                     android:layout_width="313dp"
                     android:layout_height="53dp"
                     android:background="@null"
@@ -250,25 +257,63 @@
                     android:textStyle="bold" />
             </com.google.android.material.textfield.TextInputLayout>
 
+
+            <TextView
+                android:id="@+id/textView6"
+                android:layout_width="295dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="25dp"
+                android:text="Seu gênero:"
+                android:textColor="#000000"
+                android:textSize="18sp"
+                android:textStyle="bold" />
+
+            <RadioGroup
+                android:id="@+id/opcoesGenero"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:layout_marginRight="95dp">
+
+                <RadioButton
+                    android:id="@+id/radio_opcao1"
+                    android:layout_width="109dp"
+                    android:layout_height="46dp"
+                    android:text="Homem"
+                    android:textColor="#000000"
+                    android:textSize="16sp"
+                    android:textStyle="bold" />
+
+                <RadioButton
+                    android:id="@+id/radio_opcao2"
+                    android:layout_width="109dp"
+                    android:layout_height="46dp"
+                    android:text="Mulher"
+                    android:textColor="#000000"
+                    android:textSize="16sp"
+                    android:textStyle="bold" />
+            </RadioGroup>
+
+
             <TextView
                 android:id="@+id/textView5"
                 android:layout_width="295dp"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="25dp"
+                android:layout_marginTop="20dp"
                 android:text=" Cadastrar como costureira:"
                 android:textColor="#000000"
                 android:textSize="18sp"
                 android:textStyle="bold" />
 
-            <RadioButton
-                android:id="@+id/radioButton"
+            <CheckBox
+                android:id="@+id/checkConfirmCostureira"
                 android:layout_width="143dp"
                 android:layout_height="54dp"
                 android:layout_marginTop="10dp"
                 android:layout_marginRight="75dp"
                 android:text="Sim"
                 android:textColor="#000000"
-                android:textSize="15sp"
+                android:textSize="16sp"
                 android:textStyle="bold" />
 
             <Button

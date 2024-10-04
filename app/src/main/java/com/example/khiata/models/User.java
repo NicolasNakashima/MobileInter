@@ -1,22 +1,21 @@
 package com.example.khiata.models;
 
-import com.example.khiata.models.Gender;
 public class User {
     private int id;
     private String name;
     private String cpf;
-    private Gender gender;
+    private int gender;
     private int age;
     private boolean isDressmaker;
-    private boolean isPremium;
+    private boolean isPremium; //Deixa null, porque ele se torna premium dentro do App
     private long phone;
-    private String imageURL;
+    private String imageURL; //Deixa null
     private String password;
     private String email;
-    private String profilePictureUrl;
+    private String profilePictureUrl; //Deixa null
 
     // Constructor
-    public User(int id, String name, String cpf, Gender gender, int age, boolean isDressmaker,
+    public User(int id, String name, String cpf, int gender, int age, boolean isDressmaker,
                 boolean isPremium, long phone, String imageURL, String password,
                 String email, String profilePictureUrl) {
         this.id = id;
@@ -58,11 +57,11 @@ public class User {
         this.cpf = cpf;
     }
 
-    public Gender getGender() {
+    public int getGender() {
         return gender;
     }
 
-    public void setGender(Gender gender) {
+    public void setGender(int gender) {
         this.gender = gender;
     }
 

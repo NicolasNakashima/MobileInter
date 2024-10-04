@@ -9,6 +9,6 @@ import retrofit2.http.POST;
 
 public interface UserApi {
 
-    @POST("/inserir")
-    Call<User> USER_CALL(@Body User user);
+    @POST("api/users/inserir")
+    Call<Void> inserirUsuario(@Body User user);
 }
