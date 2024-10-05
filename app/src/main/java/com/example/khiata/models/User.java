@@ -1,10 +1,9 @@
 package com.example.khiata.models;
 
 public class User {
-    private int id;
     private String name;
     private String cpf;
-    private int gender;
+    private int genderId;
     private int age;
     private boolean isDressmaker;
     private boolean isPremium; //Deixa null, porque ele se torna premium dentro do App
@@ -15,13 +14,12 @@ public class User {
     private String profilePictureUrl; //Deixa null
 
     // Constructor
-    public User(int id, String name, String cpf, int gender, int age, boolean isDressmaker,
+    public User(String name, String cpf, int genderId, int age, boolean isDressmaker,
                 boolean isPremium, long phone, String imageURL, String password,
                 String email, String profilePictureUrl) {
-        this.id = id;
         this.name = name;
         this.cpf = cpf;
-        this.gender = gender;
+        this.genderId = genderId;
         this.age = age;
         this.isDressmaker = isDressmaker;
         this.isPremium = isPremium;
@@ -33,13 +31,6 @@ public class User {
     }
 
     // Getters and Setters
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
 
     public String getName() {
         return name;
@@ -57,12 +48,12 @@ public class User {
         this.cpf = cpf;
     }
 
-    public int getGender() {
-        return gender;
+    public int getGenderId() {
+        return genderId;
     }
 
-    public void setGender(int gender) {
-        this.gender = gender;
+    public void setGenderId(int genderId) {
+        this.genderId = genderId;
     }
 
     public int getAge() {
@@ -129,6 +120,20 @@ public class User {
         this.profilePictureUrl = profilePictureUrl;
     }
 
-    // Gender class
-
+    @Override
+    public String toString() {
+        return "User{" +
+                ", name='" + name + '\'' +
+                ", cpf='" + cpf + '\'' +
+                ", genderID=" + genderId +
+                ", age=" + age +
+                ", isDressmaker=" + isDressmaker +
+                ", isPremium=" + isPremium +
+                ", phone=" + phone +
+                ", imageURL='" + imageURL + '\'' +
+                ", password='" + password + '\'' +
+                ", email='" + email + '\'' +
+                ", profilePictureUrl='" + profilePictureUrl + '\'' +
+                '}';
+    }
 }

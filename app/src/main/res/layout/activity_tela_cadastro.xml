@@ -276,7 +276,7 @@
                 android:layout_marginRight="95dp">
 
                 <RadioButton
-                    android:id="@+id/radio_opcao1"
+                    android:id="@+id/opcaoHomem"
                     android:layout_width="109dp"
                     android:layout_height="46dp"
                     android:text="Homem"
@@ -285,7 +285,7 @@
                     android:textStyle="bold" />
 
                 <RadioButton
-                    android:id="@+id/radio_opcao2"
+                    android:id="@+id/opcaoMulher"
                     android:layout_width="109dp"
                     android:layout_height="46dp"
                     android:text="Mulher"

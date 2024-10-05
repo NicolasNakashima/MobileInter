@@ -4,6 +4,7 @@ import android.app.Dialog;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ArrayAdapter;
@@ -34,6 +35,8 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.UserProfileChangeRequest;
 
+import java.io.IOException;
+
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -45,8 +48,6 @@ public class tela_cadastro extends AppCompatActivity {
     ImageView cadastro_voltar_inicio;
 
     Button btn_cadastrar, btn_ir_para_login;
-
-    int novoId = 3;
 
     private Retrofit retrofit;
     @Override
@@ -89,8 +90,8 @@ public class tela_cadastro extends AppCompatActivity {
                 String novaSenha = ((EditText) findViewById(R.id.novaSenha)).getText().toString();
                 String novaConfirmaSenha = ((EditText) findViewById(R.id.confirmNovaSenha)).getText().toString();
                 boolean confirmCostureira = ((CheckBox) findViewById(R.id.checkConfirmCostureira)).isChecked();
-                RadioGroup opcoesGenero = findViewById(R.id.opcoesGenero);
 
+                RadioGroup opcoesGenero = findViewById(R.id.opcoesGenero);
                 int selectedId = opcoesGenero.getCheckedRadioButtonId();
 
                 if(novoNome.isEmpty() || novoEmail.isEmpty() || novoCPF.isEmpty() || novoPhone == 0 || novaIdade == 0 || novaSenha.isEmpty() || novaConfirmaSenha.isEmpty() || selectedId == -1) {
@@ -113,16 +114,15 @@ public class tela_cadastro extends AppCompatActivity {
                     dialog.show();
                 } else{
                     if(novaSenha.equals(novaConfirmaSenha)){
-                        RadioButton selectedRadioButton = findViewById(selectedId);
 
-                        String selectedValue = selectedRadioButton.getText().toString();
                         int novoGenero = 0;
-                        if(selectedValue.equals("Masculino")){
+                        if(selectedId == R.id.opcaoHomem){
                             novoGenero = 2;
-                        } else if(selectedValue.equals("Feminino")){
+                        } else if(selectedId == R.id.opcaoMulher){
                             novoGenero = 1;
                         }
-                        User novoUser = new User(novoId, novoNome, novoCPF, novoGenero,novaIdade,confirmCostureira,false, novoPhone, null,novaSenha, novoEmail, null);
+
+                        User novoUser = new User( novoNome, novoCPF, novoGenero,novaIdade,confirmCostureira,false, novoPhone, null,novaSenha, novoEmail, null);
 
                         cadastrarUsuarioAPI(novoUser);
                         cadastrarUsuarioFirebase(novoEmail, novaSenha);
@@ -161,12 +161,22 @@ public class tela_cadastro extends AppCompatActivity {
         call.enqueue(new Callback<Void>() {
             @Override
             public void onResponse(Call<Void> call, Response<Void> response) {
-                Toast.makeText(tela_cadastro.this, "Usuário Cadastrado com sucesso!", Toast.LENGTH_SHORT).show();
+                if (!response.isSuccessful()) {
+                    try {
+                        String errorBody = response.errorBody().string();
+                        Toast.makeText(tela_cadastro.this, "Erro: " + errorBody, Toast.LENGTH_LONG).show();
+                        Log.e("Error", errorBody);
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                } else {
+                    Toast.makeText(tela_cadastro.this, "Usuário Cadastrado com sucesso!", Toast.LENGTH_SHORT).show();
+                }
             }
 
             @Override
             public void onFailure(Call<Void> call, Throwable t) {
-                Toast.makeText(tela_cadastro.this, "Erro ao cadastrar usuário: "+t.getMessage(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(tela_cadastro.this, "Erro ao cadastrar usuário: "+t.getMessage(), Toast.LENGTH_LONG).show();
             }
         });
     }
