@@ -3,10 +3,13 @@ package com.example.khiata.fragments;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.ImageView;
 
 import com.example.khiata.R;
 
@@ -57,10 +60,35 @@ public class fragment_tela_editar_perfil extends Fragment {
         }
     }
 
+    ImageView voltar_perfil;
+    Button btn_cancelar_alteracoes;
+    private fragment_tela_perfil fragment_tela_perfil = new fragment_tela_perfil();
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_tela_editar_perfil, container, false);
+        View view = inflater.inflate(R.layout.fragment_tela_editar_perfil, container, false);
+
+        voltar_perfil = view.findViewById(R.id.voltar_perfil);
+        voltar_perfil.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
+                transaction.replace(R.id.frame_conteudo, fragment_tela_perfil);
+                transaction.commit();
+            }
+        });
+
+        btn_cancelar_alteracoes = view.findViewById(R.id.btn_cancelar_alteracoes);
+        btn_cancelar_alteracoes.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
+                transaction.replace(R.id.frame_conteudo, fragment_tela_perfil);
+                transaction.commit();
+            }
+        });
+
+        return view;
     }
 }

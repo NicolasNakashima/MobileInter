@@ -210,6 +210,39 @@ public class fragment_tela_perfil extends Fragment {
             }
         });
 
+        btn_virar_costureira = view.findViewById(R.id.btn_virar_costureira);
+        btn_virar_costureira.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Dialog dialog = new Dialog(getActivity());
+                LayoutInflater inflater = getLayoutInflater();
+                View popup_opcao = inflater.inflate(R.layout.popup_opcao, null);
+
+                TextView msgPopup = popup_opcao.findViewById(R.id.msg_popup);
+                msgPopup.setText("Você está prestes a se tornar uma costureira.\n Deseja prosseguir?");
+                ImageView imgPopup = popup_opcao.findViewById(R.id.img_popup);
+                imgPopup.setImageResource(R.drawable.icon_pop_alert);
+                Button btn_seguir = popup_opcao.findViewById(R.id.btn_seguir);
+                btn_seguir.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        dialog.cancel();
+                    }
+                });
+                Button btn_cancelar = popup_opcao.findViewById(R.id.btn_cancelar);
+                btn_cancelar.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        dialog.cancel();
+                    }
+                });
+
+                dialog.setContentView(popup_opcao);
+                dialog.setCancelable(true);
+                dialog.show();
+            }
+        });
+
 
         return view;
     }

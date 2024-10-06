@@ -3,10 +3,14 @@ package com.example.khiata.fragments;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.ImageButton;
+import android.widget.ImageView;
 
 import com.example.khiata.R;
 
@@ -57,10 +61,36 @@ public class fragment_tela_enderecos extends Fragment {
         }
     }
 
+    ImageView voltar_home;
+    ImageButton btn_adicionar_endereco;
+    private fragment_tela_adicionar_endereco fragment_tela_adicionar_endereco= new fragment_tela_adicionar_endereco();
+    private fragment_tela_home fragment_tela_home= new fragment_tela_home();
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_tela_enderecos, container, false);
+        View view = inflater.inflate(R.layout.fragment_tela_enderecos, container, false);
+
+        voltar_home = view.findViewById(R.id.voltar_home);
+        voltar_home.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
+                transaction.replace(R.id.frame_conteudo, fragment_tela_home);
+                transaction.commit();
+            }
+        });
+
+        btn_adicionar_endereco = view.findViewById(R.id.btn_adicionar_endereco);
+        btn_adicionar_endereco.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
+                transaction.replace(R.id.frame_conteudo, fragment_tela_adicionar_endereco);
+                transaction.commit();
+            }
+        });
+
+        return view;
     }
 }

@@ -212,7 +212,7 @@
             android:textStyle="bold" />
 
         <Button
-            android:id="@+id/btn_cancelar_novo_endereco"
+            android:id="@+id/btn_cancelar_atualizar_endereco"
             android:layout_width="240dp"
             android:layout_height="50dp"
             android:layout_marginTop="30dp"
