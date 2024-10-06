@@ -2,19 +2,15 @@ package com.example.khiata.classes;
 
 import android.app.Dialog;
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.RadioButton;
 import android.widget.RadioGroup;
-import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -32,8 +28,6 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.auth.UserProfileChangeRequest;
 
 import java.io.IOException;
 
@@ -102,7 +96,7 @@ public class tela_cadastro extends AppCompatActivity {
                     msgPopup.setText("Por favor, preencha todos os campos para realizar um cadastro.");
                     ImageView imgPopup = popupView.findViewById(R.id.img_popup);
                     imgPopup.setImageResource(R.drawable.icon_pop_alert);
-                    Button btnPopup = popupView.findViewById(R.id.btn_popup);
+                    Button btnPopup = popupView.findViewById(R.id.btn_seguir);
                     btnPopup.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
@@ -134,7 +128,7 @@ public class tela_cadastro extends AppCompatActivity {
                         msgPopup.setText("Por favor, confirme a senha corretamente.");
                         ImageView imgPopup = popupView.findViewById(R.id.img_popup);
                         imgPopup.setImageResource(R.drawable.icon_pop_alert);
-                        Button btnPopup = popupView.findViewById(R.id.btn_popup);
+                        Button btnPopup = popupView.findViewById(R.id.btn_seguir);
                         btnPopup.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {

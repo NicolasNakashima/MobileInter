@@ -4,6 +4,7 @@ import android.app.Dialog;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -12,15 +13,20 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 import androidx.fragment.app.FragmentTransaction;
 
+import com.bumptech.glide.Glide;
 import com.example.khiata.R;
+import com.example.khiata.apis.UserApi;
 import com.example.khiata.fragments.fragment_tela_avaliacoes;
 import com.example.khiata.fragments.fragment_tela_cursos;
 import com.example.khiata.fragments.fragment_tela_enderecos;
@@ -28,10 +34,21 @@ import com.example.khiata.fragments.fragment_tela_home;
 import com.example.khiata.fragments.fragment_tela_perfil;
 import com.example.khiata.fragments.fragment_tela_compras;
 import com.example.khiata.fragments.fragment_tela_favoritos;
+import com.example.khiata.fragments.fragment_tela_plan_premium;
 import com.example.khiata.fragments.fragment_tela_statistics;
 import com.example.khiata.fragments.fragment_tela_area_costureira;
-import com.example.khiata.fragments.fragment_tela_premium_plan;
+import com.example.khiata.models.User;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -44,10 +61,15 @@ public class MainActivity extends AppCompatActivity {
     private fragment_tela_area_costureira fragment_tela_area_costureira = new fragment_tela_area_costureira();
     private fragment_tela_enderecos fragment_tela_enderecos = new fragment_tela_enderecos();
     private fragment_tela_avaliacoes fragment_tela_avaliacoes = new fragment_tela_avaliacoes();
-    private fragment_tela_premium_plan fragment_tela_premium_plan = new fragment_tela_premium_plan();
-    ImageView btn_lateral_menu, btn_navigation_favoritos, btn_navigation_home, btn_navigation_compras, btn_navigation_perfil;
+    private fragment_tela_plan_premium fragment_tela_plan_premium = new fragment_tela_plan_premium();
+    ImageView btn_lateral_menu, btn_navigation_favoritos, btn_navigation_home, btn_navigation_compras, btn_navigation_perfil, foto_perfil;
     View navigation_perfil, navigation_cursos, navigation_statistics, navigation_area_costureira, navigation_enderecos, navigation_avaliacoes, btn_logout;
     Button btn_adquirir_premium;
+    TextView nome_user;
+    FirebaseAuth auth = FirebaseAuth.getInstance();
+    FirebaseStorage storage = FirebaseStorage.getInstance();
+    StorageReference storageRef = storage.getReference();
+    private Retrofit retrofit;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -115,9 +137,28 @@ public class MainActivity extends AppCompatActivity {
         btn_lateral_menu.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                String userEmail = auth.getCurrentUser().getEmail();
+
                 Dialog dialog = new Dialog(MainActivity.this);
                 LayoutInflater inflater = getLayoutInflater();
                 View menu_lateral = inflater.inflate(R.layout.menu_lateral, null);
+
+                foto_perfil= menu_lateral.findViewById(R.id.foto_perfil);
+                StorageReference profileRef = storageRef.child("khiata_perfis/foto_"+userEmail+".jpg");
+                profileRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                    @Override
+                    public void onSuccess(Uri uri) {
+                        Glide.with(getApplicationContext()).load(uri).into(foto_perfil);
+                    }
+                }).addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Toast.makeText(getApplicationContext(), "Falha ao obter URL da imagem"+ e.getMessage(), Toast.LENGTH_SHORT).show();
+                    }
+                });
+
+                nome_user = menu_lateral.findViewById(R.id.nome_user);
+                buscarNomeDoUsuario(userEmail);
 
                 //Ir para tela de perfil
                 navigation_perfil = menu_lateral.findViewById(R.id.navigation_perfil);
@@ -197,7 +238,7 @@ public class MainActivity extends AppCompatActivity {
                     @Override
                     public void onClick(View v) {
                         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-                        transaction.replace(R.id.frame_conteudo, fragment_tela_premium_plan);
+                        transaction.replace(R.id.frame_conteudo, fragment_tela_plan_premium);
                         transaction.commit();
                         dialog.cancel();
                     }
@@ -208,11 +249,36 @@ public class MainActivity extends AppCompatActivity {
                 btn_logout.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        FirebaseAuth.getInstance().signOut();
-                        Intent intent = new Intent(MainActivity.this, tela_inicial.class);
-                        startActivity(intent);
-                        finish();
-                        dialog.cancel();
+                        Dialog dialog = new Dialog(MainActivity.this);
+                        LayoutInflater inflater = getLayoutInflater();
+                        View popup_opcao = inflater.inflate(R.layout.popup_opcao, null);
+
+                        TextView msgPopup = popup_opcao.findViewById(R.id.msg_popup);
+                        msgPopup.setText("Você está prestes a realizar o logout.\n Deseja prosseguir?");
+                        ImageView imgPopup = popup_opcao.findViewById(R.id.img_popup);
+                        imgPopup.setImageResource(R.drawable.icon_pop_logout);
+                        Button btn_seguir = popup_opcao.findViewById(R.id.btn_seguir);
+                        btn_seguir.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                FirebaseAuth.getInstance().signOut();
+                                Intent intent = new Intent(MainActivity.this, tela_inicial.class);
+                                startActivity(intent);
+                                finish();
+                                dialog.cancel();
+                            }
+                        });
+                        Button btn_cancelar = popup_opcao.findViewById(R.id.btn_cancelar);
+                        btn_cancelar.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                dialog.cancel();
+                            }
+                        });
+
+                        dialog.setContentView(popup_opcao);
+                        dialog.setCancelable(true);
+                        dialog.show();
                     }
                 });
 
@@ -231,6 +297,27 @@ public class MainActivity extends AppCompatActivity {
                 dialog.show();
             }
         });
+    }
 
+    private void buscarNomeDoUsuario(String userEmail) {
+        String API_BASE_URL = "https://apikhiata.onrender.com/";
+        retrofit = new Retrofit.Builder()
+                .baseUrl(API_BASE_URL)
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+        UserApi userApi = retrofit.create(UserApi.class);
+        Call<User> call = userApi.buscarUsuarioPorEmail(userEmail);
+        call.enqueue(new Callback<User>() {
+            @Override
+            public void onResponse(Call<User> call, Response<User> response) {
+                User userResponse = response.body();
+                nome_user.setText(userResponse.getName());
+            }
+
+            @Override
+            public void onFailure(Call<User> call, Throwable throwable) {
+                Toast.makeText(getApplicationContext(), throwable.getMessage(), Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 }

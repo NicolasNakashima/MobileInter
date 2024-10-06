@@ -36,7 +36,7 @@
         app:layout_constraintVertical_bias="0.479" />
 
     <ImageView
-        android:id="@+id/voltar_home"
+        android:id="@+id/voltar_perfil"
         android:layout_width="53dp"
         android:layout_height="46dp"
         app:srcCompat="@drawable/seta_retorno"

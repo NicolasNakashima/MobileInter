@@ -80,7 +80,7 @@ public class tela_nova_senha extends AppCompatActivity {
                     msgPopup.setText("Por favor, preencha todos os campos para realizar o login.");
                     ImageView imgPopup = popupView.findViewById(R.id.img_popup);
                     imgPopup.setImageResource(R.drawable.icon_pop_alert);
-                    Button btnPopup = popupView.findViewById(R.id.btn_popup);
+                    Button btnPopup = popupView.findViewById(R.id.btn_seguir);
                     btnPopup.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
@@ -109,7 +109,7 @@ public class tela_nova_senha extends AppCompatActivity {
                         msgPopup.setText("As senhas digitadas não conferem. Digite novamente.");
                         ImageView imgPopup = popupView.findViewById(R.id.img_popup);
                         imgPopup.setImageResource(R.drawable.icon_pop_alert);
-                        Button btnPopup = popupView.findViewById(R.id.btn_popup);
+                        Button btnPopup = popupView.findViewById(R.id.btn_seguir);
                         btnPopup.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {

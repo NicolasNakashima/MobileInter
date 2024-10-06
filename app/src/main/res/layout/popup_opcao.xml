@@ -10,28 +10,29 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="375dp"
-        android:layout_height="380dp">
+        android:layout_height="390dp">
 
         <TextView
             android:id="@+id/msg_popup"
-            android:layout_width="261dp"
-            android:layout_height="73dp"
-            android:layout_marginTop="32dp"
+            android:layout_width="264dp"
+            android:layout_height="85dp"
+            android:layout_marginTop="36dp"
             android:text="Usuário cadastrado com sucesso!"
             android:textAlignment="center"
             android:textColor="#000000"
             android:textSize="20sp"
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.495"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/img_popup" />
 
         <Button
-            android:id="@+id/btn_popup"
+            android:id="@+id/btn_seguir"
             android:layout_width="168dp"
             android:layout_height="49dp"
             android:layout_marginStart="16dp"
-            android:layout_marginTop="44dp"
+            android:layout_marginTop="28dp"
             android:background="@drawable/style_button1"
             android:text="Fechar"
             android:textColor="#ffffff"
@@ -40,10 +41,10 @@
             app:layout_constraintTop_toBottomOf="@+id/msg_popup" />
 
         <Button
-            android:id="@+id/btn_pop_cancelar"
+            android:id="@+id/btn_cancelar"
             android:layout_width="168dp"
             android:layout_height="49dp"
-            android:layout_marginTop="44dp"
+            android:layout_marginTop="28dp"
             android:layout_marginEnd="16dp"
             android:background="@drawable/style_button2"
             android:text="Cancelar"

@@ -1,5 +1,6 @@
 package com.example.khiata.fragments;
 
+import android.app.Dialog;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -19,7 +20,7 @@ import android.widget.Toast;
 import com.bumptech.glide.Glide;
 import com.example.khiata.apis.UserApi;
 import com.example.khiata.classes.CameraPerfil;
-import com.example.khiata.fragments.fragment_tela_home;
+import com.example.khiata.classes.tela_inicial;
 import com.example.khiata.R;
 import com.example.khiata.models.User;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -101,7 +102,7 @@ public class fragment_tela_perfil extends Fragment {
         String userEmail = auth.getCurrentUser().getEmail();
 
 
-        voltar_home = view.findViewById(R.id.voltar_home);
+        voltar_home = view.findViewById(R.id.voltar_perfil);
         voltar_home.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -169,6 +170,43 @@ public class fragment_tela_perfil extends Fragment {
                 FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
                 transaction.replace(R.id.frame_conteudo, fragment_tela_plan_premium);
                 transaction.commit();
+            }
+        });
+
+        btn_logout = view.findViewById(R.id.btn_logout);
+        btn_logout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Dialog dialog = new Dialog(getActivity());
+                LayoutInflater inflater = getLayoutInflater();
+                View popup_opcao = inflater.inflate(R.layout.popup_opcao, null);
+
+                TextView msgPopup = popup_opcao.findViewById(R.id.msg_popup);
+                msgPopup.setText("Você está prestes a realizar o logout.\n Deseja prosseguir?");
+                ImageView imgPopup = popup_opcao.findViewById(R.id.img_popup);
+                imgPopup.setImageResource(R.drawable.icon_pop_logout);
+                Button btn_seguir = popup_opcao.findViewById(R.id.btn_seguir);
+                btn_seguir.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        FirebaseAuth.getInstance().signOut();
+                        Intent intent = new Intent(getActivity(), tela_inicial.class);
+                        startActivity(intent);
+                        getActivity().finish();
+                        dialog.cancel();
+                    }
+                });
+                Button btn_cancelar = popup_opcao.findViewById(R.id.btn_cancelar);
+                btn_cancelar.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        dialog.cancel();
+                    }
+                });
+
+                dialog.setContentView(popup_opcao);
+                dialog.setCancelable(true);
+                dialog.show();
             }
         });
 

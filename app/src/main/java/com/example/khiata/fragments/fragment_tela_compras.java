@@ -67,7 +67,7 @@ public class fragment_tela_compras extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_tela_compras, container, false);
 
-        voltar_home = view.findViewById(R.id.voltar_home);
+        voltar_home = view.findViewById(R.id.voltar_perfil);
         voltar_home.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

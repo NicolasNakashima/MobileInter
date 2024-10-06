@@ -130,7 +130,7 @@ public class tela_login extends AppCompatActivity {
                                         msgPopup.setText("Usuário ou senha inválidos. Tente novamente.");
                                         ImageView imgPopup = popupView.findViewById(R.id.img_popup);
                                         imgPopup.setImageResource(R.drawable.icon_pop_alert);
-                                        Button btnPopup = popupView.findViewById(R.id.btn_popup);
+                                        Button btnPopup = popupView.findViewById(R.id.btn_seguir);
                                         btnPopup.setOnClickListener(new View.OnClickListener() {
                                             @Override
                                             public void onClick(View v) {
@@ -153,7 +153,7 @@ public class tela_login extends AppCompatActivity {
                                         msgPopup.setText("Usuário ou senha inválidos. Tente novamente.");
                                         ImageView imgPopup = popupView.findViewById(R.id.img_popup);
                                         imgPopup.setImageResource(R.drawable.icon_pop_alert);
-                                        Button btnPopup = popupView.findViewById(R.id.btn_popup);
+                                        Button btnPopup = popupView.findViewById(R.id.btn_seguir);
                                         btnPopup.setOnClickListener(new View.OnClickListener() {
                                             @Override
                                             public void onClick(View v) {
@@ -176,7 +176,7 @@ public class tela_login extends AppCompatActivity {
                                         msgPopup.setText("Erro ao autenticar: " + e.getMessage());
                                         ImageView imgPopup = popupView.findViewById(R.id.img_popup);
                                         imgPopup.setImageResource(R.drawable.icon_pop_alert);
-                                        Button btnPopup = popupView.findViewById(R.id.btn_popup);
+                                        Button btnPopup = popupView.findViewById(R.id.btn_seguir);
                                         btnPopup.setOnClickListener(new View.OnClickListener() {
                                             @Override
                                             public void onClick(View v) {
@@ -214,7 +214,7 @@ public class tela_login extends AppCompatActivity {
                     msgPopup.setText("Por favor, insira seu e-mail antes de definir uma nova senha.");
                     ImageView imgPopup = popupView.findViewById(R.id.img_popup);
                     imgPopup.setImageResource(R.drawable.icon_pop_alert);
-                    Button btnPopup = popupView.findViewById(R.id.btn_popup);
+                    Button btnPopup = popupView.findViewById(R.id.btn_seguir);
                     btnPopup.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {

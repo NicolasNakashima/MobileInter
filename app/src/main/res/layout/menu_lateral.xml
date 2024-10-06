@@ -47,7 +47,7 @@
             app:layout_constraintTop_toTopOf="parent">
 
             <ImageView
-                android:id="@+id/imageView9"
+                android:id="@+id/foto_perfil"
                 android:layout_width="63dp"
                 android:layout_height="57dp"
                 android:layout_marginStart="12dp"
@@ -58,7 +58,7 @@
                 app:srcCompat="@drawable/foto_perfil" />
 
             <TextView
-                android:id="@+id/textView27"
+                android:id="@+id/nome_user"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="12dp"
@@ -67,7 +67,7 @@
                 android:textColor="#5A2D03"
                 android:textSize="20sp"
                 android:textStyle="bold"
-                app:layout_constraintStart_toEndOf="@+id/imageView9"
+                app:layout_constraintStart_toEndOf="@+id/foto_perfil"
                 app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
@@ -80,7 +80,7 @@
                 android:textColor="#5A2D03"
                 android:textSize="17sp"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/imageView9" />
+                app:layout_constraintStart_toEndOf="@+id/foto_perfil" />
 
             <ImageView
                 android:id="@+id/imageView18"
