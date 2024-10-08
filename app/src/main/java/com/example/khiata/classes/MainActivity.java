@@ -143,6 +143,7 @@ public class MainActivity extends AppCompatActivity {
                 LayoutInflater inflater = getLayoutInflater();
                 View menu_lateral = inflater.inflate(R.layout.menu_lateral, null);
 
+                //Carregar imagem do perfil no menu lateral
                 foto_perfil= menu_lateral.findViewById(R.id.foto_perfil);
                 StorageReference profileRef = storageRef.child("khiata_perfis/foto_"+userEmail+".jpg");
                 profileRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
@@ -157,6 +158,7 @@ public class MainActivity extends AppCompatActivity {
                     }
                 });
 
+                //Carregar nome do usuário no menu lateral
                 nome_user = menu_lateral.findViewById(R.id.nome_user);
                 buscarNomeDoUsuario(userEmail);
 
@@ -201,9 +203,7 @@ public class MainActivity extends AppCompatActivity {
                 navigation_area_costureira.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-                        transaction.replace(R.id.frame_conteudo, fragment_tela_area_costureira);
-                        transaction.commit();
+                        usuarioCostureira(userEmail);
                         dialog.cancel();
                     }
                 });
@@ -299,6 +299,7 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
+    //Pega o nome do usuário para o menu lateral
     private void buscarNomeDoUsuario(String userEmail) {
         String API_BASE_URL = "https://apikhiata.onrender.com/";
         retrofit = new Retrofit.Builder()
@@ -321,6 +322,7 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
+    //Verifica se o usuário é costureira
     private void usuarioCostureira(String userEmail) {
         String API_BASE_URL = "https://apikhiata.onrender.com/";
         retrofit = new Retrofit.Builder()

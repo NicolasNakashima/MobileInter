@@ -68,7 +68,6 @@ public class fragment_tela_home extends Fragment {
     }
 
     RecyclerView costureiras_recomendas, produtos_recomendados;
-
     List<Produto> listaProdutos = new ArrayList();
     List<Costureira> listaCostureira = new ArrayList();
 
@@ -76,37 +75,32 @@ public class fragment_tela_home extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-
         View view = inflater.inflate(R.layout.fragment_tela_home, container, false);
 
+        // Carregar a lista de costureiras recomendadas
         costureiras_recomendas = view.findViewById(R.id.costureiras_recomendas);
-
         try{
             listaCostureira.add(new Costureira("Maria"));
             listaCostureira.add(new Costureira("Joana"));
         } catch (Exception e){
             throw new RuntimeException(e);
         }
-
         AdapterCostureirasRecomendadas costureirasRecomendadas = new AdapterCostureirasRecomendadas(listaCostureira);
         costureiras_recomendas.setAdapter(costureirasRecomendadas);
         costureiras_recomendas.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
 
 
-
+        // Carregar a lista de produtos recomendados
         produtos_recomendados = view.findViewById(R.id.produtos_recomendados);
-
         try{
             listaProdutos.add(new Produto("Blusa Tricot Manga Longa Inverno Cores Tendência",35.99));
             listaProdutos.add(new Produto("edtrfgyuhiy",35.99));
         } catch (Exception e){
             throw new RuntimeException(e);
         }
-
         AdapterProdutosRecomendados produtosRecomendados = new AdapterProdutosRecomendados(listaProdutos);
         produtos_recomendados.setAdapter(produtosRecomendados);
         produtos_recomendados.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
-
 
 
         return view;

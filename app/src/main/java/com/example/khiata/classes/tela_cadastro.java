@@ -30,6 +30,8 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Collections;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -55,6 +57,7 @@ public class tela_cadastro extends AppCompatActivity {
             return insets;
         });
 
+        //voltar para tela inicial
         cadastro_voltar_inicio = findViewById(R.id.cadastro_voltar_inicio);
         cadastro_voltar_inicio.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -64,6 +67,7 @@ public class tela_cadastro extends AppCompatActivity {
             }
         });
 
+        //ir para tela de login
         btn_ir_para_login = findViewById(R.id.btn_ir_para_login);
         btn_ir_para_login.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -72,6 +76,7 @@ public class tela_cadastro extends AppCompatActivity {
             }
         });
 
+        //Cadastrar conta
         btn_cadastrar = findViewById(R.id.btn_cadastrar);
         btn_cadastrar.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -79,7 +84,7 @@ public class tela_cadastro extends AppCompatActivity {
                 String novoNome = ((EditText) findViewById(R.id.novoNome)).getText().toString();
                 String novoEmail = ((EditText) findViewById(R.id.novoEmail)).getText().toString();
                 String novoCPF = ((EditText) findViewById(R.id.novoCPF)).getText().toString();
-                long novoPhone = Long.parseLong(((EditText) findViewById(R.id.novoPhone)).getText().toString());
+                int novoPhone = Integer.parseInt(((EditText) findViewById(R.id.novoPhone)).getText().toString());
                 int novaIdade = Integer.parseInt(((EditText) findViewById(R.id.novaIdade)).getText().toString());
                 String novaSenha = ((EditText) findViewById(R.id.novaSenha)).getText().toString();
                 String novaConfirmaSenha = ((EditText) findViewById(R.id.confirmNovaSenha)).getText().toString();
@@ -96,7 +101,7 @@ public class tela_cadastro extends AppCompatActivity {
                     msgPopup.setText("Por favor, preencha todos os campos para realizar um cadastro.");
                     ImageView imgPopup = popupView.findViewById(R.id.img_popup);
                     imgPopup.setImageResource(R.drawable.icon_pop_alert);
-                    Button btnPopup = popupView.findViewById(R.id.btn_seguir);
+                    Button btnPopup = popupView.findViewById(R.id.btn_popup);
                     btnPopup.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
@@ -116,10 +121,10 @@ public class tela_cadastro extends AppCompatActivity {
                             novoGenero = 1;
                         }
 
-                        User novoUser = new User( novoNome, novoCPF, novoGenero,novaIdade,confirmCostureira,false, novoPhone, null,novaSenha, novoEmail, null);
-
+                        User novoUser = new User( novoNome, novoCPF, novoGenero,novaIdade,confirmCostureira,false, novoPhone, null,novaSenha, novoEmail, null, null);
+                        Log.e("novoUser", novoUser.toString());
                         cadastrarUsuarioAPI(novoUser);
-                        cadastrarUsuarioFirebase(novoEmail, novaSenha);
+
                     } else{
                         Dialog dialog = new Dialog(tela_cadastro.this);
                         LayoutInflater inflater = getLayoutInflater();
@@ -128,7 +133,7 @@ public class tela_cadastro extends AppCompatActivity {
                         msgPopup.setText("Por favor, confirme a senha corretamente.");
                         ImageView imgPopup = popupView.findViewById(R.id.img_popup);
                         imgPopup.setImageResource(R.drawable.icon_pop_alert);
-                        Button btnPopup = popupView.findViewById(R.id.btn_seguir);
+                        Button btnPopup = popupView.findViewById(R.id.btn_popup);
                         btnPopup.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
@@ -144,17 +149,19 @@ public class tela_cadastro extends AppCompatActivity {
         });
     }
 
-    private void cadastrarUsuarioAPI(User user){
+    // Método para cadastrar um novo usuário na API
+    private void cadastrarUsuarioAPI(User user) {
         String API_BASE_URL = "https://apikhiata.onrender.com/";
         retrofit = new Retrofit.Builder()
                 .baseUrl(API_BASE_URL)
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
         UserApi userApi = retrofit.create(UserApi.class);
-        Call<Void> call = userApi.inserirUsuario(user);
-        call.enqueue(new Callback<Void>() {
+        Call<String> call = userApi.inserirUsuario(user);
+
+        call.enqueue(new Callback<String>() {
             @Override
-            public void onResponse(Call<Void> call, Response<Void> response) {
+            public void onResponse(Call<String> call, Response<String> response) {
                 if (!response.isSuccessful()) {
                     try {
                         String errorBody = response.errorBody().string();
@@ -164,30 +171,36 @@ public class tela_cadastro extends AppCompatActivity {
                         e.printStackTrace();
                     }
                 } else {
-                    Toast.makeText(tela_cadastro.this, "Usuário Cadastrado com sucesso!", Toast.LENGTH_SHORT).show();
+                    String successMessage = response.body(); // Captura a mensagem de sucesso
+                    Toast.makeText(tela_cadastro.this, successMessage, Toast.LENGTH_SHORT).show();
+                    cadastrarUsuarioFirebase(user.getEmail(), user.getPassword());
+                    Intent intent = new Intent(tela_cadastro.this, MainActivity.class);
+                    startActivity(intent);
                 }
             }
 
             @Override
-            public void onFailure(Call<Void> call, Throwable t) {
-                Toast.makeText(tela_cadastro.this, "Erro ao cadastrar usuário: "+t.getMessage(), Toast.LENGTH_LONG).show();
+            public void onFailure(Call<String> call, Throwable t) {
+                Toast.makeText(tela_cadastro.this, "Erro ao cadastrar usuário: " + t.getMessage(), Toast.LENGTH_LONG).show();
             }
         });
     }
 
+
+    // Método para cadastrar um novo usuário no Firebase
     private void cadastrarUsuarioFirebase(String novoEmail, String novaSenha){
         FirebaseAuth autenticar = FirebaseAuth.getInstance();
 
         autenticar.createUserWithEmailAndPassword(novoEmail, novaSenha)
-                .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-                    @Override
-                    public void onComplete(@NonNull Task<AuthResult> task) {
-                        if (task.isSuccessful()) {
-                            Toast.makeText(tela_cadastro.this, "Cadastro realizado com sucesso no Firebase", Toast.LENGTH_SHORT).show();
-                        } else {
-                            Toast.makeText(tela_cadastro.this, "Erro: " + task.getException().getMessage(), Toast.LENGTH_SHORT).show();
-                        }
+            .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                @Override
+                public void onComplete(@NonNull Task<AuthResult> task) {
+                    if (task.isSuccessful()) {
+                        Toast.makeText(tela_cadastro.this, "Cadastro realizado com sucesso no Firebase", Toast.LENGTH_SHORT).show();
+                    } else {
+                        Toast.makeText(tela_cadastro.this, "Erro: " + task.getException().getMessage(), Toast.LENGTH_SHORT).show();
                     }
-                });
+                }
+            });
     }
 }

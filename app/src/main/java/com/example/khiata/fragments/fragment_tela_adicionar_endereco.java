@@ -62,32 +62,34 @@ public class fragment_tela_adicionar_endereco extends Fragment {
 
     ImageView voltar_enderecos;
     Button btn_cancelar_novo_endereco;
-    private fragment_tela_enderecos fragment_tela_enderecos= new fragment_tela_enderecos();
+//    private fragment_tela_enderecos fragment_tela_enderecos= new fragment_tela_enderecos();
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_tela_adicionar_endereco, container, false);
 
-        voltar_enderecos = view.findViewById(R.id.voltar_enderecos);
-        voltar_enderecos.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
-                transaction.replace(R.id.frame_conteudo, fragment_tela_enderecos);
-                transaction.commit();
-            }
-        });
+        //Ir para tela de endereços
+//        voltar_enderecos = view.findViewById(R.id.voltar_enderecos);
+//        voltar_enderecos.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
+//                transaction.replace(R.id.frame_conteudo, new fragment_tela_enderecos());
+//                transaction.commit();
+//            }
+//        });
 
-        btn_cancelar_novo_endereco = view.findViewById(R.id.btn_cancelar_novo_endereco);
-        btn_cancelar_novo_endereco.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
-                transaction.replace(R.id.frame_conteudo, fragment_tela_enderecos);
-                transaction.commit();
-            }
-        });
+        //Cancelar criação de novo endereço
+//        btn_cancelar_novo_endereco = view.findViewById(R.id.btn_cancelar_novo_endereco);
+//        btn_cancelar_novo_endereco.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
+//                transaction.replace(R.id.frame_conteudo, new fragment_tela_enderecos());
+//                transaction.commit();
+//            }
+//        });
 
         return view;
     }

@@ -9,6 +9,7 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -28,6 +29,9 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
+
+import java.util.HashMap;
+import java.util.Map;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -85,13 +89,10 @@ public class fragment_tela_perfil extends Fragment {
     private fragment_tela_enderecos fragment_tela_enderecos = new fragment_tela_enderecos();
     private fragment_tela_editar_perfil fragment_tela_editar_perfil = new fragment_tela_editar_perfil();
     private fragment_tela_plan_premium fragment_tela_plan_premium = new fragment_tela_plan_premium();
-
-    // Obtém a referência do Firebase Storage
     FirebaseStorage storage = FirebaseStorage.getInstance();
     StorageReference storageRef = storage.getReference();
     FirebaseAuth auth = FirebaseAuth.getInstance();
     private Retrofit retrofit;
-
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -101,7 +102,7 @@ public class fragment_tela_perfil extends Fragment {
 
         String userEmail = auth.getCurrentUser().getEmail();
 
-
+        //Ir para tela de home
         voltar_home = view.findViewById(R.id.voltar_perfil);
         voltar_home.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -112,6 +113,7 @@ public class fragment_tela_perfil extends Fragment {
             }
         });
 
+        //Tirar foto de perfil
         btn_tirar_foto = view.findViewById(R.id.btn_tirar_foto);
         btn_tirar_foto.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -121,7 +123,7 @@ public class fragment_tela_perfil extends Fragment {
             }
         });
 
-
+        //Carregar foto de perfil
         foto_perfil = view.findViewById(R.id.foto_perfil);
         StorageReference profileRef = storageRef.child("khiata_perfis/foto_"+userEmail+".jpg");
         profileRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
@@ -136,6 +138,7 @@ public class fragment_tela_perfil extends Fragment {
             }
         });
 
+        //Carregar informações do perfil
         nome_user = view.findViewById(R.id.nome_user);
         email_user = view.findViewById(R.id.email_user);
         cpf_user = view.findViewById(R.id.cpf_user);
@@ -143,6 +146,7 @@ public class fragment_tela_perfil extends Fragment {
         phone_user = view.findViewById(R.id.phone_user);
         buscarInformacoesDoUsuario(userEmail);
 
+        //Ir para tela de endereços
         btn_tela_enderecos = view.findViewById(R.id.btn_tela_enderecos);
         btn_tela_enderecos.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -153,6 +157,7 @@ public class fragment_tela_perfil extends Fragment {
             }
         });
 
+        //Ir para tela de editar perfil
         btn_tela_editar_perfil = view.findViewById(R.id.btn_tela_editar_perfil);
         btn_tela_editar_perfil.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -163,6 +168,7 @@ public class fragment_tela_perfil extends Fragment {
             }
         });
 
+        //Ir para tela de plano premium
         btn_plan_premium = view.findViewById(R.id.btn_plan_premium);
         btn_plan_premium.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -173,6 +179,7 @@ public class fragment_tela_perfil extends Fragment {
             }
         });
 
+        //Logout
         btn_logout = view.findViewById(R.id.btn_logout);
         btn_logout.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -210,6 +217,7 @@ public class fragment_tela_perfil extends Fragment {
             }
         });
 
+        //Tornar-se costureira
         btn_virar_costureira = view.findViewById(R.id.btn_virar_costureira);
         btn_virar_costureira.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -226,7 +234,9 @@ public class fragment_tela_perfil extends Fragment {
                 btn_seguir.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        dialog.cancel();
+                        Map<String, Object> atualizacao = new HashMap<>();
+                        atualizacao.put("isDressmaker", true);
+                        tornarUsuarioCostureira(userEmail, atualizacao);
                     }
                 });
                 Button btn_cancelar = popup_opcao.findViewById(R.id.btn_cancelar);
@@ -243,11 +253,11 @@ public class fragment_tela_perfil extends Fragment {
             }
         });
 
-
         return view;
     }
 
 
+    //Método para buscar as informações do perfil
     private void buscarInformacoesDoUsuario(String userEmail) {
         String API_BASE_URL = "https://apikhiata.onrender.com/";
         retrofit = new Retrofit.Builder()
@@ -270,6 +280,40 @@ public class fragment_tela_perfil extends Fragment {
             @Override
             public void onFailure(Call<User> call, Throwable throwable) {
                 Toast.makeText(getContext(), throwable.getMessage(), Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+    //Método para tornar-se costureira
+    private void tornarUsuarioCostureira(String email, Map<String, Object> atualizacao) {
+        String API_BASE_URL = "https://apikhiata.onrender.com/";
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl(API_BASE_URL)
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+        UserApi userApi = retrofit.create(UserApi.class);
+        Call<Void> call = userApi.atualizarUsuario(email, atualizacao);
+
+        call.enqueue(new Callback<Void>() {
+            @Override
+            public void onResponse(Call<Void> call, Response<Void> response) {
+                if (!response.isSuccessful()) {
+                    // Captura a mensagem de erro diretamente
+                    String errorMessage = "Erro: " + response.code(); // Exibe o código do erro
+                    if (response.errorBody() != null) {
+                        errorMessage += " - " + response.errorBody().toString();
+                    }
+                    Toast.makeText(getActivity(), errorMessage, Toast.LENGTH_LONG).show();
+                    Log.e("Error", errorMessage);
+                } else {
+                    // A atualização foi bem-sucedida
+                    Toast.makeText(getActivity(), "Perfil atualizado com sucesso!", Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Void> call, Throwable t) {
+                Toast.makeText(getActivity(), "Erro ao atualizar perfil: " + t.getMessage(), Toast.LENGTH_LONG).show();
             }
         });
     }

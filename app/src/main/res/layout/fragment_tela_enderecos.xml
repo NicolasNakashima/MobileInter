@@ -48,6 +48,7 @@
         app:layout_constraintVertical_bias="0.461" />
 
     <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/lista_enderecos"
         android:layout_width="308dp"
         android:layout_height="704dp"
         android:layout_marginTop="20dp"

@@ -1,5 +1,7 @@
 package com.example.khiata.models;
 
+import java.util.List;
+
 public class User {
     private String name;
     private String cpf;
@@ -7,16 +9,17 @@ public class User {
     private int age;
     private boolean isDressmaker;
     private boolean isPremium; //Deixa null, porque ele se torna premium dentro do App
-    private long phone;
+    private int phone;
     private String imageURL; //Deixa null
     private String password;
     private String email;
     private String profilePictureUrl; //Deixa null
+    private List<Address> addresses; //Deixa uma lista vázia para cadastrar
 
     // Constructor
     public User(String name, String cpf, int genderId, int age, boolean isDressmaker,
-                boolean isPremium, long phone, String imageURL, String password,
-                String email, String profilePictureUrl) {
+                boolean isPremium, int phone, String imageURL, String password,
+                String email, String profilePictureUrl, List<Address> addresses) {
         this.name = name;
         this.cpf = cpf;
         this.genderId = genderId;
@@ -28,6 +31,7 @@ public class User {
         this.password = password;
         this.email = email;
         this.profilePictureUrl = profilePictureUrl;
+        this.addresses = addresses;
     }
 
     // Getters and Setters
@@ -80,11 +84,11 @@ public class User {
         isPremium = premium;
     }
 
-    public long getPhone() {
+    public int getPhone() {
         return phone;
     }
 
-    public void setPhone(long phone) {
+    public void setPhone(int phone) {
         this.phone = phone;
     }
 
@@ -120,10 +124,18 @@ public class User {
         this.profilePictureUrl = profilePictureUrl;
     }
 
+    public List<Address> getAddresses() {
+        return addresses;
+    }
+
+    public void setAddresses(List<Address> addresses) {
+        this.addresses = addresses;
+    }
+
     @Override
     public String toString() {
         return "User{" +
-                ", name='" + name + '\'' +
+                "name='" + name + '\'' +
                 ", cpf='" + cpf + '\'' +
                 ", genderID=" + genderId +
                 ", age=" + age +
@@ -134,6 +146,7 @@ public class User {
                 ", password='" + password + '\'' +
                 ", email='" + email + '\'' +
                 ", profilePictureUrl='" + profilePictureUrl + '\'' +
+                ", addresses=" + addresses + '\'' +
                 '}';
     }
 }

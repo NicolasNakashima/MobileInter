@@ -197,44 +197,44 @@ public class tela_login extends AppCompatActivity {
         });
 
         //Botão para caso o usuário esqueça a senha
-        esqueceu_senha = findViewById(R.id.esqueceu_senha);
-        esqueceu_senha.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                //Pegando o E-mail digitado
-                String txtEmail = ((EditText) findViewById(R.id.editLoginEmail)).getText().toString();
-
-                if(txtEmail.isEmpty()){
-                    Dialog dialog = new Dialog(tela_login.this);
-
-                    LayoutInflater inflater = getLayoutInflater();
-                    View popupView = inflater.inflate(R.layout.popup_mensagem, null);
-
-                    TextView msgPopup = popupView.findViewById(R.id.msg_popup);
-                    msgPopup.setText("Por favor, insira seu e-mail antes de definir uma nova senha.");
-                    ImageView imgPopup = popupView.findViewById(R.id.img_popup);
-                    imgPopup.setImageResource(R.drawable.icon_pop_alert);
-                    Button btnPopup = popupView.findViewById(R.id.btn_popup);
-                    btnPopup.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            dialog.cancel();
-                        }
-                    });
-
-                    dialog.setContentView(popupView);
-                    dialog.setCancelable(true);
-
-                    dialog.show();
-                }
-                else {
-                    String codigoDeVerificacao = gerarCodigo();
-
-                    EmailSender.enviarEmail(txtEmail, "webv", codigoDeVerificacao);
-
-                }
-            }
-        });
+//        esqueceu_senha = findViewById(R.id.esqueceu_senha);
+//        esqueceu_senha.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                //Pegando o E-mail digitado
+//                String txtEmail = ((EditText) findViewById(R.id.editLoginEmail)).getText().toString();
+//
+//                if(txtEmail.isEmpty()){
+//                    Dialog dialog = new Dialog(tela_login.this);
+//
+//                    LayoutInflater inflater = getLayoutInflater();
+//                    View popupView = inflater.inflate(R.layout.popup_mensagem, null);
+//
+//                    TextView msgPopup = popupView.findViewById(R.id.msg_popup);
+//                    msgPopup.setText("Por favor, insira seu e-mail antes de definir uma nova senha.");
+//                    ImageView imgPopup = popupView.findViewById(R.id.img_popup);
+//                    imgPopup.setImageResource(R.drawable.icon_pop_alert);
+//                    Button btnPopup = popupView.findViewById(R.id.btn_popup);
+//                    btnPopup.setOnClickListener(new View.OnClickListener() {
+//                        @Override
+//                        public void onClick(View v) {
+//                            dialog.cancel();
+//                        }
+//                    });
+//
+//                    dialog.setContentView(popupView);
+//                    dialog.setCancelable(true);
+//
+//                    dialog.show();
+//                }
+//                else {
+//                    String codigoDeVerificacao = gerarCodigo();
+//
+//                    EmailSender.enviarEmail(txtEmail, "webv", codigoDeVerificacao);
+//
+//                }
+//            }
+//        });
     }
 
     //Função para gerar um PIN aleatório

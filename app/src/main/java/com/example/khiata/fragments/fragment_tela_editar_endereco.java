@@ -69,25 +69,27 @@ public class fragment_tela_editar_endereco extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_tela_editar_endereco, container, false);
 
-        voltar_enderecos= view.findViewById(R.id.voltar_endercos);
-        voltar_enderecos.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
-                transaction.replace(R.id.frame_conteudo, fragment_tela_enderecos);
-                transaction.commit();
-            }
-        });
+        // Ir para tela de enderecos
+//        voltar_enderecos= view.findViewById(R.id.voltar_endercos);
+//        voltar_enderecos.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
+//                transaction.replace(R.id.frame_conteudo, fragment_tela_enderecos);
+//                transaction.commit();
+//            }
+//        });
 
-        btn_cancelar_atualizar_endereco= view.findViewById(R.id.btn_cancelar_atualizar_endereco);
-        btn_cancelar_atualizar_endereco.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
-                transaction.replace(R.id.frame_conteudo, fragment_tela_enderecos);
-                transaction.commit();
-            }
-        });
+        //Cancelar alteracoes de endereco
+//        btn_cancelar_atualizar_endereco= view.findViewById(R.id.btn_cancelar_atualizar_endereco);
+//        btn_cancelar_atualizar_endereco.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
+//                transaction.replace(R.id.frame_conteudo, fragment_tela_enderecos);
+//                transaction.commit();
+//            }
+//        });
 
         return view;
     }

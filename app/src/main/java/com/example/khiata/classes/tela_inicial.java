@@ -28,6 +28,7 @@ public class tela_inicial extends AppCompatActivity {
             return insets;
         });
 
+        //Botão para ir para tela de login
         btn_login_inicio = findViewById(R.id.btn_login_inicio);
         btn_login_inicio.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -37,6 +38,7 @@ public class tela_inicial extends AppCompatActivity {
             }
         });
 
+        //Botão para ir para tela de cadastro
         btn_cadastrar_inicio = findViewById(R.id.btn_cadastrar_inicio);
         btn_cadastrar_inicio.setOnClickListener(new View.OnClickListener() {
             @Override
