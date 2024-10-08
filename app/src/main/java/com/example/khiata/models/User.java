@@ -14,12 +14,11 @@ public class User {
     private String password;
     private String email;
     private String profilePictureUrl; //Deixa null
-    private List<Address> addresses; //Deixa uma lista vázia para cadastrar
 
     // Constructor
     public User(String name, String cpf, int genderId, int age, boolean isDressmaker,
                 boolean isPremium, int phone, String imageURL, String password,
-                String email, String profilePictureUrl, List<Address> addresses) {
+                String email, String profilePictureUrl) {
         this.name = name;
         this.cpf = cpf;
         this.genderId = genderId;
@@ -31,7 +30,6 @@ public class User {
         this.password = password;
         this.email = email;
         this.profilePictureUrl = profilePictureUrl;
-        this.addresses = addresses;
     }
 
     // Getters and Setters
@@ -124,14 +122,6 @@ public class User {
         this.profilePictureUrl = profilePictureUrl;
     }
 
-    public List<Address> getAddresses() {
-        return addresses;
-    }
-
-    public void setAddresses(List<Address> addresses) {
-        this.addresses = addresses;
-    }
-
     @Override
     public String toString() {
         return "User{" +
@@ -146,7 +136,6 @@ public class User {
                 ", password='" + password + '\'' +
                 ", email='" + email + '\'' +
                 ", profilePictureUrl='" + profilePictureUrl + '\'' +
-                ", addresses=" + addresses + '\'' +
                 '}';
     }
 }

@@ -4,6 +4,7 @@ import com.example.khiata.models.User;
 
 import java.util.Map;
 
+import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.GET;
@@ -15,7 +16,7 @@ import retrofit2.http.Path;
 public interface UserApi {
 
     @POST("api/users/inserir")
-    Call<String> inserirUsuario(@Body User user);
+    Call<ResponseBody> inserirUsuario(@Body User user);
 
     @GET("api/users/selecionar/email/{email}")
     Call<User> buscarUsuarioPorEmail(@Path("email") String email);

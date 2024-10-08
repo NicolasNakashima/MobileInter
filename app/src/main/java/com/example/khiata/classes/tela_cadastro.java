@@ -28,11 +28,13 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.gson.Gson;
 
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 
+import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -121,8 +123,9 @@ public class tela_cadastro extends AppCompatActivity {
                             novoGenero = 1;
                         }
 
-                        User novoUser = new User( novoNome, novoCPF, novoGenero,novaIdade,confirmCostureira,false, novoPhone, null,novaSenha, novoEmail, null, null);
+                        User novoUser = new User( novoNome, novoCPF, novoGenero,novaIdade,confirmCostureira,false, novoPhone, null,novaSenha, novoEmail, null);
                         Log.e("novoUser", novoUser.toString());
+                        Log.d("User", new Gson().toJson(novoUser));
                         cadastrarUsuarioAPI(novoUser);
 
                     } else{
@@ -157,11 +160,11 @@ public class tela_cadastro extends AppCompatActivity {
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
         UserApi userApi = retrofit.create(UserApi.class);
-        Call<String> call = userApi.inserirUsuario(user);
+        Call<ResponseBody> call = userApi.inserirUsuario(user);
 
-        call.enqueue(new Callback<String>() {
+        call.enqueue(new Callback<ResponseBody>() {
             @Override
-            public void onResponse(Call<String> call, Response<String> response) {
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
                 if (!response.isSuccessful()) {
                     try {
                         String errorBody = response.errorBody().string();
@@ -171,8 +174,8 @@ public class tela_cadastro extends AppCompatActivity {
                         e.printStackTrace();
                     }
                 } else {
-                    String successMessage = response.body(); // Captura a mensagem de sucesso
-                    Toast.makeText(tela_cadastro.this, successMessage, Toast.LENGTH_SHORT).show();
+                    ResponseBody successMessage = response.body(); // Captura a mensagem de sucesso
+                    Toast.makeText(tela_cadastro.this, successMessage.toString(), Toast.LENGTH_LONG).show();
                     cadastrarUsuarioFirebase(user.getEmail(), user.getPassword());
                     Intent intent = new Intent(tela_cadastro.this, MainActivity.class);
                     startActivity(intent);
@@ -180,8 +183,9 @@ public class tela_cadastro extends AppCompatActivity {
             }
 
             @Override
-            public void onFailure(Call<String> call, Throwable t) {
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
                 Toast.makeText(tela_cadastro.this, "Erro ao cadastrar usuário: " + t.getMessage(), Toast.LENGTH_LONG).show();
+                Log.e("Error", t.getMessage());
             }
         });
     }

@@ -140,7 +140,7 @@ public class CameraPerfil extends AppCompatActivity {
         ImageButton btn2 = findViewById(R.id.salvar_img);
         btn2.setOnClickListener(v -> {
             foto.setVisibility(View.VISIBLE);
-            database.downloadFoto(foto, Uri.parse(docData.get("url")));
+            database.downloadFotoPerfil(foto, Uri.parse(docData.get("url")));
         });
     }
 
@@ -204,7 +204,7 @@ public class CameraPerfil extends AppCompatActivity {
                     foto.setImageURI(outputFileResults.getSavedUri());
                     foto.setVisibility(View.VISIBLE);
                     Toast.makeText(getBaseContext(), "Imagem salva", Toast.LENGTH_SHORT).show();
-                    database.uploadFoto(getBaseContext(), foto, docData, userEmail);
+                    database.uploadFotoPerfil(getBaseContext(), foto, docData, userEmail);
 
 //                    // Iniciar a MainActivity e carregar o fragmento de perfil
 //                    Intent intent = new Intent(getBaseContext(), MainActivity.class);
