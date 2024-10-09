@@ -91,80 +91,83 @@ public class fragment_tela_editar_perfil extends Fragment {
 
         String userEmail = FirebaseAuth.getInstance().getCurrentUser().getEmail();
 
-        //Ir para tela de perfil
-//        voltar_perfil = view.findViewById(R.id.voltar_perfil);
-//        voltar_perfil.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
-//                transaction.replace(R.id.frame_conteudo, new fragment_tela_perfil());
-//                transaction.commit();
-//            }
-//        });
+//        Ir para tela de perfil
+        voltar_perfil = view.findViewById(R.id.voltar_perfil);
+        voltar_perfil.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
+                transaction.replace(R.id.frame_conteudo, new fragment_tela_perfil());
+                transaction.commit();
+            }
+        });
 
         //Cancelar alterações
-//        btn_cancelar_alteracoes = view.findViewById(R.id.btn_cancelar_alteracoes);
-//        btn_cancelar_alteracoes.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
-//                transaction.replace(R.id.frame_conteudo, new fragment_tela_perfil());
-//                transaction.commit();
-//            }
-//        });
-
-        String atualizarNome = ((EditText) view.findViewById(R.id.atualizarNome)).getText().toString();
-        int atualizarIdade = Integer.parseInt(((EditText) view.findViewById(R.id.atualizarIdade)).getText().toString());
-        int atualizarPhone = Integer.parseInt(((EditText) view.findViewById(R.id.atualizarPhone)).getText().toString());
-        RadioGroup opcoesGenero = view.findViewById(R.id.opcoesGenero);
-        int selectedId = opcoesGenero.getCheckedRadioButtonId();
+        btn_cancelar_alteracoes = view.findViewById(R.id.btn_cancelar_alteracoes);
+        btn_cancelar_alteracoes.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
+                transaction.replace(R.id.frame_conteudo, new fragment_tela_perfil());
+                transaction.commit();
+            }
+        });
 
         //Salvar alterações
-//        btn_salvar_alteracoes = view.findViewById(R.id.btn_salvar_alteracoes);
-//        btn_salvar_alteracoes.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                Map<String, Object> atualizacoes = new HashMap<>();
-//                if(!atualizarNome.isEmpty()){
-//                    atualizacoes.put("name", atualizarNome);
-//                }
-//                if(atualizarIdade != 0){
-//                    atualizacoes.put("age", atualizarIdade);
-//                }
-//                if(atualizarPhone != 0){
-//                    atualizacoes.put("phone", atualizarPhone);
-//                }
-//                if (selectedId != -1) {
-//                    int novoGenero = 0;
-//                    if(selectedId == R.id.opcaoHomem){
-//                        novoGenero = 2;
-//                    } else if(selectedId == R.id.opcaoMulher){
-//                        novoGenero = 1;
-//                    }
-//                    atualizacoes.put("genderId", novoGenero);
-//                }
-//                atualizarUsuarioAPI(userEmail, atualizacoes);
-////                else{
-////                    Dialog dialog = new Dialog(getActivity());
-////                    LayoutInflater inflater = getLayoutInflater();
-////                    View popupView = inflater.inflate(R.layout.popup_mensagem, null);
-////                    TextView msgPopup = popupView.findViewById(R.id.msg_popup);
-////                    msgPopup.setText("Incapaz de atualizar o perfil. Nenhuma informação preenchida.");
-////                    ImageView imgPopup = popupView.findViewById(R.id.img_popup);
-////                    imgPopup.setImageResource(R.drawable.icon_pop_alert);
-////                    Button btnPopup = popupView.findViewById(R.id.btn_popup);
-////                    btnPopup.setOnClickListener(new View.OnClickListener() {
-////                        @Override
-////                        public void onClick(View v) {
-////                            dialog.cancel();
-////                        }
-////                    });
-////                    dialog.setContentView(popupView);
-////                    dialog.setCancelable(true);
-////                    dialog.show();
-////                }
-//            }
-//        });
+        btn_salvar_alteracoes = view.findViewById(R.id.btn_salvar_alteracoes);
+        btn_salvar_alteracoes.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String atualizarNome = ((EditText) view.findViewById(R.id.atualizarNome)).getText().toString();
+                int atualizarIdade = 0;
+                int atualizarPhone = 0;
+                String idadeTexto = ((EditText) view.findViewById(R.id.atualizarIdade)).getText().toString();
+                if (!idadeTexto.isEmpty()) {
+                    try {
+                        atualizarIdade = Integer.parseInt(idadeTexto);
+                    } catch (NumberFormatException e) {
+                        Log.e("Error", "Idade inválida: " + e.getMessage());
+                    }
+                }
+                String phoneTexto = ((EditText) view.findViewById(R.id.atualizarPhone)).getText().toString();
+                if (!phoneTexto.isEmpty()) {
+                    try {
+                        atualizarPhone = Integer.parseInt(phoneTexto);
+                    } catch (NumberFormatException e) {
+                        Log.e("Error", "Telefone inválido: " + e.getMessage());
+                    }
+                }
+                RadioGroup opcoesGenero = view.findViewById(R.id.opcoesGenero);
+                int selectedId = opcoesGenero.getCheckedRadioButtonId();
+
+                Map<String, Object> atualizacoes = new HashMap<>();
+                if(!atualizarNome.isEmpty()){
+                    atualizacoes.put("name", atualizarNome);
+                }
+                if(atualizarIdade > 0){
+                    atualizacoes.put("age", atualizarIdade);
+                }
+                if(atualizarPhone > 0){
+                    atualizacoes.put("phone", atualizarPhone);
+                }
+                if (selectedId != -1) {
+                    int novoGenero = 0;
+                    if(selectedId == R.id.opcaoHomem){
+                        novoGenero = 2;
+                    } else if(selectedId == R.id.opcaoMulher){
+                        novoGenero = 1;
+                    }
+                    atualizacoes.put("genderId", novoGenero);
+                }
+                if (atualizacoes.isEmpty()) {
+                    // Nenhuma alteração feita
+                    Toast.makeText(getActivity(), "Nenhuma alteração foi feita.", Toast.LENGTH_SHORT).show();
+                } else {
+                    // Chamando a API para atualizar o perfil
+                    atualizarUsuarioAPI(userEmail, atualizacoes);
+                }
+            }
+        });
 
         return view;
     }

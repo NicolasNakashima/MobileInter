@@ -12,6 +12,7 @@ import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -62,7 +63,8 @@ public class MainActivity extends AppCompatActivity {
     private fragment_tela_enderecos fragment_tela_enderecos = new fragment_tela_enderecos();
     private fragment_tela_avaliacoes fragment_tela_avaliacoes = new fragment_tela_avaliacoes();
     private fragment_tela_plan_premium fragment_tela_plan_premium = new fragment_tela_plan_premium();
-    ImageView btn_lateral_menu, btn_navigation_favoritos, btn_navigation_home, btn_navigation_compras, btn_navigation_perfil, foto_perfil;
+    ImageButton btn_lateral_menu, btn_navigation_favoritos, btn_navigation_home, btn_navigation_compras, btn_navigation_perfil;
+    ImageView foto_perfil;
     View navigation_perfil, navigation_cursos, navigation_statistics, navigation_area_costureira, navigation_enderecos, navigation_avaliacoes, btn_logout;
     Button btn_adquirir_premium;
     TextView nome_user;
@@ -258,6 +260,7 @@ public class MainActivity extends AppCompatActivity {
                         ImageView imgPopup = popup_opcao.findViewById(R.id.img_popup);
                         imgPopup.setImageResource(R.drawable.icon_pop_logout);
                         Button btn_seguir = popup_opcao.findViewById(R.id.btn_seguir);
+                        btn_seguir.setText("Sair");
                         btn_seguir.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {

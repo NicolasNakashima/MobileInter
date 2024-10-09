@@ -67,4 +67,7 @@ dependencies {
     // https://square.github.io/retrofit/
     implementation ("com.squareup.retrofit2:retrofit:2.11.0")
     implementation ("com.squareup.retrofit2:converter-gson:2.11.0")
+
+    // Rounded ImageView
+    implementation("com.makeramen:roundedimageview:2.3.0")
 }

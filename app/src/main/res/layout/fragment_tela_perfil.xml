@@ -66,14 +66,16 @@
                 android:layout_height="match_parent"
                 android:layout_marginTop="20dp">
 
-                <ImageView
+                <com.makeramen.roundedimageview.RoundedImageView
                     android:id="@+id/foto_perfil"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
+                    android:layout_width="169dp"
+                    android:layout_height="154dp"
+                    android:scaleType="centerCrop"
                     android:src="@drawable/foto_perfil"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent" />
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:riv_oval="true" />
 
                 <ImageView
                     android:id="@+id/btn_tirar_foto"
@@ -83,6 +85,7 @@
                     android:src="@drawable/icon_camera"
                     app:layout_constraintBottom_toBottomOf="@+id/foto_perfil"
                     app:layout_constraintEnd_toEndOf="@+id/foto_perfil"
+                    app:layout_constraintHorizontal_bias="0.704"
                     app:layout_constraintStart_toStartOf="@+id/foto_perfil" />
             </androidx.constraintlayout.widget.ConstraintLayout>
 

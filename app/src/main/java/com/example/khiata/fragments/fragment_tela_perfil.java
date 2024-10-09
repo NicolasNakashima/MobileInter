@@ -84,10 +84,10 @@ public class fragment_tela_perfil extends Fragment {
 
     ImageView voltar_home, btn_tirar_foto, foto_perfil;
     TextView nome_user, email_user, cpf_user, idade_user, phone_user;
+    boolean isDressmaker = false;
     Button btn_tela_editar_perfil, btn_tela_enderecos, btn_virar_costureira, btn_plan_premium, btn_logout;
     private fragment_tela_home fragment_tela_home = new fragment_tela_home();
     private fragment_tela_enderecos fragment_tela_enderecos = new fragment_tela_enderecos();
-    private fragment_tela_editar_perfil fragment_tela_editar_perfil = new fragment_tela_editar_perfil();
     private fragment_tela_plan_premium fragment_tela_plan_premium = new fragment_tela_plan_premium();
     FirebaseStorage storage = FirebaseStorage.getInstance();
     StorageReference storageRef = storage.getReference();
@@ -163,7 +163,7 @@ public class fragment_tela_perfil extends Fragment {
             @Override
             public void onClick(View v) {
                 FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
-                transaction.replace(R.id.frame_conteudo, fragment_tela_editar_perfil);
+                transaction.replace(R.id.frame_conteudo, new fragment_tela_editar_perfil());
                 transaction.commit();
             }
         });
@@ -193,6 +193,7 @@ public class fragment_tela_perfil extends Fragment {
                 ImageView imgPopup = popup_opcao.findViewById(R.id.img_popup);
                 imgPopup.setImageResource(R.drawable.icon_pop_logout);
                 Button btn_seguir = popup_opcao.findViewById(R.id.btn_seguir);
+                btn_seguir.setText("Sair");
                 btn_seguir.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
@@ -231,12 +232,13 @@ public class fragment_tela_perfil extends Fragment {
                 ImageView imgPopup = popup_opcao.findViewById(R.id.img_popup);
                 imgPopup.setImageResource(R.drawable.icon_pop_alert);
                 Button btn_seguir = popup_opcao.findViewById(R.id.btn_seguir);
+                btn_seguir.setText("Continuar");
                 btn_seguir.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        Map<String, Object> atualizacao = new HashMap<>();
-                        atualizacao.put("isDressmaker", true);
-                        tornarUsuarioCostureira(userEmail, atualizacao);
+//                        btn_seguir.setEnabled(false);
+                        buscarSeUsuarioEhCostureira(userEmail);
+                        dialog.cancel();
                     }
                 });
                 Button btn_cancelar = popup_opcao.findViewById(R.id.btn_cancelar);
@@ -269,17 +271,63 @@ public class fragment_tela_perfil extends Fragment {
         call.enqueue(new Callback<User>() {
             @Override
             public void onResponse(Call<User> call, Response<User> response) {
-                User userResponse = response.body();
-                nome_user.setText(userResponse.getName());
-                email_user.setText(userResponse.getEmail());
-                cpf_user.setText(userResponse.getCpf());
-                idade_user.setText(userResponse.getAge());
-                phone_user.setText(String.valueOf(userResponse.getPhone()));
+                if (response.isSuccessful() && response.body() != null) {
+                    User userResponse = response.body();
+                    nome_user.setText(userResponse.getName());
+                    email_user.setText(userResponse.getEmail());
+                    cpf_user.setText(userResponse.getCpf());
+
+                    // Convertendo corretamente para String os valores numéricos
+                    idade_user.setText(String.valueOf(userResponse.getAge()));  // Converte idade para String
+                    phone_user.setText(String.valueOf(userResponse.getPhone())); // Converte telefone para String, caso seja numérico
+                } else {
+                    Toast.makeText(getContext(), "Usuário não encontrado ou resposta inválida", Toast.LENGTH_SHORT).show();
+                    Log.e("API Error", "Response code: " + response.code() + " | Error body: " + response.errorBody());
+                }
             }
 
             @Override
             public void onFailure(Call<User> call, Throwable throwable) {
                 Toast.makeText(getContext(), throwable.getMessage(), Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+    //Método para buscar se o usuário é costureira
+    private void  buscarSeUsuarioEhCostureira(String userEmail) {
+        String API_BASE_URL = "https://apikhiata.onrender.com/";
+        retrofit = new Retrofit.Builder()
+                .baseUrl(API_BASE_URL)
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+        UserApi userApi = retrofit.create(UserApi.class);
+        Call<User> call = userApi.buscarUsuarioPorEmail(userEmail);
+        call.enqueue(new Callback<User>() {
+            @Override
+            public void onResponse(Call<User> call, Response<User> response) {
+                if (response.isSuccessful() && response.body() != null) {
+                    User userResponse = response.body();
+                    isDressmaker= userResponse.isDressmaker();
+
+                    if (!isDressmaker) {
+                        Map<String, Object> atualizacao = new HashMap<>();
+                        atualizacao.put("isDressmaker", true);
+                        tornarUsuarioCostureira(userEmail, atualizacao);
+                    } else {
+                        Toast.makeText(getActivity(), "Você já é costureira!", Toast.LENGTH_SHORT).show();
+                    }
+                } else {
+                    Toast.makeText(getContext(), "Usuário não encontrado ou resposta inválida", Toast.LENGTH_SHORT).show();
+                    Log.e("API Error", "Response code: " + response.code() + " | Error body: " + response.errorBody());
+                }
+
+//                btn_seguir.setEnabled(true);
+            }
+
+            @Override
+            public void onFailure(Call<User> call, Throwable throwable) {
+                Toast.makeText(getContext(), throwable.getMessage(), Toast.LENGTH_SHORT).show();
+//                btn_seguir.setEnabled(true);
             }
         });
     }
@@ -307,13 +355,16 @@ public class fragment_tela_perfil extends Fragment {
                     Log.e("Error", errorMessage);
                 } else {
                     // A atualização foi bem-sucedida
-                    Toast.makeText(getActivity(), "Perfil atualizado com sucesso!", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getActivity(), "Você é costureira!", Toast.LENGTH_SHORT).show();
+//                    dialog.dismiss();
                 }
+//                btn_seguir.setEnabled(true);
             }
 
             @Override
             public void onFailure(Call<Void> call, Throwable t) {
                 Toast.makeText(getActivity(), "Erro ao atualizar perfil: " + t.getMessage(), Toast.LENGTH_LONG).show();
+//                btn_seguir.setEnabled(true);
             }
         });
     }

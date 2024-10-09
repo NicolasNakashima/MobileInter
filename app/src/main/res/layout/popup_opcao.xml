@@ -9,7 +9,7 @@
     app:cardCornerRadius="10dp">
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="375dp"
+        android:layout_width="350dp"
         android:layout_height="390dp">
 
         <TextView
@@ -31,7 +31,7 @@
             android:id="@+id/btn_seguir"
             android:layout_width="168dp"
             android:layout_height="49dp"
-            android:layout_marginStart="16dp"
+            android:layout_marginStart="5dp"
             android:layout_marginTop="28dp"
             android:background="@drawable/style_button1"
             android:text="Fechar"
@@ -45,7 +45,7 @@
             android:layout_width="168dp"
             android:layout_height="49dp"
             android:layout_marginTop="28dp"
-            android:layout_marginEnd="16dp"
+            android:layout_marginEnd="5dp"
             android:background="@drawable/style_button2"
             android:text="Cancelar"
             android:textColor="#384384"
