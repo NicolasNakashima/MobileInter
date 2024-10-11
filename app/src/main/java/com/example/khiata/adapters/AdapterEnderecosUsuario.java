@@ -28,11 +28,8 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class AdapterEnderecosUsuario extends RecyclerView.Adapter<AdapterEnderecosUsuario.MeuViewHolder> {
 
     private List<Address> enderecos = new ArrayList();
-    private Context context;
-    private Retrofit retrofit;
 
-    public AdapterEnderecosUsuario(Context context, List<Address> enderecos) {
-        this.context = context;
+    public AdapterEnderecosUsuario(List<Address> enderecos) {
         this.enderecos = enderecos;
     }
     @NonNull
@@ -55,34 +52,7 @@ public class AdapterEnderecosUsuario extends RecyclerView.Adapter<AdapterEnderec
         rotulo_endereco.setText(enderecos.get(position).getLabel());
         street_endereco.setText(enderecos.get(position).getStreet() + " - " + enderecos.get(position).getNumber());
         complement_endereco.setText(enderecos.get(position).getComplement());
-        String userEmail = FirebaseAuth.getInstance().getCurrentUser().getEmail();
-        buscarNomeDoUsuario(userEmail, destinatario_endereco);
-    }
-
-    private void buscarNomeDoUsuario(String userEmail, TextView destinatario_endereco) {
-        String API_BASE_URL = "https://apikhiata.onrender.com/";
-        retrofit = new Retrofit.Builder()
-                .baseUrl(API_BASE_URL)
-                .addConverterFactory(GsonConverterFactory.create())
-                .build();
-        UserApi userApi = retrofit.create(UserApi.class);
-        Call<User> call = userApi.buscarUsuarioPorEmail(userEmail);
-        call.enqueue(new Callback<User>() {
-            @Override
-            public void onResponse(Call<User> call, Response<User> response) {
-                User userResponse = response.body();
-                if (userResponse != null) {
-                    destinatario_endereco.setText(userResponse.getName());
-                } else {
-                    destinatario_endereco.setText("Desconhecido");
-                }
-            }
-
-            @Override
-            public void onFailure(Call<User> call, Throwable throwable) {
-                Toast.makeText(context, throwable.getMessage(), Toast.LENGTH_SHORT).show();
-            }
-        });
+        destinatario_endereco.setText(enderecos.get(position).getRecipient());
     }
 
     @Override

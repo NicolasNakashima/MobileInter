@@ -2,13 +2,14 @@ package com.example.khiata.models;
 
 public class Address {
     private long id=0;
+    private String recipient;
     private String street;
     private int number;
     private String complement;
     private String label;
 
-    public Address(long id, String street, int number, String complement, String label) {
-        this.id = id;
+    public Address(String recipient ,String street, int number, String complement, String label) {
+        this.recipient = recipient;
         this.street = street;
         this.number = number;
         this.complement = complement;
@@ -54,10 +55,19 @@ public class Address {
         this.label = label;
     }
 
+    public String getRecipient() {
+        return recipient;
+    }
+
+    public void setRecipient(String recipient) {
+        this.recipient = recipient;
+    }
+
     @Override
     public String toString() {
         return "Address{" +
                 "id=" + id +
+                ", recipient='" + recipient + '\'' +
                 ", street='" + street + '\'' +
                 ", number=" + number +
                 ", complement='" + complement + '\'' +

@@ -66,7 +66,7 @@
                 android:layout_height="match_parent"
                 android:layout_marginTop="20dp">
 
-                <com.makeramen.roundedimageview.RoundedImageView
+                <ImageView
                     android:id="@+id/foto_perfil"
                     android:layout_width="169dp"
                     android:layout_height="154dp"
@@ -75,7 +75,7 @@
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:riv_oval="true" />
+                    android:background="@drawable/circular_img"/>
 
                 <ImageView
                     android:id="@+id/btn_tirar_foto"
@@ -229,7 +229,7 @@
                 android:layout_width="254dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="27dp"
-                android:layout_marginBottom="20dp"
+                android:layout_marginBottom="80dp"
                 android:background="@drawable/style_button1"
                 android:text="Sair"
                 android:textColor="#ffffff"

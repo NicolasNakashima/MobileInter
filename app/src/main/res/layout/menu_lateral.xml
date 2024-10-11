@@ -29,8 +29,8 @@
 
         <ImageView
             android:id="@+id/imageView8"
-            android:layout_width="294dp"
-            android:layout_height="310dp"
+            android:layout_width="303dp"
+            android:layout_height="337dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -46,17 +46,16 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
 
-            <com.makeramen.roundedimageview.RoundedImageView
+            <ImageView
                 android:id="@+id/foto_perfil"
-                android:layout_width="63dp"
-                android:layout_height="57dp"
-                android:layout_marginStart="12dp"
+                android:layout_width="78dp"
+                android:layout_height="58dp"
+                android:layout_marginStart="15dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.523"
                 app:srcCompat="@drawable/foto_perfil"
-                app:riv_oval="true"/>
+                android:background="@drawable/circular_img"/>
 
             <TextView
                 android:id="@+id/nome_user"

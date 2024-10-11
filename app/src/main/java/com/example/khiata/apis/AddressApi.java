@@ -13,16 +13,12 @@ import retrofit2.http.PUT;
 import retrofit2.http.Path;
 
 public interface AddressApi {
-
-    @POST("api/enderecos/inserir")
-    Call<String> inserirEndereco(@Body Address address);
-
     @POST("api/enderecos/user/inserir/{userid}")
-    Call<Address> inserirEnderecoUsuario(@Path("userid") String userid, @Body Address address);
+    Call<Address> inserirEnderecoUsuario(@Path("userid") int userid, @Body Address address);
 
     @DELETE("api/enderecos/deletar/{id}")
-    Call<String> deletarEndereco(@Path("id") String id);
+    Call<String> deletarEndereco(@Path("id") int id);
 
     @GET("api/enderecos/user/{userid}")
-    Call<ArrayList<Address>> buscarEnderecosUsuario(@Path("userid") String userid);
+    Call<ArrayList<Address>> buscarEnderecosUsuario(@Path("userid") int userid);
 }

@@ -3,6 +3,7 @@ package com.example.khiata.models;
 import java.util.List;
 
 public class User {
+    private int id;
     private String name;
     private String cpf;
     private int genderId;
@@ -14,6 +15,7 @@ public class User {
     private String password;
     private String email;
     private String profilePictureUrl; //Deixa null
+    private List<Address> addresses;
 
     // Constructor
     public User(String name, String cpf, int genderId, int age, boolean isDressmaker,
@@ -30,6 +32,29 @@ public class User {
         this.password = password;
         this.email = email;
         this.profilePictureUrl = profilePictureUrl;
+    }
+
+    public User(String name, String cpf, int genderId, int age, boolean isDressmaker, boolean isPremium, int phone, String imageURL, String password, String email, String profilePictureUrl, List<Address> addresses) {
+        this.name = name;
+        this.cpf = cpf;
+        this.genderId = genderId;
+        this.age = age;
+        this.isDressmaker = isDressmaker;
+        this.isPremium = isPremium;
+        this.phone = phone;
+        this.imageURL = imageURL;
+        this.password = password;
+        this.email = email;
+        this.profilePictureUrl = profilePictureUrl;
+        this.addresses = addresses;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     // Getters and Setters
@@ -122,6 +147,14 @@ public class User {
         this.profilePictureUrl = profilePictureUrl;
     }
 
+    public List<Address> getAddresses() {
+        return addresses;
+    }
+
+    public void setAddresses(List<Address> addresses) {
+        this.addresses = addresses;
+    }
+
     @Override
     public String toString() {
         return "User{" +
@@ -136,6 +169,7 @@ public class User {
                 ", password='" + password + '\'' +
                 ", email='" + email + '\'' +
                 ", profilePictureUrl='" + profilePictureUrl + '\'' +
+                ", addresses=" + addresses + '\'' +
                 '}';
     }
 }
