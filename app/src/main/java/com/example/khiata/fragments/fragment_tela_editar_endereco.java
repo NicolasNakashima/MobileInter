@@ -165,7 +165,7 @@ public class fragment_tela_editar_endereco extends Fragment {
                 // Verificar se alguma atualização foi feita
                 if (houveAtualizacao) {
                     // Criar o objeto Address atualizado
-                    Address enderecoAtualizado = new Address(enderecoId, atualDestinatario, atualRua, atualNumero, atualComplemento, atualRotulo);
+                    Address enderecoAtualizado = new Address(atualDestinatario, atualRua, atualNumero, atualComplemento, atualRotulo);
                     Log.e("Endereço", enderecoAtualizado.toString());
                     Log.d("User", new Gson().toJson(enderecoAtualizado));
                     atualizarEnderecoUsuario(enderecoId, enderecoAtualizado); // Enviar a atualização para a API

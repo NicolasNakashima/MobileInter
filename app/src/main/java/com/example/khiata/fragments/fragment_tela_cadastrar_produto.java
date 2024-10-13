@@ -63,7 +63,6 @@ public class fragment_tela_cadastrar_produto extends Fragment {
 
     ImageView voltar_area_costureira;
     Button btn_cancelar_cadastrar_produto;
-//    private fragment_tela_area_costureira fragment_tela_area_costureira= new fragment_tela_area_costureira();
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -71,26 +70,26 @@ public class fragment_tela_cadastrar_produto extends Fragment {
         View view = inflater.inflate(R.layout.fragment_tela_cadastrar_produto, container, false);
 
         //Ir para tela de area costureira
-//        voltar_area_costureira = view.findViewById(R.id.voltar_area_costureira);
-//        voltar_area_costureira.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
-//                transaction.replace(R.id.frame_conteudo, fragment_tela_area_costureira);
-//                transaction.commit();
-//            }
-//        });
+        voltar_area_costureira = view.findViewById(R.id.voltar_area_costureira);
+        voltar_area_costureira.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
+                transaction.replace(R.id.frame_conteudo, new fragment_tela_area_costureira());
+                transaction.commit();
+            }
+        });
 
         //Cancelar Cadastro de Produto
-//        btn_cancelar_cadastrar_produto = view.findViewById(R.id.btn_cancelar_cadastrar_produto);
-//        btn_cancelar_cadastrar_produto.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
-//                transaction.replace(R.id.frame_conteudo, fragment_tela_area_costureira);
-//                transaction.commit();
-//            }
-//        });
+        btn_cancelar_cadastrar_produto = view.findViewById(R.id.btn_cancelar_cadastrar_produto);
+        btn_cancelar_cadastrar_produto.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
+                transaction.replace(R.id.frame_conteudo, new fragment_tela_area_costureira());
+                transaction.commit();
+            }
+        });
 
         return view;
     }

@@ -64,8 +64,6 @@ public class fragment_tela_area_costureira extends Fragment {
 
     ImageView voltar_home;
     ImageButton btn_adicionar_produto;
-//    private fragment_tela_home fragment_tela_home= new fragment_tela_home();
-//    private fragment_tela_cadastrar_produto fragment_tela_cadastrar_produto= new fragment_tela_cadastrar_produto();
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -73,26 +71,26 @@ public class fragment_tela_area_costureira extends Fragment {
         View view = inflater.inflate(R.layout.fragment_tela_area_costureira, container, false);
 
         //Ir para tela de home
-//        voltar_home = view.findViewById(R.id.voltar_home);
-//        voltar_home.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
-//                transaction.replace(R.id.frame_conteudo, fragment_tela_home);
-//                transaction.commit();
-//            }
-//        });
+        voltar_home = view.findViewById(R.id.voltar_home);
+        voltar_home.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
+                transaction.replace(R.id.frame_conteudo, new fragment_tela_home());
+                transaction.commit();
+            }
+        });
 
         //Ir para tela de cadastrar produtos
-//        btn_adicionar_produto = view.findViewById(R.id.btn_adicionar_produto);
-//        btn_adicionar_produto.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
-//                transaction.replace(R.id.frame_conteudo, fragment_tela_cadastrar_produto);
-//                transaction.commit();
-//            }
-//        });
+        btn_adicionar_produto = view.findViewById(R.id.btn_adicionar_produto);
+        btn_adicionar_produto.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
+                transaction.replace(R.id.frame_conteudo, new fragment_tela_cadastrar_produto());
+                transaction.commit();
+            }
+        });
 
         return view;
     }

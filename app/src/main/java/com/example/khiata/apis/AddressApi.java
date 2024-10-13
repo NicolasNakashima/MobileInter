@@ -3,11 +3,13 @@ package com.example.khiata.apis;
 import com.example.khiata.models.Address;
 
 import java.util.ArrayList;
+import java.util.Map;
 
 import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.DELETE;
 import retrofit2.http.GET;
+import retrofit2.http.PATCH;
 import retrofit2.http.POST;
 import retrofit2.http.PUT;
 import retrofit2.http.Path;
@@ -27,4 +29,7 @@ public interface AddressApi {
 
     @PUT("api/enderecos/atualizar/{id}")
     Call<String> atualizarEndereco(@Path("id") int id, @Body Address address);
+
+    @PATCH("api/enderecos/atualizar/id/{id}")
+    Call<Void> atualizarEnderecoPorId(@Path("id") int id, @Body Map<String, Object> atualizacoes);
 }

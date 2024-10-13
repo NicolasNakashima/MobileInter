@@ -61,7 +61,7 @@ public class Database {
 
         //Abrir Database
         FirebaseStorage storage = FirebaseStorage.getInstance();
-        storage.getReference("khiata_perfis").child("foto_"+ProductName+".jpg").putBytes(databyte).
+        storage.getReference("khiata_produtos").child(ProductName+".jpg").putBytes(databyte).
             addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                 @Override
                 public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {

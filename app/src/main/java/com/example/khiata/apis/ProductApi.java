@@ -3,23 +3,34 @@ package com.example.khiata.apis;
 import com.example.khiata.models.Product;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.http.DELETE;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
+import retrofit2.http.Path;
+import retrofit2.http.Query;
 
 public interface ProductApi {
 
-    @POST("/insert/product?id={id}&name={name}&price={price}&imageurl={imageurl}&typeId={typeid}&dressmarker={dressmarker}&avaliation={avaliation}")
-    Call<String> insertProduct(String id, String name, String price, String imageurl, String typeId, String dressmarker, String avaliation);
+    @POST("/insert/product")
+    Call<String> insertProduct(
+            @Query("id") String id,
+            @Query("name") String name,
+            @Query("price") String price,
+            @Query("imageurl") String imageurl,
+            @Query("typeId") String typeId,
+            @Query("dressmarker") String dressmarker,
+            @Query("avaliation") String avaliation
+    );
 
-    @DELETE("/delete?id={id}")
-    Call<String> deleteProduct(String id);
+    @DELETE("/delete")
+    Call<String> deleteProduct(@Query("id") int id);
 
-    @GET("/get/name?name={name}")
-    Call<Product> getByName(String name);
+    @GET("/get/name")
+    Call<String> getByName(@Query("name") String name);
 
-    @GET("/get/dressmarker?dressmarker={dressmarker}")
-    Call<ArrayList<Product>> getProductsByDressmarker(String dressmarker);
+    @GET("/get/dressmarker")
+    Call<String> getProductsByDressmarker(@Query("dressmarker") String dressmarker);
 }
