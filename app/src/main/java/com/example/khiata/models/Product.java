@@ -7,9 +7,9 @@ public class Product {
     private String imageUrl;
     private int typeId;
     private String dressMarkerName;
-    private int avaliation;
+    private double avaliation;
 
-    public Product(int id, String name, double price, String imageUrl, int typeId, String dressMarkerName, int avaliation) {
+    public Product(int id, String name, double price, String imageUrl, int typeId, String dressMarkerName, double avaliation) {
         this.id = id;
         this.name = name;
         this.price = price;
@@ -67,11 +67,11 @@ public class Product {
         this.dressMarkerName = dressMarkerName;
     }
 
-    public int getAvaliation() {
+    public double getAvaliation() {
         return avaliation;
     }
 
-    public void setAvaliation(int avaliation) {
+    public void setAvaliation(double avaliation) {
         this.avaliation = avaliation;
     }
 

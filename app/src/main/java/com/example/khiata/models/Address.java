@@ -1,7 +1,7 @@
 package com.example.khiata.models;
 
 public class Address {
-    private int id=0;
+    private int id;
     private String recipient;
     private String street;
     private int number;
@@ -9,6 +9,15 @@ public class Address {
     private String label;
 
     public Address(String recipient ,String street, int number, String complement, String label) {
+        this.recipient = recipient;
+        this.street = street;
+        this.number = number;
+        this.complement = complement;
+        this.label = label;
+    }
+
+    public Address(int id,String recipient ,String street, int number, String complement, String label) {
+        this.id = id;
         this.recipient = recipient;
         this.street = street;
         this.number = number;
