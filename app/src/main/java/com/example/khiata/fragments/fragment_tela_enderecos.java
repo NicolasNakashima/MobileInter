@@ -169,7 +169,7 @@ public class fragment_tela_enderecos extends Fragment {
                         enderecos.clear();
                         enderecos.addAll(listaDeEnderecos);
 
-                        AdapterEnderecosUsuario adapter = new AdapterEnderecosUsuario(enderecos);
+                        AdapterEnderecosUsuario adapter = new AdapterEnderecosUsuario(getActivity(), enderecos);
                         lista_enderecos.setAdapter(adapter);
                         adapter.notifyDataSetChanged();
                     } else {

@@ -21,4 +21,10 @@ public interface AddressApi {
 
     @GET("api/enderecos/user/{userid}")
     Call<ArrayList<Address>> buscarEnderecosUsuario(@Path("userid") int userid);
+
+    @GET("api/enderecos/selecionar/id/{id}")
+    Call<Address> selecionarEnderecoPorId(@Path("id") int id);
+
+    @PUT("api/enderecos/atualizar/{id}")
+    Call<String> atualizarEndereco(@Path("id") int id, @Body Address address);
 }
