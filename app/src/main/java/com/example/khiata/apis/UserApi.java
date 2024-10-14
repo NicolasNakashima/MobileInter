@@ -2,6 +2,8 @@ package com.example.khiata.apis;
 
 import com.example.khiata.models.User;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 import okhttp3.ResponseBody;
@@ -23,5 +25,8 @@ public interface UserApi {
 
     @PATCH("api/users/atualizar/email/{email}")
     Call<Void> atualizarUsuario(@Path("email") String email, @Body Map<String, Object> atualizacoes);
+
+    @GET("api/users/selecionar")
+    Call<ArrayList<User>> selecionarTodos();
 
 }

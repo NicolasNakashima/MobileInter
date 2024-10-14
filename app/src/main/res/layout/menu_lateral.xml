@@ -48,14 +48,15 @@
 
             <ImageView
                 android:id="@+id/foto_perfil"
-                android:layout_width="78dp"
-                android:layout_height="58dp"
+                android:layout_width="76dp"
+                android:layout_height="66dp"
                 android:layout_marginStart="15dp"
+                android:background="@drawable/circular_img"
                 app:layout_constraintBottom_toBottomOf="parent"
+                android:scaleType="centerCrop"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:srcCompat="@drawable/foto_perfil"
-                android:background="@drawable/circular_img"/>
+                app:srcCompat="@drawable/foto_perfil" />
 
             <TextView
                 android:id="@+id/nome_user"

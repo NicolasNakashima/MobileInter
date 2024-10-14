@@ -7,6 +7,7 @@ import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -154,6 +155,7 @@ public class fragment_tela_area_costureira extends Fragment {
 
     //Método para buscar os endereços do usuário
     private void pegarProdutosDoUsuario(String userName) {
+        Log.e("userName", userName);
         String API_BASE_URL = "https://interdisciplinarr.onrender.com/";
         retrofit = new Retrofit.Builder()
                 .baseUrl(API_BASE_URL)
@@ -169,10 +171,15 @@ public class fragment_tela_area_costureira extends Fragment {
                 if (response.isSuccessful()) {
                     String responseBody = response.body();
 
+                    // Fazendo a substituição para criar um JSON válido
+                    String jsonValid = responseBody
+                            .replace("'", "\"")  // Substitui aspas simples por duplas
+                            .replaceAll("ObjectId\\(.*?\\)", "\"\"");  // Remove o ObjectId
+
                     // Usando Gson para converter a String JSON em uma lista de objetos Product
                     Gson gson = new Gson();
                     Type productListType = new TypeToken<ArrayList<Product>>(){}.getType();
-                    List<Product> listaDeProdutos = gson.fromJson(responseBody, productListType);
+                    List<Product> listaDeProdutos = gson.fromJson(jsonValid, productListType);
 
                     if (listaDeProdutos != null && !listaDeProdutos.isEmpty()) {
                         produtos.clear();
@@ -184,17 +191,21 @@ public class fragment_tela_area_costureira extends Fragment {
                         adapter.notifyDataSetChanged();
                     } else {
                         Toast.makeText(getActivity(), "Nenhum produto cadastrado.", Toast.LENGTH_SHORT).show();
+                        Log.e("Error", "Nenhum produto encontrado.");
                     }
                 } else {
                     Toast.makeText(getActivity(), "Falha ao carregar produtos", Toast.LENGTH_SHORT).show();
+                    Log.e("Error", response.message());
                 }
             }
 
             @Override
             public void onFailure(Call<String> call, Throwable throwable) {
                 Toast.makeText(getActivity(), throwable.getMessage(), Toast.LENGTH_SHORT).show();
+                Log.e("Error", throwable.getMessage());
             }
         });
     }
+
 
 }

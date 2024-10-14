@@ -11,16 +11,27 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import com.example.khiata.R;
 import com.example.khiata.adapters.AdapterCostureirasRecomendadas;
+import com.example.khiata.adapters.AdapterEnderecosUsuario;
 import com.example.khiata.adapters.AdapterProdutosRecomendados;
-import com.example.khiata.models.Costureira;
+import com.example.khiata.apis.AddressApi;
+import com.example.khiata.apis.UserApi;
+import com.example.khiata.models.Address;
 import com.example.khiata.models.Produto;
+import com.example.khiata.models.User;
+import com.google.firebase.auth.FirebaseAuth;
 
-import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.List;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -71,8 +82,9 @@ public class fragment_tela_home extends Fragment {
 
     RecyclerView costureiras_recomendas, produtos_recomendados;
     List<Produto> listaProdutos = new ArrayList();
-    List<Costureira> listaCostureira = new ArrayList();
+    List<User> listaCostureira = new ArrayList();
     ImageView btn_pesquisa, btn_carrinho;
+    private Retrofit retrofit;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -82,15 +94,8 @@ public class fragment_tela_home extends Fragment {
 
         // Carregar a lista de costureiras recomendadas
         costureiras_recomendas = view.findViewById(R.id.costureiras_recomendas);
-        try{
-            listaCostureira.add(new Costureira("Maria"));
-            listaCostureira.add(new Costureira("Joana"));
-        } catch (Exception e){
-            throw new RuntimeException(e);
-        }
-        AdapterCostureirasRecomendadas costureirasRecomendadas = new AdapterCostureirasRecomendadas(listaCostureira);
-        costureiras_recomendas.setAdapter(costureirasRecomendadas);
         costureiras_recomendas.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
+        buscarCostureiras(FirebaseAuth.getInstance().getCurrentUser().getEmail());
 
 
         // Carregar a lista de produtos recomendados
@@ -117,4 +122,55 @@ public class fragment_tela_home extends Fragment {
 
         return view;
     }
+
+    //Método para buscar os usuários que são costureiras
+    private void buscarCostureiras(String emailLogado){
+        String API_BASE_URL = "https://apikhiata.onrender.com/";
+        retrofit = new Retrofit.Builder()
+                .baseUrl(API_BASE_URL)
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+        UserApi userApi = retrofit.create(UserApi.class);
+        Call<ArrayList<User>> call = userApi.selecionarTodos();
+        call.enqueue(new Callback<ArrayList<User>>() {
+            @Override
+            public void onResponse(Call<ArrayList<User>> call, Response<ArrayList<User>> response) {
+                if (response.isSuccessful()) {
+                    ArrayList<User> listaDeCostureiras = response.body();
+
+                    if (listaDeCostureiras != null && !listaDeCostureiras.isEmpty()) {
+                        // Limpa a lista antes de adicionar novos usuários
+                        listaCostureira.clear();
+
+                        // Filtrar apenas costureiras (isDressmaker == true) e e-mail diferente do logado
+                        for (User usuario : listaDeCostureiras) {
+                            if (usuario.isDressmaker() && !usuario.getEmail().equals(emailLogado)) {
+                                listaCostureira.add(usuario);
+                            }
+                        }
+
+                        if (!listaCostureira.isEmpty()) {
+                            // Atualizar o Adapter apenas se houver costureiras correspondentes
+                            AdapterCostureirasRecomendadas adapter = new AdapterCostureirasRecomendadas(listaCostureira);
+                            costureiras_recomendas.setAdapter(adapter);
+                            adapter.notifyDataSetChanged();
+                        } else {
+                            Toast.makeText(getActivity(), "Nenhuma costureira encontrada.", Toast.LENGTH_SHORT).show();
+                            // Exibir uma view alternativa aqui, se necessário
+                        }
+                    } else {
+                        Toast.makeText(getActivity(), "Nenhum usuário encontrado.", Toast.LENGTH_SHORT).show();
+                    }
+                } else {
+                    Toast.makeText(getActivity(), "Falha ao carregar usuários", Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ArrayList<User>> call, Throwable throwable) {
+                Toast.makeText(getActivity(), throwable.getMessage(), Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
 }

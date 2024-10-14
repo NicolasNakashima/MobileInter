@@ -9,16 +9,16 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.khiata.R;
-import com.example.khiata.models.Costureira;
+import com.example.khiata.models.User;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class AdapterCostureirasRecomendadas extends RecyclerView.Adapter<AdapterCostureirasRecomendadas.MeuViewHolder> {
 
-    private List<Costureira> costureiras = new ArrayList();
+    private List<User> costureiras = new ArrayList();
 
-    public AdapterCostureirasRecomendadas(List<Costureira> costureiras) {
+    public AdapterCostureirasRecomendadas(List<User> costureiras) {
         this.costureiras = costureiras;
     }
 
@@ -35,7 +35,7 @@ public class AdapterCostureirasRecomendadas extends RecyclerView.Adapter<Adapter
     @Override
     public void onBindViewHolder(@NonNull AdapterCostureirasRecomendadas.MeuViewHolder holder, int position) {
         TextView nome_costureira = holder.nome_costureira;
-        nome_costureira.setText(costureiras.get(position).getNome());
+        nome_costureira.setText(costureiras.get(position).getName());
     }
 
     @Override
