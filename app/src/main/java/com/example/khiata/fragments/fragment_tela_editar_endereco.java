@@ -24,6 +24,7 @@ import com.google.gson.GsonBuilder;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Map;
 
 import retrofit2.Call;
@@ -83,8 +84,6 @@ public class fragment_tela_editar_endereco extends Fragment {
     Button btn_cancelar_atualizar_endereco, btn_atualizar_endereco;
     int addressId;
     private Retrofit retrofit;
-    String atualDestinatario, atualRua, atualComplemento, atualRotulo;
-    int atualNumero;
     int enderecoId;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -114,14 +113,6 @@ public class fragment_tela_editar_endereco extends Fragment {
             }
         });
 
-        Bundle bundle = getArguments();
-        if(bundle != null) {
-            enderecoId = bundle.getInt("enderecoId", -1);
-            if (enderecoId != -1) {
-                pegarEnderecoDoUsuario(enderecoId);
-            }
-        }
-
         //Atualizar Endereco
         btn_atualizar_endereco = view.findViewById(R.id.btn_atualizar_endereco);
         btn_atualizar_endereco.setOnClickListener(new View.OnClickListener() {
@@ -131,47 +122,42 @@ public class fragment_tela_editar_endereco extends Fragment {
                 String atualizarRua = ((EditText) view.findViewById(R.id.atualizarRua)).getText().toString();
                 String atualizarComplemento = ((EditText) view.findViewById(R.id.atualizarComplemento)).getText().toString();
                 String atualizarRotulo = ((EditText) view.findViewById(R.id.atualizarRotulo)).getText().toString();
-                String numeroTexto = ((EditText) view.findViewById(R.id.atualizarNumero)).getText().toString();
-
-                // Verificar se os campos estão vazios ou não
-                boolean houveAtualizacao = false;
-                if (!atualizarDestinatario.isEmpty()) {
-                    atualDestinatario = atualizarDestinatario; // Atualizar destinatário
-                    houveAtualizacao = true;
-                }
-                if (!atualizarRua.isEmpty()) {
-                    atualRua = atualizarRua; // Atualizar rua
-                    houveAtualizacao = true;
-                }
-                if (!atualizarComplemento.isEmpty()) {
-                    atualComplemento = atualizarComplemento; // Atualizar complemento
-                    houveAtualizacao = true;
-                }
-                if (!atualizarRotulo.isEmpty()) {
-                    atualRotulo = atualizarRotulo; // Atualizar rótulo
-                    houveAtualizacao = true;
-                }
                 int atualizarNumero = 0;
+                String numeroTexto = ((EditText) view.findViewById(R.id.atualizarNumero)).getText().toString();
                 if (!numeroTexto.isEmpty()) {
                     try {
                         atualizarNumero = Integer.parseInt(numeroTexto);
-                        atualNumero = atualizarNumero; // Atualizar número
-                        houveAtualizacao = true;
                     } catch (NumberFormatException e) {
-                        Log.e("Error", "Número inválido: " + e.getMessage());
+                        Log.e("Error", "Idade inválida: " + e.getMessage());
                     }
                 }
-
-                // Verificar se alguma atualização foi feita
-                if (houveAtualizacao) {
-                    // Criar o objeto Address atualizado
-                    Address enderecoAtualizado = new Address(atualDestinatario, atualRua, atualNumero, atualComplemento, atualRotulo);
-                    Log.e("Endereço", enderecoAtualizado.toString());
-                    Log.d("User", new Gson().toJson(enderecoAtualizado));
-                    atualizarEnderecoUsuario(enderecoId, enderecoAtualizado); // Enviar a atualização para a API
-                } else {
-                    // Exibir mensagem informando que não houve atualização
-                    Toast.makeText(getActivity(), "Nenhuma alteração feita para atualizar o endereço.", Toast.LENGTH_SHORT).show();
+                Map<String, Object> atualizacoes = new HashMap<>();
+                if(!atualizarDestinatario.isEmpty()){
+                    atualizacoes.put("recipient", atualizarDestinatario);
+                }
+                if(!atualizarRua.isEmpty()){
+                    atualizacoes.put("street", atualizarRua);
+                }
+                if(!atualizarComplemento.isEmpty()){
+                    atualizacoes.put("complement", atualizarComplemento);
+                }
+                if(!atualizarRotulo.isEmpty()){
+                    atualizacoes.put("label", atualizarRotulo);
+                }
+                if(atualizarNumero != 0){
+                    atualizacoes.put("number", atualizarNumero);
+                }
+                if (atualizacoes.isEmpty()) {
+                    // Nenhuma alteração feita
+                    Toast.makeText(getActivity(), "Nenhuma alteração foi feita.", Toast.LENGTH_SHORT).show();
+                } else{
+                    Bundle bundle = getArguments();
+                    if(bundle != null) {
+                        enderecoId = bundle.getInt("enderecoId", -1);
+                        if (enderecoId != -1) {
+                            atualizarEndercoDoUsuario(enderecoId, atualizacoes);
+                        }
+                    }
                 }
             }
         });
@@ -181,85 +167,35 @@ public class fragment_tela_editar_endereco extends Fragment {
 
 
     //Método para atualizar um endereço do usário
-    private void atualizarEnderecoUsuario(int addressId, Address atualizacao) {
-        Log.e("atualizacao", atualizacao.toString());
-        Log.d("User", new Gson().toJson(atualizacao));
-        Log.e("addressId", String.valueOf(addressId));
+    private void atualizarEndercoDoUsuario(int addressId, Map<String, Object> atualizacoes) {
         String API_BASE_URL = "https://apikhiata.onrender.com/";
-        Gson gson = new GsonBuilder().setLenient().create();
         Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(API_BASE_URL)
-                .addConverterFactory(GsonConverterFactory.create(gson))
-                .build();
-        AddressApi addressApi = retrofit.create(AddressApi.class);
-        Call<String> call = addressApi.atualizarEndereco(addressId, atualizacao);
-
-        call.enqueue(new Callback<String>() {
-            @Override
-            public void onResponse(Call<String> call, Response<String> response) {
-                if (response.isSuccessful() && response.body() != null) {
-                    // Pegue o corpo da resposta como String
-                    String mensagemResposta = response.body();
-                    Log.d("Response Body", mensagemResposta);
-                    // Continue com a lógica de sucesso
-                    Toast.makeText(getActivity(), mensagemResposta, Toast.LENGTH_SHORT).show();
-                } else {
-                    // Tratamento de erro com mensagem do erro
-                    String errorMessage = "Erro: " + response.code(); // Exibe o código do erro
-                    if (response.errorBody() != null) {
-                        try {
-                            errorMessage += " - " + response.errorBody().string();
-                        } catch (IOException e) {
-                            e.printStackTrace();
-                        }
-                    }
-                    Toast.makeText(getActivity(), errorMessage, Toast.LENGTH_LONG).show();
-                    Log.e("Error", errorMessage);
-                }
-            }
-
-            @Override
-            public void onFailure(Call<String> call, Throwable t) {
-                Toast.makeText(getActivity(), "Erro ao atualizar endereço: " + t.getMessage(), Toast.LENGTH_LONG).show();
-                Log.e("Error", t.getMessage());
-            }
-        });
-    }
-
-
-    //Método para buscar endereço por Id
-    private void pegarEnderecoDoUsuario(int addressId){
-        String API_BASE_URL = "https://apikhiata.onrender.com/";
-        retrofit = new Retrofit.Builder()
                 .baseUrl(API_BASE_URL)
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
         AddressApi addressApi = retrofit.create(AddressApi.class);
-        Call<Address> call = addressApi.selecionarEnderecoPorId(addressId);
-        call.enqueue(new Callback<Address>() {
+        Call<Void> call = addressApi.atualizarEnderecoPorId(addressId, atualizacoes);
+
+        call.enqueue(new Callback<Void>() {
             @Override
-            public void onResponse(Call<Address> call, Response<Address> response) {
-                if (response.isSuccessful()) {
-                    Address address = response.body();
-                    if (address != null) {
-                        atualDestinatario = address.getRecipient();
-                        atualRua = address.getStreet();
-                        atualNumero = address.getNumber();
-                        atualComplemento = address.getComplement();
-                        atualRotulo = address.getLabel();
-
-                    } else {
-                        Toast.makeText(getActivity(), "Endereço não encontrado", Toast.LENGTH_SHORT).show();
+            public void onResponse(Call<Void> call, Response<Void> response) {
+                if (!response.isSuccessful()) {
+                    // Captura a mensagem de erro diretamente
+                    String errorMessage = "Erro: " + response.code(); // Exibe o código do erro
+                    if (response.errorBody() != null) {
+                        errorMessage += " - " + response.errorBody().toString();
                     }
-
+                    Toast.makeText(getActivity(), errorMessage, Toast.LENGTH_LONG).show();
+                    Log.e("Error", errorMessage);
                 } else {
-                    Toast.makeText(getActivity(), "Falha ao buscar endereço", Toast.LENGTH_SHORT).show();
+                    // A atualização foi bem-sucedida
+                    Toast.makeText(getActivity(), "Endereço atualizado com sucesso!", Toast.LENGTH_SHORT).show();
                 }
             }
 
             @Override
-            public void onFailure(Call<Address> call, Throwable throwable) {
-                Toast.makeText(getActivity(), throwable.getMessage(), Toast.LENGTH_SHORT).show();
+            public void onFailure(Call<Void> call, Throwable t) {
+                Toast.makeText(getActivity(), "Erro ao atualizar endereço: " + t.getMessage(), Toast.LENGTH_LONG).show();
             }
         });
     }

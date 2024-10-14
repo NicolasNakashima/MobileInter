@@ -4,6 +4,8 @@ import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,8 +13,30 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import com.example.khiata.R;
+import com.example.khiata.adapters.AdapterEnderecosUsuario;
+import com.example.khiata.adapters.AdapterProdutosAdicionados;
+import com.example.khiata.apis.AddressApi;
+import com.example.khiata.apis.ProductApi;
+import com.example.khiata.apis.UserApi;
+import com.example.khiata.models.Address;
+import com.example.khiata.models.Product;
+import com.example.khiata.models.User;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
+
+import java.lang.reflect.Type;
+import java.util.ArrayList;
+import java.util.List;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -64,6 +88,11 @@ public class fragment_tela_area_costureira extends Fragment {
 
     ImageView voltar_home;
     ImageButton btn_adicionar_produto;
+    String nome_usuario;
+    FirebaseAuth auth = FirebaseAuth.getInstance();
+    private Retrofit retrofit;
+    RecyclerView lista_produtos_adicionados;
+    List<Product> produtos = new ArrayList();
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -92,6 +121,80 @@ public class fragment_tela_area_costureira extends Fragment {
             }
         });
 
+        lista_produtos_adicionados = view.findViewById(R.id.lista_produtos_adicionados);
+        lista_produtos_adicionados.setLayoutManager(new LinearLayoutManager(getContext()));
+        buscarNomeDoUsuario(auth.getCurrentUser().getEmail());
+
         return view;
     }
+
+    //Pega o nome do usuário atual
+    private void buscarNomeDoUsuario(String userEmail) {
+        String API_BASE_URL = "https://apikhiata.onrender.com/";
+        retrofit = new Retrofit.Builder()
+                .baseUrl(API_BASE_URL)
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+        UserApi userApi = retrofit.create(UserApi.class);
+        Call<User> call = userApi.buscarUsuarioPorEmail(userEmail);
+        call.enqueue(new Callback<User>() {
+            @Override
+            public void onResponse(Call<User> call, Response<User> response) {
+                User userResponse = response.body();
+                nome_usuario = userResponse.getName();
+                pegarProdutosDoUsuario(nome_usuario);
+            }
+
+            @Override
+            public void onFailure(Call<User> call, Throwable throwable) {
+                Toast.makeText(getActivity(), throwable.getMessage(), Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+    //Método para buscar os endereços do usuário
+    private void pegarProdutosDoUsuario(String userName) {
+        String API_BASE_URL = "https://interdisciplinarr.onrender.com/";
+        retrofit = new Retrofit.Builder()
+                .baseUrl(API_BASE_URL)
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+
+        ProductApi productApi = retrofit.create(ProductApi.class);
+        Call<String> call = productApi.getProductsByDressmarker(userName);
+
+        call.enqueue(new Callback<String>() {
+            @Override
+            public void onResponse(Call<String> call, Response<String> response) {
+                if (response.isSuccessful()) {
+                    String responseBody = response.body();
+
+                    // Usando Gson para converter a String JSON em uma lista de objetos Product
+                    Gson gson = new Gson();
+                    Type productListType = new TypeToken<ArrayList<Product>>(){}.getType();
+                    List<Product> listaDeProdutos = gson.fromJson(responseBody, productListType);
+
+                    if (listaDeProdutos != null && !listaDeProdutos.isEmpty()) {
+                        produtos.clear();
+                        produtos.addAll(listaDeProdutos);
+
+                        // Atualiza o adapter com a lista de produtos
+                        AdapterProdutosAdicionados adapter = new AdapterProdutosAdicionados(getActivity(), produtos);
+                        lista_produtos_adicionados.setAdapter(adapter);
+                        adapter.notifyDataSetChanged();
+                    } else {
+                        Toast.makeText(getActivity(), "Nenhum produto cadastrado.", Toast.LENGTH_SHORT).show();
+                    }
+                } else {
+                    Toast.makeText(getActivity(), "Falha ao carregar produtos", Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<String> call, Throwable throwable) {
+                Toast.makeText(getActivity(), throwable.getMessage(), Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
 }

@@ -21,7 +21,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <ImageView
-        android:id="@+id/voltar_perfil"
+        android:id="@+id/voltar_home"
         android:layout_width="55dp"
         android:layout_height="41dp"
         app:layout_constraintBottom_toBottomOf="@+id/toolbar2"
