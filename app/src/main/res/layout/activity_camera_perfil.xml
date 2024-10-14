@@ -33,14 +33,6 @@
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/padrao" />
 
-
-    <!--    <androidx.constraintlayout.widget.Guideline-->
-<!--        android:id="@+id/vertical_centerline"-->
-<!--        android:layout_width="wrap_content"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        android:orientation="vertical"-->
-<!--        app:layout_constraintGuide_percent=".50" />-->
-
     <Button
         android:id="@+id/btn_capture_img"
         android:layout_width="110dp"

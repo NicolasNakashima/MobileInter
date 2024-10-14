@@ -3,12 +3,14 @@ package com.example.khiata.fragments;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 
 import com.example.khiata.R;
 import com.example.khiata.adapters.AdapterCostureirasRecomendadas;
@@ -70,6 +72,7 @@ public class fragment_tela_home extends Fragment {
     RecyclerView costureiras_recomendas, produtos_recomendados;
     List<Produto> listaProdutos = new ArrayList();
     List<Costureira> listaCostureira = new ArrayList();
+    ImageView btn_pesquisa, btn_carrinho;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -102,6 +105,15 @@ public class fragment_tela_home extends Fragment {
         produtos_recomendados.setAdapter(produtosRecomendados);
         produtos_recomendados.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
 
+        btn_pesquisa = view.findViewById(R.id.btn_pesquisa);
+        btn_pesquisa.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
+                transaction.replace(R.id.frame_conteudo, new fragment_tela_pesquisa());
+                transaction.commit();
+            }
+        });
 
         return view;
     }

@@ -7,6 +7,16 @@
     android:layout_height="match_parent"
     tools:context=".classes.MainActivity">
 
+    <FrameLayout
+        android:id="@+id/frame_conteudo"
+        android:layout_width="393dp"
+        android:layout_height="737dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+    </FrameLayout>
+
     <LinearLayout
         android:layout_width="395dp"
         android:layout_height="66dp"
@@ -63,15 +73,5 @@
             android:background="@android:color/transparent"
             app:srcCompat="@drawable/menu_perfil" />
     </LinearLayout>
-
-    <FrameLayout
-        android:id="@+id/frame_conteudo"
-        android:layout_width="393dp"
-        android:layout_height="737dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
-
-    </FrameLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

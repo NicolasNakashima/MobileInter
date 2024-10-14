@@ -137,11 +137,11 @@ public class CameraPerfil extends AppCompatActivity {
 //        });
 
         //Baixar imagem do firebase
-        ImageButton btn2 = findViewById(R.id.salvar_img);
-        btn2.setOnClickListener(v -> {
-            foto.setVisibility(View.VISIBLE);
-            database.downloadFotoPerfil(foto, Uri.parse(docData.get("url")));
-        });
+//        ImageButton btn2 = findViewById(R.id.salvar_img);
+//        btn2.setOnClickListener(v -> {
+//            foto.setVisibility(View.VISIBLE);
+//            database.downloadFotoPerfil(foto, Uri.parse(docData.get("url")));
+//        });
     }
 
     private ActivityResultLauncher<Intent> resultLauncherGaleria =
