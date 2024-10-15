@@ -22,7 +22,7 @@
             app:layout_constraintHorizontal_bias="0.03"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/img_produto" />
+            app:srcCompat="@drawable/add_img" />
 
         <TextView
             android:id="@+id/titulo_produto"

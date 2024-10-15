@@ -151,7 +151,7 @@ public class fragment_tela_home extends Fragment {
 
                         if (!listaCostureira.isEmpty()) {
                             // Atualizar o Adapter apenas se houver costureiras correspondentes
-                            AdapterCostureirasRecomendadas adapter = new AdapterCostureirasRecomendadas(listaCostureira);
+                            AdapterCostureirasRecomendadas adapter = new AdapterCostureirasRecomendadas(getActivity(), listaCostureira);
                             costureiras_recomendas.setAdapter(adapter);
                             adapter.notifyDataSetChanged();
                         } else {

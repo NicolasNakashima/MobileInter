@@ -134,7 +134,9 @@ public class fragment_tela_perfil extends Fragment {
         }).addOnFailureListener(new OnFailureListener() {
             @Override
             public void onFailure(@NonNull Exception e) {
-                Toast.makeText(getContext(), "Falha ao obter URL da imagem"+ e.getMessage(), Toast.LENGTH_SHORT).show();
+//                Toast.makeText(getContext(), "Falha ao obter URL da imagem"+ e.getMessage(), Toast.LENGTH_SHORT).show();
+                Log.d("TAG", "Falha ao obter URL da imagem"+ e.getMessage());
+                foto_perfil.setImageResource(R.drawable.empty_img);
             }
         });
 

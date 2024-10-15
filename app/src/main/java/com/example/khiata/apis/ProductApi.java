@@ -32,5 +32,5 @@ public interface ProductApi {
     Call<String> getByName(@Query("name") String name);
 
     @GET("/get/dressmarker")
-    Call<String> getProductsByDressmarker(@Query("dressmarker") String dressmarker);
+    Call<List<Product>> getProductsByDressmarker(@Query("dressmarker") String dressmarker);
 }

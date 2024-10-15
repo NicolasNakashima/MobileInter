@@ -163,23 +163,13 @@ public class fragment_tela_area_costureira extends Fragment {
                 .build();
 
         ProductApi productApi = retrofit.create(ProductApi.class);
-        Call<String> call = productApi.getProductsByDressmarker(userName);
+        Call<List<Product>> call = productApi.getProductsByDressmarker(userName); // Mudança aqui
 
-        call.enqueue(new Callback<String>() {
+        call.enqueue(new Callback<List<Product>>() {  // Mudança aqui
             @Override
-            public void onResponse(Call<String> call, Response<String> response) {
+            public void onResponse(Call<List<Product>> call, Response<List<Product>> response) {
                 if (response.isSuccessful()) {
-                    String responseBody = response.body();
-
-                    // Fazendo a substituição para criar um JSON válido
-                    String jsonValid = responseBody
-                            .replace("'", "\"")  // Substitui aspas simples por duplas
-                            .replaceAll("ObjectId\\(.*?\\)", "\"\"");  // Remove o ObjectId
-
-                    // Usando Gson para converter a String JSON em uma lista de objetos Product
-                    Gson gson = new Gson();
-                    Type productListType = new TypeToken<ArrayList<Product>>(){}.getType();
-                    List<Product> listaDeProdutos = gson.fromJson(jsonValid, productListType);
+                    List<Product> listaDeProdutos = response.body();
 
                     if (listaDeProdutos != null && !listaDeProdutos.isEmpty()) {
                         produtos.clear();
@@ -200,12 +190,10 @@ public class fragment_tela_area_costureira extends Fragment {
             }
 
             @Override
-            public void onFailure(Call<String> call, Throwable throwable) {
+            public void onFailure(Call<List<Product>> call, Throwable throwable) {
                 Toast.makeText(getActivity(), throwable.getMessage(), Toast.LENGTH_SHORT).show();
                 Log.e("Error", throwable.getMessage());
             }
         });
     }
-
-
 }

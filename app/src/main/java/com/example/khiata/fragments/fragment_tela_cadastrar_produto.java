@@ -62,7 +62,7 @@ public class fragment_tela_cadastrar_produto extends Fragment {
     }
 
     ImageView voltar_area_costureira;
-    Button btn_cancelar_cadastrar_produto;
+    Button btn_cancelar_cadastrar_produto, btn_adicionar_produto;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -88,6 +88,15 @@ public class fragment_tela_cadastrar_produto extends Fragment {
                 FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
                 transaction.replace(R.id.frame_conteudo, new fragment_tela_area_costureira());
                 transaction.commit();
+            }
+        });
+
+        //Adicionar Produto
+        btn_adicionar_produto = view.findViewById(R.id.btn_adicionar_produto);
+        btn_adicionar_produto.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
             }
         });
 
