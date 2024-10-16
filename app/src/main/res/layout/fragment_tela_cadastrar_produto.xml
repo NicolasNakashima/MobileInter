@@ -107,7 +107,7 @@
 
 
                 <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/editTituloProduto"
+                    android:id="@+id/editTitulo"
                     android:layout_width="313dp"
                     android:layout_height="53dp"
                     android:background="@null"
@@ -120,7 +120,7 @@
             </com.google.android.material.textfield.TextInputLayout>
 
             <EditText
-                android:id="@+id/editTextNumberDecimal"
+                android:id="@+id/editPrice"
                 android:layout_width="314dp"
                 android:layout_height="65dp"
                 android:layout_marginTop="45dp"
@@ -132,26 +132,26 @@
                 android:textColor="#000000"
                 android:textStyle="bold" />
 
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/textInputLayout6"
-                android:layout_width="314dp"
-                android:layout_height="65dp"
-                android:layout_marginTop="45dp"
-                android:background="@drawable/style_boxinput">
+<!--            <com.google.android.material.textfield.TextInputLayout-->
+<!--                android:id="@+id/textInputLayout6"-->
+<!--                android:layout_width="314dp"-->
+<!--                android:layout_height="65dp"-->
+<!--                android:layout_marginTop="45dp"-->
+<!--                android:background="@drawable/style_boxinput">-->
 
 
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/editTamanho"
-                    android:layout_width="313dp"
-                    android:layout_height="53dp"
-                    android:background="@null"
-                    android:hint="Tamanho:"
-                    android:paddingLeft="16dp"
-                    android:paddingBottom="10dp"
-                    android:textColor="#000000"
-                    android:textColorHint="#000000"
-                    android:textStyle="bold" />
-            </com.google.android.material.textfield.TextInputLayout>
+<!--                <com.google.android.material.textfield.TextInputEditText-->
+<!--                    android:id="@+id/editSize"-->
+<!--                    android:layout_width="313dp"-->
+<!--                    android:layout_height="53dp"-->
+<!--                    android:background="@null"-->
+<!--                    android:hint="Tamanho:"-->
+<!--                    android:paddingLeft="16dp"-->
+<!--                    android:paddingBottom="10dp"-->
+<!--                    android:textColor="#000000"-->
+<!--                    android:textColorHint="#000000"-->
+<!--                    android:textStyle="bold" />-->
+<!--            </com.google.android.material.textfield.TextInputLayout>-->
 
             <EditText
                 android:background="@drawable/style_boxinput"

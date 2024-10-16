@@ -214,6 +214,5 @@ public class fragment_tela_adicionar_endereco extends Fragment {
                 Log.e("Error", t.getMessage());
             }
         });
-
     }
 }

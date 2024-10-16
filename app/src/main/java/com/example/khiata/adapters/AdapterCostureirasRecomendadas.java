@@ -86,7 +86,7 @@ public class AdapterCostureirasRecomendadas extends RecyclerView.Adapter<Adapter
 
                 // Cria um Bundle para passar o email da costureira
                 Bundle bundle = new Bundle();
-                bundle.putString("costureira_emial", email_costureira); // Passa o email da costureira para o fragmento
+                bundle.putString("email_costureira", email_costureira); // Passa o email da costureira para o fragmento
 
                 // Define o argumento no fragmento de edição
                 perfilCostureiraFragment.setArguments(bundle);

@@ -16,11 +16,11 @@ public interface ProductApi {
 
     @POST("/insert/product")
     Call<String> insertProduct(
-            @Query("id") String id,
+            @Query("id") int id,
             @Query("name") String name,
-            @Query("price") String price,
+            @Query("price") double price,
             @Query("imageurl") String imageurl,
-            @Query("typeId") String typeId,
+            @Query("typeId") int typeId,
             @Query("dressmarker") String dressmarker,
             @Query("avaliation") String avaliation
     );
@@ -29,7 +29,7 @@ public interface ProductApi {
     Call<String> deleteProduct(@Query("id") int id);
 
     @GET("/get/name")
-    Call<String> getByName(@Query("name") String name);
+    Call<List<Product>> getByName(@Query("name") String name);
 
     @GET("/get/dressmarker")
     Call<List<Product>> getProductsByDressmarker(@Query("dressmarker") String dressmarker);

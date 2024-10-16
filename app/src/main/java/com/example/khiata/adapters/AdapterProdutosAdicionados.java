@@ -59,12 +59,10 @@ public class AdapterProdutosAdicionados extends RecyclerView.Adapter<AdapterProd
         TextView titulo_produto = holder.titulo_produto;
         TextView preco_produto = holder.preco_produto;
 
-        titulo_produto.setText(produtos.get(position).getName());
-        preco_produto.setText("R$ " + String.valueOf(produtos.get(position).getPrice()));
-
-        int produtoId = produtos.get(position).getId();
-
-        String produtoName = produtos.get(position).getName();
+        // Defina os dados do produto para exibir no item
+        Product produto = produtos.get(position);
+        titulo_produto.setText(produto.getName());
+        preco_produto.setText("R$ " + String.valueOf(produto.getPrice()));
 
         // Listener para excluir o produto
         btn_excluir_produto.setOnClickListener(new View.OnClickListener() {
@@ -75,7 +73,7 @@ public class AdapterProdutosAdicionados extends RecyclerView.Adapter<AdapterProd
                 View popup_opcao = inflater.inflate(R.layout.popup_opcao, null);
 
                 TextView msgPopup = popup_opcao.findViewById(R.id.msg_popup);
-                msgPopup.setText("Você está prestes a excluir o produto \n" + produtos.get(position).getName() + "\n. Deseja prosseguir?");
+                msgPopup.setText("Você está prestes a excluir o produto \n" + produto.getName() + "\n. Deseja prosseguir?");
                 ImageView imgPopup = popup_opcao.findViewById(R.id.img_popup);
                 imgPopup.setImageResource(R.drawable.icon_pop_delete);
                 Button btn_seguir = popup_opcao.findViewById(R.id.btn_seguir);
@@ -85,7 +83,7 @@ public class AdapterProdutosAdicionados extends RecyclerView.Adapter<AdapterProd
                     public void onClick(View v) {
                         int adapterPosition = holder.getAdapterPosition();
                         if (adapterPosition != RecyclerView.NO_POSITION) {
-                            deletarProduto(produtoId, adapterPosition);
+                            deletarProduto(produtos.get(adapterPosition).getId(), adapterPosition);
                         }
                         dialog.dismiss();
                     }

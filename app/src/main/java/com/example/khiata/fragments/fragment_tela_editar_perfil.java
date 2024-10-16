@@ -196,6 +196,9 @@ public class fragment_tela_editar_perfil extends Fragment {
                 } else {
                     // A atualização foi bem-sucedida
                     Toast.makeText(getActivity(), "Perfil atualizado com sucesso!", Toast.LENGTH_SHORT).show();
+                    FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
+                    transaction.replace(R.id.frame_conteudo, new fragment_tela_perfil());
+                    transaction.commit();
                 }
             }
 
