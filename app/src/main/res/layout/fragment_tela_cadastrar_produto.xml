@@ -1,0 +1,196 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/frameLayout3"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#FFFFFF"
+    tools:context=".fragments.fragment_tela_cadastrar_produto">
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="392dp"
+        android:layout_height="84dp"
+        android:background="?attr/colorPrimary"
+        android:backgroundTint="#FAC552"
+        android:minHeight="?attr/actionBarSize"
+        android:theme="?attr/actionBarTheme"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+
+    <TextView
+        android:id="@+id/textView4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Novo produto"
+        android:textColor="#5A2D03"
+        android:textSize="27sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="@+id/toolbar"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/toolbar"
+        app:layout_constraintVertical_bias="0.479" />
+
+    <ImageView
+        android:id="@+id/voltar_area_costureira"
+        android:layout_width="53dp"
+        android:layout_height="46dp"
+        app:layout_constraintBottom_toBottomOf="@+id/toolbar"
+        app:layout_constraintEnd_toEndOf="@+id/toolbar"
+        app:layout_constraintHorizontal_bias="0.058"
+        app:layout_constraintStart_toStartOf="@+id/toolbar"
+        app:layout_constraintTop_toTopOf="@+id/toolbar"
+        app:layout_constraintVertical_bias="0.605"
+        app:srcCompat="@drawable/seta_retorno" />
+
+    <ScrollView
+        android:layout_width="391dp"
+        android:layout_height="721dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/toolbar">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/textView2"
+                android:layout_width="282dp"
+                android:layout_height="64dp"
+                android:layout_marginTop="40dp"
+                android:text="Insira as informações necessárias"
+                android:textAlignment="center"
+                android:textColor="#000000"
+                android:textSize="22sp"
+                android:textStyle="bold"  />
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/cardView2"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="40dp">
+
+                <ImageView
+                    android:id="@+id/imageView13"
+                    android:layout_width="283dp"
+                    android:layout_height="225dp"
+                    android:src="@drawable/add_img"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent" />
+
+                <ImageView
+                    android:id="@+id/btn_tirar_foto_produto"
+                    android:layout_width="55dp"
+                    android:layout_height="53dp"
+                    android:src="@drawable/icon_camera"
+                    app:layout_constraintBottom_toBottomOf="@+id/imageView13"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.846"
+                    app:layout_constraintStart_toStartOf="parent" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/textInputLayout46"
+                android:layout_width="314dp"
+                android:layout_height="65dp"
+                android:layout_marginTop="45dp"
+                android:background="@drawable/style_boxinput">
+
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/editTitulo"
+                    android:layout_width="313dp"
+                    android:layout_height="53dp"
+                    android:background="@null"
+                    android:hint="Título:"
+                    android:paddingLeft="16dp"
+                    android:paddingBottom="10dp"
+                    android:textColor="#000000"
+                    android:textColorHint="#000000"
+                    android:textStyle="bold" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <EditText
+                android:id="@+id/editPrice"
+                android:layout_width="314dp"
+                android:layout_height="65dp"
+                android:layout_marginTop="45dp"
+                android:background="@drawable/style_boxinput"
+                android:ems="10"
+                android:hint="Preço:"
+                android:inputType="numberDecimal"
+                android:paddingLeft="16dp"
+                android:textColor="#000000"
+                android:textStyle="bold" />
+
+<!--            <com.google.android.material.textfield.TextInputLayout-->
+<!--                android:id="@+id/textInputLayout6"-->
+<!--                android:layout_width="314dp"-->
+<!--                android:layout_height="65dp"-->
+<!--                android:layout_marginTop="45dp"-->
+<!--                android:background="@drawable/style_boxinput">-->
+
+
+<!--                <com.google.android.material.textfield.TextInputEditText-->
+<!--                    android:id="@+id/editSize"-->
+<!--                    android:layout_width="313dp"-->
+<!--                    android:layout_height="53dp"-->
+<!--                    android:background="@null"-->
+<!--                    android:hint="Tamanho:"-->
+<!--                    android:paddingLeft="16dp"-->
+<!--                    android:paddingBottom="10dp"-->
+<!--                    android:textColor="#000000"-->
+<!--                    android:textColorHint="#000000"-->
+<!--                    android:textStyle="bold" />-->
+<!--            </com.google.android.material.textfield.TextInputLayout>-->
+
+            <EditText
+                android:background="@drawable/style_boxinput"
+                android:id="@+id/editDescricao"
+                android:layout_width="314dp"
+                android:layout_height="100dp"
+                android:layout_marginTop="45dp"
+                android:ems="10"
+                android:gravity="start|top"
+                android:paddingLeft="16dp"
+                android:paddingBottom="10dp"
+                android:hint="Descrição:"
+                android:inputType="textMultiLine"
+                android:textColor="#000000"
+                android:textStyle="bold"/>
+
+            <Button
+                android:id="@+id/btn_adicionar_produto"
+                android:layout_width="240dp"
+                android:layout_height="50dp"
+                android:layout_marginTop="25dp"
+                android:background="@drawable/style_button1"
+                android:text="Adicionar Produto"
+                android:textColor="#ffffff"
+                android:textSize="15sp"
+                android:textStyle="bold" />
+
+            <Button
+                android:id="@+id/btn_cancelar_cadastrar_produto"
+                android:layout_width="240dp"
+                android:layout_height="50dp"
+                android:layout_marginTop="30dp"
+                android:layout_marginBottom="80dp"
+                android:background="@drawable/style_button2"
+                android:text="Cancelar"
+                android:textSize="15sp"
+                android:textStyle="bold" />
+
+        </LinearLayout>
+    </ScrollView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

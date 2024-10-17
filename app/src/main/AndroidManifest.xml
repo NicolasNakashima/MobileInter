@@ -1,6 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools" >
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <uses-permission android:name="android.permission.INTERNET" />
+
+    <uses-feature
+        android:name="android.hardware.telephony"
+        android:required="false" />
+    <uses-feature android:name="android.hardware.camera.any" />
+
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.RECORD_AUDIO" />
+    <uses-permission
+        android:name="android.permission.READ_EXTERNAL_STORAGE"
+        android:maxSdkVersion="28" />
+    <uses-permission
+        android:name="android.permission.WRITE_EXTERNAL_STORAGE"
+        android:maxSdkVersion="28" />
+    <uses-permission android:name="android.permission.RECEIVE_SMS" />
+    <uses-permission android:name="android.permission.SEND_SMS" />
 
     <application
         android:allowBackup="true"
@@ -11,13 +29,34 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Khiata"
-        tools:targetApi="31" >
+        tools:targetApi="31">
         <activity
-            android:name=".tela_produto"
+            android:name=".classes.confirmacao_pagamento"
             android:exported="false" />
         <activity
-            android:name=".MainActivity"
-            android:exported="true" >
+            android:name=".classes.tela_carrinho"
+            android:exported="false" />
+        <activity
+            android:name=".classes.CameraProduto"
+            android:exported="false" />
+        <activity
+            android:name=".classes.CameraPerfil"
+            android:exported="false" />
+        <activity
+            android:name=".classes.tela_nova_senha"
+            android:exported="false" />
+        <activity
+            android:name=".classes.tela_cadastro"
+            android:exported="false" />
+        <activity
+            android:name=".classes.tela_login"
+            android:exported="false" />
+        <activity
+            android:name=".classes.MainActivity"
+            android:exported="false" />
+        <activity
+            android:name=".classes.tela_inicial"
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

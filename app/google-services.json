@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "769597961621",
+    "project_id": "fir-khiata",
+    "storage_bucket": "fir-khiata.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:769597961621:android:16ce454ac0a3e4c471729c",
+        "android_client_info": {
+          "package_name": "com.example.khiata"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBX3aay9e61cn-piLUqyTsSOqWu899BNAA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
