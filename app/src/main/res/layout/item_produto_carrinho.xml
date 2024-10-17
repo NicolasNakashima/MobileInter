@@ -13,7 +13,7 @@
         android:layout_height="150dp">
 
         <ImageView
-            android:id="@+id/imageView7"
+            android:id="@+id/img_produto"
             android:layout_width="138dp"
             android:layout_height="131dp"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -32,7 +32,7 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.238"
-            app:layout_constraintStart_toEndOf="@+id/textView13"
+            app:layout_constraintStart_toEndOf="@+id/titulo_produto"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0.088"
             app:srcCompat="@drawable/icon_delete" />
@@ -48,12 +48,12 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.046"
-            app:layout_constraintStart_toEndOf="@+id/imageView7"
-            app:layout_constraintTop_toBottomOf="@+id/textView12"
+            app:layout_constraintStart_toEndOf="@+id/img_produto"
+            app:layout_constraintTop_toBottomOf="@+id/tamanho_produto"
             app:layout_constraintVertical_bias="0.526" />
 
         <TextView
-            android:id="@+id/textView11"
+            android:id="@+id/vendedor_produto"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Vendido por Carla"
@@ -62,12 +62,12 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.065"
-            app:layout_constraintStart_toEndOf="@+id/imageView7"
-            app:layout_constraintTop_toBottomOf="@+id/textView13"
+            app:layout_constraintStart_toEndOf="@+id/img_produto"
+            app:layout_constraintTop_toBottomOf="@+id/titulo_produto"
             app:layout_constraintVertical_bias="0.054" />
 
         <TextView
-            android:id="@+id/textView12"
+            android:id="@+id/tamanho_produto"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Tamanho: P"
@@ -76,12 +76,12 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.047"
-            app:layout_constraintStart_toEndOf="@+id/imageView7"
-            app:layout_constraintTop_toBottomOf="@+id/textView11"
+            app:layout_constraintStart_toEndOf="@+id/img_produto"
+            app:layout_constraintTop_toBottomOf="@+id/vendedor_produto"
             app:layout_constraintVertical_bias="0.129" />
 
         <TextView
-            android:id="@+id/textView13"
+            android:id="@+id/titulo_produto"
             android:layout_width="176dp"
             android:layout_height="46dp"
             android:text="Blusa Tricot Manga Longa  Inverno Cores Tendência"
@@ -91,7 +91,7 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.138"
-            app:layout_constraintStart_toEndOf="@+id/imageView7"
+            app:layout_constraintStart_toEndOf="@+id/img_produto"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0.096" />
     </androidx.constraintlayout.widget.ConstraintLayout>

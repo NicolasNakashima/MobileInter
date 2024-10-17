@@ -31,6 +31,9 @@
         android:theme="@style/Theme.Khiata"
         tools:targetApi="31">
         <activity
+            android:name=".classes.confirmacao_pagamento"
+            android:exported="false" />
+        <activity
             android:name=".classes.tela_carrinho"
             android:exported="false" />
         <activity

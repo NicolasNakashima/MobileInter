@@ -1,5 +1,6 @@
 package com.example.khiata.fragments;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -19,6 +20,9 @@ import com.example.khiata.adapters.AdapterEnderecosUsuario;
 import com.example.khiata.adapters.AdapterProdutosRecomendados;
 import com.example.khiata.apis.AddressApi;
 import com.example.khiata.apis.UserApi;
+import com.example.khiata.classes.MainActivity;
+import com.example.khiata.classes.tela_carrinho;
+import com.example.khiata.classes.tela_inicial;
 import com.example.khiata.models.Address;
 import com.example.khiata.models.Produto;
 import com.example.khiata.models.User;
@@ -110,6 +114,8 @@ public class fragment_tela_home extends Fragment {
         produtos_recomendados.setAdapter(produtosRecomendados);
         produtos_recomendados.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
 
+
+        //Botão para ir para pesquisa
         btn_pesquisa = view.findViewById(R.id.btn_pesquisa);
         btn_pesquisa.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -117,6 +123,16 @@ public class fragment_tela_home extends Fragment {
                 FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
                 transaction.replace(R.id.frame_conteudo, new fragment_tela_pesquisa());
                 transaction.commit();
+            }
+        });
+
+        //Botão para ir para carrinho
+        btn_carrinho = view.findViewById(R.id.btn_carrinho);
+        btn_carrinho.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getActivity(), tela_carrinho.class);
+                startActivity(intent);
             }
         });
 

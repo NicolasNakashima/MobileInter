@@ -1,5 +1,6 @@
 package com.example.khiata.fragments;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -18,6 +19,7 @@ import android.widget.Toast;
 import com.example.khiata.R;
 import com.example.khiata.adapters.AdapterProdutosAdicionados;
 import com.example.khiata.apis.ProductApi;
+import com.example.khiata.classes.tela_carrinho;
 import com.example.khiata.models.Product;
 
 import java.util.ArrayList;
@@ -76,7 +78,7 @@ public class fragment_tela_pesquisa extends Fragment {
         }
     }
 
-    ImageView voltar_home, btn_pesquisar;
+    ImageView voltar_home, btn_pesquisar, btn_carrinho;
     private Retrofit retrofit;
     RecyclerView lista_produtos_pesquisados;
     List<Product> produtos = new ArrayList();
@@ -112,6 +114,16 @@ public class fragment_tela_pesquisa extends Fragment {
                     lista_produtos_pesquisados.setLayoutManager(new LinearLayoutManager(getContext()));
                     pegarProdutosPesquisados(busca);
                 }
+            }
+        });
+
+        //Botão para ir para carrinho
+        btn_carrinho = view.findViewById(R.id.btn_carrinho);
+        btn_carrinho.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getActivity(), tela_carrinho.class);
+                startActivity(intent);
             }
         });
 

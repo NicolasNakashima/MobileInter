@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/frameLayout15"
+    android:id="@+id/frameLayout18"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".fragments.fragment_tela_cursos"
+    tools:context=".fragments.fragment_tela_formas_pagamento"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="#FFFFFF">
 
@@ -21,7 +21,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <ImageView
-        android:id="@+id/voltar_home"
+        android:id="@+id/voltar_plan_premium"
         android:layout_width="55dp"
         android:layout_height="41dp"
         app:layout_constraintBottom_toBottomOf="@+id/toolbar2"
@@ -36,7 +36,7 @@
         android:id="@+id/textView4"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Cursos"
+        android:text="Formas de pagamento"
         android:textColor="#5A2D03"
         android:textSize="24sp"
         android:textStyle="bold"
@@ -47,38 +47,45 @@
         app:layout_constraintTop_toTopOf="@+id/toolbar2"
         app:layout_constraintVertical_bias="0.461" />
 
-    <ImageView
-        android:id="@+id/imageView7"
-        android:layout_width="515dp"
-        android:layout_height="287dp"
-        android:src="@drawable/ad_premium"
+    <TextView
+        android:id="@+id/textView23"
+        android:layout_width="290dp"
+        android:layout_height="60dp"
+        android:layout_marginTop="40dp"
+        android:gravity="center"
+        android:text="Selecione a forma de pagamento"
+        android:textColor="#000000"
+        android:textSize="22sp"
+        android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/toolbar2" />
 
     <Button
-        android:id="@+id/btn_adquirir_premium"
-        android:layout_width="199dp"
-        android:layout_height="48dp"
-        android:layout_marginTop="188dp"
+        android:id="@+id/btn_continuar_pagamento"
+        android:layout_width="240dp"
+        android:layout_height="50dp"
         android:background="@drawable/style_button1"
-        android:text="Adquirir Premium"
-        android:textColor="#FFFFFF"
+        android:text="Continuar"
+        android:textColor="#ffffff"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.082"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/toolbar2" />
+        tools:layout_editor_absoluteY="604dp" />
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:layout_width="332dp"
-        android:layout_height="412dp"
-        android:layout_marginTop="20dp"
+    <Button
+        android:id="@+id/btn_cancelar"
+        android:layout_width="240dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="32dp"
+        android:background="@drawable/style_button2"
+        android:text="Cancelar"
+        android:textColor="#384384"
+        android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.491"
+        app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageView7"
-        tools:listitem="@layout/item_curso" />
+        app:layout_constraintTop_toBottomOf="@+id/btn_continuar_pagamento" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
