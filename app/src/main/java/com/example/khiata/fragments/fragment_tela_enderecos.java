@@ -83,8 +83,6 @@ public class fragment_tela_enderecos extends Fragment {
 
     ImageView voltar_home;
     ImageButton btn_adicionar_endereco;
-//    private fragment_tela_adicionar_endereco fragment_tela_adicionar_endereco= new fragment_tela_adicionar_endereco();
-//    private fragment_tela_home fragment_tela_home= new fragment_tela_home();
     List<Address> enderecos = new ArrayList();
     RecyclerView lista_enderecos;
     int userId;

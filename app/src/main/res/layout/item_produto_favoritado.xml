@@ -10,19 +10,19 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="385dp"
-        android:layout_height="150dp">
+        android:layout_height="145dp">
 
         <ImageView
             android:id="@+id/img_produto"
-            android:layout_width="138dp"
-            android:layout_height="131dp"
+            android:layout_width="145dp"
+            android:layout_height="110dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.024"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0.526"
-            app:srcCompat="@drawable/img_produto" />
+            app:srcCompat="@drawable/add_img" />
 
         <TextView
             android:id="@+id/preco_produto"
@@ -34,9 +34,10 @@
             android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.046"
+            app:layout_constraintHorizontal_bias="0.061"
             app:layout_constraintStart_toEndOf="@+id/img_produto"
-            app:layout_constraintTop_toBottomOf="@+id/vendedor_produto" />
+            app:layout_constraintTop_toBottomOf="@+id/vendedor_produto"
+            app:layout_constraintVertical_bias="0.433" />
 
         <TextView
             android:id="@+id/vendedor_produto"
@@ -47,25 +48,36 @@
             android:textSize="13sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.065"
+            app:layout_constraintHorizontal_bias="0.083"
             app:layout_constraintStart_toEndOf="@+id/img_produto"
             app:layout_constraintTop_toBottomOf="@+id/titulo_produto"
-            app:layout_constraintVertical_bias="0.263" />
+            app:layout_constraintVertical_bias="0.158" />
 
         <TextView
             android:id="@+id/titulo_produto"
             android:layout_width="176dp"
             android:layout_height="46dp"
+            android:layout_marginStart="8dp"
             android:text="Blusa Tricot Manga Longa  Inverno Cores Tendência"
             android:textColor="#000000"
-            android:textSize="15sp"
+            android:textSize="14sp"
             android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.138"
+            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toEndOf="@+id/img_produto"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.096" />
+            app:layout_constraintVertical_bias="0.181" />
+
+        <ImageView
+            android:id="@+id/btn_favorito"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="18dp"
+            app:layout_constraintStart_toEndOf="@+id/titulo_produto"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/icon_favoritado" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </androidx.cardview.widget.CardView>

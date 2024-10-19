@@ -1,5 +1,6 @@
 package com.example.khiata.fragments;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -11,6 +12,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 
 import com.example.khiata.R;
+import com.example.khiata.classes.tela_carrinho;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -59,7 +61,7 @@ public class fragment_tela_favoritos extends Fragment {
         }
     }
 
-    ImageView voltar_home;
+    ImageView voltar_home, btn_carrinho;
     private fragment_tela_home fragment_tela_home = new fragment_tela_home();
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -67,6 +69,7 @@ public class fragment_tela_favoritos extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_tela_favoritos, container, false);
 
+        //Botao para voltar para tela de home
         voltar_home = view.findViewById(R.id.voltar_home);
         voltar_home.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -74,6 +77,16 @@ public class fragment_tela_favoritos extends Fragment {
                 FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
                 transaction.replace(R.id.frame_conteudo, fragment_tela_home);
                 transaction.commit();
+            }
+        });
+
+        //Botao para ir para tela de carrinho
+        btn_carrinho = view.findViewById(R.id.btn_carrinho);
+        btn_carrinho.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getActivity(), tela_carrinho.class);
+                startActivity(intent);
             }
         });
 

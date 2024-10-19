@@ -122,6 +122,7 @@ public class fragment_tela_area_costureira extends Fragment {
             }
         });
 
+        //Listar os produtos
         lista_produtos_adicionados = view.findViewById(R.id.lista_produtos_adicionados);
         lista_produtos_adicionados.setLayoutManager(new LinearLayoutManager(getContext()));
         buscarNomeDoUsuario(auth.getCurrentUser().getEmail());

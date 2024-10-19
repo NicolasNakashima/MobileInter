@@ -8,6 +8,7 @@ import androidx.fragment.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 
 import com.example.khiata.R;
@@ -60,18 +61,31 @@ public class fragment_tela_cursos extends Fragment {
     }
 
     ImageView voltar_home;
+    Button btn_adquirir_premium;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_tela_cursos, container, false);
 
+        //Botão para voltar para o home
         voltar_home = view.findViewById(R.id.voltar_home);
         voltar_home.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
                 transaction.replace(R.id.frame_conteudo, new fragment_tela_home());
+                transaction.commit();
+            }
+        });
+
+        //Botão para adquirir premium
+        btn_adquirir_premium = view.findViewById(R.id.btn_adquirir_premium);
+        btn_adquirir_premium.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
+                transaction.replace(R.id.frame_conteudo, new fragment_tela_plan_premium());
                 transaction.commit();
             }
         });

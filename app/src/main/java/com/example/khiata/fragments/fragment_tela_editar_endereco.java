@@ -82,8 +82,6 @@ public class fragment_tela_editar_endereco extends Fragment {
 
     ImageView voltar_enderecos;
     Button btn_cancelar_atualizar_endereco, btn_atualizar_endereco;
-    int addressId;
-    private Retrofit retrofit;
     int enderecoId;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
