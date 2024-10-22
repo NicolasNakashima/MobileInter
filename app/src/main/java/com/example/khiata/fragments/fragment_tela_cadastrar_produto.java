@@ -1,8 +1,10 @@
 package com.example.khiata.fragments;
 
 import android.app.Dialog;
+import android.net.Uri;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
@@ -12,11 +14,14 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.GridLayout;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.RadioButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.example.khiata.R;
 import com.example.khiata.apis.AddressApi;
 import com.example.khiata.apis.ProductApi;
@@ -24,7 +29,11 @@ import com.example.khiata.apis.UserApi;
 import com.example.khiata.models.Address;
 import com.example.khiata.models.Product;
 import com.example.khiata.models.User;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 
 import java.io.IOException;
 
@@ -86,6 +95,9 @@ public class fragment_tela_cadastrar_produto extends Fragment {
     String nome_usuario;
     private Retrofit retrofit;
     FirebaseAuth auth = FirebaseAuth.getInstance();
+    FirebaseStorage storage = FirebaseStorage.getInstance();
+    StorageReference storageRef = storage.getReference();
+    String imgName;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -114,6 +126,31 @@ public class fragment_tela_cadastrar_produto extends Fragment {
             }
         });
 
+        ImageView img_produto = view.findViewById(R.id.img_produto);
+        Bundle bundle = getArguments();
+        if (bundle != null) {
+            String imgProduto = bundle.getString("imgName");
+            imgName = imgProduto;
+
+            // Buscar a imagem no Firebase usando o nome da imagem
+            if (imgProduto != null) {
+                StorageReference profileRef = storageRef.child("khiata_produtos/"+imgProduto+".jpg");
+                profileRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                    @Override
+                    public void onSuccess(Uri uri) {
+                        Glide.with(getContext()).load(uri).circleCrop().into(img_produto);
+                    }
+                }).addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Log.d("TAG", "Falha ao obter URL da imagem"+ e.getMessage());
+                        img_produto.setImageResource(R.drawable.add_img);
+                    }
+                });
+            }
+        }
+
+
         //Adicionar Produto
         btn_adicionar_produto = view.findViewById(R.id.btn_adicionar_produto);
         btn_adicionar_produto.setOnClickListener(new View.OnClickListener() {
@@ -122,13 +159,34 @@ public class fragment_tela_cadastrar_produto extends Fragment {
                 String novoTitulo = ((EditText) view.findViewById(R.id.editTitulo)).getText().toString();
                 double novoPreco = Double.parseDouble(((EditText) view.findViewById(R.id.editPrice)).getText().toString());
                 String novaDescricao = ((EditText) view.findViewById(R.id.editDescricao)).getText().toString();
+                String drawableImg = ((ImageView) view.findViewById(R.id.img_produto)).getDrawable().toString();
+                GridLayout opcoesTamanho = view.findViewById(R.id.opcoesTamanho);
+                RadioButton tamanhoSelecionado = null;
+                String novoTamanho;
+                //Percorre os RadioButtons do GridLayout e verificar se algum está selecionado
+                for (int i = 0; i < opcoesTamanho.getChildCount(); i++) {
+                    View child = opcoesTamanho.getChildAt(i);
+                    if (child instanceof RadioButton) {
+                        RadioButton radioButton = (RadioButton) child;
+                        if (radioButton.isChecked()) {
+                            tamanhoSelecionado = radioButton;
+                            break;
+                        }
+                    }
+                }
+                //Pega qual RadioButton foi selecionado
+                if(tamanhoSelecionado != null){
+                    novoTamanho = tamanhoSelecionado.getText().toString();
+                } else{
+                    novoTamanho = null;
+                }
 
-                if(novoTitulo.isEmpty() || novoPreco == 0 || novaDescricao.isEmpty()){
+                if(novoTitulo.isEmpty() || novoPreco == 0 || novaDescricao.isEmpty() || drawableImg.equals("@drawable/add_img")){
                     Dialog dialog = new Dialog(getActivity());
                     LayoutInflater inflater = getLayoutInflater();
                     View popupView = inflater.inflate(R.layout.popup_mensagem, null);
                     TextView msgPopup = popupView.findViewById(R.id.msg_popup);
-                    msgPopup.setText("Por favor, preencha todos os campos para cadastrar um novo produto.");
+                    msgPopup.setText("Por favor, tire uma foto e preencha todos os campos antes de adicionar um novo produto.");
                     ImageView imgPopup = popupView.findViewById(R.id.img_popup);
                     imgPopup.setImageResource(R.drawable.icon_pop_alert);
                     Button btnPopup = popupView.findViewById(R.id.btn_popup);
@@ -142,7 +200,7 @@ public class fragment_tela_cadastrar_produto extends Fragment {
                     dialog.setCancelable(true);
                     dialog.show();
                 } else{
-                    buscarNomeDoUsuario(auth.getCurrentUser().getEmail(), novoTitulo, novoPreco, novaDescricao);
+                    buscarNomeDoUsuario(auth.getCurrentUser().getEmail(), novoTitulo, novoPreco, novaDescricao, imgName, novoTamanho);
                 }
             }
         });
@@ -151,7 +209,7 @@ public class fragment_tela_cadastrar_produto extends Fragment {
     }
 
     //Pega o nome do usuário atual
-    private void buscarNomeDoUsuario(String userEmail, String novoTitulo, double novoPreco, String novaDescricao) {
+    private void buscarNomeDoUsuario(String userEmail, String novoTitulo, double novoPreco, String novaDescricao, String imgName, String novoTamanho) {
         String API_BASE_URL = "https://apikhiata.onrender.com/";
         retrofit = new Retrofit.Builder()
                 .baseUrl(API_BASE_URL)
@@ -164,7 +222,7 @@ public class fragment_tela_cadastrar_produto extends Fragment {
             public void onResponse(Call<User> call, Response<User> response) {
                 User userResponse = response.body();
                 nome_usuario = userResponse.getName();
-                cadastrarEnderecoUsuario(nome_usuario, novoTitulo, novoPreco, novaDescricao);
+                cadastrarProdutoUsuario(nome_usuario, novoTitulo, novoPreco, novaDescricao, imgName, novoTamanho);
             }
 
             @Override
@@ -175,14 +233,14 @@ public class fragment_tela_cadastrar_produto extends Fragment {
     }
 
     //Método para cadastrar um novo produto
-    private void cadastrarEnderecoUsuario(String nome_usuario, String novoTitulo, double novoPreco, String novaDescricao) {
+    private void cadastrarProdutoUsuario(String nome_usuario, String novoTitulo, double novoPreco, String novaDescricao, String imgName, String novoTamanho) {
         String API_BASE_URL = "https://interdisciplinarr.onrender.com/";
         retrofit = new Retrofit.Builder()
                 .baseUrl(API_BASE_URL)
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
         ProductApi productApi = retrofit.create(ProductApi.class);
-        Call<String> call = productApi.insertProduct(0, novoTitulo, novoPreco, "", 0, nome_usuario, novaDescricao);
+        Call<String> call = productApi.insertProduct(novoTitulo, novoPreco, imgName, 1, nome_usuario, 0, novaDescricao, novoTamanho);
         call.enqueue(new Callback<String>() {
             @Override
             public void onResponse(Call<String> call, Response<String> response) {

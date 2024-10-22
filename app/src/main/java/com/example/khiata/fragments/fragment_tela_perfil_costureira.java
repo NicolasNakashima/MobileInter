@@ -11,6 +11,9 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.telephony.SmsManager;
 import android.util.Log;
@@ -25,13 +28,19 @@ import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.example.khiata.R;
+import com.example.khiata.adapters.AdapterProdutosAdicionados;
+import com.example.khiata.apis.ProductApi;
 import com.example.khiata.apis.UserApi;
+import com.example.khiata.models.Product;
 import com.example.khiata.models.User;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -94,6 +103,8 @@ public class fragment_tela_perfil_costureira extends Fragment {
     private Retrofit retrofit;
     FirebaseStorage storage = FirebaseStorage.getInstance();
     StorageReference storageRef = storage.getReference();
+    RecyclerView lista_produtos_costureira;
+    List<Product> produtos = new ArrayList();
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -127,13 +138,17 @@ public class fragment_tela_perfil_costureira extends Fragment {
                 }).addOnFailureListener(new OnFailureListener() {
                     @Override
                     public void onFailure(@NonNull Exception e) {
-//                Toast.makeText(getContext(), "Falha ao obter URL da imagem"+ e.getMessage(), Toast.LENGTH_SHORT).show();
                         Log.d("TAG", "Falha ao obter URL da imagem"+ e.getMessage());
                         img_costureira.setImageResource(R.drawable.empty_img);
                     }
                 });
             }
         }
+
+        //Listar os produtos
+        lista_produtos_costureira = view.findViewById(R.id.lista_produtos_costureira);
+        lista_produtos_costureira.setLayoutManager(new GridLayoutManager(getActivity(), 2));
+        pegarProdutosDaCostureira(nome_costureira_txt);
 
         btn_sms = view.findViewById(R.id.btn_sms);
         btn_sms.setOnClickListener(new View.OnClickListener() {
@@ -242,5 +257,49 @@ public class fragment_tela_perfil_costureira extends Fragment {
 
         SmsManager smsManager = SmsManager.getDefault();
         smsManager.sendTextMessage(String.valueOf(phone_costureira), String.valueOf(phone_user), msg_sms, pi, null);
+    }
+
+    //Método para buscar os produtos da costureira
+    private void pegarProdutosDaCostureira(String userName) {
+        Log.e("userName", userName);
+        String API_BASE_URL = "https://interdisciplinarr.onrender.com/";
+        retrofit = new Retrofit.Builder()
+                .baseUrl(API_BASE_URL)
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+
+        ProductApi productApi = retrofit.create(ProductApi.class);
+        Call<List<Product>> call = productApi.getProductsByDressmarker(userName);
+
+        call.enqueue(new Callback<List<Product>>() {
+            @Override
+            public void onResponse(Call<List<Product>> call, Response<List<Product>> response) {
+                if (response.isSuccessful()) {
+                    List<Product> listaDeProdutos = response.body();
+
+                    if (listaDeProdutos != null && !listaDeProdutos.isEmpty()) {
+                        produtos.clear();
+                        produtos.addAll(listaDeProdutos);
+
+                        // Atualiza o adapter com a lista de produtos
+                        AdapterProdutosAdicionados adapter = new AdapterProdutosAdicionados(getActivity(), produtos);
+                        lista_produtos_costureira.setAdapter(adapter);
+                        adapter.notifyDataSetChanged();
+                    } else {
+                        Toast.makeText(getActivity(), "Nenhum produto cadastrado.", Toast.LENGTH_SHORT).show();
+                        Log.e("Error", "Nenhum produto encontrado.");
+                    }
+                } else {
+                    Toast.makeText(getActivity(), "Falha ao carregar produtos", Toast.LENGTH_SHORT).show();
+                    Log.e("Error", response.message());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<List<Product>> call, Throwable throwable) {
+                Toast.makeText(getActivity(), throwable.getMessage(), Toast.LENGTH_SHORT).show();
+                Log.e("Error", throwable.getMessage());
+            }
+        });
     }
 }

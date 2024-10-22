@@ -1,6 +1,8 @@
 package com.example.khiata.adapters;
 
 import android.content.Context;
+import android.net.Uri;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,8 +13,13 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.example.khiata.R;
 import com.example.khiata.models.Product;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -28,7 +35,8 @@ public class AdapterProdutosCostureira extends RecyclerView.Adapter<AdapterProdu
         this.produtos = produtos;
     }
     private Retrofit retrofit;
-
+    FirebaseStorage storage = FirebaseStorage.getInstance();
+    StorageReference storageRef = storage.getReference();
     @NonNull
     @Override
     public AdapterProdutosCostureira.MeuViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -45,6 +53,25 @@ public class AdapterProdutosCostureira extends RecyclerView.Adapter<AdapterProdu
         RatingBar avaliacao_produto_costureira = holder.avaliacao_produto_costureira;
         TextView titulo_produto = holder.titulo_produto;
         TextView preco_produto = holder.preco_produto;
+
+        Product produto = produtos.get(position);
+        titulo_produto.setText(produto.getName());
+        preco_produto.setText("R$ " + String.valueOf(produto.getPrice()));
+        avaliacao_produto_costureira.setRating((float) produto.getAvaliation());
+
+        StorageReference profileRef = storageRef.child("khiata_produtos/"+produto.getImageUrl()+".jpg");
+        profileRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+            @Override
+            public void onSuccess(Uri uri) {
+                Glide.with(context).load(uri).circleCrop().into(img_produto);
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                Log.d("TAG", "Falha ao obter URL da imagem"+ e.getMessage());
+                img_produto.setImageResource(R.drawable.add_img);
+            }
+        });
     }
 
     @Override

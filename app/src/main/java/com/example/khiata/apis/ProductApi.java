@@ -16,13 +16,14 @@ public interface ProductApi {
 
     @POST("/insert/product")
     Call<String> insertProduct(
-            @Query("id") int id,
             @Query("name") String name,
             @Query("price") double price,
             @Query("imageurl") String imageurl,
             @Query("typeId") int typeId,
             @Query("dressmarker") String dressmarker,
-            @Query("avaliation") String avaliation
+            @Query("avaliation") double avaliation,
+            @Query("description") String description,
+            @Query("size") String size
     );
 
     @DELETE("/delete")

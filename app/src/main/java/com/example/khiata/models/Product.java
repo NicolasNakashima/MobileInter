@@ -8,8 +8,10 @@ public class Product {
     private int typeId;
     private String dressMarkerName;
     private double avaliation;
+    private String description;
+    private String size;
 
-    public Product(int id, String name, double price, String imageUrl, int typeId, String dressMarkerName, double avaliation) {
+    public Product(int id, String name, double price, String imageUrl, int typeId, String dressMarkerName, double avaliation, String description, String size) {
         this.id = id;
         this.name = name;
         this.price = price;
@@ -17,6 +19,8 @@ public class Product {
         this.typeId = typeId;
         this.dressMarkerName = dressMarkerName;
         this.avaliation = avaliation;
+        this.description = description;
+        this.size = size;
     }
 
     public int getId() {
@@ -75,6 +79,22 @@ public class Product {
         this.avaliation = avaliation;
     }
 
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public String getSize() {
+        return size;
+    }
+
+    public void setSize(String size) {
+        this.size = size;
+    }
+
     @Override
     public String toString() {
         return "Product{" +
@@ -85,6 +105,8 @@ public class Product {
                 ", typeId=" + typeId +
                 ", dressMarkerName='" + dressMarkerName + '\'' +
                 ", avaliation=" + avaliation +
+                ", description='" + description + '\'' +
+                ", size='" + size + '\'' +
                 '}';
     }
 }

@@ -164,9 +164,9 @@ public class fragment_tela_area_costureira extends Fragment {
                 .build();
 
         ProductApi productApi = retrofit.create(ProductApi.class);
-        Call<List<Product>> call = productApi.getProductsByDressmarker(userName); // Mudança aqui
+        Call<List<Product>> call = productApi.getProductsByDressmarker(userName);
 
-        call.enqueue(new Callback<List<Product>>() {  // Mudança aqui
+        call.enqueue(new Callback<List<Product>>() {
             @Override
             public void onResponse(Call<List<Product>> call, Response<List<Product>> response) {
                 if (response.isSuccessful()) {

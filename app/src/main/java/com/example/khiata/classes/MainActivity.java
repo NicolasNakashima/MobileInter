@@ -38,6 +38,7 @@ import com.example.khiata.fragments.fragment_tela_compras;
 import com.example.khiata.fragments.fragment_tela_favoritos;
 import com.example.khiata.fragments.fragment_tela_plan_premium;
 import com.example.khiata.fragments.fragment_tela_statistics;
+import com.example.khiata.fragments.fragment_tela_cadastrar_produto;
 import com.example.khiata.fragments.fragment_tela_area_costureira;
 import com.example.khiata.models.User;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -64,6 +65,7 @@ public class MainActivity extends AppCompatActivity {
     private fragment_tela_enderecos fragment_tela_enderecos = new fragment_tela_enderecos();
     private fragment_tela_avaliacoes fragment_tela_avaliacoes = new fragment_tela_avaliacoes();
     private fragment_tela_plan_premium fragment_tela_plan_premium = new fragment_tela_plan_premium();
+    private fragment_tela_cadastrar_produto fragment_tela_cadastrar_produto = new fragment_tela_cadastrar_produto();
     ImageButton btn_lateral_menu, btn_navigation_favoritos, btn_navigation_home, btn_navigation_compras, btn_navigation_perfil;
     ImageView foto_perfil;
     View navigation_perfil, navigation_cursos, navigation_statistics, navigation_area_costureira, navigation_enderecos, navigation_avaliacoes, btn_logout;
@@ -84,6 +86,21 @@ public class MainActivity extends AppCompatActivity {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
+
+        Intent intent = getIntent();
+        if (intent != null) {
+            String fragmentName = intent.getStringExtra("fragment");
+            String imgProductName = intent.getStringExtra("imgName");
+            if (fragmentName.equals("cadastrar_produto") && imgProductName != null) {
+                // Carregar o fragmento de cadastrar produto
+                FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+                Bundle bundle = new Bundle();
+                bundle.putString("imgName", imgProductName);
+                fragment_tela_cadastrar_produto.setArguments(bundle);
+                transaction.replace(R.id.frame_conteudo, fragment_tela_cadastrar_produto);
+                transaction.commit();
+            }
+        }
 
         if (savedInstanceState == null) {
             FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();

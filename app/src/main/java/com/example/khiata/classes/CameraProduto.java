@@ -29,9 +29,11 @@ import androidx.core.content.ContextCompat;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
+import androidx.fragment.app.FragmentTransaction;
 
 import com.example.khiata.R;
 import com.example.khiata.databases_classes.Database;
+import com.example.khiata.fragments.fragment_tela_area_costureira;
 import com.example.khiata.fragments.fragment_tela_cadastrar_produto;
 import com.google.common.util.concurrent.ListenableFuture;
 import com.google.firebase.auth.FirebaseAuth;
@@ -41,6 +43,7 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -102,7 +105,8 @@ public class CameraProduto extends AppCompatActivity {
         //Capturar imagem
         Button button = findViewById(R.id.btn_capture_img);
         button.setOnClickListener(view -> {
-            takePhoto();
+            String imgName = UUID.randomUUID().toString();
+            takePhoto(imgName);
         });
 
         //Alterar camera
@@ -132,7 +136,7 @@ public class CameraProduto extends AppCompatActivity {
                 }
             });
 
-    private void takePhoto() {
+    private void takePhoto(String imgName) {
 
         if(imageCapture == null){
             return;
@@ -141,7 +145,7 @@ public class CameraProduto extends AppCompatActivity {
         //Definir nome e caminho da imagem
 //        String name = new SimpleDateFormat(userName, Locale.US).format(System.currentTimeMillis());
         ContentValues contentValues = new ContentValues();
-        contentValues.put(MediaStore.MediaColumns.DISPLAY_NAME, "NomeDoProduto");//Não sei o que colocar
+        contentValues.put(MediaStore.MediaColumns.DISPLAY_NAME, imgName);
         contentValues.put(MediaStore.MediaColumns.MIME_TYPE, "image/jpeg");
         contentValues.put(MediaStore.MediaColumns.RELATIVE_PATH, "Pictures/CameraXGaleria");
 
@@ -182,12 +186,12 @@ public class CameraProduto extends AppCompatActivity {
                         foto.setImageURI(outputFileResults.getSavedUri());
                         foto.setVisibility(View.VISIBLE);
                         Toast.makeText(getBaseContext(), "Imagem salva", Toast.LENGTH_SHORT).show();
-                        database.uploadFotoPerfil(getBaseContext(), foto, docData, "NomeDoProduto");
+                        database.uploadFotoPerfil(getBaseContext(), foto, docData, imgName);
 
-//                    // Iniciar a MainActivity e carregar o fragmento de perfil
-//                    Intent intent = new Intent(getBaseContext(), MainActivity.class);
-//                    intent.putExtra("fragment_tela_perfil", "fragment_tela_perfil");
-//                    startActivity(intent);
+                        Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                        intent.putExtra("fragment", "cadastrar_produto");
+                        intent.putExtra("imgName", imgName);
+                        startActivity(intent);
                     }
 
                     @Override
