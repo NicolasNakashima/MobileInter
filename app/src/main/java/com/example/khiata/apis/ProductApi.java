@@ -30,7 +30,7 @@ public interface ProductApi {
     Call<String> deleteProduct(@Query("id") int id);
 
     @GET("/get/name")
-    Call<List<Product>> getByName(@Query("name") String name);
+    Call<List<String>> getByName(@Query("name") String name);
 
     @GET("/get/dressmarker")
     Call<List<Product>> getProductsByDressmarker(@Query("dressmarker") String dressmarker);

@@ -18,12 +18,17 @@ import android.widget.Toast;
 
 import com.example.khiata.R;
 import com.example.khiata.adapters.AdapterProdutosAdicionados;
+import com.example.khiata.adapters.AdapterProdutosPesquisados;
 import com.example.khiata.apis.ProductApi;
 import com.example.khiata.classes.tela_carrinho;
 import com.example.khiata.models.Product;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 
+import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.function.LongFunction;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -106,10 +111,12 @@ public class fragment_tela_pesquisa extends Fragment {
             @Override
             public void onClick(View v) {
                 String busca = ((EditText) view.findViewById(R.id.barra_pesquisa)).getText().toString();
-                if(!busca.isEmpty()){
-                    Toast.makeText(getActivity(), "Nenhum produto encontrado", Toast.LENGTH_SHORT).show();
+                if(busca.isEmpty()){
+                    Log.e("busca", busca);
+                    Toast.makeText(getActivity(), "Preencha o campo de pesquisa", Toast.LENGTH_SHORT).show();
                 }
                 else{
+                    Log.e("busca", busca);
                     lista_produtos_pesquisados = view.findViewById(R.id.lista_produtos_pesquisados);
                     lista_produtos_pesquisados.setLayoutManager(new LinearLayoutManager(getContext()));
                     pegarProdutosPesquisados(busca);
@@ -132,6 +139,7 @@ public class fragment_tela_pesquisa extends Fragment {
 
     //Método para buscar os produtos pesquisados
     private void pegarProdutosPesquisados(String productName) {
+        Log.e("productName", productName);
         String API_BASE_URL = "https://interdisciplinarr.onrender.com/";
         retrofit = new Retrofit.Builder()
                 .baseUrl(API_BASE_URL)
@@ -139,22 +147,38 @@ public class fragment_tela_pesquisa extends Fragment {
                 .build();
 
         ProductApi productApi = retrofit.create(ProductApi.class);
-        Call<List<Product>> call = productApi.getByName(productName); // Mudança aqui
+        Call<List<String>> call = productApi.getByName(productName);
 
-        call.enqueue(new Callback<List<Product>>() {  // Mudança aqui
+        call.enqueue(new Callback<List<String>>() {
             @Override
-            public void onResponse(Call<List<Product>> call, Response<List<Product>> response) {
+            public void onResponse(Call<List<String>> call, Response<List<String>> response) {
                 if (response.isSuccessful()) {
-                    List<Product> listaDeProdutos = response.body();
+                    List<String> jsonStringList = response.body();  // A resposta já é uma lista de Strings
+                    if (jsonStringList != null && !jsonStringList.isEmpty()) {
+                        // Como a lista possui apenas 1 item por pesquisa, pegamos o primeiro item
+                        String jsonString = jsonStringList.get(0);
 
-                    if (listaDeProdutos != null && !listaDeProdutos.isEmpty()) {
-                        produtos.clear();
-                        produtos.addAll(listaDeProdutos);
+                        // Fazendo o parse da String para um JSON válido
+                        jsonString = jsonString.replace("'", "\"");  // Substitui aspas simples por aspas duplas
 
-                        // Atualiza o adapter com a lista de produtos
-                        AdapterProdutosAdicionados adapter = new AdapterProdutosAdicionados(getActivity(), produtos);
-                        lista_produtos_pesquisados.setAdapter(adapter);
-                        adapter.notifyDataSetChanged();
+                        // Agora faça o parsing dessa String JSON para um objeto
+                        Gson gson = new Gson();
+                        Type productType = new TypeToken<Product>(){}.getType();
+                        Product produto = gson.fromJson(jsonString, productType);
+
+                        if (produto != null) {
+                            Toast.makeText(getActivity(), "Produtos encontrados.", Toast.LENGTH_SHORT).show();
+                            produtos.clear();
+                            produtos.add(produto);
+
+                            // Atualiza o adapter com a lista de produtos
+                            AdapterProdutosPesquisados adapter = new AdapterProdutosPesquisados(getActivity(), produtos);
+                            lista_produtos_pesquisados.setAdapter(adapter);
+                            adapter.notifyDataSetChanged();
+                        } else {
+                            Toast.makeText(getActivity(), "Nenhum produto encontrado.", Toast.LENGTH_SHORT).show();
+                            Log.e("Error", "Nenhum produto encontrado.");
+                        }
                     } else {
                         Toast.makeText(getActivity(), "Nenhum produto encontrado.", Toast.LENGTH_SHORT).show();
                         Log.e("Error", "Nenhum produto encontrado.");
@@ -166,7 +190,7 @@ public class fragment_tela_pesquisa extends Fragment {
             }
 
             @Override
-            public void onFailure(Call<List<Product>> call, Throwable throwable) {
+            public void onFailure(Call<List<String>> call, Throwable throwable) {
                 Toast.makeText(getActivity(), throwable.getMessage(), Toast.LENGTH_SHORT).show();
                 Log.e("Error", throwable.getMessage());
             }

@@ -53,7 +53,7 @@ public class AdapterProdutosAdicionados extends RecyclerView.Adapter<AdapterProd
     @Override
     public AdapterProdutosAdicionados.MeuViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         //Carregar o tempplate de visualização
-        View viewItem = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_endereco, parent, false);
+        View viewItem = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_produto_adicionado, parent, false);
 
         //Criar o ViewHolder para carregar os dados
         return new AdapterProdutosAdicionados.MeuViewHolder(viewItem);

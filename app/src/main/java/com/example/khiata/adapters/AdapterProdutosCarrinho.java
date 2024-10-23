@@ -36,7 +36,7 @@ public class AdapterProdutosCarrinho extends RecyclerView.Adapter<AdapterProduto
     @Override
     public AdapterProdutosCarrinho.MeuViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         //Carregar o tempplate de visualização
-        View viewItem = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_costureira, parent, false);
+        View viewItem = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_produto_carrinho, parent, false);
 
         //Criar o ViewHolder para carregar os dados
         return new AdapterProdutosCarrinho.MeuViewHolder(viewItem);
