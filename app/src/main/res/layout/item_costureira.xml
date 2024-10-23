@@ -44,8 +44,8 @@
 
         <ImageView
             android:id="@+id/img_costureira"
-            android:layout_width="108dp"
-            android:layout_height="95dp"
+            android:layout_width="99dp"
+            android:layout_height="99dp"
             android:scaleType="centerCrop"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"

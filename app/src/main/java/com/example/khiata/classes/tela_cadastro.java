@@ -83,10 +83,11 @@ public class tela_cadastro extends AppCompatActivity {
         btn_cadastrar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                String regexTelefone = "\\d{2}\\d{5}\\d{4}"; //Expressão regular para o formato DDXXXXXXXXX
                 String novoNome = ((EditText) findViewById(R.id.novoNome)).getText().toString();
                 String novoEmail = ((EditText) findViewById(R.id.novoEmail)).getText().toString();
                 String novoCPF = ((EditText) findViewById(R.id.novoCPF)).getText().toString();
-                int novoPhone = Integer.parseInt(((EditText) findViewById(R.id.novoPhone)).getText().toString());
+                String novoPhone = ((EditText) findViewById(R.id.novoPhone)).getText().toString();
                 int novaIdade = Integer.parseInt(((EditText) findViewById(R.id.novaIdade)).getText().toString());
                 String novaSenha = ((EditText) findViewById(R.id.novaSenha)).getText().toString();
                 String novaConfirmaSenha = ((EditText) findViewById(R.id.confirmNovaSenha)).getText().toString();
@@ -95,7 +96,7 @@ public class tela_cadastro extends AppCompatActivity {
                 RadioGroup opcoesGenero = findViewById(R.id.opcoesGenero);
                 int selectedId = opcoesGenero.getCheckedRadioButtonId();
 
-                if(novoNome.isEmpty() || novoEmail.isEmpty() || novoCPF.isEmpty() || novoPhone == 0 || novaIdade == 0 || novaSenha.isEmpty() || novaConfirmaSenha.isEmpty() || selectedId == -1) {
+                if(novoNome.isEmpty() || novoEmail.isEmpty() || novoCPF.isEmpty() || novoPhone.isEmpty() || novaIdade == 0 || novaSenha.isEmpty() || novaConfirmaSenha.isEmpty() || selectedId == -1) {
                     Dialog dialog = new Dialog(tela_cadastro.this);
                     LayoutInflater inflater = getLayoutInflater();
                     View popupView = inflater.inflate(R.layout.popup_mensagem, null);
@@ -115,19 +116,37 @@ public class tela_cadastro extends AppCompatActivity {
                     dialog.show();
                 } else{
                     if(novaSenha.equals(novaConfirmaSenha)){
+                        if(novoPhone.matches(regexTelefone)){
+                            int novoGenero = 0;
+                            if(selectedId == R.id.opcaoHomem){
+                                novoGenero = 2;
+                            } else if(selectedId == R.id.opcaoMulher){
+                                novoGenero = 1;
+                            }
 
-                        int novoGenero = 0;
-                        if(selectedId == R.id.opcaoHomem){
-                            novoGenero = 2;
-                        } else if(selectedId == R.id.opcaoMulher){
-                            novoGenero = 1;
+                            User novoUser = new User( novoNome, novoCPF, novoGenero,novaIdade,confirmCostureira,0, novoPhone, null,novaSenha, novoEmail, null);
+                            Log.e("novoUser", novoUser.toString());
+                            Log.d("User", new Gson().toJson(novoUser));
+                            cadastrarUsuarioAPI(novoUser);
+                        } else{
+                            Dialog dialog = new Dialog(tela_cadastro.this);
+                            LayoutInflater inflater = getLayoutInflater();
+                            View popupView = inflater.inflate(R.layout.popup_mensagem, null);
+                            TextView msgPopup = popupView.findViewById(R.id.msg_popup);
+                            msgPopup.setText("Por favor, digite um telefone valido no formato DDXXXXXXXXX.");
+                            ImageView imgPopup = popupView.findViewById(R.id.img_popup);
+                            imgPopup.setImageResource(R.drawable.icon_pop_alert);
+                            Button btnPopup = popupView.findViewById(R.id.btn_popup);
+                            btnPopup.setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View v) {
+                                    dialog.cancel();
+                                }
+                            });
+                            dialog.setContentView(popupView);
+                            dialog.setCancelable(true);
+                            dialog.show();
                         }
-
-                        User novoUser = new User( novoNome, novoCPF, novoGenero,novaIdade,confirmCostureira,false, novoPhone, null,novaSenha, novoEmail, null);
-                        Log.e("novoUser", novoUser.toString());
-                        Log.d("User", new Gson().toJson(novoUser));
-                        cadastrarUsuarioAPI(novoUser);
-
                     } else{
                         Dialog dialog = new Dialog(tela_cadastro.this);
                         LayoutInflater inflater = getLayoutInflater();
@@ -177,8 +196,19 @@ public class tela_cadastro extends AppCompatActivity {
                     ResponseBody successMessage = response.body(); // Captura a mensagem de sucesso
                     Toast.makeText(tela_cadastro.this, successMessage.toString(), Toast.LENGTH_LONG).show();
                     cadastrarUsuarioFirebase(user.getEmail(), user.getPassword());
-                    Intent intent = new Intent(tela_cadastro.this, MainActivity.class);
-                    startActivity(intent);
+                    FirebaseAuth auth = FirebaseAuth.getInstance();
+                    auth.signInWithEmailAndPassword(user.getEmail(), user.getPassword())
+                        .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                            @Override
+                            public void onComplete(@NonNull Task<AuthResult> task) {
+                                if(task.isSuccessful()){
+                                    Intent intent = new Intent(tela_cadastro.this, MainActivity.class);
+                                    startActivity(intent);
+                                } else{
+                                    Toast.makeText(tela_cadastro.this, "Erro ao realizar o login: " + task.getException().getMessage(), Toast.LENGTH_LONG).show();
+                                }
+                            }
+                        });
                 }
             }
 

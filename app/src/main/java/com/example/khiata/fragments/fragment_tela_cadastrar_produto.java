@@ -1,6 +1,7 @@
 package com.example.khiata.fragments;
 
 import android.app.Dialog;
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 
@@ -26,6 +27,8 @@ import com.example.khiata.R;
 import com.example.khiata.apis.AddressApi;
 import com.example.khiata.apis.ProductApi;
 import com.example.khiata.apis.UserApi;
+import com.example.khiata.classes.CameraPerfil;
+import com.example.khiata.classes.CameraProduto;
 import com.example.khiata.models.Address;
 import com.example.khiata.models.Product;
 import com.example.khiata.models.User;
@@ -90,7 +93,7 @@ public class fragment_tela_cadastrar_produto extends Fragment {
         }
     }
 
-    ImageView voltar_area_costureira;
+    ImageView voltar_area_costureira, btn_tirar_foto_produto;
     Button btn_cancelar_cadastrar_produto, btn_adicionar_produto;
     String nome_usuario;
     private Retrofit retrofit;
@@ -139,16 +142,26 @@ public class fragment_tela_cadastrar_produto extends Fragment {
                     @Override
                     public void onSuccess(Uri uri) {
                         Glide.with(getContext()).load(uri).circleCrop().into(img_produto);
+                        Log.d("TAG", "URL da imagem do produto: "+uri);
                     }
                 }).addOnFailureListener(new OnFailureListener() {
                     @Override
                     public void onFailure(@NonNull Exception e) {
-                        Log.d("TAG", "Falha ao obter URL da imagem"+ e.getMessage());
+                        Log.d("TAG", "Falha ao obter URL da imagem do produto"+ e.getMessage());
                         img_produto.setImageResource(R.drawable.add_img);
                     }
                 });
             }
         }
+
+        btn_tirar_foto_produto = view.findViewById(R.id.btn_tirar_foto_produto);
+        btn_tirar_foto_produto.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getContext(), CameraProduto.class);
+                startActivity(intent);
+            }
+        });
 
 
         //Adicionar Produto
@@ -157,7 +170,15 @@ public class fragment_tela_cadastrar_produto extends Fragment {
             @Override
             public void onClick(View v) {
                 String novoTitulo = ((EditText) view.findViewById(R.id.editTitulo)).getText().toString();
-                double novoPreco = Double.parseDouble(((EditText) view.findViewById(R.id.editPrice)).getText().toString());
+                String precoText = ((EditText) view.findViewById(R.id.editPrice)).getText().toString();
+                double novoPreco = 0;
+                if (!precoText.isEmpty()) {
+                    try {
+                        novoPreco = Double.parseDouble(precoText);
+                    } catch (NumberFormatException e) {
+                        novoPreco = 0;
+                    }
+                }
                 String novaDescricao = ((EditText) view.findViewById(R.id.editDescricao)).getText().toString();
                 String drawableImg = ((ImageView) view.findViewById(R.id.img_produto)).getDrawable().toString();
                 GridLayout opcoesTamanho = view.findViewById(R.id.opcoesTamanho);
@@ -186,7 +207,7 @@ public class fragment_tela_cadastrar_produto extends Fragment {
                     LayoutInflater inflater = getLayoutInflater();
                     View popupView = inflater.inflate(R.layout.popup_mensagem, null);
                     TextView msgPopup = popupView.findViewById(R.id.msg_popup);
-                    msgPopup.setText("Por favor, tire uma foto e preencha todos os campos antes de adicionar um novo produto.");
+                    msgPopup.setText("Por favor, tire uma foto e preencha todos os campos.");
                     ImageView imgPopup = popupView.findViewById(R.id.img_popup);
                     imgPopup.setImageResource(R.drawable.icon_pop_alert);
                     Button btnPopup = popupView.findViewById(R.id.btn_popup);
@@ -222,18 +243,26 @@ public class fragment_tela_cadastrar_produto extends Fragment {
             public void onResponse(Call<User> call, Response<User> response) {
                 User userResponse = response.body();
                 nome_usuario = userResponse.getName();
+                Log.e("Nome do Usuário", nome_usuario);
                 cadastrarProdutoUsuario(nome_usuario, novoTitulo, novoPreco, novaDescricao, imgName, novoTamanho);
             }
 
             @Override
             public void onFailure(Call<User> call, Throwable throwable) {
                 Toast.makeText(getActivity(), throwable.getMessage(), Toast.LENGTH_SHORT).show();
+                Log.e("Error", throwable.getMessage());
             }
         });
     }
 
     //Método para cadastrar um novo produto
     private void cadastrarProdutoUsuario(String nome_usuario, String novoTitulo, double novoPreco, String novaDescricao, String imgName, String novoTamanho) {
+        Log.e("Nome do Usuário", nome_usuario);
+        Log.e("Novo Tamanho", novoTamanho);
+        Log.e("Imagem", imgName);
+        Log.e("Novo Preço", String.valueOf(novoPreco));
+        Log.e("Novo Título", novoTitulo);
+        Log.e("Nova Descricão", novaDescricao);
         String API_BASE_URL = "https://interdisciplinarr.onrender.com/";
         retrofit = new Retrofit.Builder()
                 .baseUrl(API_BASE_URL)
@@ -251,6 +280,7 @@ public class fragment_tela_cadastrar_produto extends Fragment {
                         Log.e("Error", errorBody);
                     } catch (IOException e) {
                         e.printStackTrace();
+                        Log.e("Error", e.getMessage());
                     }
                 } else {
                     Toast.makeText(getActivity(), "produto cadastrado com sucesso", Toast.LENGTH_LONG).show();

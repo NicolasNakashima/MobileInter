@@ -87,11 +87,17 @@ public class MainActivity extends AppCompatActivity {
             return insets;
         });
 
+        if (savedInstanceState == null) {
+            FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+            transaction.replace(R.id.frame_conteudo, fragment_tela_home);
+            transaction.commit();
+        }
+
         Intent intent = getIntent();
         if (intent != null) {
             String fragmentName = intent.getStringExtra("fragment");
             String imgProductName = intent.getStringExtra("imgName");
-            if (fragmentName.equals("cadastrar_produto") && imgProductName != null) {
+            if ("cadastrar_produto".equals(fragmentName) && imgProductName != null) {
                 // Carregar o fragmento de cadastrar produto
                 FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
                 Bundle bundle = new Bundle();
@@ -100,12 +106,6 @@ public class MainActivity extends AppCompatActivity {
                 transaction.replace(R.id.frame_conteudo, fragment_tela_cadastrar_produto);
                 transaction.commit();
             }
-        }
-
-        if (savedInstanceState == null) {
-            FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-            transaction.replace(R.id.frame_conteudo, fragment_tela_home);
-            transaction.commit();
         }
 
         //Ir para tela de perfil

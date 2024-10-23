@@ -118,23 +118,16 @@ public class fragment_tela_editar_perfil extends Fragment {
         btn_salvar_alteracoes.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                String regexTelefone = "\\d{2}\\d{5}\\d{4}"; //Expressão regular para o formato DDXXXXXXXXX
                 String atualizarNome = ((EditText) view.findViewById(R.id.atualizarNome)).getText().toString();
                 int atualizarIdade = 0;
-                int atualizarPhone = 0;
+                String atualizarPhone = ((EditText) view.findViewById(R.id.atualizarPhone)).getText().toString();
                 String idadeTexto = ((EditText) view.findViewById(R.id.atualizarIdade)).getText().toString();
                 if (!idadeTexto.isEmpty()) {
                     try {
                         atualizarIdade = Integer.parseInt(idadeTexto);
                     } catch (NumberFormatException e) {
                         Log.e("Error", "Idade inválida: " + e.getMessage());
-                    }
-                }
-                String phoneTexto = ((EditText) view.findViewById(R.id.atualizarPhone)).getText().toString();
-                if (!phoneTexto.isEmpty()) {
-                    try {
-                        atualizarPhone = Integer.parseInt(phoneTexto);
-                    } catch (NumberFormatException e) {
-                        Log.e("Error", "Telefone inválido: " + e.getMessage());
                     }
                 }
                 RadioGroup opcoesGenero = view.findViewById(R.id.opcoesGenero);
@@ -147,8 +140,29 @@ public class fragment_tela_editar_perfil extends Fragment {
                 if(atualizarIdade > 0){
                     atualizacoes.put("age", atualizarIdade);
                 }
-                if(atualizarPhone > 0){
-                    atualizacoes.put("phone", atualizarPhone);
+                if(!atualizarPhone.isEmpty()){
+                    if (atualizarPhone.matches(regexTelefone)) {
+                        atualizacoes.put("phones", atualizarPhone);
+                    } else {
+                        Dialog dialog = new Dialog(getActivity());
+                        LayoutInflater inflater = getLayoutInflater();
+                        View popupView = inflater.inflate(R.layout.popup_mensagem, null);
+                        TextView msgPopup = popupView.findViewById(R.id.msg_popup);
+                        msgPopup.setText("Por favor, digite um telefone valido no formato DDXXXXXXXXX.");
+                        ImageView imgPopup = popupView.findViewById(R.id.img_popup);
+                        imgPopup.setImageResource(R.drawable.icon_pop_alert);
+                        Button btnPopup = popupView.findViewById(R.id.btn_popup);
+                        btnPopup.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                dialog.cancel();
+                            }
+                        });
+                        dialog.setContentView(popupView);
+                        dialog.setCancelable(true);
+                        dialog.show();
+                    }
+
                 }
                 if (selectedId != -1) {
                     int novoGenero = 0;

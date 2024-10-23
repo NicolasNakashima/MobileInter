@@ -99,7 +99,7 @@ public class fragment_tela_perfil_costureira extends Fragment {
     String email_costureira;
     TextView nome_costureira;
     String nome_costureira_txt;
-    int phone_costureira, phone_user;
+    String phone_costureira, phone_user;
     private Retrofit retrofit;
     FirebaseStorage storage = FirebaseStorage.getInstance();
     StorageReference storageRef = storage.getReference();
@@ -148,6 +148,7 @@ public class fragment_tela_perfil_costureira extends Fragment {
         //Listar os produtos
         lista_produtos_costureira = view.findViewById(R.id.lista_produtos_costureira);
         lista_produtos_costureira.setLayoutManager(new GridLayoutManager(getActivity(), 2));
+        Log.e("nome_costureira", nome_costureira_txt);
         pegarProdutosDaCostureira(nome_costureira_txt);
 
         btn_sms = view.findViewById(R.id.btn_sms);
@@ -251,7 +252,7 @@ public class fragment_tela_perfil_costureira extends Fragment {
     }
 
     //Método para enviar SMS
-    private void enviarSms(int phone_costureira, String msg_sms, int phone_user) {
+    private void enviarSms(String phone_costureira, String msg_sms, String phone_user) {
         Intent intent = new Intent(String.valueOf(getActivity()));
         PendingIntent pi = PendingIntent.getActivity(getActivity(), RESULT_OK, intent, PendingIntent.FLAG_IMMUTABLE);
 
@@ -261,6 +262,10 @@ public class fragment_tela_perfil_costureira extends Fragment {
 
     //Método para buscar os produtos da costureira
     private void pegarProdutosDaCostureira(String userName) {
+        if (userName == null) {
+            Log.e("Error", "userName is null");
+            return;
+        }
         Log.e("userName", userName);
         String API_BASE_URL = "https://interdisciplinarr.onrender.com/";
         retrofit = new Retrofit.Builder()

@@ -186,7 +186,7 @@ public class CameraProduto extends AppCompatActivity {
                         foto.setImageURI(outputFileResults.getSavedUri());
                         foto.setVisibility(View.VISIBLE);
                         Toast.makeText(getBaseContext(), "Imagem salva", Toast.LENGTH_SHORT).show();
-                        database.uploadFotoPerfil(getBaseContext(), foto, docData, imgName);
+                        database.uploadFotoProduto(getBaseContext(), foto, docData, imgName);
 
                         Intent intent = new Intent(getApplicationContext(), MainActivity.class);
                         intent.putExtra("fragment", "cadastrar_produto");
