@@ -3,6 +3,7 @@ package com.example.khiata.adapters;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
+import android.net.Uri;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,12 +16,17 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.example.khiata.R;
 import com.example.khiata.apis.AddressApi;
 import com.example.khiata.apis.ProductApi;
 import com.example.khiata.classes.tela_inicial;
 import com.example.khiata.models.Product;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -41,7 +47,8 @@ public class AdapterProdutosAdicionados extends RecyclerView.Adapter<AdapterProd
         this.produtos = produtos;
     }
     private Retrofit retrofit;
-
+    FirebaseStorage storage = FirebaseStorage.getInstance();
+    StorageReference storageRef = storage.getReference();
     @NonNull
     @Override
     public AdapterProdutosAdicionados.MeuViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -63,6 +70,20 @@ public class AdapterProdutosAdicionados extends RecyclerView.Adapter<AdapterProd
         Product produto = produtos.get(position);
         titulo_produto.setText(produto.getName());
         preco_produto.setText("R$ " + String.valueOf(produto.getPrice()));
+
+        StorageReference profileRef = storageRef.child("khiata_produtos/"+produto.getImageUrl()+".jpg");
+        profileRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+            @Override
+            public void onSuccess(Uri uri) {
+                Glide.with(context).load(uri).circleCrop().into(img_produto);
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                Log.d("TAG", "Falha ao obter URL da imagem"+ e.getMessage());
+                img_produto.setImageResource(R.drawable.add_img);
+            }
+        });
 
         // Listener para excluir o produto
         btn_excluir_produto.setOnClickListener(new View.OnClickListener() {

@@ -164,7 +164,7 @@
             </androidx.constraintlayout.widget.ConstraintLayout>
 
             <Button
-                android:id="@+id/button"
+                android:id="@+id/btn_adquirir_premium"
                 android:layout_width="254dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="40dp"

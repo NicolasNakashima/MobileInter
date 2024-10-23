@@ -110,7 +110,7 @@ public class fragment_tela_home extends Fragment {
         } catch (Exception e){
             throw new RuntimeException(e);
         }
-        AdapterProdutosRecomendados produtosRecomendados = new AdapterProdutosRecomendados(listaProdutos);
+        AdapterProdutosRecomendados produtosRecomendados = new AdapterProdutosRecomendados(getActivity(), listaProdutos);
         produtos_recomendados.setAdapter(produtosRecomendados);
         produtos_recomendados.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
 

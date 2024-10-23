@@ -47,4 +47,15 @@
         app:layout_constraintTop_toTopOf="@+id/toolbar2"
         app:layout_constraintVertical_bias="0.461" />
 
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/lista_avaliacoes_usuario"
+        android:layout_width="360dp"
+        android:layout_height="700dp"
+        android:layout_marginTop="20dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.515"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/toolbar2"
+        tools:listitem="@layout/item_avaliacao_usuario" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

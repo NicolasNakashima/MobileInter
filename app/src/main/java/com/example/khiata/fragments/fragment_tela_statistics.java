@@ -66,6 +66,7 @@ public class fragment_tela_statistics extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_tela_statistics, container, false);
 
+        //Botão para voltar para a tela home
         voltar_home = view.findViewById(R.id.voltar_home);
         voltar_home.setOnClickListener(new View.OnClickListener() {
             @Override

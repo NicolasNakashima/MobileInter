@@ -127,12 +127,12 @@ public class fragment_tela_adicionar_endereco extends Fragment {
                 String novoComplemento = ((EditText) view.findViewById(R.id.editComplemento)).getText().toString();
                 String novoRotulo = ((EditText) view.findViewById(R.id.editRotulo)).getText().toString();
 
-                if(novoDestinatario.isEmpty() || novaRua.isEmpty() || novoNumero == 0 || novoComplemento.isEmpty() || novoRotulo.isEmpty()){
+                if(novoDestinatario.isEmpty() || novaRua.isEmpty() || novoNumero == 0 || novoRotulo.isEmpty()){
                     Dialog dialog = new Dialog(getActivity());
                     LayoutInflater inflater = getLayoutInflater();
                     View popupView = inflater.inflate(R.layout.popup_mensagem, null);
                     TextView msgPopup = popupView.findViewById(R.id.msg_popup);
-                    msgPopup.setText("Por favor, preencha todos os campos para cadastrar um novo endereço.");
+                    msgPopup.setText("Por favor, preencha os campos para cadastrar um novo endereço.");
                     ImageView imgPopup = popupView.findViewById(R.id.img_popup);
                     imgPopup.setImageResource(R.drawable.icon_pop_alert);
                     Button btnPopup = popupView.findViewById(R.id.btn_popup);
@@ -146,6 +146,9 @@ public class fragment_tela_adicionar_endereco extends Fragment {
                     dialog.setCancelable(true);
                     dialog.show();
                 } else{
+                    if(novoComplemento.isEmpty()){
+                        novoComplemento = null;
+                    }
                     Address novoEndereco = new Address(novoDestinatario, novaRua, novoNumero, novoComplemento, novoRotulo);
                     Log.d("Address", new Gson().toJson(novoEndereco));
                     buscarIdDoUsuario(FirebaseAuth.getInstance().getCurrentUser().getEmail(), novoEndereco);

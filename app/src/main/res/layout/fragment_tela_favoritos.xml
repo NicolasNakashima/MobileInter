@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     tools:context=".fragments.fragment_tela_favoritos"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:background="#FFFFFF">
+    android:background="#EBEBEB">
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar2"
@@ -46,5 +46,25 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/toolbar2"
         app:layout_constraintVertical_bias="0.461" />
+
+    <ImageView
+        android:id="@+id/btn_carrinho"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="24dp"
+        android:src="@drawable/navigation_kart"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/lista_produtos_favoritos"
+        android:layout_width="392dp"
+        android:layout_height="700dp"
+        android:layout_marginTop="20dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/toolbar2"
+        tools:listitem="@layout/item_produto_favoritado" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

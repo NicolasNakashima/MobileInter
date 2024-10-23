@@ -1,8 +1,10 @@
 package com.example.khiata.adapters;
 
+import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -14,12 +16,17 @@ import com.example.khiata.models.Produto;
 import java.util.ArrayList;
 import java.util.List;
 
+import retrofit2.Retrofit;
+
 public class AdapterProdutosRecomendados extends RecyclerView.Adapter<AdapterProdutosRecomendados.MeuViewHolder> {
     private List<Produto> produtos = new ArrayList();
+    private Context context;
 
-    public AdapterProdutosRecomendados(List<Produto> produtos) {
+    public AdapterProdutosRecomendados(Context context, List<Produto> produtos) {
+        this.context = context;
         this.produtos = produtos;
     }
+    private Retrofit retrofit;
 
     @NonNull
     @Override
@@ -46,11 +53,13 @@ public class AdapterProdutosRecomendados extends RecyclerView.Adapter<AdapterPro
 
     public class MeuViewHolder extends RecyclerView.ViewHolder{
         TextView titulo_produto, preco_produto;
+        ImageView img_produto;
 
         public MeuViewHolder(@NonNull View itemView) {
             super(itemView);
             titulo_produto = itemView.findViewById(R.id.titulo_produto);
             preco_produto = itemView.findViewById(R.id.preco_produto);
+            img_produto = itemView.findViewById(R.id.img_produto);
         }
     }
 }

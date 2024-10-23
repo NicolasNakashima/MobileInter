@@ -9,8 +9,8 @@ public class User {
     private int genderId;
     private int age;
     private boolean isDressmaker;
-    private boolean isPremium; //Deixa null, porque ele se torna premium dentro do App
-    private int phone;
+    private int premiumStatus; //Deixa 0, (0 = normal, 1 = premium, 2 = pendente)
+    private String phones;
     private String imageURL; //Deixa null
     private String password;
     private String email;
@@ -19,29 +19,29 @@ public class User {
 
     // Constructor
     public User(String name, String cpf, int genderId, int age, boolean isDressmaker,
-                boolean isPremium, int phone, String imageURL, String password,
+                int premiumStatus, String phones, String imageURL, String password,
                 String email, String profilePictureUrl) {
         this.name = name;
         this.cpf = cpf;
         this.genderId = genderId;
         this.age = age;
         this.isDressmaker = isDressmaker;
-        this.isPremium = isPremium;
-        this.phone = phone;
+        this.premiumStatus = premiumStatus;
+        this.phones = phones;
         this.imageURL = imageURL;
         this.password = password;
         this.email = email;
         this.profilePictureUrl = profilePictureUrl;
     }
 
-    public User(String name, String cpf, int genderId, int age, boolean isDressmaker, boolean isPremium, int phone, String imageURL, String password, String email, String profilePictureUrl, List<Address> addresses) {
+    public User(String name, String cpf, int genderId, int age, boolean isDressmaker, int premiumStatus, String phones, String imageURL, String password, String email, String profilePictureUrl, List<Address> addresses) {
         this.name = name;
         this.cpf = cpf;
         this.genderId = genderId;
         this.age = age;
         this.isDressmaker = isDressmaker;
-        this.isPremium = isPremium;
-        this.phone = phone;
+        this.premiumStatus = premiumStatus;
+        this.phones = phones;
         this.imageURL = imageURL;
         this.password = password;
         this.email = email;
@@ -99,20 +99,18 @@ public class User {
         isDressmaker = dressmaker;
     }
 
-    public boolean isPremium() {
-        return isPremium;
+    public int getPremiumStatus() {
+        return premiumStatus;
     }
 
-    public void setPremium(boolean premium) {
-        isPremium = premium;
+    public void setPremiumStatus(int premiumStatus) {
+        premiumStatus= premiumStatus;
     }
 
-    public int getPhone() {
-        return phone;
-    }
+    public String getPhone() {return phones;}
 
-    public void setPhone(int phone) {
-        this.phone = phone;
+    public void setPhone(String phones) {
+        this.phones = phones;
     }
 
     public String getImageURL() {
@@ -163,8 +161,8 @@ public class User {
                 ", genderID=" + genderId +
                 ", age=" + age +
                 ", isDressmaker=" + isDressmaker +
-                ", isPremium=" + isPremium +
-                ", phone=" + phone +
+                ", premiumStatus=" + premiumStatus +
+                ", phone=" + phones +
                 ", imageURL='" + imageURL + '\'' +
                 ", password='" + password + '\'' +
                 ", email='" + email + '\'' +

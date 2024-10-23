@@ -7,17 +7,9 @@ public class Address {
     private int number;
     private String complement;
     private String label;
+    private String cep;
 
     public Address(String recipient ,String street, int number, String complement, String label) {
-        this.recipient = recipient;
-        this.street = street;
-        this.number = number;
-        this.complement = complement;
-        this.label = label;
-    }
-
-    public Address(int id,String recipient ,String street, int number, String complement, String label) {
-        this.id = id;
         this.recipient = recipient;
         this.street = street;
         this.number = number;
@@ -72,6 +64,14 @@ public class Address {
         this.recipient = recipient;
     }
 
+    public String getCep() {
+        return cep;
+    }
+
+    public void setCep(String cep) {
+        this.cep = cep;
+    }
+
     @Override
     public String toString() {
         return "Address{" +
@@ -81,6 +81,7 @@ public class Address {
                 ", number=" + number +
                 ", complement='" + complement + '\'' +
                 ", label='" + label + '\'' +
+                ", cep='" + cep + '\'' +
                 '}';
     }
 }
