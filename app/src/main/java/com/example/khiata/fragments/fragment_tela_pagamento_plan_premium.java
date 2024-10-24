@@ -1,12 +1,25 @@
 package com.example.khiata.fragments;
 
+import static androidx.core.content.ContextCompat.getSystemService;
+
 import android.app.Dialog;
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
+import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.os.Build;
 import android.os.Bundle;
 
+import androidx.core.app.ActivityCompat;
+import androidx.core.app.NotificationCompat;
+import androidx.core.app.NotificationManagerCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
+import android.os.Handler;
+import android.os.Looper;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -18,6 +31,7 @@ import android.widget.Toast;
 
 import com.example.khiata.R;
 import com.example.khiata.apis.UserApi;
+import com.example.khiata.classes.NotificationReceiver;
 import com.example.khiata.classes.tela_inicial;
 import com.google.firebase.auth.FirebaseAuth;
 
@@ -139,7 +153,12 @@ public class fragment_tela_pagamento_plan_premium extends Fragment {
         btn_pagar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                new Handler(Looper.getMainLooper()).postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        notificar();
+                    }
+                }, 2000);
             }
         });
 
@@ -181,5 +200,50 @@ public class fragment_tela_pagamento_plan_premium extends Fragment {
                 Toast.makeText(getActivity(), "Erro ao atualizar perfil: " + t.getMessage(), Toast.LENGTH_LONG).show();
             }
         });
+    }
+
+    //Método para notificação de pagamento
+    private void notificar() {
+        //Criar notificação
+        Context context = getActivity();
+        Intent intentAndroid = new Intent(context, NotificationReceiver.class);
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(context, 0, intentAndroid, PendingIntent.FLAG_IMMUTABLE);
+
+        NotificationCompat.Builder builder = new NotificationCompat.Builder(getActivity(), "channel_id")
+                .setSmallIcon(R.drawable.icon_app)
+                .setContentTitle("Seu pagamento foi confirmado")
+                .setContentText("Seu pagamento foi recebido, aguarde o liberamento do seu plano Premium.\n/Obrigado por escolher Khiata!")
+                .setPriority(NotificationCompat.PRIORITY_HIGH)
+                .setAutoCancel(true)
+                .setContentIntent(pendingIntent);
+
+        //Config Canal de notificação
+        NotificationManager manager = getSystemService(getActivity(), NotificationManager.class);
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            NotificationChannel channel = new NotificationChannel("channel_id", "Notificacao", NotificationManager.IMPORTANCE_HIGH);
+            manager.createNotificationChannel(channel);
+        }
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            if (ActivityCompat.checkSelfPermission(getActivity(), android.Manifest.permission.POST_NOTIFICATIONS) != PackageManager.PERMISSION_GRANTED) {
+                ActivityCompat.requestPermissions(getActivity(), new String[]{android.Manifest.permission.POST_NOTIFICATIONS}, 100);
+                return;
+            }
+        }
+
+        //Show - Apresentar notificação
+        NotificationManagerCompat notificationManager = NotificationManagerCompat.from(getActivity());
+        if (ActivityCompat.checkSelfPermission(getActivity(), android.Manifest.permission.POST_NOTIFICATIONS) != PackageManager.PERMISSION_GRANTED) {
+            // TODO: Consider calling
+            //    ActivityCompat#requestPermissions
+            // here to request the missing permissions, and then overriding
+            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+            //                                          int[] grantResults)
+            // to handle the case where the user grants the permission. See the documentation
+            // for ActivityCompat#requestPermissions for more details.
+            return;
+        }
+        notificationManager.notify(1, builder.build());
     }
 }
