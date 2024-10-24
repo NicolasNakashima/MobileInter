@@ -44,7 +44,10 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 
+import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -307,23 +310,44 @@ public class fragment_tela_perfil_costureira extends Fragment {
                 .build();
 
         ProductApi productApi = retrofit.create(ProductApi.class);
-        Call<List<Product>> call = productApi.getProductsByDressmarker(userName);
+        Call<List<String>> call = productApi.getProductsByDressmarker(userName);
 
-        call.enqueue(new Callback<List<Product>>() {
+        call.enqueue(new Callback<List<String>>() {
             @Override
-            public void onResponse(Call<List<Product>> call, Response<List<Product>> response) {
+            public void onResponse(Call<List<String>> call, Response<List<String>> response) {
                 if (response.isSuccessful()) {
-                    List<Product> listaDeProdutos = response.body();
+                    List<String> jsonStringList = response.body();
 
-                    if (listaDeProdutos != null && !listaDeProdutos.isEmpty()) {
-                        produtos.clear();
-                        produtos.addAll(listaDeProdutos);
+                    if(jsonStringList != null && !jsonStringList.isEmpty()) {
+                        Gson gson = new Gson();
+                        Type productType = new TypeToken<Product>(){}.getType();
 
-                        // Atualiza o adapter com a lista de produtos
-                        AdapterProdutosAdicionados adapter = new AdapterProdutosAdicionados(getActivity(), produtos);
-                        lista_produtos_costureira.setAdapter(adapter);
-                        adapter.notifyDataSetChanged();
-                    } else {
+                        produtos.clear();  // Limpa a lista de produtos antes de adicionar novos
+
+                        for (String jsonString : jsonStringList) {
+                            // Converte cada String JSON da lista em um objeto Product
+                            jsonString = jsonString.replace("'", "\"");
+                            Product produto = gson.fromJson(jsonString, productType);
+
+                            if (produto != null) {
+                                produtos.add(produto);  // Adiciona o produto na lista
+                            } else {
+                                Log.e("Error", "Erro ao converter produto.");
+                            }
+                        }
+
+                        if (!produtos.isEmpty()) {
+                            Toast.makeText(getActivity(), "Produtos encontrados.", Toast.LENGTH_SHORT).show();
+
+                            AdapterProdutosAdicionados adapter = new AdapterProdutosAdicionados(getActivity(), produtos);
+                            lista_produtos_costureira.setAdapter(adapter);
+                            adapter.notifyDataSetChanged();
+
+                        } else {
+                            Toast.makeText(getActivity(), "Nenhum produto cadastrado.", Toast.LENGTH_SHORT).show();
+                            Log.e("Error", "Nenhum produto encontrado.");
+                        }
+                    } else{
                         Toast.makeText(getActivity(), "Nenhum produto cadastrado.", Toast.LENGTH_SHORT).show();
                         Log.e("Error", "Nenhum produto encontrado.");
                     }
@@ -334,7 +358,7 @@ public class fragment_tela_perfil_costureira extends Fragment {
             }
 
             @Override
-            public void onFailure(Call<List<Product>> call, Throwable throwable) {
+            public void onFailure(Call<List<String>> call, Throwable throwable) {
                 Toast.makeText(getActivity(), throwable.getMessage(), Toast.LENGTH_SHORT).show();
                 Log.e("Error", throwable.getMessage());
             }

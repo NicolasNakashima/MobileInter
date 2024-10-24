@@ -155,6 +155,7 @@ public class fragment_tela_pesquisa extends Fragment {
                 if (response.isSuccessful()) {
                     List<String> jsonStringList = response.body();  // A resposta já é uma lista de Strings
                     if (jsonStringList != null && !jsonStringList.isEmpty()) {
+
                         // Como a lista possui apenas 1 item por pesquisa, pegamos o primeiro item
                         String jsonString = jsonStringList.get(0);
 
