@@ -9,12 +9,12 @@ public class User {
     private int genderId;
     private int age;
     private boolean isDressmaker;
-    private int premiumStatus; //Deixa 0, (0 = normal, 1 = premium, 2 = pendente)
+    private int premiumStatus; //Deixa 0 no cadastro, (0 = normal, 1 = premium, 2 = pendente)
     private String phones;
-    private String imageURL; //Deixa null
+    private String imageURL; //Deixa null no cadastro
     private String password;
     private String email;
-    private String profilePictureUrl; //Deixa null
+    private String profilePictureUrl; //Deixa null no cadastro
     private List<Address> addresses;
 
     // Constructor

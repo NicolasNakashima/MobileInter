@@ -1,18 +1,27 @@
 package com.example.khiata.fragments;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.example.khiata.R;
 import com.example.khiata.classes.tela_carrinho;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -61,7 +70,10 @@ public class fragment_tela_produto extends Fragment {
         }
     }
 
-    ImageView voltar_home, btn_carrinho;
+    ImageView voltar_home, btn_carrinho, img_produto;
+    TextView titulo_produto, vendedor_produto, preco_produto, tamanho_produto, descricao_produto;
+    FirebaseStorage storage = FirebaseStorage.getInstance();
+    StorageReference storageRef = storage.getReference();
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -88,6 +100,43 @@ public class fragment_tela_produto extends Fragment {
                 startActivity(intent);
             }
         });
+
+        //Pegando informações do produto
+        Bundle bundle = getArguments();
+        if(bundle != null){
+            String titulo_produto_txt = bundle.getString("titulo_produto");
+            String vendedor_produto_txt = bundle.getString("vendedor_produto");
+            String preco_produto_txt = String.valueOf(bundle.getDouble("preco_produto"));
+            String imagem_produto_txt = bundle.getString("imagem_produto");
+            String descricao_produto_txt = bundle.getString("descricao_produto");
+            String tamanho_produto_txt = bundle.getString("tamanho_produto");
+            if (titulo_produto_txt != null && vendedor_produto_txt != null && preco_produto_txt != null && imagem_produto_txt != null && descricao_produto_txt != null && tamanho_produto_txt != null) {
+                titulo_produto = view.findViewById(R.id.titulo_produto);
+                titulo_produto.setText(titulo_produto_txt);
+                vendedor_produto = view.findViewById(R.id.vendedor_produto);
+                vendedor_produto.setText("Vendedor: " + vendedor_produto_txt);
+                preco_produto = view.findViewById(R.id.preco_produto);
+                preco_produto.setText("R$ " + preco_produto_txt);
+                tamanho_produto = view.findViewById(R.id.tamanho_produto);
+                tamanho_produto.setText("Tamanho: " + tamanho_produto);
+                descricao_produto = view.findViewById(R.id.descricao_produto);
+                descricao_produto.setText(descricao_produto_txt);
+                img_produto = view.findViewById(R.id.img_produto);
+                StorageReference profileRef = storageRef.child("khiata_produtos/"+imagem_produto_txt+".jpg");
+                profileRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                    @Override
+                    public void onSuccess(Uri uri) {
+                        Glide.with(getContext()).load(uri).into(img_produto);
+                    }
+                }).addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Log.d("TAG", "Falha ao obter URL da imagem"+ e.getMessage());
+                        img_produto.setImageResource(R.drawable.add_img);
+                    }
+                });
+            }
+        }
 
         return view;
     }

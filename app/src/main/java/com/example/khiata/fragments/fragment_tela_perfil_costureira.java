@@ -170,6 +170,7 @@ public class fragment_tela_perfil_costureira extends Fragment {
         lista_produtos_costureira = view.findViewById(R.id.lista_produtos_costureira);
         lista_produtos_costureira.setLayoutManager(new GridLayoutManager(getActivity(), 2));
         if(nome_costureira_txt != null){
+            Log.e("Nome", nome_costureira_txt);
             pegarProdutosDaCostureira(nome_costureira_txt);
         } else {
             Log.e("Error", "nome_costureira_txt is null");

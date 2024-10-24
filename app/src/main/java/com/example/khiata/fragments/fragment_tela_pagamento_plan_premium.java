@@ -35,6 +35,7 @@ import com.example.khiata.classes.NotificationReceiver;
 import com.example.khiata.classes.tela_inicial;
 import com.google.firebase.auth.FirebaseAuth;
 
+import java.util.HashMap;
 import java.util.Map;
 
 import retrofit2.Call;
@@ -156,7 +157,9 @@ public class fragment_tela_pagamento_plan_premium extends Fragment {
                 new Handler(Looper.getMainLooper()).postDelayed(new Runnable() {
                     @Override
                     public void run() {
-                        notificar();
+                        Map<String, Object> atualizacoes = new HashMap<>();
+                        atualizacoes.put("premiumStatus", 2);
+                        deixarStatusPremiumPendente(FirebaseAuth.getInstance().getCurrentUser().getEmail(), atualizacoes);
                     }
                 }, 2000);
             }
@@ -189,9 +192,10 @@ public class fragment_tela_pagamento_plan_premium extends Fragment {
                 } else {
                     // A atualização foi bem-sucedida
                     Toast.makeText(getActivity(), "Perfil atualizado com sucesso!", Toast.LENGTH_SHORT).show();
-                    FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
-                    transaction.replace(R.id.frame_conteudo, new fragment_tela_perfil());
-                    transaction.commit();
+//                    FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
+//                    transaction.replace(R.id.frame_conteudo, new fragment_tela_perfil());
+//                    transaction.commit();
+                    notificar();
                 }
             }
 
@@ -212,7 +216,7 @@ public class fragment_tela_pagamento_plan_premium extends Fragment {
         NotificationCompat.Builder builder = new NotificationCompat.Builder(getActivity(), "channel_id")
                 .setSmallIcon(R.drawable.icon_app)
                 .setContentTitle("Seu pagamento foi confirmado")
-                .setContentText("Seu pagamento foi recebido, aguarde o liberamento do seu plano Premium.\n/Obrigado por escolher Khiata!")
+                .setContentText("Pagamento recebido, aguarde o liberamento do seu plano Premium.")
                 .setPriority(NotificationCompat.PRIORITY_HIGH)
                 .setAutoCancel(true)
                 .setContentIntent(pendingIntent);

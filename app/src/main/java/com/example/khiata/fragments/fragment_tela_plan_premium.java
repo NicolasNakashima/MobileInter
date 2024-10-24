@@ -1,17 +1,31 @@
 package com.example.khiata.fragments;
 
+import android.app.Dialog;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.khiata.R;
+import com.example.khiata.apis.UserApi;
+import com.example.khiata.classes.tela_login;
+import com.example.khiata.models.User;
+import com.google.firebase.auth.FirebaseAuth;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -62,6 +76,8 @@ public class fragment_tela_plan_premium extends Fragment {
 
     ImageView voltar_home;
     Button btn_adquirir_premium;
+    private Retrofit retrofit;
+    int statusPremium;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -84,13 +100,89 @@ public class fragment_tela_plan_premium extends Fragment {
         btn_adquirir_premium.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
-                transaction.replace(R.id.frame_conteudo, new fragment_tela_dados_compra_premium());
-                transaction.commit();
+                buscarStatusPremium(FirebaseAuth.getInstance().getCurrentUser().getEmail());
+                if(statusPremium == 0){
+                    FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
+                    transaction.replace(R.id.frame_conteudo, new fragment_tela_dados_compra_premium());
+                    transaction.commit();
+                }
+                if(statusPremium == 1){
+                    Dialog dialog = new Dialog(getActivity());
+
+                    LayoutInflater inflater = getLayoutInflater();
+                    View popupView = inflater.inflate(R.layout.popup_mensagem, null);
+
+                    TextView msgPopup = popupView.findViewById(R.id.msg_popup);
+                    msgPopup.setText("Sua conta já possui o plano premium");
+                    ImageView imgPopup = popupView.findViewById(R.id.img_popup);
+                    imgPopup.setImageResource(R.drawable.icon_pop_alert);
+                    Button btnPopup = popupView.findViewById(R.id.btn_popup);
+                    btnPopup.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            dialog.cancel();
+                        }
+                    });
+
+                    dialog.setContentView(popupView);
+                    dialog.setCancelable(true);
+                    dialog.show();
+                }
+                if (statusPremium == 2) {
+                    Dialog dialog = new Dialog(getActivity());
+
+                    LayoutInflater inflater = getLayoutInflater();
+                    View popupView = inflater.inflate(R.layout.popup_mensagem, null);
+
+                    TextView msgPopup = popupView.findViewById(R.id.msg_popup);
+                    msgPopup.setText("O seu plano premium logo será liberado");
+                    ImageView imgPopup = popupView.findViewById(R.id.img_popup);
+                    imgPopup.setImageResource(R.drawable.icon_pop_alert);
+                    Button btnPopup = popupView.findViewById(R.id.btn_popup);
+                    btnPopup.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            dialog.cancel();
+                        }
+                    });
+
+                    dialog.setContentView(popupView);
+                    dialog.setCancelable(true);
+                    dialog.show();
+                }
             }
         });
 
 
         return view;
+    }
+
+    //Método para buscar o status do plano premium de um determinado usuário
+    private void buscarStatusPremium(String userEmail) {
+        String API_BASE_URL = "https://apikhiata.onrender.com/";
+        retrofit = new Retrofit.Builder()
+                .baseUrl(API_BASE_URL)
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+        UserApi userApi = retrofit.create(UserApi.class);
+        Call<User> call = userApi.buscarUsuarioPorEmail(userEmail);
+        call.enqueue(new Callback<User>() {
+            @Override
+            public void onResponse(Call<User> call, Response<User> response) {
+                if (response.isSuccessful() && response.body() != null) {
+                    User userResponse = response.body();
+                    statusPremium = userResponse.getPremiumStatus();
+
+                } else {
+                    Toast.makeText(getContext(), "Usuário não encontrado ou resposta inválida", Toast.LENGTH_SHORT).show();
+                    Log.e("API Error", "Response code: " + response.code() + " | Error body: " + response.errorBody());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<User> call, Throwable throwable) {
+                Toast.makeText(getContext(), throwable.getMessage(), Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 }

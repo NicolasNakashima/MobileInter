@@ -9,8 +9,8 @@
     app:cardCornerRadius="5dp">
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="255dp"
-        android:layout_height="290dp">
+        android:layout_width="250dp"
+        android:layout_height="275dp">
 
         <ImageView
             android:id="@+id/img_produto"
@@ -48,10 +48,10 @@
             android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.127"
+            app:layout_constraintHorizontal_bias="0.113"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/titulo_produto"
-            app:layout_constraintVertical_bias="0.218" />
+            app:layout_constraintVertical_bias="0.2" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </androidx.cardview.widget.CardView>

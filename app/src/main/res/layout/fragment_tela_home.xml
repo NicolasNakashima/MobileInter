@@ -24,11 +24,11 @@
         android:id="@+id/btn_carrinho"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="36dp"
+        android:layout_marginEnd="24dp"
         app:layout_constraintBottom_toBottomOf="@+id/toolbar2"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.372"
+        app:layout_constraintVertical_bias="0.488"
         app:srcCompat="@drawable/navigation_kart" />
 
     <TextView
@@ -87,12 +87,12 @@
 
     <ImageView
         android:id="@+id/btn_pesquisa"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="283dp"
+        android:layout_height="44dp"
         android:layout_marginEnd="20dp"
-        android:src="@drawable/btn_pesquisa"
+        android:src="@drawable/searchbar"
         app:layout_constraintBottom_toBottomOf="@+id/toolbar2"
         app:layout_constraintEnd_toStartOf="@+id/btn_carrinho"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.372" />
+        app:layout_constraintVertical_bias="0.525" />
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -56,14 +56,14 @@
             android:orientation="vertical">
 
             <ImageView
-                android:id="@+id/imageView9"
+                android:id="@+id/img_produto"
                 android:layout_width="280dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
                 android:src="@drawable/add_img" />
 
             <TextView
-                android:id="@+id/textView27"
+                android:id="@+id/titulo_produto"
                 android:layout_width="301dp"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="10dp"
@@ -74,7 +74,7 @@
                 android:textStyle="bold" />
 
             <TextView
-                android:id="@+id/textView29"
+                android:id="@+id/tamanho_produto"
                 android:layout_width="306dp"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="10dp"
@@ -84,7 +84,17 @@
                 android:textSize="17sp" />
 
             <TextView
-                android:id="@+id/textView30"
+                android:id="@+id/vendedor_produto"
+                android:layout_width="306dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="15dp"
+                android:text="Vendedor: Nome"
+                android:textColor="#000000"
+                android:textSize="17sp" />
+
+            <TextView
+                android:id="@+id/preco_produto"
                 android:layout_width="307dp"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="10dp"
@@ -106,9 +116,9 @@
                 android:textStyle="bold" />
 
             <TextView
-                android:id="@+id/textView32"
+                android:id="@+id/descricao_produto"
                 android:layout_width="307dp"
-                android:layout_height="83dp"
+                android:layout_height="wrap_content"
                 android:layout_marginLeft="10dp"
                 android:layout_marginTop="10dp"
                 android:text="Blusa tamanho único vários modelos 65cm x 41 cm em media. tecido, linha, estica bem. produto NOVO qualquer duvida chamar chat"

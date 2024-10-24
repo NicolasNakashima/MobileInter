@@ -4,6 +4,7 @@ import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
+import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,6 +15,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
@@ -21,6 +24,7 @@ import com.example.khiata.R;
 import com.example.khiata.apis.AddressApi;
 import com.example.khiata.apis.ProductApi;
 import com.example.khiata.classes.tela_inicial;
+import com.example.khiata.fragments.fragment_tela_produto;
 import com.example.khiata.models.Product;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -75,7 +79,7 @@ public class AdapterProdutosAdicionados extends RecyclerView.Adapter<AdapterProd
         profileRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
             @Override
             public void onSuccess(Uri uri) {
-                Glide.with(context).load(uri).circleCrop().into(img_produto);
+                Glide.with(context).load(uri).into(img_produto);
             }
         }).addOnFailureListener(new OnFailureListener() {
             @Override
@@ -120,6 +124,28 @@ public class AdapterProdutosAdicionados extends RecyclerView.Adapter<AdapterProd
                 dialog.setContentView(popup_opcao);
                 dialog.setCancelable(true);
                 dialog.show();
+            }
+        });
+
+        //Ir para a tela do produto ao clicar num card
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                fragment_tela_produto telaProdutoFragment = new fragment_tela_produto();
+
+                Bundle bundle = new Bundle();
+                bundle.putString("titulo_produto", produto.getName());
+                bundle.putString("vendedor_produto", produto.getDressMarkerName());
+                bundle.putDouble("preco_produto", produto.getPrice());
+                bundle.putString("imagem_produto", produto.getImageUrl());
+                bundle.putString("descricao_produto", produto.getDescription());
+                bundle.putString("tamanho_produto", produto.getSize());
+                telaProdutoFragment.setArguments(bundle);
+
+                FragmentTransaction transaction = ((AppCompatActivity) context).getSupportFragmentManager().beginTransaction();
+                transaction.replace(R.id.frame_conteudo, telaProdutoFragment);
+                transaction.addToBackStack(null);
+                transaction.commit();
             }
         });
     }
