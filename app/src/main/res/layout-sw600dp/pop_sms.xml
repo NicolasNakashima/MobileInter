@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_margin="5dp"
+    android:layout_marginTop="10dp"
+    app:cardCornerRadius="10dp">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="350dp"
+        android:layout_height="390dp">
+
+        <TextView
+            android:id="@+id/titulo"
+            android:layout_width="271dp"
+            android:layout_height="67dp"
+            android:layout_marginTop="14dp"
+            android:gravity="center|top"
+            android:text="Entre em contato direto com Luíza Sousa (SMS)"
+            android:textColor="#000000"
+            android:textSize="22sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.506"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <EditText
+            android:id="@+id/msgSMS"
+            android:layout_width="261dp"
+            android:layout_height="209dp"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/style_boxinput"
+            android:ems="10"
+            android:gravity="start|top"
+            android:hint="Mensagem:"
+            android:inputType="textMultiLine"
+            android:paddingLeft="16dp"
+            android:paddingBottom="10dp"
+            android:textColor="#000000"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.505"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/titulo" />
+
+        <Button
+            android:id="@+id/btn_enviar"
+            android:layout_width="168dp"
+            android:layout_height="49dp"
+            android:layout_marginStart="5dp"
+            android:layout_marginTop="20dp"
+            android:background="@drawable/style_button1"
+            android:text="Enviar"
+            android:textColor="#ffffff"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/msgSMS" />
+
+        <Button
+            android:id="@+id/btn_cancelar"
+            android:layout_width="168dp"
+            android:layout_height="49dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginEnd="5dp"
+            android:background="@drawable/style_button2"
+            android:text="Cancelar"
+            android:textColor="#384384"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/msgSMS" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.cardview.widget.CardView>

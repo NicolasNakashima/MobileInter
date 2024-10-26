@@ -135,6 +135,7 @@ public class fragment_tela_cadastrar_produto extends Fragment {
         if (bundle != null) {
             String imgProduto = bundle.getString("imgName");
             imgName = imgProduto;
+            Log.e("Imagem", imgName);
 
             // Buscar a imagem no Firebase usando o nome da imagem
             if (imgProduto != null) {

@@ -11,7 +11,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.CompoundButton;
 import android.widget.ImageView;
+import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -20,6 +22,8 @@ import com.example.khiata.apis.UserApi;
 import com.example.khiata.classes.tela_login;
 import com.example.khiata.models.User;
 import com.google.firebase.auth.FirebaseAuth;
+
+import org.w3c.dom.Text;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -75,7 +79,9 @@ public class fragment_tela_plan_premium extends Fragment {
     }
 
     ImageView voltar_home;
+    TextView preco_premium;
     Button btn_adquirir_premium;
+    Switch opcao_preco_premium;
     private Retrofit retrofit;
     int statusPremium;
     @Override
@@ -95,12 +101,26 @@ public class fragment_tela_plan_premium extends Fragment {
             }
         });
 
+        preco_premium = view.findViewById(R.id.preco_premium);
+        opcao_preco_premium = view.findViewById(R.id.opcao_preco_premium);
+        opcao_preco_premium.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if(isChecked){
+                    preco_premium.setText("R$ 15.90 /mês");
+                } else {
+                    preco_premium.setText("R$ 190.80 /ano");
+                }
+            }
+        });
+
         //Botao para seguir no processo de adquirir o plano premium
         btn_adquirir_premium = view.findViewById(R.id.btn_adquirir_premium);
         btn_adquirir_premium.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 buscarStatusPremium(FirebaseAuth.getInstance().getCurrentUser().getEmail());
+                Log.e("Status Premium: ", String.valueOf(statusPremium));
                 if(statusPremium == 0){
                     FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
                     transaction.replace(R.id.frame_conteudo, new fragment_tela_dados_compra_premium());

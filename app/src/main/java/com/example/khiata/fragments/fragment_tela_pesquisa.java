@@ -153,27 +153,30 @@ public class fragment_tela_pesquisa extends Fragment {
             @Override
             public void onResponse(Call<List<String>> call, Response<List<String>> response) {
                 if (response.isSuccessful()) {
-                    List<String> jsonStringList = response.body();  // A resposta já é uma lista de Strings
+                    List<String> jsonStringList = response.body();
                     if (jsonStringList != null && !jsonStringList.isEmpty()) {
-
-                        // Como a lista possui apenas 1 item por pesquisa, pegamos o primeiro item
-                        String jsonString = jsonStringList.get(0);
-
-                        // Fazendo o parse da String para um JSON válido
-                        jsonString = jsonString.replace("'", "\"");  // Substitui aspas simples por aspas duplas
-
-                        // Agora faça o parsing dessa String JSON para um objeto
                         Gson gson = new Gson();
                         Type productType = new TypeToken<Product>(){}.getType();
-                        Product produto = gson.fromJson(jsonString, productType);
 
-                        if (produto != null) {
+                        produtos.clear();
+
+                        for (String jsonString : jsonStringList) {
+                            // Converte cada String JSON da lista em um objeto Product
+                            jsonString = jsonString.replace("'", "\"");
+                            Product produto = gson.fromJson(jsonString, productType);
+
+                            if (produto != null) {
+                                produtos.add(produto);  // Adiciona o produto na lista
+                            } else {
+                                Log.e("Error", "Erro ao converter produto.");
+                            }
+                        }
+
+
+                        if (!produtos.isEmpty()) {
                             Toast.makeText(getActivity(), "Produtos encontrados.", Toast.LENGTH_SHORT).show();
-                            produtos.clear();
-                            produtos.add(produto);
 
-                            // Atualiza o adapter com a lista de produtos
-                            AdapterProdutosPesquisados adapter = new AdapterProdutosPesquisados(getActivity(), produtos);
+                            AdapterProdutosAdicionados adapter = new AdapterProdutosAdicionados(getActivity(), produtos);
                             lista_produtos_pesquisados.setAdapter(adapter);
                             adapter.notifyDataSetChanged();
                         } else {

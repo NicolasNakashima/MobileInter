@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".classes.MainActivity">
+
+    <FrameLayout
+        android:id="@+id/frame_conteudo"
+        android:layout_width="393dp"
+        android:layout_height="737dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+    </FrameLayout>
+
+    <LinearLayout
+        android:layout_width="395dp"
+        android:layout_height="66dp"
+        android:gravity="center"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/frame_conteudo">
+
+        <ImageButton
+            android:id="@+id/btn_lateral_menu"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:background="@android:color/transparent"
+            app:srcCompat="@drawable/menu_lateral" />
+
+        <ImageButton
+            android:id="@+id/btn_navigation_favoritos"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="10dp"
+            android:background="@android:color/transparent"
+            app:srcCompat="@drawable/menu_favoritos" />
+
+        <ImageButton
+            android:id="@+id/btn_navigation_home"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:background="@android:color/transparent"
+            app:srcCompat="@drawable/menu_home" />
+
+        <ImageButton
+            android:id="@+id/btn_navigation_compras"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="20dp"
+            android:background="@android:color/transparent"
+            app:srcCompat="@drawable/menu_compras" />
+
+        <ImageButton
+            android:id="@+id/btn_navigation_perfil"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:background="@android:color/transparent"
+            app:srcCompat="@drawable/menu_perfil" />
+    </LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

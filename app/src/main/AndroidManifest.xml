@@ -33,11 +33,9 @@
         android:theme="@style/Theme.Khiata"
         tools:targetApi="31">
         <activity
-            android:name=".classes.confirmacao_pagamento"
-            android:exported="false" />
-        <activity
             android:name=".classes.tela_carrinho"
-            android:exported="false" />
+            android:exported="false"
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".classes.CameraProduto"
             android:exported="false" />
@@ -46,19 +44,24 @@
             android:exported="false" />
         <activity
             android:name=".classes.tela_nova_senha"
-            android:exported="false" />
+            android:exported="false"
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".classes.tela_cadastro"
-            android:exported="false" />
+            android:exported="false"
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".classes.tela_login"
-            android:exported="false" />
+            android:exported="false"
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".classes.MainActivity"
-            android:exported="false" />
+            android:exported="false"
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".classes.tela_inicial"
-            android:exported="true">
+            android:exported="true"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

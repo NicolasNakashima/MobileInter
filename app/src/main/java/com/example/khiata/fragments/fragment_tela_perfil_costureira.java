@@ -299,6 +299,7 @@ public class fragment_tela_perfil_costureira extends Fragment {
 
     //Método para buscar os produtos da costureira
     private void pegarProdutosDaCostureira(String userName) {
+        Log.e("userName", "userName: " + userName);
         if (userName == null) {
             Log.e("Error", "userName is null");
             return;
