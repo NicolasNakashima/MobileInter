@@ -13,14 +13,13 @@
         android:layout_height="wrap_content"
         android:text="Insira suas informações"
         android:textColor="#000000"
-        android:textSize="22sp"
+        android:textSize="25sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/toolbar"
-        app:layout_constraintVertical_bias="0.052" />
+        app:layout_constraintVertical_bias="0.064" />
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/textInputLayout2"
@@ -30,10 +29,10 @@
         android:background="@drawable/style_boxinput"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.493"
+        app:layout_constraintHorizontal_bias="0.492"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView2"
-        app:layout_constraintVertical_bias="0.007">
+        app:layout_constraintVertical_bias="0.045">
 
 
         <com.google.android.material.textfield.TextInputEditText
@@ -84,19 +83,19 @@
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.17"
+        app:layout_constraintHorizontal_bias="0.341"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textInputLayout"
-        app:layout_constraintVertical_bias="0.05" />
+        app:layout_constraintVertical_bias="0.064" />
 
     <Button
         android:id="@+id/btn_login"
-        android:layout_width="240dp"
-        android:layout_height="50dp"
+        android:layout_width="262dp"
+        android:layout_height="57dp"
         android:background="@drawable/style_button1"
         android:text="Entrar"
         android:textColor="#ffffff"
-        android:textSize="15sp"
+        android:textSize="20sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -107,11 +106,11 @@
 
     <Button
         android:id="@+id/btn_ir_para_cadastro"
-        android:layout_width="240dp"
-        android:layout_height="50dp"
+        android:layout_width="262dp"
+        android:layout_height="57dp"
         android:background="@drawable/style_button2"
         android:text="Cadastrar"
-        android:textSize="15sp"
+        android:textSize="20sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -122,8 +121,8 @@
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar"
-        android:layout_width="397dp"
-        android:layout_height="70dp"
+        android:layout_width="600dp"
+        android:layout_height="88dp"
         android:background="?attr/colorPrimary"
         android:backgroundTint="#FAC552"
         android:minHeight="?attr/actionBarSize"
@@ -139,7 +138,7 @@
         android:layout_height="wrap_content"
         android:text="Login"
         android:textColor="#5A2D03"
-        android:textSize="24sp"
+        android:textSize="30sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="@+id/toolbar"
         app:layout_constraintEnd_toEndOf="parent"
@@ -150,14 +149,14 @@
 
     <ImageView
         android:id="@+id/login_voltar_inicio"
-        android:layout_width="55dp"
-        android:layout_height="41dp"
+        android:layout_width="57dp"
+        android:layout_height="52dp"
         app:layout_constraintBottom_toBottomOf="@+id/toolbar"
         app:layout_constraintEnd_toEndOf="@+id/toolbar"
-        app:layout_constraintHorizontal_bias="0.046"
+        app:layout_constraintHorizontal_bias="0.085"
         app:layout_constraintStart_toStartOf="@+id/toolbar"
         app:layout_constraintTop_toTopOf="@+id/toolbar"
-        app:layout_constraintVertical_bias="0.551"
+        app:layout_constraintVertical_bias="0.555"
         app:srcCompat="@drawable/seta_retorno" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

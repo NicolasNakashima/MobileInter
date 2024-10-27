@@ -63,7 +63,7 @@ public class AdapterProdutosCostureira extends RecyclerView.Adapter<AdapterProdu
         profileRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
             @Override
             public void onSuccess(Uri uri) {
-                Glide.with(context).load(uri).circleCrop().into(img_produto);
+                Glide.with(context).load(uri).into(img_produto);
             }
         }).addOnFailureListener(new OnFailureListener() {
             @Override

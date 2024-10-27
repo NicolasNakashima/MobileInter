@@ -35,6 +35,7 @@ import android.widget.Toast;
 import com.bumptech.glide.Glide;
 import com.example.khiata.R;
 import com.example.khiata.adapters.AdapterProdutosAdicionados;
+import com.example.khiata.adapters.AdapterProdutosCostureira;
 import com.example.khiata.apis.ProductApi;
 import com.example.khiata.apis.UserApi;
 import com.example.khiata.models.Product;
@@ -148,7 +149,11 @@ public class fragment_tela_perfil_costureira extends Fragment {
             email_costureira = bundle.getString("email_costureira", null);
             if (email_costureira != null) {
                 nome_costureira = view.findViewById(R.id.nome_costureira);
+                //Listar os produtos
+                lista_produtos_costureira = view.findViewById(R.id.lista_produtos_costureira);
+                lista_produtos_costureira.setLayoutManager(new GridLayoutManager(getContext(), 2));
                 buscarInformacoesDaCostureira(email_costureira);
+
                 img_costureira = view.findViewById(R.id.img_costureira);
                 StorageReference profileRef = storageRef.child("khiata_perfis/foto_"+email_costureira+".jpg");
                 profileRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
@@ -165,17 +170,6 @@ public class fragment_tela_perfil_costureira extends Fragment {
                 });
             }
         }
-
-        //Listar os produtos
-        lista_produtos_costureira = view.findViewById(R.id.lista_produtos_costureira);
-        lista_produtos_costureira.setLayoutManager(new GridLayoutManager(getActivity(), 2));
-        if(nome_costureira_txt != null){
-            Log.e("Nome", nome_costureira_txt);
-            pegarProdutosDaCostureira(nome_costureira_txt);
-        } else {
-            Log.e("Error", "nome_costureira_txt is null");
-        }
-
 
         btn_sms = view.findViewById(R.id.btn_sms);
         btn_sms.setOnClickListener(new View.OnClickListener() {
@@ -242,6 +236,7 @@ public class fragment_tela_perfil_costureira extends Fragment {
                     nome_costureira.setText(userResponse.getName());
                     phone_costureira = userResponse.getPhone();
                     nome_costureira_txt = userResponse.getName();
+                    pegarProdutosDaCostureira(userResponse.getName());
                 } else {
                     Toast.makeText(getContext(), "Usuário não encontrado ou resposta inválida", Toast.LENGTH_SHORT).show();
                     Log.e("API Error", "Response code: " + response.code() + " | Error body: " + response.errorBody());
@@ -299,12 +294,6 @@ public class fragment_tela_perfil_costureira extends Fragment {
 
     //Método para buscar os produtos da costureira
     private void pegarProdutosDaCostureira(String userName) {
-        Log.e("userName", "userName: " + userName);
-        if (userName == null) {
-            Log.e("Error", "userName is null");
-            return;
-        }
-        Log.e("userName", userName);
         String API_BASE_URL = "https://interdisciplinarr.onrender.com/";
         retrofit = new Retrofit.Builder()
                 .baseUrl(API_BASE_URL)
@@ -341,7 +330,7 @@ public class fragment_tela_perfil_costureira extends Fragment {
                         if (!produtos.isEmpty()) {
                             Toast.makeText(getActivity(), "Produtos encontrados.", Toast.LENGTH_SHORT).show();
 
-                            AdapterProdutosAdicionados adapter = new AdapterProdutosAdicionados(getActivity(), produtos);
+                            AdapterProdutosCostureira adapter = new AdapterProdutosCostureira(getActivity(), produtos);
                             lista_produtos_costureira.setAdapter(adapter);
                             adapter.notifyDataSetChanged();
 
@@ -367,7 +356,7 @@ public class fragment_tela_perfil_costureira extends Fragment {
         });
     }
 
-    //Bloco de funções para gerenciar permissões
+    //Bloco de funções para gerenciar permissões para o SMS
     private boolean allPermissionsGranted(){
         for(String permission : REQUIRED_PERMISSIONS){
             if(ContextCompat.checkSelfPermission(getActivity(), permission)

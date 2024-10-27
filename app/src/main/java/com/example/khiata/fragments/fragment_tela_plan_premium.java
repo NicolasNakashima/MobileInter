@@ -114,13 +114,13 @@ public class fragment_tela_plan_premium extends Fragment {
             }
         });
 
+        //Aqui pega o status do plano premium atua do usuário
+        buscarStatusPremium(FirebaseAuth.getInstance().getCurrentUser().getEmail());
         //Botao para seguir no processo de adquirir o plano premium
         btn_adquirir_premium = view.findViewById(R.id.btn_adquirir_premium);
         btn_adquirir_premium.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                buscarStatusPremium(FirebaseAuth.getInstance().getCurrentUser().getEmail());
-                Log.e("Status Premium: ", String.valueOf(statusPremium));
                 if(statusPremium == 0){
                     FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
                     transaction.replace(R.id.frame_conteudo, new fragment_tela_dados_compra_premium());

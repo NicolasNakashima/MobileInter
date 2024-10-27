@@ -118,9 +118,8 @@ public class fragment_tela_produto extends Fragment {
                 preco_produto = view.findViewById(R.id.preco_produto);
                 preco_produto.setText("R$ " + preco_produto_txt);
                 tamanho_produto = view.findViewById(R.id.tamanho_produto);
-                tamanho_produto.setText("Tamanho: " + tamanho_produto);
+                tamanho_produto.setText("Tamanho: " + tamanho_produto_txt);
                 descricao_produto = view.findViewById(R.id.descricao_produto);
-                Log.e("Descricão",descricao_produto_txt);
                 descricao_produto.setText(descricao_produto_txt);
                 img_produto = view.findViewById(R.id.img_produto);
                 StorageReference profileRef = storageRef.child("khiata_produtos/"+imagem_produto_txt+".jpg");

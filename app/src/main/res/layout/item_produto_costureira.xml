@@ -9,12 +9,12 @@
     app:cardCornerRadius="5dp">
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="200dp"
+        android:layout_width="190dp"
         android:layout_height="275dp">
 
         <ImageView
             android:id="@+id/img_produto"
-            android:layout_width="200dp"
+            android:layout_width="190dp"
             android:layout_height="149dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
