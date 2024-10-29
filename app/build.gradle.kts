@@ -81,4 +81,7 @@ dependencies {
 
     implementation ("com.squareup.retrofit2:converter-scalars:2.9.0")
 
+    // Lottie
+    implementation("com.airbnb.android:lottie:6.5.2")
+
 }

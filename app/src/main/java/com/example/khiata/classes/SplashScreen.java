@@ -33,10 +33,10 @@ public class SplashScreen extends AppCompatActivity {
             return insets;
         });
 
-        splash_logo = findViewById(R.id.splash_logo);
-        Glide.with(this)
-                .asGif().load(R.drawable.splash_screen).centerCrop()
-                .into(splash_logo);
+//        splash_logo = findViewById(R.id.splash_logo);
+//        Glide.with(this)
+//                .asGif().load(R.drawable.splash_screen).centerCrop()
+//                .into(splash_logo);
 
         new Handler(Looper.getMainLooper()).postDelayed(new Runnable() {
             @Override
