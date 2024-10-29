@@ -19,7 +19,6 @@
         android:maxSdkVersion="28" />
     <uses-permission android:name="android.permission.RECEIVE_SMS" />
     <uses-permission android:name="android.permission.SEND_SMS" />
-
     <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
 
     <application
@@ -33,9 +32,12 @@
         android:theme="@style/Theme.Khiata"
         tools:targetApi="31">
         <activity
+            android:name=".classes.tela_inicial"
+            android:exported="false" />
+        <activity
             android:name=".classes.tela_carrinho"
             android:exported="false"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" />
         <activity
             android:name=".classes.CameraProduto"
             android:exported="false" />
@@ -45,21 +47,21 @@
         <activity
             android:name=".classes.tela_nova_senha"
             android:exported="false"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" />
         <activity
             android:name=".classes.tela_cadastro"
             android:exported="false"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" />
         <activity
             android:name=".classes.tela_login"
             android:exported="false"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" />
         <activity
             android:name=".classes.MainActivity"
             android:exported="false"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" />
         <activity
-            android:name=".classes.tela_inicial"
+            android:name=".classes.SplashScreen"
             android:exported="true"
             android:screenOrientation="portrait">
             <intent-filter>
