@@ -9,6 +9,7 @@ import androidx.fragment.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 
 import com.example.khiata.R;
@@ -61,7 +62,8 @@ public class fragment_tela_favoritos extends Fragment {
         }
     }
 
-    ImageView voltar_home, btn_carrinho;
+    ImageView voltar_home;
+    Button btn_voltar_home;
     private fragment_tela_home fragment_tela_home = new fragment_tela_home();
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -80,13 +82,14 @@ public class fragment_tela_favoritos extends Fragment {
             }
         });
 
-        //Botao para ir para tela de carrinho
-        btn_carrinho = view.findViewById(R.id.btn_carrinho);
-        btn_carrinho.setOnClickListener(new View.OnClickListener() {
+        //Botao para voltar para tela de home
+        btn_voltar_home = view.findViewById(R.id.btn_voltar_home);
+        btn_voltar_home.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getActivity(), tela_carrinho.class);
-                startActivity(intent);
+                FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
+                transaction.replace(R.id.frame_conteudo, fragment_tela_home);
+                transaction.commit();
             }
         });
 

@@ -2,6 +2,7 @@ package com.example.khiata.fragments;
 
 import android.app.Dialog;
 import android.os.Bundle;
+import android.graphics.Color;
 
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
@@ -79,9 +80,8 @@ public class fragment_tela_plan_premium extends Fragment {
     }
 
     ImageView voltar_home;
-    TextView preco_premium;
+    TextView preco_premium, textAnual, textMensal;
     Button btn_adquirir_premium;
-    Switch opcao_preco_premium;
     private Retrofit retrofit;
     int statusPremium;
     @Override
@@ -102,19 +102,29 @@ public class fragment_tela_plan_premium extends Fragment {
         });
 
         preco_premium = view.findViewById(R.id.preco_premium);
-        opcao_preco_premium = view.findViewById(R.id.opcao_preco_premium);
-        opcao_preco_premium.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if(isChecked){
-                    preco_premium.setText("R$ 15.90 /mês");
-                } else {
-                    preco_premium.setText("R$ 190.80 /ano");
-                }
-            }
+        textAnual = view.findViewById(R.id.textAnual);
+        textMensal = view.findViewById(R.id.textMensal);
+
+        // Inicialmente, defina o fundo para o "Anual" como selecionado
+        textMensal.setBackgroundResource(R.drawable.switch_selected);
+        textAnual.setBackgroundColor(Color.TRANSPARENT);
+        preco_premium.setText("R$ 15.90 /mês");  // Defina o valor mensal inicialmente
+
+        // Configura o evento de clique para a opção "Anual"
+        textAnual.setOnClickListener(view1 -> {
+            textAnual.setBackgroundResource(R.drawable.switch_selected); // Fundo selecionado para "Anual"
+            textMensal.setBackgroundColor(Color.TRANSPARENT); // Remova o fundo selecionado de "Mensal"
+            preco_premium.setText("R$ 190.80 /ano"); // Atualize o texto do preço para anual
         });
 
-        //Aqui pega o status do plano premium atua do usuário
+        // Configura o evento de clique para a opção "Mensal"
+        textMensal.setOnClickListener(view12 -> {
+            textMensal.setBackgroundResource(R.drawable.switch_selected); // Fundo selecionado para "Mensal"
+            textAnual.setBackgroundColor(Color.TRANSPARENT); // Remova o fundo selecionado de "Anual"
+            preco_premium.setText("R$ 15.90 /mês"); // Atualize o texto do preço para mensal
+        });
+
+        //Aqui pega o status do plano premium atual do usuário
         buscarStatusPremium(FirebaseAuth.getInstance().getCurrentUser().getEmail());
         //Botao para seguir no processo de adquirir o plano premium
         btn_adquirir_premium = view.findViewById(R.id.btn_adquirir_premium);

@@ -47,24 +47,56 @@
         app:layout_constraintTop_toTopOf="@+id/toolbar2"
         app:layout_constraintVertical_bias="0.461" />
 
-    <ImageView
-        android:id="@+id/btn_carrinho"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:layout_marginEnd="24dp"
-        android:src="@drawable/navigation_kart"
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/cardView12"
+        android:layout_width="347dp"
+        android:layout_height="418dp"
+        android:layout_marginTop="104dp"
+        android:background="#FFFFFF"
+        app:cardCornerRadius="5dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/lista_produtos_favoritos"
-        android:layout_width="392dp"
-        android:layout_height="700dp"
-        android:layout_marginTop="20dp"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.488"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/toolbar2"
-        tools:listitem="@layout/item_produto_favoritado" />
+        app:layout_constraintTop_toBottomOf="@+id/toolbar2">
+
+        <ImageView
+            android:id="@+id/imageView9"
+            android:layout_width="151dp"
+            android:layout_height="136dp"
+            android:layout_marginTop="24dp"
+            android:src="@drawable/icon_pop_alert"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.502"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/textView27"
+            android:layout_width="239dp"
+            android:layout_height="103dp"
+            android:layout_marginTop="30dp"
+            android:gravity="center"
+            android:text="Está funcionalidade não está disponível numa futura atualização. Por favor, volte para a home"
+            android:textColor="#000000"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/imageView9" />
+
+        <Button
+            android:id="@+id/btn_voltar_home"
+            android:layout_width="224dp"
+            android:layout_height="47dp"
+            android:layout_marginTop="36dp"
+            android:background="@drawable/style_button1"
+            android:text="Voltar"
+            android:textColor="#ffffff"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.495"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textView27" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
