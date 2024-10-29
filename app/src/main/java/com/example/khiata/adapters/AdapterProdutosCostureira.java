@@ -41,7 +41,7 @@ public class AdapterProdutosCostureira extends RecyclerView.Adapter<AdapterProdu
     @Override
     public AdapterProdutosCostureira.MeuViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         //Carregar o tempplate de visualização
-        View viewItem = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_costureira, parent, false);
+        View viewItem = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_produto_costureira, parent, false);
 
         //Criar o ViewHolder para carregar os dados
         return new AdapterProdutosCostureira.MeuViewHolder(viewItem);
@@ -63,7 +63,7 @@ public class AdapterProdutosCostureira extends RecyclerView.Adapter<AdapterProdu
         profileRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
             @Override
             public void onSuccess(Uri uri) {
-                Glide.with(context).load(uri).circleCrop().into(img_produto);
+                Glide.with(context).load(uri).into(img_produto);
             }
         }).addOnFailureListener(new OnFailureListener() {
             @Override

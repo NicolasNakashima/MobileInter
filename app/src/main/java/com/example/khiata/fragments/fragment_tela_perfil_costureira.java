@@ -5,10 +5,16 @@ import static android.app.Activity.RESULT_OK;
 import android.app.Dialog;
 import android.app.PendingIntent;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.GridLayoutManager;
@@ -29,6 +35,7 @@ import android.widget.Toast;
 import com.bumptech.glide.Glide;
 import com.example.khiata.R;
 import com.example.khiata.adapters.AdapterProdutosAdicionados;
+import com.example.khiata.adapters.AdapterProdutosCostureira;
 import com.example.khiata.apis.ProductApi;
 import com.example.khiata.apis.UserApi;
 import com.example.khiata.models.Product;
@@ -38,9 +45,14 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 
+import java.lang.reflect.Type;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -100,11 +112,21 @@ public class fragment_tela_perfil_costureira extends Fragment {
     TextView nome_costureira;
     String nome_costureira_txt;
     String phone_costureira, phone_user;
+    String msg_sms;
     private Retrofit retrofit;
     FirebaseStorage storage = FirebaseStorage.getInstance();
     StorageReference storageRef = storage.getReference();
     RecyclerView lista_produtos_costureira;
     List<Product> produtos = new ArrayList();
+    private static final String[] REQUIRED_PERMISSIONS;
+    static {
+        List<String> requiredPermissions = new ArrayList<>();
+        requiredPermissions.add(android.Manifest.permission.SEND_SMS);
+        if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.P) {
+            requiredPermissions.add(android.Manifest.permission.WRITE_EXTERNAL_STORAGE);
+        }
+        REQUIRED_PERMISSIONS = requiredPermissions.toArray(new String[0]);
+    }
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -127,7 +149,11 @@ public class fragment_tela_perfil_costureira extends Fragment {
             email_costureira = bundle.getString("email_costureira", null);
             if (email_costureira != null) {
                 nome_costureira = view.findViewById(R.id.nome_costureira);
+                //Listar os produtos
+                lista_produtos_costureira = view.findViewById(R.id.lista_produtos_costureira);
+                lista_produtos_costureira.setLayoutManager(new GridLayoutManager(getContext(), 2));
                 buscarInformacoesDaCostureira(email_costureira);
+
                 img_costureira = view.findViewById(R.id.img_costureira);
                 StorageReference profileRef = storageRef.child("khiata_perfis/foto_"+email_costureira+".jpg");
                 profileRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
@@ -145,12 +171,6 @@ public class fragment_tela_perfil_costureira extends Fragment {
             }
         }
 
-        //Listar os produtos
-        lista_produtos_costureira = view.findViewById(R.id.lista_produtos_costureira);
-        lista_produtos_costureira.setLayoutManager(new GridLayoutManager(getActivity(), 2));
-        Log.e("nome_costureira", nome_costureira_txt);
-        pegarProdutosDaCostureira(nome_costureira_txt);
-
         btn_sms = view.findViewById(R.id.btn_sms);
         btn_sms.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -161,7 +181,7 @@ public class fragment_tela_perfil_costureira extends Fragment {
 
                 TextView titulo = pop_sms.findViewById(R.id.titulo);
                 titulo.setText("Entre em contato direto com "+nome_costureira_txt+" (SMS)");
-                String msg_sms = ((EditText) pop_sms.findViewById(R.id.msgSMS)).getText().toString();
+                EditText msgSmsEditText = pop_sms.findViewById(R.id.msgSMS);
                 Button btn_cancelar = pop_sms.findViewById(R.id.btn_cancelar);
                 btn_cancelar.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -173,12 +193,18 @@ public class fragment_tela_perfil_costureira extends Fragment {
                 btn_enviar.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
+                        msg_sms = msgSmsEditText.getText().toString();
+                        Log.e("msg_sms", msg_sms);
                         if(msg_sms.isEmpty()) {
                             Toast.makeText(getActivity(), "Não é possível enviar uma mensagem vazia", Toast.LENGTH_SHORT).show();
                         }
                         else{
                             buscarTelefoneUsuario(FirebaseAuth.getInstance().getCurrentUser().getEmail());
-                            enviarSms(phone_costureira, msg_sms, phone_user);
+                            if(allPermissionsGranted()){
+                                enviarSms(phone_costureira, msg_sms, phone_user);
+                            } else {
+                                requestPermissions();
+                            }
                             dialog.cancel();
                         }
                     }
@@ -210,6 +236,7 @@ public class fragment_tela_perfil_costureira extends Fragment {
                     nome_costureira.setText(userResponse.getName());
                     phone_costureira = userResponse.getPhone();
                     nome_costureira_txt = userResponse.getName();
+                    pegarProdutosDaCostureira(userResponse.getName());
                 } else {
                     Toast.makeText(getContext(), "Usuário não encontrado ou resposta inválida", Toast.LENGTH_SHORT).show();
                     Log.e("API Error", "Response code: " + response.code() + " | Error body: " + response.errorBody());
@@ -258,15 +285,15 @@ public class fragment_tela_perfil_costureira extends Fragment {
 
         SmsManager smsManager = SmsManager.getDefault();
         smsManager.sendTextMessage(String.valueOf(phone_costureira), String.valueOf(phone_user), msg_sms, pi, null);
+        if (smsManager != null) {
+            Toast.makeText(getActivity(), "Mensagem enviada!", Toast.LENGTH_SHORT).show();
+        } else {
+            Toast.makeText(getActivity(), "Erro ao enviar mensagem!", Toast.LENGTH_SHORT).show();
+        }
     }
 
     //Método para buscar os produtos da costureira
     private void pegarProdutosDaCostureira(String userName) {
-        if (userName == null) {
-            Log.e("Error", "userName is null");
-            return;
-        }
-        Log.e("userName", userName);
         String API_BASE_URL = "https://interdisciplinarr.onrender.com/";
         retrofit = new Retrofit.Builder()
                 .baseUrl(API_BASE_URL)
@@ -274,23 +301,44 @@ public class fragment_tela_perfil_costureira extends Fragment {
                 .build();
 
         ProductApi productApi = retrofit.create(ProductApi.class);
-        Call<List<Product>> call = productApi.getProductsByDressmarker(userName);
+        Call<List<String>> call = productApi.getProductsByDressmarker(userName);
 
-        call.enqueue(new Callback<List<Product>>() {
+        call.enqueue(new Callback<List<String>>() {
             @Override
-            public void onResponse(Call<List<Product>> call, Response<List<Product>> response) {
+            public void onResponse(Call<List<String>> call, Response<List<String>> response) {
                 if (response.isSuccessful()) {
-                    List<Product> listaDeProdutos = response.body();
+                    List<String> jsonStringList = response.body();
 
-                    if (listaDeProdutos != null && !listaDeProdutos.isEmpty()) {
-                        produtos.clear();
-                        produtos.addAll(listaDeProdutos);
+                    if(jsonStringList != null && !jsonStringList.isEmpty()) {
+                        Gson gson = new Gson();
+                        Type productType = new TypeToken<Product>(){}.getType();
 
-                        // Atualiza o adapter com a lista de produtos
-                        AdapterProdutosAdicionados adapter = new AdapterProdutosAdicionados(getActivity(), produtos);
-                        lista_produtos_costureira.setAdapter(adapter);
-                        adapter.notifyDataSetChanged();
-                    } else {
+                        produtos.clear();  // Limpa a lista de produtos antes de adicionar novos
+
+                        for (String jsonString : jsonStringList) {
+                            // Converte cada String JSON da lista em um objeto Product
+                            jsonString = jsonString.replace("'", "\"");
+                            Product produto = gson.fromJson(jsonString, productType);
+
+                            if (produto != null) {
+                                produtos.add(produto);  // Adiciona o produto na lista
+                            } else {
+                                Log.e("Error", "Erro ao converter produto.");
+                            }
+                        }
+
+                        if (!produtos.isEmpty()) {
+                            Toast.makeText(getActivity(), "Produtos encontrados.", Toast.LENGTH_SHORT).show();
+
+                            AdapterProdutosCostureira adapter = new AdapterProdutosCostureira(getActivity(), produtos);
+                            lista_produtos_costureira.setAdapter(adapter);
+                            adapter.notifyDataSetChanged();
+
+                        } else {
+                            Toast.makeText(getActivity(), "Nenhum produto cadastrado.", Toast.LENGTH_SHORT).show();
+                            Log.e("Error", "Nenhum produto encontrado.");
+                        }
+                    } else{
                         Toast.makeText(getActivity(), "Nenhum produto cadastrado.", Toast.LENGTH_SHORT).show();
                         Log.e("Error", "Nenhum produto encontrado.");
                     }
@@ -301,10 +349,43 @@ public class fragment_tela_perfil_costureira extends Fragment {
             }
 
             @Override
-            public void onFailure(Call<List<Product>> call, Throwable throwable) {
+            public void onFailure(Call<List<String>> call, Throwable throwable) {
                 Toast.makeText(getActivity(), throwable.getMessage(), Toast.LENGTH_SHORT).show();
                 Log.e("Error", throwable.getMessage());
             }
         });
     }
+
+    //Bloco de funções para gerenciar permissões para o SMS
+    private boolean allPermissionsGranted(){
+        for(String permission : REQUIRED_PERMISSIONS){
+            if(ContextCompat.checkSelfPermission(getActivity(), permission)
+                    != PackageManager.PERMISSION_GRANTED){
+                return false;
+            }
+        }
+        return true;
+    }
+
+    private void requestPermissions(){
+        activityResultLauncher.launch(REQUIRED_PERMISSIONS);
+    }
+    private ActivityResultLauncher<String[]> activityResultLauncher = registerForActivityResult(
+        new ActivityResultContracts.RequestMultiplePermissions(),
+        permissions -> {
+            // Handle Permission granted/rejected
+            boolean permissionGranted = true;
+            for (Map.Entry<String, Boolean> entry : permissions.entrySet()) {
+                if (Arrays.asList(REQUIRED_PERMISSIONS).contains(entry.getKey()) && !entry.getValue()) {
+                    permissionGranted = false;
+                    break;
+                }
+            }
+            if (!permissionGranted) {
+                Toast.makeText(getActivity(),"Permissão NEGADA. Tente novamente.",Toast.LENGTH_SHORT).show();
+            } else {
+                enviarSms(phone_costureira, msg_sms, phone_user);
+            }
+        }
+    );
 }

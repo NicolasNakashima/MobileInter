@@ -79,4 +79,9 @@ dependencies {
     // Flexbox
     implementation ("com.google.android.flexbox:flexbox:3.0.0")
 
+    implementation ("com.squareup.retrofit2:converter-scalars:2.9.0")
+
+    // Lottie
+    implementation("com.airbnb.android:lottie:6.5.2")
+
 }

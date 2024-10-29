@@ -45,6 +45,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
+import retrofit2.converter.scalars.ScalarsConverterFactory;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -134,6 +135,7 @@ public class fragment_tela_cadastrar_produto extends Fragment {
         if (bundle != null) {
             String imgProduto = bundle.getString("imgName");
             imgName = imgProduto;
+            Log.e("Imagem", imgName);
 
             // Buscar a imagem no Firebase usando o nome da imagem
             if (imgProduto != null) {
@@ -266,6 +268,7 @@ public class fragment_tela_cadastrar_produto extends Fragment {
         String API_BASE_URL = "https://interdisciplinarr.onrender.com/";
         retrofit = new Retrofit.Builder()
                 .baseUrl(API_BASE_URL)
+                .addConverterFactory(ScalarsConverterFactory.create())
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
         ProductApi productApi = retrofit.create(ProductApi.class);
