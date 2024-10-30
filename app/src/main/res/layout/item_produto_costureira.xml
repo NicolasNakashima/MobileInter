@@ -33,10 +33,10 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.122"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/titulo_produto" />
+            app:layout_constraintTop_toBottomOf="@+id/cart_id" />
 
         <TextView
-            android:id="@+id/titulo_produto"
+            android:id="@+id/cart_id"
             android:layout_width="169dp"
             android:layout_height="30dp"
             android:layout_marginTop="12dp"

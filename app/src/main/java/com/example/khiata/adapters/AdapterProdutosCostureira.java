@@ -4,6 +4,7 @@ import android.content.Context;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.graphics.drawable.Drawable;
+import android.graphics.drawable.LayerDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
@@ -58,8 +59,8 @@ public class AdapterProdutosCostureira extends RecyclerView.Adapter<AdapterProdu
     public void onBindViewHolder(@NonNull AdapterProdutosCostureira.MeuViewHolder holder, int position) {
         ImageView img_produto = holder.img_produto;
         RatingBar avaliacao_produto_costureira = holder.avaliacao_produto_costureira;
-        Drawable stars = avaliacao_produto_costureira.getProgressDrawable();
-        stars.setColorFilter(Color.parseColor("#FAC552"), PorterDuff.Mode.SRC_ATOP);
+        LayerDrawable stars = (LayerDrawable) avaliacao_produto_costureira.getProgressDrawable();
+        stars.getDrawable(2).setColorFilter(Color.parseColor("#FAC552"), PorterDuff.Mode.SRC_ATOP);
         TextView titulo_produto = holder.titulo_produto;
         TextView preco_produto = holder.preco_produto;
 
@@ -118,7 +119,7 @@ public class AdapterProdutosCostureira extends RecyclerView.Adapter<AdapterProdu
             super(itemView);
             img_produto = itemView.findViewById(R.id.img_produto);
             avaliacao_produto_costureira = itemView.findViewById(R.id.avaliacao_produto_costureira);
-            titulo_produto = itemView.findViewById(R.id.titulo_produto);
+            titulo_produto = itemView.findViewById(R.id.cart_id);
             preco_produto = itemView.findViewById(R.id.preco_produto);
         }
     }

@@ -3,6 +3,7 @@ package com.example.khiata.fragments;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.graphics.drawable.Drawable;
+import android.graphics.drawable.LayerDrawable;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -112,8 +113,8 @@ public class fragment_tela_avaliacoes extends Fragment {
 
         //Definindo a avaliação do usuario
         avaliacao_usuario = view.findViewById(R.id.avaliacao_usuario);
-        Drawable stars = avaliacao_usuario.getProgressDrawable();
-        stars.setColorFilter(Color.parseColor("#FAC552"), PorterDuff.Mode.SRC_ATOP);
+        LayerDrawable stars = (LayerDrawable) avaliacao_usuario.getProgressDrawable();
+        stars.getDrawable(2).setColorFilter(Color.parseColor("#FAC552"), PorterDuff.Mode.SRC_ATOP);
         buscarAvaliacaoDoUsuario(FirebaseAuth.getInstance().getCurrentUser().getEmail());
 
         return view;

@@ -1,6 +1,10 @@
 package com.example.khiata.fragments;
 
 import android.app.Dialog;
+import android.graphics.Color;
+import android.graphics.PorterDuff;
+import android.graphics.drawable.Drawable;
+import android.graphics.drawable.LayerDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 
@@ -149,6 +153,8 @@ public class fragment_tela_curso extends Fragment {
                 categoria_curso = view.findViewById(R.id.categoria_curso);
                 categoria_curso.setText("Categoria: " + categoria_curso_txt);
                 avaliacao_curso = view.findViewById(R.id.avaliacao_curso);
+                LayerDrawable stars = (LayerDrawable) avaliacao_curso.getProgressDrawable();
+                stars.getDrawable(2).setColorFilter(Color.parseColor("#FAC552"), PorterDuff.Mode.SRC_ATOP);
                 avaliacao_curso.setRating(avaliacao_curso_txt);
                 //Configurando o WebView para o video do YouTube
                 youtubeWebView = view.findViewById(R.id.youtubeWebView);

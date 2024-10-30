@@ -32,7 +32,7 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.238"
-            app:layout_constraintStart_toEndOf="@+id/titulo_produto"
+            app:layout_constraintStart_toEndOf="@+id/cart_id"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0.088"
             app:srcCompat="@drawable/icon_delete" />
@@ -63,7 +63,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.065"
             app:layout_constraintStart_toEndOf="@+id/img_produto"
-            app:layout_constraintTop_toBottomOf="@+id/titulo_produto"
+            app:layout_constraintTop_toBottomOf="@+id/cart_id"
             app:layout_constraintVertical_bias="0.054" />
 
         <TextView
@@ -81,7 +81,7 @@
             app:layout_constraintVertical_bias="0.129" />
 
         <TextView
-            android:id="@+id/titulo_produto"
+            android:id="@+id/cart_id"
             android:layout_width="176dp"
             android:layout_height="46dp"
             android:text="Blusa Tricot Manga Longa  Inverno Cores Tendência"

@@ -19,6 +19,7 @@ import com.example.khiata.adapters.AdapterAvaliacoesUsuario;
 import com.example.khiata.adapters.AdapterCursos;
 import com.example.khiata.models.Avaliation;
 import com.example.khiata.models.Course;
+import com.google.firebase.auth.FirebaseAuth;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -104,8 +105,8 @@ public class fragment_tela_cursos extends Fragment {
 
         //Definindo os cursos
         lista_cursos = view.findViewById(R.id.lista_cursos);
-        cursos.add(new Course("Teste", "Categoria", "2h 10min", 4.5, "https://blog.maximustecidos.com.br/wp-content/uploads/2020/11/4-dicas-para-conservar-a-maquina-de-costura-1.jpg", "https://www.youtube.com/watch?v=6kZMl7A7XWQ&pp=ygUHY29zdHVyYQ%3D%3D"));
-        AdapterCursos adapter = new AdapterCursos(getActivity(), cursos);
+        cursos.add(new Course("Teste", "Categoria", "2h 10min", 4.5, "https://blog.maximustecidos.com.br/wp-content/uploads/2020/11/4-dicas-para-conservar-a-maquina-de-costura-1.jpg", "https://youtu.be/GbYQqa4hRzE?si=pDc2RfV2OjD35ccS"));
+        AdapterCursos adapter = new AdapterCursos(getActivity(), cursos, FirebaseAuth.getInstance().getCurrentUser().getEmail());
         lista_cursos.setAdapter(adapter);
         lista_cursos.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
 

@@ -158,8 +158,8 @@ public class fragment_tela_perfil_costureira extends Fragment {
             if (email_costureira != null) {
                 nome_costureira = view.findViewById(R.id.nome_costureira);
                 avaliacao_costureira = view.findViewById(R.id.avaliacao_costureira);
-                Drawable stars = avaliacao_costureira.getProgressDrawable();
-                stars.setColorFilter(Color.parseColor("#FAC552"), PorterDuff.Mode.SRC_ATOP);
+                LayerDrawable stars = (LayerDrawable) avaliacao_costureira.getProgressDrawable();
+                stars.getDrawable(2).setColorFilter(Color.parseColor("#FAC552"), PorterDuff.Mode.SRC_ATOP);
                 //Listar os produtos
                 lista_produtos_costureira = view.findViewById(R.id.lista_produtos_costureira);
                 lista_produtos_costureira.setLayoutManager(new GridLayoutManager(getContext(), 2));
@@ -188,18 +188,18 @@ public class fragment_tela_perfil_costureira extends Fragment {
             @Override
             public void onClick(View v) {
                 // Cria um novo fragmento de perfil da costureira
-                fragment_tela_perfil_costureira perfilCostureiraFragment = new fragment_tela_perfil_costureira();
+                fragment_tela_avaliacoes_costureira avaliacoesCostureiraFragment = new fragment_tela_avaliacoes_costureira();
 
                 // Cria um Bundle para passar o email da costureira
                 Bundle bundle = new Bundle();
                 bundle.putString("email_costureira", email_costureira); // Passa o email da costureira para o fragmento
 
                 // Define o argumento no fragmento de edição
-                perfilCostureiraFragment.setArguments(bundle);
+                avaliacoesCostureiraFragment.setArguments(bundle);
 
                 // Inicia a transação de fragmento para substituir o fragmento atual
                 FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
-                transaction.replace(R.id.frame_conteudo, perfilCostureiraFragment);
+                transaction.replace(R.id.frame_conteudo, avaliacoesCostureiraFragment);
                 transaction.addToBackStack(null); // Adiciona a transação à pilha de navegação
                 transaction.commit();
             }

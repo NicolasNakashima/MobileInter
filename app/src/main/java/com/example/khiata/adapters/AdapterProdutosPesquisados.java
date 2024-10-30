@@ -109,7 +109,7 @@ public class AdapterProdutosPesquisados extends RecyclerView.Adapter<AdapterProd
         ImageView img_produto;
         public MeuViewHolder(@NonNull View itemView) {
             super(itemView);
-            titulo_produto = itemView.findViewById(R.id.titulo_produto);
+            titulo_produto = itemView.findViewById(R.id.cart_id);
             vendedor_produto = itemView.findViewById(R.id.vendedor_produto);
             preco_produto = itemView.findViewById(R.id.preco_produto);
             img_produto = itemView.findViewById(R.id.img_produto);

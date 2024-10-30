@@ -11,7 +11,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.khiata.R;
-import com.example.khiata.models.Course;
+import com.example.khiata.models.Historic;
 import com.example.khiata.models.Product;
 
 import java.util.ArrayList;
@@ -20,12 +20,12 @@ import java.util.List;
 import retrofit2.Retrofit;
 
 public class AdapterProdutosComprados extends RecyclerView.Adapter<AdapterProdutosComprados.MeuViewHolder> {
-    private List<Product> produtos = new ArrayList();
+    private List<Historic> pedidos = new ArrayList();
     private Context context;
 
-    public AdapterProdutosComprados(Context context, List<Product> produtos) {
+    public AdapterProdutosComprados(Context context, List<Historic> pedidos) {
         this.context = context;
-        this.produtos = produtos;
+        this.pedidos = pedidos;
     }
     private Retrofit retrofit;
     @NonNull
@@ -40,27 +40,32 @@ public class AdapterProdutosComprados extends RecyclerView.Adapter<AdapterProdut
 
     @Override
     public void onBindViewHolder(@NonNull AdapterProdutosComprados.MeuViewHolder holder, int position) {
-        ImageView img_produto = holder.img_produto;
-        TextView titulo_produto = holder.titulo_produto;
-        TextView total_compra = holder.total_compra;
-        TextView status_compra = holder.status_compra;
-        TextView btn_adicionar_carrinho = holder.btn_adicionar_carrinho;
+        TextView cart_id = holder.cart_id;
+        TextView status_pedido = holder.status_pedido;
+        TextView total_pedido = holder.total_pedido;
+        TextView forma_pagamento = holder.forma_pagamento;
+        TextView data_pedido = holder.data_pedido;
+
+        Historic pedido = pedidos.get(position);
+        cart_id.setText("ID: " + pedido.getCart_id());
+        status_pedido.setText("Status: " + pedido.getStatus());
+        total_pedido.setText("Total: R$ " + pedido.getFinalValue());
+        forma_pagamento.setText("Forma de pagamento: " + pedido.getPaymentmethod());
+        data_pedido.setText("Data: " + pedido.getOrderDate());
     }
 
     @Override
-    public int getItemCount() {return produtos.size();}
+    public int getItemCount() {return pedidos.size();}
 
     public class MeuViewHolder extends RecyclerView.ViewHolder {
-        ImageView img_produto;
-        TextView titulo_produto, total_compra, status_compra, btn_adicionar_carrinho;
-
+        TextView cart_id, status_pedido, total_pedido, forma_pagamento, data_pedido;
         public MeuViewHolder(@NonNull View itemView) {
             super(itemView);
-            img_produto = itemView.findViewById(R.id.img_produto);
-            titulo_produto = itemView.findViewById(R.id.titulo_produto);
-            total_compra = itemView.findViewById(R.id.total_compra);
-            status_compra = itemView.findViewById(R.id.status_compra);
-            btn_adicionar_carrinho = itemView.findViewById(R.id.btn_adicionar_carrinho);
+            cart_id = itemView.findViewById(R.id.cart_id);
+            status_pedido = itemView.findViewById(R.id.status_pedido);
+            total_pedido = itemView.findViewById(R.id.total_pedido);
+            forma_pagamento = itemView.findViewById(R.id.forma_pagamento);
+            data_pedido = itemView.findViewById(R.id.data_pedido);
         }
     }
 }

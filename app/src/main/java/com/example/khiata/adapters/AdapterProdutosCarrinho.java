@@ -12,7 +12,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.khiata.R;
 import com.example.khiata.models.Product;
-import com.example.khiata.models.Produto;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -71,7 +70,7 @@ public class AdapterProdutosCarrinho extends RecyclerView.Adapter<AdapterProduto
             btn_excluir_item = view.findViewById(R.id.btn_excluir_item);
             preco_produto = view.findViewById(R.id.preco_produto);
             vendedor_produto = view.findViewById(R.id.vendedor_produto);
-            titulo_produto = view.findViewById(R.id.titulo_produto);
+            titulo_produto = view.findViewById(R.id.cart_id);
             tamanho_produto = view.findViewById(R.id.tamanho_produto);
         }
     }

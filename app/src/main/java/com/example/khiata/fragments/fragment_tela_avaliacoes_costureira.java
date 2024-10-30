@@ -4,6 +4,7 @@ import android.app.Dialog;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.graphics.drawable.Drawable;
+import android.graphics.drawable.LayerDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 
@@ -95,7 +96,7 @@ public class fragment_tela_avaliacoes_costureira extends Fragment {
         }
     }
 
-    ImageView voltar_perfil_costureira, img_costureira;
+    ImageView voltar_home, img_costureira;
     TextView nome_costureira;
     RatingBar avaliacao_costureira;
     ImageButton btn_adicionar_avaliacao_costureira;
@@ -112,12 +113,12 @@ public class fragment_tela_avaliacoes_costureira extends Fragment {
         View view = inflater.inflate(R.layout.fragment_tela_avaliacoes_costureira, container, false);
 
         //Botão para voltar para a tela de perfil da costureira
-        voltar_perfil_costureira = view.findViewById(R.id.voltar_perfil_costureira);
-        voltar_perfil_costureira.setOnClickListener(new View.OnClickListener() {
+        voltar_home = view.findViewById(R.id.voltar_home);
+        voltar_home.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
-                transaction.replace(R.id.frame_conteudo, new fragment_tela_perfil_costureira());
+                transaction.replace(R.id.frame_conteudo, new fragment_tela_home());
                 transaction.commit();
             }
         });
@@ -129,8 +130,8 @@ public class fragment_tela_avaliacoes_costureira extends Fragment {
             if (email_costureira != null) {
                 nome_costureira = view.findViewById(R.id.nome_costureira);
                 avaliacao_costureira = view.findViewById(R.id.avaliacao_costureira);
-                Drawable stars = avaliacao_costureira.getProgressDrawable();
-                stars.setColorFilter(Color.parseColor("#FAC552"), PorterDuff.Mode.SRC_ATOP);
+                LayerDrawable stars = (LayerDrawable) avaliacao_costureira.getProgressDrawable();
+                stars.getDrawable(2).setColorFilter(Color.parseColor("#FAC552"), PorterDuff.Mode.SRC_ATOP);
                 buscarInformacoesDaCostureira(email_costureira);
 
                 img_costureira = view.findViewById(R.id.img_costureira);

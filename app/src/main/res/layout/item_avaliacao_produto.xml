@@ -9,7 +9,7 @@
     app:cardCornerRadius="5dp">
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="360dp"
+        android:layout_width="350dp"
         android:layout_height="wrap_content">
 
         <TextView

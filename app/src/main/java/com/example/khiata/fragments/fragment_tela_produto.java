@@ -4,7 +4,7 @@ import android.app.Dialog;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
-import android.graphics.drawable.Drawable;
+import android.graphics.drawable.LayerDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 
@@ -130,7 +130,7 @@ public class fragment_tela_produto extends Fragment {
             String tamanho_produto_txt = bundle.getString("tamanho_produto");
             float avaliacao_produto_txt = bundle.getFloat("avaliacao_produto");
             if (titulo_produto_txt != null && vendedor_produto_txt != null && preco_produto_txt != null && imagem_produto_txt != null && descricao_produto_txt != null && tamanho_produto_txt != null) {
-                titulo_produto = view.findViewById(R.id.titulo_produto);
+                titulo_produto = view.findViewById(R.id.cart_id);
                 titulo_produto.setText(titulo_produto_txt);
                 vendedor_produto = view.findViewById(R.id.vendedor_produto);
                 vendedor_produto.setText("Vendedor: " + vendedor_produto_txt);
@@ -141,9 +141,9 @@ public class fragment_tela_produto extends Fragment {
                 descricao_produto = view.findViewById(R.id.descricao_produto);
                 descricao_produto.setText(descricao_produto_txt);
                 avaliacao_produto = view.findViewById(R.id.avaliacao_produto);
-                Drawable stars = avaliacao_produto.getProgressDrawable();
-                stars.setColorFilter(Color.parseColor("#FAC552"), PorterDuff.Mode.SRC_ATOP);
                 avaliacao_produto.setRating(avaliacao_produto_txt);
+                LayerDrawable stars = (LayerDrawable) avaliacao_produto.getProgressDrawable();
+                stars.getDrawable(2).setColorFilter(Color.parseColor("#FAC552"), PorterDuff.Mode.SRC_ATOP);
                 img_produto = view.findViewById(R.id.img_produto);
                 StorageReference profileRef = storageRef.child("khiata_produtos/"+imagem_produto_txt+".jpg");
                 profileRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
