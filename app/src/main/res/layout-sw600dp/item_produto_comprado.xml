@@ -23,7 +23,7 @@
             app:srcCompat="@drawable/add_img" />
 
         <TextView
-            android:id="@+id/titulo_produto"
+            android:id="@+id/cart_id"
             android:layout_width="186dp"
             android:layout_height="39dp"
             android:layout_marginStart="16dp"
@@ -35,7 +35,7 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
-            android:id="@+id/status_compra"
+            android:id="@+id/status_pedido"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
@@ -45,10 +45,10 @@
             android:textSize="12sp"
             android:textStyle="bold"
             app:layout_constraintStart_toEndOf="@+id/img_produto"
-            app:layout_constraintTop_toBottomOf="@+id/titulo_produto" />
+            app:layout_constraintTop_toBottomOf="@+id/cart_id" />
 
         <TextView
-            android:id="@+id/total_compra"
+            android:id="@+id/total_pedido"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
@@ -58,7 +58,7 @@
             android:textSize="16sp"
             android:textStyle="bold"
             app:layout_constraintStart_toEndOf="@+id/img_produto"
-            app:layout_constraintTop_toBottomOf="@+id/status_compra" />
+            app:layout_constraintTop_toBottomOf="@+id/status_pedido" />
 
         <TextView
             android:id="@+id/btn_adicionar_carrinho"
@@ -70,7 +70,7 @@
             android:textColor="#384384"
             android:textStyle="bold"
             app:layout_constraintStart_toEndOf="@+id/img_produto"
-            app:layout_constraintTop_toBottomOf="@+id/total_compra" />
+            app:layout_constraintTop_toBottomOf="@+id/total_pedido" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </androidx.cardview.widget.CardView>

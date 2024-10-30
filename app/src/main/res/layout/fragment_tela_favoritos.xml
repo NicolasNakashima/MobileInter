@@ -76,7 +76,7 @@
             android:layout_height="103dp"
             android:layout_marginTop="30dp"
             android:gravity="center"
-            android:text="Está funcionalidade não está disponível numa futura atualização. Por favor, volte para a home"
+            android:text="Está funcionalidade estará disponível numa futura atualização. Por favor, volte para a home"
             android:textColor="#000000"
             android:textSize="18sp"
             android:textStyle="bold"

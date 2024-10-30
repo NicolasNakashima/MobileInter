@@ -61,6 +61,9 @@ public class fragment_tela_selecao_endereco_pagamento extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_tela_selecao_endereco_pagamento, container, false);
+        View view = inflater.inflate(R.layout.fragment_tela_selecao_endereco_pagamento, container, false);
+
+
+        return view;
     }
 }

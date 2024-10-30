@@ -4,6 +4,8 @@ import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,6 +14,15 @@ import android.widget.Button;
 import android.widget.ImageView;
 
 import com.example.khiata.R;
+import com.example.khiata.adapters.AdapterAvaliacoesCurso;
+import com.example.khiata.adapters.AdapterAvaliacoesUsuario;
+import com.example.khiata.adapters.AdapterCursos;
+import com.example.khiata.models.Avaliation;
+import com.example.khiata.models.Course;
+import com.google.firebase.auth.FirebaseAuth;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -62,6 +73,8 @@ public class fragment_tela_cursos extends Fragment {
 
     ImageView voltar_home;
     Button btn_adquirir_premium;
+    RecyclerView lista_cursos;
+    List<Course> cursos = new ArrayList();
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -89,6 +102,13 @@ public class fragment_tela_cursos extends Fragment {
                 transaction.commit();
             }
         });
+
+        //Definindo os cursos
+        lista_cursos = view.findViewById(R.id.lista_cursos);
+        cursos.add(new Course("Teste", "Categoria", "2h 10min", 4.5, "https://blog.maximustecidos.com.br/wp-content/uploads/2020/11/4-dicas-para-conservar-a-maquina-de-costura-1.jpg", "https://youtu.be/GbYQqa4hRzE?si=pDc2RfV2OjD35ccS"));
+        AdapterCursos adapter = new AdapterCursos(getActivity(), cursos, FirebaseAuth.getInstance().getCurrentUser().getEmail());
+        lista_cursos.setAdapter(adapter);
+        lista_cursos.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
 
 
         return view;

@@ -16,11 +16,12 @@ public class User {
     private String email;
     private String profilePictureUrl; //Deixa null no cadastro
     private List<Address> addresses;
+    private double avaliation;
 
     // Constructor
     public User(String name, String cpf, int genderId, int age, boolean isDressmaker,
                 int premiumStatus, String phones, String imageURL, String password,
-                String email, String profilePictureUrl) {
+                String email, String profilePictureUrl, double avaliation) {
         this.name = name;
         this.cpf = cpf;
         this.genderId = genderId;
@@ -32,9 +33,10 @@ public class User {
         this.password = password;
         this.email = email;
         this.profilePictureUrl = profilePictureUrl;
+        this.avaliation = avaliation;
     }
 
-    public User(String name, String cpf, int genderId, int age, boolean isDressmaker, int premiumStatus, String phones, String imageURL, String password, String email, String profilePictureUrl, List<Address> addresses) {
+    public User(String name, String cpf, int genderId, int age, boolean isDressmaker, int premiumStatus, String phones, String imageURL, String password, String email, String profilePictureUrl, List<Address> addresses, double avaliation) {
         this.name = name;
         this.cpf = cpf;
         this.genderId = genderId;
@@ -47,6 +49,7 @@ public class User {
         this.email = email;
         this.profilePictureUrl = profilePictureUrl;
         this.addresses = addresses;
+        this.avaliation = avaliation;
     }
 
     public int getId() {
@@ -153,6 +156,14 @@ public class User {
         this.addresses = addresses;
     }
 
+    public double getAvaliation() {
+        return avaliation;
+    }
+
+    public void setAvaliation(double avaliation) {
+        this.avaliation = avaliation;
+    }
+
     @Override
     public String toString() {
         return "User{" +
@@ -168,6 +179,7 @@ public class User {
                 ", email='" + email + '\'' +
                 ", profilePictureUrl='" + profilePictureUrl + '\'' +
                 ", addresses=" + addresses + '\'' +
+                ", avaliation=" + avaliation + '\'' +
                 '}';
     }
 }

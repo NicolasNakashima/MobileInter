@@ -1,7 +1,12 @@
 package com.example.khiata.adapters;
 
 import android.content.Context;
+import android.graphics.Color;
+import android.graphics.PorterDuff;
+import android.graphics.drawable.Drawable;
+import android.graphics.drawable.LayerDrawable;
 import android.net.Uri;
+import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,10 +16,13 @@ import android.widget.RatingBar;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.example.khiata.R;
+import com.example.khiata.fragments.fragment_tela_produto;
 import com.example.khiata.models.Product;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -51,6 +59,8 @@ public class AdapterProdutosCostureira extends RecyclerView.Adapter<AdapterProdu
     public void onBindViewHolder(@NonNull AdapterProdutosCostureira.MeuViewHolder holder, int position) {
         ImageView img_produto = holder.img_produto;
         RatingBar avaliacao_produto_costureira = holder.avaliacao_produto_costureira;
+        LayerDrawable stars = (LayerDrawable) avaliacao_produto_costureira.getProgressDrawable();
+        stars.getDrawable(2).setColorFilter(Color.parseColor("#FAC552"), PorterDuff.Mode.SRC_ATOP);
         TextView titulo_produto = holder.titulo_produto;
         TextView preco_produto = holder.preco_produto;
 
@@ -72,6 +82,29 @@ public class AdapterProdutosCostureira extends RecyclerView.Adapter<AdapterProdu
                 img_produto.setImageResource(R.drawable.add_img);
             }
         });
+
+        //Ir para a tela do produto ao clicar num card
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                fragment_tela_produto telaProdutoFragment = new fragment_tela_produto();
+
+                Bundle bundle = new Bundle();
+                bundle.putString("titulo_produto", produto.getName());
+                bundle.putString("vendedor_produto", produto.getDressMarkerName());
+                bundle.putDouble("preco_produto", produto.getPrice());
+                bundle.putString("imagem_produto", produto.getImageUrl());
+                bundle.putString("descricao_produto", produto.getDescription());
+                bundle.putString("tamanho_produto", produto.getSize());
+                bundle.putFloat("avaliacao_produto", (float) produto.getAvaliation());
+                telaProdutoFragment.setArguments(bundle);
+
+                FragmentTransaction transaction = ((AppCompatActivity) context).getSupportFragmentManager().beginTransaction();
+                transaction.replace(R.id.frame_conteudo, telaProdutoFragment);
+                transaction.addToBackStack(null);
+                transaction.commit();
+            }
+        });
     }
 
     @Override
@@ -86,7 +119,7 @@ public class AdapterProdutosCostureira extends RecyclerView.Adapter<AdapterProdu
             super(itemView);
             img_produto = itemView.findViewById(R.id.img_produto);
             avaliacao_produto_costureira = itemView.findViewById(R.id.avaliacao_produto_costureira);
-            titulo_produto = itemView.findViewById(R.id.titulo_produto);
+            titulo_produto = itemView.findViewById(R.id.cart_id);
             preco_produto = itemView.findViewById(R.id.preco_produto);
         }
     }

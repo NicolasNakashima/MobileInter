@@ -124,7 +124,7 @@ public class tela_cadastro extends AppCompatActivity {
                                 novoGenero = 1;
                             }
 
-                            User novoUser = new User( novoNome, novoCPF, novoGenero,novaIdade,confirmCostureira,0, novoPhone, null,novaSenha, novoEmail, null);
+                            User novoUser = new User( novoNome, novoCPF, novoGenero,novaIdade,confirmCostureira,0, novoPhone, null,novaSenha, novoEmail, null, 0);
                             Log.e("novoUser", novoUser.toString());
                             Log.d("User", new Gson().toJson(novoUser));
                             cadastrarUsuarioAPI(novoUser);

@@ -43,6 +43,11 @@ public class AdapterSelecaoEnderecosPagamento extends RecyclerView.Adapter<Adapt
         TextView destinatario_endereco = holder.destinatario_endereco;
         TextView street_endereco = holder.street_endereco;
         TextView complement_endereco = holder.complement_endereco;
+
+        rotulo_endereco.setText(enderecos.get(position).getLabel());
+        street_endereco.setText(enderecos.get(position).getStreet() + " - " + enderecos.get(position).getNumber() + " - " + enderecos.get(position).getCep());
+        complement_endereco.setText(enderecos.get(position).getComplement());
+        destinatario_endereco.setText(enderecos.get(position).getRecipient());
     }
 
     @Override

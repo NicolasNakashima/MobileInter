@@ -2,7 +2,6 @@ package com.example.khiata.adapters;
 
 import android.app.Dialog;
 import android.content.Context;
-import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
@@ -21,14 +20,11 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.example.khiata.R;
-import com.example.khiata.apis.AddressApi;
 import com.example.khiata.apis.ProductApi;
-import com.example.khiata.classes.tela_inicial;
 import com.example.khiata.fragments.fragment_tela_produto;
 import com.example.khiata.models.Product;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
@@ -140,6 +136,7 @@ public class AdapterProdutosAdicionados extends RecyclerView.Adapter<AdapterProd
                 bundle.putString("imagem_produto", produto.getImageUrl());
                 bundle.putString("descricao_produto", produto.getDescription());
                 bundle.putString("tamanho_produto", produto.getSize());
+                bundle.putFloat("avaliacao_produto", (float) produto.getAvaliation());
                 telaProdutoFragment.setArguments(bundle);
 
                 FragmentTransaction transaction = ((AppCompatActivity) context).getSupportFragmentManager().beginTransaction();
@@ -193,7 +190,7 @@ public class AdapterProdutosAdicionados extends RecyclerView.Adapter<AdapterProd
             super(itemView);
             img_produto = itemView.findViewById(R.id.img_produto);
             btn_excluir_produto = itemView.findViewById(R.id.btn_excluir_produto);
-            titulo_produto = itemView.findViewById(R.id.titulo_produto);
+            titulo_produto = itemView.findViewById(R.id.cart_id);
             preco_produto = itemView.findViewById(R.id.preco_produto);
         }
     }

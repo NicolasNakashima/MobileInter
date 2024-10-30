@@ -64,7 +64,7 @@ public class AdapterEnderecosUsuario extends RecyclerView.Adapter<AdapterEnderec
         ImageView btn_editar_endereco = holder.btn_editar_endereco;
 
         rotulo_endereco.setText(enderecos.get(position).getLabel());
-        street_endereco.setText(enderecos.get(position).getStreet() + " - " + enderecos.get(position).getNumber());
+        street_endereco.setText(enderecos.get(position).getStreet() + " - " + enderecos.get(position).getNumber() + " - " + enderecos.get(position).getCep());
         complement_endereco.setText(enderecos.get(position).getComplement());
         destinatario_endereco.setText(enderecos.get(position).getRecipient());
 
