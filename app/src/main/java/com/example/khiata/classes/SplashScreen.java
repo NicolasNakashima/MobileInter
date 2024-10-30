@@ -43,12 +43,16 @@ public class SplashScreen extends AppCompatActivity {
             public void run() {
                 abrirTela();
             }
-        }, 3000);
+        }, 4000);
     }
 
     private void abrirTela(){
         Intent intent = new Intent(SplashScreen.this, tela_inicial.class);
         startActivity(intent);
-        //finish();
+        // Aplique as animações de transição
+        overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
+
+        // Finalize a SplashScreen
+        finish();
     }
 }

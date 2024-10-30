@@ -140,6 +140,7 @@ public class AdapterProdutosAdicionados extends RecyclerView.Adapter<AdapterProd
                 bundle.putString("imagem_produto", produto.getImageUrl());
                 bundle.putString("descricao_produto", produto.getDescription());
                 bundle.putString("tamanho_produto", produto.getSize());
+                bundle.putFloat("avaliacao_produto", (float) produto.getAvaliation());
                 telaProdutoFragment.setArguments(bundle);
 
                 FragmentTransaction transaction = ((AppCompatActivity) context).getSupportFragmentManager().beginTransaction();

@@ -1,6 +1,9 @@
 package com.example.khiata.adapters;
 
 import android.content.Context;
+import android.graphics.Color;
+import android.graphics.PorterDuff;
+import android.graphics.drawable.Drawable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -42,7 +45,13 @@ public class AdapterAvaliacoesUsuario extends RecyclerView.Adapter<AdapterAvalia
     public void onBindViewHolder(@NonNull AdapterAvaliacoesUsuario.MeuViewHolder holder, int position) {
         TextView nome_usuario = holder.nome_usuario;
         RatingBar avaliacao_usuario = holder.avaliacao_usuario;
+        Drawable stars = avaliacao_usuario.getProgressDrawable();
+        stars.setColorFilter(Color.parseColor("#FAC552"), PorterDuff.Mode.SRC_ATOP);
         TextView comentario_usuario = holder.comentario_usuario;
+
+        nome_usuario.setText(avaliacoes.get(position).getUserName());
+        avaliacao_usuario.setRating((float) avaliacoes.get(position).getRating());
+        comentario_usuario.setText(avaliacoes.get(position).getComment());
     }
 
     @Override

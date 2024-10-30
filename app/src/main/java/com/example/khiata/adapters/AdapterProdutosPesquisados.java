@@ -90,6 +90,7 @@ public class AdapterProdutosPesquisados extends RecyclerView.Adapter<AdapterProd
                 bundle.putString("imagem_produto", product.getImageUrl());
                 bundle.putString("descricao_produto", product.getDescription());
                 bundle.putString("tamanho_produto", product.getSize());
+                bundle.putFloat("avaliacao_produto", (float) product.getAvaliation());
                 telaProdutoFragment.setArguments(bundle);
 
                 FragmentTransaction transaction = ((AppCompatActivity) context).getSupportFragmentManager().beginTransaction();

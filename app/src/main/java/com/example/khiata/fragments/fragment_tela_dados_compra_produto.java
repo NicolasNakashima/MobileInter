@@ -1,14 +1,20 @@
 package com.example.khiata.fragments;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.example.khiata.R;
+import com.example.khiata.classes.tela_carrinho;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -57,10 +63,56 @@ public class fragment_tela_dados_compra_produto extends Fragment {
         }
     }
 
+    ImageView voltar_carrinho;
+    Button btn_cancelar_confirmacao_dados, btn_confirmar_dados;
+    TextView escolher_outro_endereco;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_tela_dados_compra_produto, container, false);
+        View view = inflater.inflate(R.layout.fragment_tela_dados_compra_produto, container, false);
+
+        //Botão para voltar para tela de carrinho
+        voltar_carrinho = view.findViewById(R.id.voltar_carrinho);
+        voltar_carrinho.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getActivity(), tela_carrinho.class);
+                startActivity(intent);
+            }
+        });
+
+        //Botão para cancelar a compra
+        btn_cancelar_confirmacao_dados = view.findViewById(R.id.btn_cancelar_confirmacao_dados);
+        btn_cancelar_confirmacao_dados.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getActivity(), tela_carrinho.class);
+                startActivity(intent);
+            }
+        });
+
+        //Botão para voltar e escolher outro endereço
+        escolher_outro_endereco = view.findViewById(R.id.escolher_outro_endereco);
+        escolher_outro_endereco.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
+                transaction.replace(R.id.frame_conteudo, new fragment_tela_selecao_endereco_pagamento());
+                transaction.commit();
+            }
+        });
+
+        btn_confirmar_dados = view.findViewById(R.id.btn_confirmar_dados);
+        btn_confirmar_dados.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
+                transaction.replace(R.id.frame_conteudo, new fragment_tela_pagamento_produto());
+                transaction.commit();
+            }
+        });
+
+        return view;
     }
 }

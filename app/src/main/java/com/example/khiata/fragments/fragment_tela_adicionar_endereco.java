@@ -126,8 +126,9 @@ public class fragment_tela_adicionar_endereco extends Fragment {
                 int novoNumero = Integer.parseInt(((EditText) view.findViewById(R.id.editNumero)).getText().toString());
                 String novoComplemento = ((EditText) view.findViewById(R.id.editComplemento)).getText().toString();
                 String novoRotulo = ((EditText) view.findViewById(R.id.editRotulo)).getText().toString();
+                String novoCEP = ((EditText) view.findViewById(R.id.editCEP)).getText().toString();
 
-                if(novoDestinatario.isEmpty() || novaRua.isEmpty() || novoNumero == 0 || novoRotulo.isEmpty()){
+                if(novoDestinatario.isEmpty() || novaRua.isEmpty() || novoNumero == 0 || novoRotulo.isEmpty() || novoCEP.isEmpty()) {
                     Dialog dialog = new Dialog(getActivity());
                     LayoutInflater inflater = getLayoutInflater();
                     View popupView = inflater.inflate(R.layout.popup_mensagem, null);
@@ -149,7 +150,7 @@ public class fragment_tela_adicionar_endereco extends Fragment {
                     if(novoComplemento.isEmpty()){
                         novoComplemento = null;
                     }
-                    Address novoEndereco = new Address(novoDestinatario, novaRua, novoNumero, novoComplemento, novoRotulo);
+                    Address novoEndereco = new Address(novoDestinatario, novaRua, novoNumero, novoComplemento, novoRotulo, novoCEP);
                     Log.d("Address", new Gson().toJson(novoEndereco));
                     buscarIdDoUsuario(FirebaseAuth.getInstance().getCurrentUser().getEmail(), novoEndereco);
                 }

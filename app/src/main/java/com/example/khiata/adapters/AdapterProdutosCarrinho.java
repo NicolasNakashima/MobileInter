@@ -44,7 +44,18 @@ public class AdapterProdutosCarrinho extends RecyclerView.Adapter<AdapterProduto
 
     @Override
     public void onBindViewHolder(@NonNull AdapterProdutosCarrinho.MeuViewHolder holder, int position) {
+        ImageView img_produto = holder.img_produto;
+        TextView preco_produto = holder.preco_produto;
+        TextView vendedor_produto = holder.vendedor_produto;
+        TextView titulo_produto = holder.titulo_produto;
+        TextView tamanho_produto = holder.tamanho_produto;
+        ImageView btn_excluir_item = holder.btn_excluir_item;
 
+        Product produto = produtos.get(position);
+        preco_produto.setText("R$" + String.valueOf(produto.getPrice()));
+        vendedor_produto.setText("Vendido por " + produto.getDressMarkerName());
+        titulo_produto.setText(produto.getName());
+        tamanho_produto.setText("Tamanho: " + produto.getSize());
     }
 
     @Override

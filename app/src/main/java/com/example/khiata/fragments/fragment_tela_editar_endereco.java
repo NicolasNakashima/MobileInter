@@ -120,6 +120,7 @@ public class fragment_tela_editar_endereco extends Fragment {
                 String atualizarRua = ((EditText) view.findViewById(R.id.atualizarRua)).getText().toString();
                 String atualizarComplemento = ((EditText) view.findViewById(R.id.atualizarComplemento)).getText().toString();
                 String atualizarRotulo = ((EditText) view.findViewById(R.id.atualizarRotulo)).getText().toString();
+                String atualizarCEP = ((EditText) view.findViewById(R.id.atualizarCEP)).getText().toString();
                 int atualizarNumero = 0;
                 String numeroTexto = ((EditText) view.findViewById(R.id.atualizarNumero)).getText().toString();
                 if (!numeroTexto.isEmpty()) {
@@ -141,6 +142,9 @@ public class fragment_tela_editar_endereco extends Fragment {
                 }
                 if(!atualizarRotulo.isEmpty()){
                     atualizacoes.put("label", atualizarRotulo);
+                }
+                if(!atualizarCEP.isEmpty()){
+                    atualizacoes.put("cep", atualizarCEP);
                 }
                 if(atualizarNumero != 0){
                     atualizacoes.put("number", atualizarNumero);

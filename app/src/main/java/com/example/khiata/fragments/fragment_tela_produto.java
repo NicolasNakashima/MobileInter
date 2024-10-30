@@ -12,7 +12,9 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.RatingBar;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
@@ -72,6 +74,8 @@ public class fragment_tela_produto extends Fragment {
 
     ImageView voltar_home, btn_carrinho, img_produto;
     TextView titulo_produto, vendedor_produto, preco_produto, tamanho_produto, descricao_produto;
+    RatingBar avaliacao_produto;
+    Button btn_adicionar_produto_carrinho, btn_adicionar_avaliacao_produto;
     FirebaseStorage storage = FirebaseStorage.getInstance();
     StorageReference storageRef = storage.getReference();
     @Override
@@ -110,6 +114,7 @@ public class fragment_tela_produto extends Fragment {
             String imagem_produto_txt = bundle.getString("imagem_produto");
             String descricao_produto_txt = bundle.getString("descricao_produto");
             String tamanho_produto_txt = bundle.getString("tamanho_produto");
+            float avaliacao_produto_txt = bundle.getFloat("avaliacao_produto");
             if (titulo_produto_txt != null && vendedor_produto_txt != null && preco_produto_txt != null && imagem_produto_txt != null && descricao_produto_txt != null && tamanho_produto_txt != null) {
                 titulo_produto = view.findViewById(R.id.titulo_produto);
                 titulo_produto.setText(titulo_produto_txt);
@@ -121,6 +126,8 @@ public class fragment_tela_produto extends Fragment {
                 tamanho_produto.setText("Tamanho: " + tamanho_produto_txt);
                 descricao_produto = view.findViewById(R.id.descricao_produto);
                 descricao_produto.setText(descricao_produto_txt);
+                avaliacao_produto = view.findViewById(R.id.avaliacao_produto);
+                avaliacao_produto.setRating(avaliacao_produto_txt);
                 img_produto = view.findViewById(R.id.img_produto);
                 StorageReference profileRef = storageRef.child("khiata_produtos/"+imagem_produto_txt+".jpg");
                 profileRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {

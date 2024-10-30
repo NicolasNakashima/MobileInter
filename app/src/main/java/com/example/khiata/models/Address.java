@@ -9,12 +9,13 @@ public class Address {
     private String label;
     private String cep;
 
-    public Address(String recipient ,String street, int number, String complement, String label) {
+    public Address(String recipient ,String street, int number, String complement, String label, String cep) {
         this.recipient = recipient;
         this.street = street;
         this.number = number;
         this.complement = complement;
         this.label = label;
+        this.cep = cep;
     }
 
     public int getId() {

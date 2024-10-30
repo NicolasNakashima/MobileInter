@@ -1,6 +1,7 @@
 package com.example.khiata.adapters;
 
 import android.content.Context;
+import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -45,6 +46,11 @@ public class AdapterCursos extends RecyclerView.Adapter<AdapterCursos.MeuViewHol
         TextView titulo_curso = holder.titulo_curso;
         TextView tempo_curso = holder.tempo_curso;
         RatingBar avaliacao_curso = holder.avaliacao_curso;
+
+        img_curso.setImageURI(Uri.parse(cursos.get(position).getThumbnailUrl()));
+        titulo_curso.setText(cursos.get(position).getTitle());
+        tempo_curso.setText(cursos.get(position).getDuration());
+        avaliacao_curso.setRating((float) cursos.get(position).getAvaliation());
     }
 
     @Override

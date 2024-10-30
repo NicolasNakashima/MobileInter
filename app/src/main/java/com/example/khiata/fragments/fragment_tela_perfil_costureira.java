@@ -6,6 +6,10 @@ import android.app.Dialog;
 import android.app.PendingIntent;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.Color;
+import android.graphics.PorterDuff;
+import android.graphics.drawable.Drawable;
+import android.graphics.drawable.LayerDrawable;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -13,6 +17,7 @@ import android.os.Bundle;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
@@ -29,6 +34,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.RatingBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -108,8 +114,9 @@ public class fragment_tela_perfil_costureira extends Fragment {
     }
 
     ImageView voltar_home, img_costureira, btn_sms;
+    RatingBar avaliacao_costureira;
     String email_costureira;
-    TextView nome_costureira;
+    TextView nome_costureira, btn_comentarios;
     String nome_costureira_txt;
     String phone_costureira, phone_user;
     String msg_sms;
@@ -144,11 +151,15 @@ public class fragment_tela_perfil_costureira extends Fragment {
             }
         });
 
+        //Pegar as informações da costureira
         Bundle bundle = getArguments();
         if(bundle != null) {
             email_costureira = bundle.getString("email_costureira", null);
             if (email_costureira != null) {
                 nome_costureira = view.findViewById(R.id.nome_costureira);
+                avaliacao_costureira = view.findViewById(R.id.avaliacao_costureira);
+                Drawable stars = avaliacao_costureira.getProgressDrawable();
+                stars.setColorFilter(Color.parseColor("#FAC552"), PorterDuff.Mode.SRC_ATOP);
                 //Listar os produtos
                 lista_produtos_costureira = view.findViewById(R.id.lista_produtos_costureira);
                 lista_produtos_costureira.setLayoutManager(new GridLayoutManager(getContext(), 2));
@@ -171,6 +182,30 @@ public class fragment_tela_perfil_costureira extends Fragment {
             }
         }
 
+        //Botão para ir para a área de avaliaçãoes da costureira
+        btn_comentarios = view.findViewById(R.id.btn_comentarios);
+        btn_comentarios.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Cria um novo fragmento de perfil da costureira
+                fragment_tela_perfil_costureira perfilCostureiraFragment = new fragment_tela_perfil_costureira();
+
+                // Cria um Bundle para passar o email da costureira
+                Bundle bundle = new Bundle();
+                bundle.putString("email_costureira", email_costureira); // Passa o email da costureira para o fragmento
+
+                // Define o argumento no fragmento de edição
+                perfilCostureiraFragment.setArguments(bundle);
+
+                // Inicia a transação de fragmento para substituir o fragmento atual
+                FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
+                transaction.replace(R.id.frame_conteudo, perfilCostureiraFragment);
+                transaction.addToBackStack(null); // Adiciona a transação à pilha de navegação
+                transaction.commit();
+            }
+        });
+
+        //Botão para enviar SMS
         btn_sms = view.findViewById(R.id.btn_sms);
         btn_sms.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -236,6 +271,7 @@ public class fragment_tela_perfil_costureira extends Fragment {
                     nome_costureira.setText(userResponse.getName());
                     phone_costureira = userResponse.getPhone();
                     nome_costureira_txt = userResponse.getName();
+                    avaliacao_costureira.setRating((float) userResponse.getAvaliation());
                     pegarProdutosDaCostureira(userResponse.getName());
                 } else {
                     Toast.makeText(getContext(), "Usuário não encontrado ou resposta inválida", Toast.LENGTH_SHORT).show();
