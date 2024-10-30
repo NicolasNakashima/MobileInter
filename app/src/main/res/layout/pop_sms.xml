@@ -18,7 +18,7 @@
             android:layout_height="67dp"
             android:layout_marginTop="14dp"
             android:gravity="center|top"
-            android:text="Entre em contato direto com Luíza Sousa (SMS)"
+            android:text="Entre em contato direto com Nome (SMS)"
             android:textColor="#000000"
             android:textSize="22sp"
             android:textStyle="bold"

@@ -49,13 +49,34 @@
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/lista_avaliacoes_usuario"
-        android:layout_width="360dp"
-        android:layout_height="700dp"
-        android:layout_marginTop="20dp"
+        android:layout_width="358dp"
+        android:layout_height="642dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.515"
+        app:layout_constraintHorizontal_bias="0.483"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/toolbar2"
+        app:layout_constraintTop_toBottomOf="@+id/cardView14"
         tools:listitem="@layout/item_avaliacao_usuario" />
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/cardView14"
+        android:layout_width="393dp"
+        android:layout_height="89dp"
+        android:background="#FFFFFF"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/toolbar2">
+
+        <RatingBar
+            android:id="@+id/avaliacao_usuario"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:scaleX="1"
+            android:scaleY="1"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.496"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
