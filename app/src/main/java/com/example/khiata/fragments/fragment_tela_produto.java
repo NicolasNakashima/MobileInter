@@ -1,29 +1,41 @@
 package com.example.khiata.fragments;
 
+import android.app.Dialog;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.PorterDuff;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.example.khiata.R;
+import com.example.khiata.adapters.AdapterAvaliacoesCostureira;
 import com.example.khiata.classes.tela_carrinho;
+import com.example.khiata.models.Avaliation;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -76,6 +88,8 @@ public class fragment_tela_produto extends Fragment {
     TextView titulo_produto, vendedor_produto, preco_produto, tamanho_produto, descricao_produto;
     RatingBar avaliacao_produto;
     Button btn_adicionar_produto_carrinho, btn_adicionar_avaliacao_produto;
+    RecyclerView lista_avaliacoes_produto;
+    List<Avaliation> avaliacoes = new ArrayList();
     FirebaseStorage storage = FirebaseStorage.getInstance();
     StorageReference storageRef = storage.getReference();
     @Override
@@ -127,6 +141,8 @@ public class fragment_tela_produto extends Fragment {
                 descricao_produto = view.findViewById(R.id.descricao_produto);
                 descricao_produto.setText(descricao_produto_txt);
                 avaliacao_produto = view.findViewById(R.id.avaliacao_produto);
+                Drawable stars = avaliacao_produto.getProgressDrawable();
+                stars.setColorFilter(Color.parseColor("#FAC552"), PorterDuff.Mode.SRC_ATOP);
                 avaliacao_produto.setRating(avaliacao_produto_txt);
                 img_produto = view.findViewById(R.id.img_produto);
                 StorageReference profileRef = storageRef.child("khiata_produtos/"+imagem_produto_txt+".jpg");
@@ -144,6 +160,48 @@ public class fragment_tela_produto extends Fragment {
                 });
             }
         }
+
+        //Botão para adicionar o produto ao carrinho
+        btn_adicionar_produto_carrinho = view.findViewById(R.id.btn_adicionar_produto_carrinho);
+        btn_adicionar_produto_carrinho.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
+
+        //Botão para adicionar avaliação ao produto
+        btn_adicionar_avaliacao_produto = view.findViewById(R.id.btn_adicionar_avaliacao_produto);
+        btn_adicionar_avaliacao_produto.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Dialog dialog = new Dialog(getActivity());
+                LayoutInflater inflater = getLayoutInflater();
+                View pop_avaliacao = inflater.inflate(R.layout.pop_avaliacao, null);
+
+                RatingBar avaliation_bar = pop_avaliacao.findViewById(R.id.avaliation_bar);
+                EditText edit_comment = pop_avaliacao.findViewById(R.id.edit_comment);
+                Button btn_enviar = pop_avaliacao.findViewById(R.id.btn_enviar);
+                Button btn_cancelar = pop_avaliacao.findViewById(R.id.btn_cancelar);
+                btn_cancelar.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        dialog.cancel();
+                    }
+                });
+
+                dialog.setContentView(pop_avaliacao);
+                dialog.setCancelable(true);
+                dialog.show();
+            }
+        });
+
+        //Definindo as avaliações do produto
+        lista_avaliacoes_produto = view.findViewById(R.id.lista_avaliacoes_produto);
+        avaliacoes.add(new Avaliation("Joaquim", "Serviço muito bom, comprarei novamente", 4));
+        AdapterAvaliacoesCostureira adapter = new AdapterAvaliacoesCostureira(getActivity(), avaliacoes);
+        lista_avaliacoes_produto.setAdapter(adapter);
+        lista_avaliacoes_produto.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
 
         return view;
     }
