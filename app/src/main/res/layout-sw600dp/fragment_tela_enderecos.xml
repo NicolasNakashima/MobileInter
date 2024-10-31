@@ -10,8 +10,8 @@
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar2"
-        android:layout_width="392dp"
-        android:layout_height="84dp"
+        android:layout_width="702dp"
+        android:layout_height="88dp"
         android:background="?attr/colorPrimary"
         android:backgroundTint="#FAC552"
         android:minHeight="?attr/actionBarSize"
@@ -22,14 +22,15 @@
 
     <ImageView
         android:id="@+id/voltar_home"
-        android:layout_width="55dp"
-        android:layout_height="41dp"
+        android:layout_width="57dp"
+        android:layout_height="52dp"
+        android:layout_marginBottom="6dp"
         app:layout_constraintBottom_toBottomOf="@+id/toolbar2"
         app:layout_constraintEnd_toEndOf="@+id/toolbar2"
-        app:layout_constraintHorizontal_bias="0.047"
+        app:layout_constraintHorizontal_bias="0.148"
         app:layout_constraintStart_toStartOf="@+id/toolbar2"
         app:layout_constraintTop_toTopOf="@+id/toolbar2"
-        app:layout_constraintVertical_bias="0.558"
+        app:layout_constraintVertical_bias="0.611"
         app:srcCompat="@drawable/seta_retorno" />
 
     <TextView
@@ -38,7 +39,7 @@
         android:layout_height="wrap_content"
         android:text="Lista de endereços"
         android:textColor="#5A2D03"
-        android:textSize="24sp"
+        android:textSize="30sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="@+id/toolbar2"
         app:layout_constraintEnd_toEndOf="parent"
@@ -49,23 +50,23 @@
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/lista_enderecos"
-        android:layout_width="308dp"
-        android:layout_height="704dp"
-        android:layout_marginTop="20dp"
+        android:layout_width="365dp"
+        android:layout_height="910dp"
+        android:layout_marginTop="30dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.494"
+        app:layout_constraintHorizontal_bias="0.501"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/toolbar2"
         tools:listitem="@layout/item_endereco" />
 
     <ImageButton
         android:id="@+id/btn_adicionar_endereco"
-        android:layout_width="70dp"
-        android:layout_height="72dp"
-        android:layout_marginEnd="24dp"
-        android:layout_marginBottom="32dp"
+        android:layout_width="94dp"
+        android:layout_height="101dp"
+        android:layout_marginEnd="64dp"
+        android:layout_marginBottom="48dp"
         android:background="@android:color/transparent"
-        android:src="@drawable/btn_adicionar"
+        android:src="@drawable/btn_adicionar_tablet"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
 
