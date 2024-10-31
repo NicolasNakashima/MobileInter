@@ -1,14 +1,35 @@
 package com.example.khiata.fragments;
 
+import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.PorterDuff;
+import android.graphics.drawable.LayerDrawable;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.webkit.WebSettings;
+import android.webkit.WebViewClient;
+import android.widget.ImageView;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.khiata.R;
+import com.example.khiata.apis.UserApi;
+import com.example.khiata.classes.tela_carrinho;
+import com.example.khiata.models.User;
+import com.google.firebase.auth.FirebaseAuth;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -57,13 +78,80 @@ public class fragment_tela_resumo_compra extends Fragment {
         }
     }
 
+    ImageView voltar_compras, btn_carrinho;
+    private Retrofit retrofit;
+    TextView cart_id, cpf_usuario, data_pedido, forma_pagamento;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_tela_resumo_compra, container, false);
 
+        //Botão voltar tela compras
+        voltar_compras = view.findViewById(R.id.voltar_compras);
+        voltar_compras.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
+                transaction.replace(R.id.frame_conteudo, new fragment_tela_compras());
+                transaction.commit();
+            }
+        });
 
+        //Botão para ir para tela carrinho
+        btn_carrinho = view.findViewById(R.id.btn_carrinho);
+        btn_carrinho.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getActivity(), tela_carrinho.class);
+                startActivity(intent);
+            }
+        });
+
+        buscarCPFDoUsuario(FirebaseAuth.getInstance().getCurrentUser().getEmail());
+        //Pegando informações do pedido
+        Bundle bundle = getArguments();
+        if(bundle != null){
+            String cart_id_txt = bundle.getString("cart_id");
+            String forma_pagamento_txt = bundle.getString("forma_pagamento");
+            String data_pedido_txt = bundle.getString("data_pedido");
+            if (cart_id_txt != null && forma_pagamento_txt != null && data_pedido_txt != null) {
+                cart_id = view.findViewById(R.id.cart_id);
+                cart_id.setText("ID: " + cart_id_txt);
+                forma_pagamento = view.findViewById(R.id.forma_pagamento);
+                forma_pagamento.setText("Forma de pagamento: " + forma_pagamento_txt);
+                data_pedido = view.findViewById(R.id.data_pedido);
+                data_pedido.setText("Data: " + data_pedido_txt);
+            }
+        }
         return view;
+    }
+
+    //Método para buscar o CPF do perfil
+    private void buscarCPFDoUsuario(String userEmail) {
+        String API_BASE_URL = "https://apikhiata.onrender.com/";
+        retrofit = new Retrofit.Builder()
+                .baseUrl(API_BASE_URL)
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+        UserApi userApi = retrofit.create(UserApi.class);
+        Call<User> call = userApi.buscarUsuarioPorEmail(userEmail);
+        call.enqueue(new Callback<User>() {
+            @Override
+            public void onResponse(Call<User> call, Response<User> response) {
+                if (response.isSuccessful() && response.body() != null) {
+                    User userResponse = response.body();
+                    cpf_usuario.setText("CPF: " + userResponse.getCpf());
+                } else {
+                    Toast.makeText(getContext(), "Usuário não encontrado ou resposta inválida", Toast.LENGTH_SHORT).show();
+                    Log.e("API Error", "Response code: " + response.code() + " | Error body: " + response.errorBody());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<User> call, Throwable throwable) {
+                Toast.makeText(getContext(), throwable.getMessage(), Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 }

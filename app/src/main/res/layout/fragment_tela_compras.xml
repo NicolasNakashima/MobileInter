@@ -58,6 +58,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/lista_pedidos"
         android:layout_width="358dp"
         android:layout_height="702dp"
         android:layout_marginTop="20dp"

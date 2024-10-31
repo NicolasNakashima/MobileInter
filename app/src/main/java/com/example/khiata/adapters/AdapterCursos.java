@@ -85,7 +85,6 @@ public class AdapterCursos extends RecyclerView.Adapter<AdapterCursos.MeuViewHol
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Log.e("premium", String.valueOf(premiumStatus));
                 if(premiumStatus == 1) {
                     fragment_tela_curso telaCursoFragment = new fragment_tela_curso();
 

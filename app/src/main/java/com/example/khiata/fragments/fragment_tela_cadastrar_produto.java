@@ -25,6 +25,7 @@ import android.widget.Toast;
 import com.bumptech.glide.Glide;
 import com.example.khiata.R;
 import com.example.khiata.apis.AddressApi;
+import com.example.khiata.apis.CategoryApi;
 import com.example.khiata.apis.ProductApi;
 import com.example.khiata.apis.UserApi;
 import com.example.khiata.classes.CameraPerfil;
@@ -300,4 +301,30 @@ public class fragment_tela_cadastrar_produto extends Fragment {
             }
         });
     }
+
+    //Pegar a lista de categorias
+//    private void buscarCategorias() {
+//        String API_BASE_URL = "https://apikhiata.onrender.com/";
+//        retrofit = new Retrofit.Builder()
+//                .baseUrl(API_BASE_URL)
+//                .addConverterFactory(GsonConverterFactory.create())
+//                .build();
+//        CategoryApi userApi = retrofit.create(CategoryApi.class);
+//        Call<User> call = userApi.buscarUsuarioPorEmail(userEmail);
+//        call.enqueue(new Callback<User>() {
+//            @Override
+//            public void onResponse(Call<User> call, Response<User> response) {
+//                User userResponse = response.body();
+//                nome_usuario = userResponse.getName();
+//                Log.e("Nome do Usuário", nome_usuario);
+//                cadastrarProdutoUsuario(nome_usuario, novoTitulo, novoPreco, novaDescricao, imgName, novoTamanho);
+//            }
+//
+//            @Override
+//            public void onFailure(Call<User> call, Throwable throwable) {
+//                Toast.makeText(getActivity(), throwable.getMessage(), Toast.LENGTH_SHORT).show();
+//                Log.e("Error", throwable.getMessage());
+//            }
+//        });
+//    }
 }

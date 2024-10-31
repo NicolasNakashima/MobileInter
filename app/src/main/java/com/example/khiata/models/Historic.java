@@ -11,8 +11,7 @@ public class Historic {
     private String orderDate;
     private String deliveryDate;
 
-    public Historic(int id, int cart_id, double finalValue, String userCpf, String paymentmethod, String status, String created_Date, String orderDate, String deliveryDate) {
-        this.id = id;
+    public Historic(int cart_id, double finalValue, String userCpf, String paymentmethod, String status, String created_Date, String orderDate, String deliveryDate) {
         this.cart_id = cart_id;
         FinalValue = finalValue;
         this.userCpf = userCpf;
