@@ -1,15 +1,19 @@
 package com.example.khiata.adapters;
 
 import android.content.Context;
+import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.khiata.R;
+import com.example.khiata.fragments.fragment_tela_dados_compra_produto;
 import com.example.khiata.models.Address;
 import com.example.khiata.models.Avaliation;
 
@@ -48,6 +52,26 @@ public class AdapterSelecaoEnderecosPagamento extends RecyclerView.Adapter<Adapt
         street_endereco.setText(enderecos.get(position).getStreet() + " - " + enderecos.get(position).getNumber() + " - " + enderecos.get(position).getCep());
         complement_endereco.setText(enderecos.get(position).getComplement());
         destinatario_endereco.setText(enderecos.get(position).getRecipient());
+
+        //Ir para a tela de confirmação de dados
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                fragment_tela_dados_compra_produto telaDadosCompraProduto = new fragment_tela_dados_compra_produto();
+
+                Bundle bundle = new Bundle();
+                bundle.putString("street_endereco", enderecos.get(position).getStreet());
+                bundle.putString("number_endereco", String.valueOf(enderecos.get(position).getNumber()));
+                bundle.putString("cep_endereco", enderecos.get(position).getCep());
+                bundle.putString("complement_endereco", enderecos.get(position).getComplement());
+                telaDadosCompraProduto.setArguments(bundle);
+
+                FragmentTransaction transaction = ((AppCompatActivity) context).getSupportFragmentManager().beginTransaction();
+                transaction.replace(R.id.frame_conteudo, telaDadosCompraProduto);
+                transaction.addToBackStack(null);
+                transaction.commit();
+            }
+        });
     }
 
     @Override

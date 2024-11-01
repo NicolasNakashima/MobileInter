@@ -52,7 +52,7 @@ public class AdapterProdutosComprados extends RecyclerView.Adapter<AdapterProdut
 
         Historic pedido = pedidos.get(position);
         cart_id.setText("ID: " + pedido.getCart_id());
-        status_pedido.setText("Status: " + pedido.getStatus());
+        status_pedido.setText(pedido.getStatus());
         total_pedido.setText("Total: R$ " + pedido.getFinalValue());
         forma_pagamento.setText("Forma de pagamento: " + pedido.getPaymentmethod());
         data_pedido.setText("Data: " + pedido.getOrderDate());

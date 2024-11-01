@@ -108,6 +108,7 @@ public class fragment_tela_resumo_compra extends Fragment {
             }
         });
 
+        cpf_usuario = view.findViewById(R.id.cpf_usuario);
         buscarCPFDoUsuario(FirebaseAuth.getInstance().getCurrentUser().getEmail());
         //Pegando informações do pedido
         Bundle bundle = getArguments();

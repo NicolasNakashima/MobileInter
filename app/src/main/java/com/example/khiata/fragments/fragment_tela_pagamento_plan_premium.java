@@ -191,7 +191,7 @@ public class fragment_tela_pagamento_plan_premium extends Fragment {
                     Log.e("Error", errorMessage);
                 } else {
                     // A atualização foi bem-sucedida
-                    Toast.makeText(getActivity(), "Perfil atualizado com sucesso!", Toast.LENGTH_SHORT).show();
+                    //Toast.makeText(getActivity(), "Perfil atualizado com sucesso!", Toast.LENGTH_SHORT).show();
 //                    FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
 //                    transaction.replace(R.id.frame_conteudo, new fragment_tela_perfil());
 //                    transaction.commit();

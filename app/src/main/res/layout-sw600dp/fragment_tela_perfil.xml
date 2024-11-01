@@ -215,7 +215,7 @@
                 android:background="@drawable/style_button1"
                 android:text="Tornar-se costureira"
                 android:textColor="#ffffff"
-                android:textSize="20sp"
+                android:textSize="19sp"
                 android:textStyle="bold" />
 
             <Button

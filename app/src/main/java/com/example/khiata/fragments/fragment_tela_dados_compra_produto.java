@@ -1,20 +1,41 @@
 package com.example.khiata.fragments;
 
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.PorterDuff;
+import android.graphics.drawable.LayerDrawable;
+import android.net.Uri;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
+import androidx.recyclerview.widget.GridLayoutManager;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.example.khiata.R;
+import com.example.khiata.apis.UserApi;
 import com.example.khiata.classes.tela_carrinho;
+import com.example.khiata.models.User;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.storage.StorageReference;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -65,7 +86,8 @@ public class fragment_tela_dados_compra_produto extends Fragment {
 
     ImageView voltar_carrinho;
     Button btn_cancelar_confirmacao_dados, btn_confirmar_dados;
-    TextView escolher_outro_endereco;
+    TextView escolher_outro_endereco, nome_usuario, phone_usuario, cpf_usuario, street_endereco, complement_endereco;
+    private Retrofit retrofit;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -113,6 +135,57 @@ public class fragment_tela_dados_compra_produto extends Fragment {
             }
         });
 
+        //Carregar os dados para confirmar o pedido
+        nome_usuario = view.findViewById(R.id.nome_usuario);
+        phone_usuario = view.findViewById(R.id.phone_usuario);
+        cpf_usuario = view.findViewById(R.id.cpf_usuario);
+        buscarInformacoesDoUsuario(FirebaseAuth.getInstance().getCurrentUser().getEmail());
+        street_endereco = view.findViewById(R.id.street_endereco);
+        complement_endereco = view.findViewById(R.id.complement_endereco);
+
+        //Pegando informações do endereço selecionado
+        Bundle bundle = getArguments();
+        if(bundle != null){
+            String street_endereco_txt = bundle.getString("street_endereco");
+            String complement_endereco_txt = bundle.getString("complement_endereco");
+            String number_endereco_txt = String.valueOf(bundle.getDouble("number_endereco"));
+            String cep_endereco_txt = bundle.getString("cep_endereco");
+            if (street_endereco_txt != null && complement_endereco_txt != null && number_endereco_txt != null && cep_endereco_txt != null) {
+                street_endereco.setText(street_endereco_txt + " - " + number_endereco_txt + " - " + cep_endereco_txt);
+                complement_endereco.setText(complement_endereco_txt);
+            }
+        }
+
         return view;
+    }
+
+    //Método para buscar as informações do perfil
+    private void buscarInformacoesDoUsuario(String userEmail) {
+        String API_BASE_URL = "https://apikhiata.onrender.com/";
+        retrofit = new Retrofit.Builder()
+                .baseUrl(API_BASE_URL)
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+        UserApi userApi = retrofit.create(UserApi.class);
+        Call<User> call = userApi.buscarUsuarioPorEmail(userEmail);
+        call.enqueue(new Callback<User>() {
+            @Override
+            public void onResponse(Call<User> call, Response<User> response) {
+                if (response.isSuccessful() && response.body() != null) {
+                    User userResponse = response.body();
+                    nome_usuario.setText(userResponse.getName());
+                    phone_usuario.setText(userResponse.getPhone());
+                    cpf_usuario.setText(userResponse.getCpf());
+                } else {
+                    Toast.makeText(getContext(), "Usuário não encontrado ou resposta inválida", Toast.LENGTH_SHORT).show();
+                    Log.e("API Error", "Response code: " + response.code() + " | Error body: " + response.errorBody());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<User> call, Throwable throwable) {
+                Toast.makeText(getContext(), throwable.getMessage(), Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 }
