@@ -88,7 +88,15 @@ public class tela_cadastro extends AppCompatActivity {
                 String novoEmail = ((EditText) findViewById(R.id.novoEmail)).getText().toString();
                 String novoCPF = ((EditText) findViewById(R.id.novoCPF)).getText().toString();
                 String novoPhone = ((EditText) findViewById(R.id.novoPhone)).getText().toString();
-                int novaIdade = Integer.parseInt(((EditText) findViewById(R.id.novaIdade)).getText().toString());
+                int novaIdade = 0;
+                String novaIdadeTexto = ((EditText) findViewById(R.id.novaIdade)).getText().toString();
+                if (!novaIdadeTexto.isEmpty()) {
+                    try {
+                        novaIdade = Integer.parseInt(novaIdadeTexto);
+                    } catch (NumberFormatException e) {
+                        Log.e("Error", "Idade inválida: " + e.getMessage());
+                    }
+                }
                 String novaSenha = ((EditText) findViewById(R.id.novaSenha)).getText().toString();
                 String novaConfirmaSenha = ((EditText) findViewById(R.id.confirmNovaSenha)).getText().toString();
                 boolean confirmCostureira = ((CheckBox) findViewById(R.id.checkConfirmCostureira)).isChecked();
@@ -96,7 +104,7 @@ public class tela_cadastro extends AppCompatActivity {
                 RadioGroup opcoesGenero = findViewById(R.id.opcoesGenero);
                 int selectedId = opcoesGenero.getCheckedRadioButtonId();
 
-                if(novoNome.isEmpty() || novoEmail.isEmpty() || novoCPF.isEmpty() || novoPhone.isEmpty() || novaIdade == 0 || novaSenha.isEmpty() || novaConfirmaSenha.isEmpty() || selectedId == -1) {
+                if(novoNome.isEmpty() || novoEmail.isEmpty() || novoCPF.isEmpty() || novoPhone.isEmpty() || novaIdade <= 0 || novaSenha.isEmpty() || novaConfirmaSenha.isEmpty() || selectedId == -1) {
                     Dialog dialog = new Dialog(tela_cadastro.this);
                     LayoutInflater inflater = getLayoutInflater();
                     View popupView = inflater.inflate(R.layout.popup_mensagem, null);

@@ -121,9 +121,9 @@
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/lista_produtos_costureira"
-        android:layout_width="394dp"
-        android:layout_height="540dp"
-        android:layout_marginTop="20dp"
+        android:layout_width="396dp"
+        android:layout_height="488dp"
+        android:layout_marginTop="15dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/cardView7"

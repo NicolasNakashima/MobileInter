@@ -131,6 +131,7 @@ public class fragment_tela_plan_premium extends Fragment {
         btn_adquirir_premium.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Log.d("premiumStatus", String.valueOf(statusPremium));
                 if(statusPremium == 0){
                     FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
                     transaction.replace(R.id.frame_conteudo, new fragment_tela_dados_compra_premium());
@@ -202,6 +203,7 @@ public class fragment_tela_plan_premium extends Fragment {
                 if (response.isSuccessful() && response.body() != null) {
                     User userResponse = response.body();
                     statusPremium = userResponse.getPremiumStatus();
+                    Log.d("API Response", "Premium status: " + statusPremium);
 
                 } else {
                     Toast.makeText(getContext(), "Usuário não encontrado ou resposta inválida", Toast.LENGTH_SHORT).show();
