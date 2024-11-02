@@ -168,7 +168,7 @@ public class fragment_tela_selecao_endereco_pagamento extends Fragment {
                         View popup_opcao = inflater.inflate(R.layout.popup_opcao, null);
 
                         TextView msgPopup = popup_opcao.findViewById(R.id.msg_popup);
-                        msgPopup.setText("Você não possui endereços cadastrados. Cadastre um endereço para seguir com a compra");
+                        msgPopup.setText("Nenhum endereço encontrado. Cadastre um endereço para seguir com a compra");
                         ImageView imgPopup = popup_opcao.findViewById(R.id.img_popup);
                         imgPopup.setImageResource(R.drawable.icon_pop_alert);
                         Button btn_seguir = popup_opcao.findViewById(R.id.btn_seguir);

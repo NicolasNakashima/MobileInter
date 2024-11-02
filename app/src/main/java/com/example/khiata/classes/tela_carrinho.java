@@ -65,16 +65,16 @@ public class tela_carrinho extends AppCompatActivity {
         btn_finalizar_compra.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-                transaction.replace(R.id.frame_conteudo, new fragment_tela_selecao_endereco_pagamento());
-                transaction.commit();
+                Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                intent.putExtra("fragment", "selecao_endereco_pagamento");
+                startActivity(intent);
             }
         });
 
         //Definir a lista de produtos
         lista_produtos_carrinho = findViewById(R.id.lista_produtos_carrinho);
-        produtos.add(new Product("Camiseta regata", 23.00, null, 1, "Joana", 3.2, "Camiseta regata branca, tamanho adulto", "M"));
-        AdapterProdutosCarrinho adapterProdutosCarrinho = new AdapterProdutosCarrinho(this, produtos);
+        produtos.add(new Product("Camiseta regata", 23.00, "Imagem", 1, "Joana", 3.2, "Camiseta regata branca, tamanho adulto", "M"));
+        AdapterProdutosCarrinho adapterProdutosCarrinho = new AdapterProdutosCarrinho(getApplicationContext(), produtos);
         lista_produtos_carrinho.setAdapter(adapterProdutosCarrinho);
         lista_produtos_carrinho.setLayoutManager(new LinearLayoutManager(getApplicationContext(), LinearLayoutManager.HORIZONTAL, false));
     }

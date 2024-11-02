@@ -14,7 +14,7 @@ import retrofit2.http.Query;
 
 public interface ProductApi {
 
-    @GET("/insert/product")
+    @POST("/insert/product")
     Call<String> insertProduct(
             @Query("name") String name,
             @Query("price") double price,

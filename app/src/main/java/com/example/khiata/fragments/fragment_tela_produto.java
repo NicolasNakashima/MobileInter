@@ -123,13 +123,20 @@ public class fragment_tela_produto extends Fragment {
         Bundle bundle = getArguments();
         if(bundle != null){
             String titulo_produto_txt = bundle.getString("titulo_produto");
+            Log.d("titulo", titulo_produto_txt);
             String vendedor_produto_txt = bundle.getString("vendedor_produto");
+            Log.d("vendedor", vendedor_produto_txt);
             String preco_produto_txt = String.valueOf(bundle.getDouble("preco_produto"));
+            Log.d("preco", preco_produto_txt);
             String imagem_produto_txt = bundle.getString("imagem_produto");
+            Log.d("imagem", imagem_produto_txt);
             String descricao_produto_txt = bundle.getString("descricao_produto");
+            Log.d("descricao", descricao_produto_txt);
             String tamanho_produto_txt = bundle.getString("tamanho_produto");
+            Log.d("tamanho", tamanho_produto_txt);
             float avaliacao_produto_txt = bundle.getFloat("avaliacao_produto");
-            if (titulo_produto_txt != null && vendedor_produto_txt != null && preco_produto_txt != null && imagem_produto_txt != null && descricao_produto_txt != null && tamanho_produto_txt != null) {
+            Log.d("avaliacao", String.valueOf(avaliacao_produto_txt));
+            if (titulo_produto_txt != null && vendedor_produto_txt != null && preco_produto_txt != null && imagem_produto_txt != null && descricao_produto_txt != null) {
                 titulo_produto = view.findViewById(R.id.cart_id);
                 titulo_produto.setText(titulo_produto_txt);
                 vendedor_produto = view.findViewById(R.id.vendedor_produto);
@@ -137,7 +144,11 @@ public class fragment_tela_produto extends Fragment {
                 preco_produto = view.findViewById(R.id.preco_produto);
                 preco_produto.setText("R$ " + preco_produto_txt);
                 tamanho_produto = view.findViewById(R.id.tamanho_produto);
-                tamanho_produto.setText("Tamanho: " + tamanho_produto_txt);
+                if(tamanho_produto_txt == null){
+                    tamanho_produto.setText("Tamanho: Nenhum");
+                } else {
+                    tamanho_produto.setText("Tamanho: " + tamanho_produto_txt);
+                }
                 descricao_produto = view.findViewById(R.id.descricao_produto);
                 descricao_produto.setText(descricao_produto_txt);
                 avaliacao_produto = view.findViewById(R.id.avaliacao_produto);

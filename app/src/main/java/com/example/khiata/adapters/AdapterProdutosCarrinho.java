@@ -1,6 +1,9 @@
 package com.example.khiata.adapters;
 
+import static androidx.core.content.ContextCompat.startActivity;
+
 import android.content.Context;
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
@@ -17,6 +20,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.example.khiata.R;
+import com.example.khiata.classes.MainActivity;
 import com.example.khiata.fragments.fragment_tela_produto;
 import com.example.khiata.models.Product;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -87,22 +91,20 @@ public class AdapterProdutosCarrinho extends RecyclerView.Adapter<AdapterProduto
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                fragment_tela_produto telaProdutoFragment = new fragment_tela_produto();
 
-                Bundle bundle = new Bundle();
-                bundle.putString("titulo_produto", produto.getName());
-                bundle.putString("vendedor_produto", produto.getDressMarkerName());
-                bundle.putDouble("preco_produto", produto.getPrice());
-                bundle.putString("imagem_produto", produto.getImageUrl());
-                bundle.putString("descricao_produto", produto.getDescription());
-                bundle.putString("tamanho_produto", produto.getSize());
-                bundle.putFloat("avaliacao_produto", (float) produto.getAvaliation());
-                telaProdutoFragment.setArguments(bundle);
+                Intent intent = new Intent(context, MainActivity.class);
+                intent.putExtra("fragment", "tela_produto");
+                intent.putExtra("titulo_produto", produto.getName());
+                intent.putExtra("vendedor_produto", produto.getDressMarkerName());
+                intent.putExtra("preco_produto", produto.getPrice());
+                intent.putExtra("imagem_produto", produto.getImageUrl());
+                intent.putExtra("descricao_produto", produto.getDescription());
+                intent.putExtra("tamanho_produto", produto.getSize());
+                intent.putExtra("avaliacao_produto", (float) produto.getAvaliation());
 
-                FragmentTransaction transaction = ((AppCompatActivity) context).getSupportFragmentManager().beginTransaction();
-                transaction.replace(R.id.frame_conteudo, telaProdutoFragment);
-                transaction.addToBackStack(null);
-                transaction.commit();
+                // Adiciona a flag para iniciar a atividade corretamente
+                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                context.startActivity(intent);
             }
         });
     }
