@@ -10,8 +10,8 @@
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar2"
-        android:layout_width="392dp"
-        android:layout_height="84dp"
+        android:layout_width="702dp"
+        android:layout_height="88dp"
         android:background="?attr/colorPrimary"
         android:backgroundTint="#FAC552"
         android:minHeight="?attr/actionBarSize"
@@ -22,14 +22,15 @@
 
     <ImageView
         android:id="@+id/voltar_home"
-        android:layout_width="55dp"
-        android:layout_height="41dp"
+        android:layout_width="57dp"
+        android:layout_height="52dp"
+        android:layout_marginBottom="6dp"
         app:layout_constraintBottom_toBottomOf="@+id/toolbar2"
         app:layout_constraintEnd_toEndOf="@+id/toolbar2"
-        app:layout_constraintHorizontal_bias="0.047"
+        app:layout_constraintHorizontal_bias="0.145"
         app:layout_constraintStart_toStartOf="@+id/toolbar2"
         app:layout_constraintTop_toTopOf="@+id/toolbar2"
-        app:layout_constraintVertical_bias="0.558"
+        app:layout_constraintVertical_bias="0.611"
         app:srcCompat="@drawable/seta_retorno" />
 
     <TextView
@@ -38,7 +39,7 @@
         android:layout_height="wrap_content"
         android:text="Busca de produtos"
         android:textColor="#5A2D03"
-        android:textSize="24sp"
+        android:textSize="30sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="@+id/toolbar2"
         app:layout_constraintEnd_toEndOf="parent"
@@ -49,8 +50,8 @@
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/lista_produtos_pesquisados"
-        android:layout_width="350dp"
-        android:layout_height="633dp"
+        android:layout_width="395dp"
+        android:layout_height="666dp"
         android:layout_marginTop="20dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -59,28 +60,28 @@
 
     <ImageView
         android:id="@+id/btn_carrinho"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:layout_marginEnd="24dp"
+        android:layout_width="49dp"
+        android:layout_height="47dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="64dp"
         android:src="@drawable/navigation_kart"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/textInputLayout10"
-        android:layout_width="317dp"
-        android:layout_height="60dp"
+        android:layout_width="493dp"
+        android:layout_height="65dp"
         android:background="@drawable/style_boxinput"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.144"
+        app:layout_constraintHorizontal_bias="0.159"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/toolbar2">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/barra_pesquisa"
-            android:layout_width="313dp"
-            android:layout_height="53dp"
+            android:layout_width="match_parent"
+            android:layout_height="54dp"
             android:hint="Buscar: Camisa"
             android:paddingLeft="16dp"
             android:paddingBottom="10dp"
@@ -91,12 +92,12 @@
 
     <ImageView
         android:id="@+id/btn_pesquisar"
-        android:layout_width="46dp"
-        android:layout_height="46dp"
+        android:layout_width="52dp"
+        android:layout_height="50dp"
         android:layout_marginTop="12dp"
         android:src="@drawable/pesquisar"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.466"
+        app:layout_constraintHorizontal_bias="0.533"
         app:layout_constraintStart_toEndOf="@+id/textInputLayout10"
         app:layout_constraintTop_toBottomOf="@+id/toolbar2" />
 

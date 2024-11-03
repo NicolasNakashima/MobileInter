@@ -26,8 +26,8 @@
 
         <ImageView
             android:id="@+id/btn_excluir_item"
-            android:layout_width="35dp"
-            android:layout_height="37dp"
+            android:layout_width="30dp"
+            android:layout_height="31dp"
             android:layout_marginStart="5dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
@@ -80,7 +80,7 @@
 
         <TextView
             android:id="@+id/cart_id"
-            android:layout_width="176dp"
+            android:layout_width="173dp"
             android:layout_height="wrap_content"
             android:text="Nome"
             android:textColor="#000000"

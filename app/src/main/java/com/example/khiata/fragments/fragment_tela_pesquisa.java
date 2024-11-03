@@ -176,7 +176,7 @@ public class fragment_tela_pesquisa extends Fragment {
                         if (!produtos.isEmpty()) {
                             Toast.makeText(getActivity(), "Produtos encontrados.", Toast.LENGTH_SHORT).show();
 
-                            AdapterProdutosAdicionados adapter = new AdapterProdutosAdicionados(getActivity(), produtos);
+                            AdapterProdutosPesquisados adapter = new AdapterProdutosPesquisados(getActivity(), produtos);
                             lista_produtos_pesquisados.setAdapter(adapter);
                             adapter.notifyDataSetChanged();
                         } else {
