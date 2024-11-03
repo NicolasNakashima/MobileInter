@@ -99,7 +99,9 @@ public class MainActivity extends AppCompatActivity {
         Intent intent = getIntent();
         if (intent != null) {
             String fragmentName = intent.getStringExtra("fragment");
+            Log.d("TAG", "FragmentName: " + fragmentName);
             String imgProductName = intent.getStringExtra("imgName");
+            Log.d("TAG", "ImgName: " + imgProductName);
             String titulo_produto = intent.getStringExtra("titulo_produto");
             String vendedor_produto = intent.getStringExtra("vendedor_produto");
             double preco_produto = intent.getDoubleExtra("preco_produto", 0.0);

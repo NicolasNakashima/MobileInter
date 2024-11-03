@@ -151,21 +151,23 @@ public class fragment_tela_cadastrar_produto extends Fragment {
 
             // Buscar a imagem no Firebase usando o nome da imagem
             if (imgProduto != null) {
-                StorageReference profileRef = storageRef.child("khiata_produtos/"+imgProduto+".jpg");
+                StorageReference profileRef = storageRef.child("khiata_produtos/" + imgProduto + ".jpg");
                 profileRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
                     @Override
                     public void onSuccess(Uri uri) {
-                        Glide.with(getContext()).load(uri).circleCrop().into(img_produto);
-                        Log.d("TAG", "URL da imagem do produto: "+uri);
+                        Glide.with(getContext()).load(uri).into(img_produto);
+                        Log.d("TAG", "URL da imagem do produto: " + uri);
                     }
                 }).addOnFailureListener(new OnFailureListener() {
                     @Override
                     public void onFailure(@NonNull Exception e) {
-                        Log.d("TAG", "Falha ao obter URL da imagem do produto"+ e.getMessage());
+                        Log.d("TAG", "Falha ao obter URL da imagem do produto: " + e.getMessage());
                         img_produto.setImageResource(R.drawable.add_img);
                     }
                 });
             }
+        } else {
+            Log.e("Imagem", "Nenhuma imagem");
         }
 
         btn_tirar_foto_produto = view.findViewById(R.id.btn_tirar_foto_produto);
