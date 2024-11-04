@@ -44,7 +44,7 @@ public class AdapterEnderecosUsuario extends RecyclerView.Adapter<AdapterEnderec
         this.enderecos = enderecos;
     }
     private Retrofit retrofit;
-    String userName;
+
     @NonNull
     @Override
     public AdapterEnderecosUsuario.MeuViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -65,12 +65,14 @@ public class AdapterEnderecosUsuario extends RecyclerView.Adapter<AdapterEnderec
         ImageView btn_editar_endereco = holder.btn_editar_endereco;
         TextView status_endereco = holder.status_endereco;
 
+        //Buscando e definindo o nome do destinatário
+        buscarNomeDoUsuario(FirebaseAuth.getInstance().getCurrentUser().getEmail(), destinatario_endereco);
+
         rotulo_endereco.setText(enderecos.get(position).getLabel());
         street_endereco.setText(enderecos.get(position).getStreet() + " - " + enderecos.get(position).getNumber() + " - " + enderecos.get(position).getCep());
         complement_endereco.setText(enderecos.get(position).getComplement());
-        destinatario_endereco.setText(userName);
-        boolean statusEndereco = enderecos.get(position).isDeactivate();
 
+        boolean statusEndereco = enderecos.get(position).isDeactivate();
         if(statusEndereco){
             status_endereco.setText("Ativo");
         } else{
@@ -114,7 +116,7 @@ public class AdapterEnderecosUsuario extends RecyclerView.Adapter<AdapterEnderec
     }
 
     //Método responsável por buscar o nome do usuário
-    private void buscarNomeDoUsuario(String userEmail) {
+    private void buscarNomeDoUsuario(String userEmail, TextView destinatario_endereco) {
         String API_BASE_URL = "https://apikhiata.onrender.com/";
         retrofit = new Retrofit.Builder()
                 .baseUrl(API_BASE_URL)
@@ -125,8 +127,13 @@ public class AdapterEnderecosUsuario extends RecyclerView.Adapter<AdapterEnderec
         call.enqueue(new Callback<User>() {
             @Override
             public void onResponse(Call<User> call, Response<User> response) {
-                User userResponse = response.body();
-                userName = userResponse.getName();
+                if (response.isSuccessful() && response.body() != null) {
+                    User userResponse = response.body();
+                    destinatario_endereco.setText(userResponse.getName());
+                } else {
+                    // Trata caso a resposta não seja bem-sucedida
+                    Log.e("Error", "Erro na resposta da API: " + response.code());
+                }
             }
 
             @Override

@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     tools:context=".fragments.fragment_tela_statistics"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:background="#EBEBEB">
+    android:background="#FFFFFF">
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar2"
@@ -48,6 +48,7 @@
         app:layout_constraintVertical_bias="0.461" />
 
     <WebView
+        android:id="@+id/webViewAreaOculta"
         android:layout_width="394dp"
         android:layout_height="727dp"
         app:layout_constraintEnd_toEndOf="parent"

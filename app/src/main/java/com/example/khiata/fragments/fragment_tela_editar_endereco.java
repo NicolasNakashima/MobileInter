@@ -183,11 +183,15 @@ public class fragment_tela_editar_endereco extends Fragment {
 
     //Método para atualizar um endereço do usário
     private void atualizarEndercoDoUsuario(int addressId, Map<String, Object> atualizacoes) {
+        Log.d("TAG", "atualizarEndercoDoUsuario: ID do endereço: " + addressId);
         String API_BASE_URL = "https://apikhiata.onrender.com/";
+
+        // Configuração do Retrofit
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(API_BASE_URL)
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
+
         AddressApi addressApi = retrofit.create(AddressApi.class);
         Call<Void> call = addressApi.atualizarEnderecoPorId(addressId, atualizacoes);
 
@@ -195,10 +199,16 @@ public class fragment_tela_editar_endereco extends Fragment {
             @Override
             public void onResponse(Call<Void> call, Response<Void> response) {
                 if (!response.isSuccessful()) {
-                    // Captura a mensagem de erro diretamente
-                    String errorMessage = "Erro: " + response.code(); // Exibe o código do erro
+                    // Captura a mensagem de erro de forma mais detalhada
+                    String errorMessage = "Erro: " + response.code(); // Código de erro
                     if (response.errorBody() != null) {
-                        errorMessage += " - " + response.errorBody().toString();
+                        try {
+                            // Lê o corpo da resposta de erro e converte em string
+                            String errorBody = response.errorBody().string();
+                            errorMessage += " - " + errorBody;
+                        } catch (IOException e) {
+                            Log.e("Error", "Erro ao ler o corpo da resposta de erro: " + e.getMessage());
+                        }
                     }
                     Toast.makeText(getActivity(), errorMessage, Toast.LENGTH_LONG).show();
                     Log.e("Error", errorMessage);
@@ -213,8 +223,12 @@ public class fragment_tela_editar_endereco extends Fragment {
 
             @Override
             public void onFailure(Call<Void> call, Throwable t) {
-                Toast.makeText(getActivity(), "Erro ao atualizar endereço: " + t.getMessage(), Toast.LENGTH_LONG).show();
+                // Captura erros de falha na comunicação com a API
+                String failureMessage = "Erro ao atualizar endereço: " + t.getMessage();
+                Toast.makeText(getActivity(), failureMessage, Toast.LENGTH_LONG).show();
+                Log.e("Error", failureMessage);
             }
         });
     }
+
 }

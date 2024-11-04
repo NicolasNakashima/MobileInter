@@ -2,6 +2,7 @@ package com.example.khiata.adapters;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,6 +20,7 @@ import com.example.khiata.fragments.fragment_tela_dados_compra_produto;
 import com.example.khiata.models.Address;
 import com.example.khiata.models.Avaliation;
 import com.example.khiata.models.User;
+import com.google.firebase.auth.FirebaseAuth;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -38,7 +40,7 @@ public class AdapterSelecaoEnderecosPagamento extends RecyclerView.Adapter<Adapt
         this.enderecos = enderecos;
     }
     private Retrofit retrofit;
-    String userName;
+
     @NonNull
     @Override
     public AdapterSelecaoEnderecosPagamento.MeuViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -58,10 +60,12 @@ public class AdapterSelecaoEnderecosPagamento extends RecyclerView.Adapter<Adapt
 
         Address endereco = enderecos.get(position);
 
+        //Buscando e definindo nome do destinatário
+        buscarNomeDoUsuario(FirebaseAuth.getInstance().getCurrentUser().getEmail(), destinatario_endereco);
+
         rotulo_endereco.setText(endereco.getLabel());
         street_endereco.setText(endereco.getStreet() + " - " + endereco.getNumber() + " - " + endereco.getCep());
         complement_endereco.setText(endereco.getComplement());
-        destinatario_endereco.setText(userName);
 
         //Ir para a tela de confirmação de dados
         holder.itemView.setOnClickListener(new View.OnClickListener() {
@@ -85,7 +89,7 @@ public class AdapterSelecaoEnderecosPagamento extends RecyclerView.Adapter<Adapt
     }
 
     //Método responsável por buscar o nome do usuário
-    private void buscarNomeDoUsuario(String userEmail) {
+    private void buscarNomeDoUsuario(String userEmail, TextView destinatario_endereco) {
         String API_BASE_URL = "https://apikhiata.onrender.com/";
         retrofit = new Retrofit.Builder()
                 .baseUrl(API_BASE_URL)
@@ -96,8 +100,13 @@ public class AdapterSelecaoEnderecosPagamento extends RecyclerView.Adapter<Adapt
         call.enqueue(new Callback<User>() {
             @Override
             public void onResponse(Call<User> call, Response<User> response) {
-                User userResponse = response.body();
-                userName = userResponse.getName();
+                if (response.isSuccessful() && response.body() != null) {
+                    User userResponse = response.body();
+                    destinatario_endereco.setText(userResponse.getName());
+                } else {
+                    // Trata caso a resposta não seja bem-sucedida
+                    Log.e("Error", "Erro na resposta da API: " + response.code());
+                }
             }
 
             @Override

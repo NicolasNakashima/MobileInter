@@ -20,28 +20,20 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
-import androidx.fragment.app.FragmentTransaction;
 
 import com.example.khiata.R;
 import com.example.khiata.apis.CategoryApi;
 import com.example.khiata.apis.UserApi;
-import com.example.khiata.fragments.fragment_tela_perfil;
-import com.example.khiata.models.Address;
 import com.example.khiata.models.Category;
 import com.example.khiata.models.User;
 import com.example.khiata.models.UserPreference;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
 
 import java.io.IOException;
-import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 import retrofit2.Call;
 import retrofit2.Callback;
