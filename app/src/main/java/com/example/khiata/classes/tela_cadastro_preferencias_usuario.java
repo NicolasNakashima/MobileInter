@@ -162,7 +162,7 @@ public class tela_cadastro_preferencias_usuario extends AppCompatActivity {
 
     // Método para buscar as categorias e criar CheckBoxes
     private void buscarCategorias() {
-        String API_BASE_URL = "https://interdisciplinarr.onrender.com/";
+        String API_BASE_URL = "https://khiata-api.onrender.com/";
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(API_BASE_URL)
                 .addConverterFactory(GsonConverterFactory.create())

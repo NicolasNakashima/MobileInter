@@ -149,7 +149,7 @@ public class AdapterProdutosAdicionados extends RecyclerView.Adapter<AdapterProd
 
     //Método responsável por deletar um produto
     private void deletarProduto(int productId, int position) {
-        String API_BASE_URL = "https://interdisciplinarr.onrender.com/";
+        String API_BASE_URL = "https://khiata-api.onrender.com/";
         retrofit = new Retrofit.Builder()
                 .baseUrl(API_BASE_URL)
                 .addConverterFactory(GsonConverterFactory.create())
