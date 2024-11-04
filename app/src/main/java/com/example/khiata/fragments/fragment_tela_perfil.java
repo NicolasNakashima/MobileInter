@@ -85,7 +85,7 @@ public class fragment_tela_perfil extends Fragment {
     ImageView voltar_home, btn_tirar_foto, foto_perfil;
     TextView nome_user, email_user, cpf_user, idade_user, phone_user;
     boolean isDressmaker = false;
-    Button btn_tela_editar_perfil, btn_tela_enderecos, btn_virar_costureira, btn_plan_premium, btn_logout;
+    Button btn_tela_editar_perfil, btn_tela_enderecos, btn_virar_costureira, btn_plan_premium, btn_logout, btn_tela_editar_preferencias;
     private fragment_tela_home fragment_tela_home = new fragment_tela_home();
     private fragment_tela_enderecos fragment_tela_enderecos = new fragment_tela_enderecos();
     private fragment_tela_plan_premium fragment_tela_plan_premium = new fragment_tela_plan_premium();
@@ -166,6 +166,17 @@ public class fragment_tela_perfil extends Fragment {
             public void onClick(View v) {
                 FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
                 transaction.replace(R.id.frame_conteudo, new fragment_tela_editar_perfil());
+                transaction.commit();
+            }
+        });
+
+        //Ir para tela de editar preferencias
+        btn_tela_editar_preferencias = view.findViewById(R.id.btn_tela_editar_preferencias);
+        btn_tela_editar_preferencias.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
+                transaction.replace(R.id.frame_conteudo, new fragment_tela_atualizar_preferencias());
                 transaction.commit();
             }
         });

@@ -208,6 +208,17 @@
                 android:textStyle="bold" />
 
             <Button
+                android:id="@+id/btn_tela_editar_preferencias"
+                android:layout_width="262dp"
+                android:layout_height="57dp"
+                android:layout_marginTop="30dp"
+                android:background="@drawable/style_button1"
+                android:text="Editar preferências"
+                android:textColor="#ffffff"
+                android:textSize="20sp"
+                android:textStyle="bold" />
+
+            <Button
                 android:id="@+id/btn_virar_costureira"
                 android:layout_width="262dp"
                 android:layout_height="57dp"

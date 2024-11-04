@@ -1,14 +1,46 @@
 package com.example.khiata.fragments;
 
+import android.app.Dialog;
+import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.Typeface;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.CheckBox;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.khiata.R;
+import com.example.khiata.apis.CategoryApi;
+import com.example.khiata.apis.UserApi;
+import com.example.khiata.classes.MainActivity;
+import com.example.khiata.classes.tela_cadastro_preferencias_usuario;
+import com.example.khiata.models.Category;
+import com.example.khiata.models.User;
+import com.example.khiata.models.UserPreference;
+import com.google.firebase.auth.FirebaseAuth;
+
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -57,10 +89,216 @@ public class fragment_tela_atualizar_preferencias extends Fragment {
         }
     }
 
+    ImageView voltar_perfil;
+    Button btn_cancelar, salvar_preferencias;
+    private List<String> categoriasSelecionadas = new ArrayList();
+    LinearLayout lista_categorias;
+    int userId;
+    private Retrofit retrofit;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_tela_atualizar_preferencias, container, false);
+        View view = inflater.inflate(R.layout.fragment_tela_atualizar_preferencias, container, false);
+
+        //Botão para voltar para a tela de perfil
+        voltar_perfil = view.findViewById(R.id.voltar_perfil);
+        voltar_perfil.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
+                transaction.replace(R.id.frame_conteudo, new fragment_tela_perfil());
+                transaction.commit();
+            }
+        });
+
+        //Botão para cancelar a atualização das preferências
+        btn_cancelar = view.findViewById(R.id.btn_cancelar);
+        btn_cancelar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
+                transaction.replace(R.id.frame_conteudo, new fragment_tela_perfil());
+                transaction.commit();
+            }
+        });
+
+        //Buscar id do usuario
+        buscarIdDoUsuario(FirebaseAuth.getInstance().getCurrentUser().getEmail());
+
+        // Código para lidar com a seleção de categorias e clique no botão "salvar_preferencias"
+        lista_categorias = view.findViewById(R.id.lista_categorias);
+        buscarCategorias();
+        salvar_preferencias = view.findViewById(R.id.salvar_preferencias);
+        salvar_preferencias.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (categoriasSelecionadas.size() != 0) {
+                    List<UserPreference> userPreferences = new ArrayList<>();
+                    for (String categoria : categoriasSelecionadas) {
+                        UserPreference pref = new UserPreference(userId, categoria);
+                        userPreferences.add(pref);  // Adiciona cada preferência na lista
+                    }
+                    // Chama o método para atualizar as preferências
+                    atualizarPreferenciasUsuario(userId, userPreferences);
+                } else {
+                    // Mostra o pop-up de alerta se nenhuma categoria for selecionada
+                    Dialog dialog = new Dialog(getActivity());
+                    LayoutInflater inflater = getLayoutInflater();
+                    View popupView = inflater.inflate(R.layout.popup_mensagem, null);
+                    TextView msgPopup = popupView.findViewById(R.id.msg_popup);
+                    msgPopup.setText("Por favor, selecione pelo menos uma categoria.");
+                    ImageView imgPopup = popupView.findViewById(R.id.img_popup);
+                    imgPopup.setImageResource(R.drawable.icon_pop_alert);
+                    Button btnPopup = popupView.findViewById(R.id.btn_popup);
+                    btnPopup.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            dialog.cancel();
+                        }
+                    });
+                    dialog.setContentView(popupView);
+                    dialog.setCancelable(true);
+                    dialog.show();
+                }
+            }
+        });
+
+        return view;
+    }
+
+    //Método para buscar o ID do usuário
+    private void buscarIdDoUsuario(String userEmail){
+        String API_BASE_URL = "https://apikhiata.onrender.com/";
+        retrofit = new Retrofit.Builder()
+                .baseUrl(API_BASE_URL)
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+        UserApi userApi = retrofit.create(UserApi.class);
+        Call<User> call = userApi.buscarUsuarioPorEmail(userEmail);
+        call.enqueue(new Callback<User>() {
+            @Override
+            public void onResponse(Call<User> call, Response<User> response) {
+                User userResponse = response.body();
+                userId = userResponse.getId();
+            }
+
+            @Override
+            public void onFailure(Call<User> call, Throwable throwable) {
+                Toast.makeText(getActivity(), throwable.getMessage(), Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+    // Método para buscar as categorias e criar CheckBoxes
+    private void buscarCategorias() {
+        String API_BASE_URL = "https://khiata-api.onrender.com/";
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl(API_BASE_URL)
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+
+        CategoryApi categoryApi = retrofit.create(CategoryApi.class);
+        Call<List<Category>> call = categoryApi.getCategories();
+
+        call.enqueue(new Callback<List<Category>>() {
+            @Override
+            public void onResponse(Call<List<Category>> call, Response<List<Category>> response) {
+                if (!response.isSuccessful()) {
+                    Toast.makeText(getActivity(), "Erro: " + response.code(), Toast.LENGTH_SHORT).show();
+                    Log.e("Error", response.code() + "");
+                    return;
+                }
+
+                List<Category> categories = response.body(); // Usa diretamente a resposta da API
+                if (categories != null && !categories.isEmpty()) {
+                    lista_categorias.removeAllViews(); // Limpa o LinearLayout antes de adicionar novos itens
+
+                    // Popula o LinearLayout com CheckBoxes das categorias
+                    for (Category category : categories) {
+                        CheckBox checkBox = new CheckBox(getActivity());
+                        checkBox.setText(category.getType());
+                        checkBox.setTag(category.getId()); // Armazena o ID da categoria no CheckBox
+                        checkBox.setTextColor(Color.BLACK);
+                        checkBox.setTextSize(25);
+                        checkBox.setTypeface(null, Typeface.BOLD);
+
+                        // Listener para armazenar/remover a seleção
+                        checkBox.setOnCheckedChangeListener((buttonView, isChecked) -> {
+                            String categoryTipo = buttonView.getText().toString();
+
+                            if (isChecked) {
+                                // Adiciona o tipo de categoria à lista se o CheckBox for marcado
+                                categoriasSelecionadas.add(categoryTipo);
+                            } else {
+                                // Remove o tipo de categoria da lista se o CheckBox for desmarcado
+                                categoriasSelecionadas.remove(categoryTipo);
+                            }
+
+                            // Mostrar a lista de categorias selecionadas no Log
+                            Log.d("Categorias Selecionadas", categoriasSelecionadas.toString());
+                        });
+
+                        lista_categorias.addView(checkBox); // Adiciona o CheckBox ao LinearLayout
+                    }
+                } else {
+                    Toast.makeText(getActivity(), "Nenhuma categoria encontrada.", Toast.LENGTH_SHORT).show();
+                    Log.e("Error", "Nenhuma categoria encontrada.");
+                }
+            }
+
+            @Override
+            public void onFailure(Call<List<Category>> call, Throwable throwable) {
+                Toast.makeText(getActivity(), throwable.getMessage(), Toast.LENGTH_SHORT).show();
+                Log.e("Error", throwable.getMessage());
+            }
+        });
+    }
+
+    //Método para atualizar o perfil do usuário para definir as preferências dele
+    private void atualizarPreferenciasUsuario(int userId, List<UserPreference> preferencias) {
+        String API_BASE_URL = "https://apikhiata.onrender.com/";
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl(API_BASE_URL)
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+        UserApi userApi = retrofit.create(UserApi.class);
+
+        // Monta o mapa de atualizações
+        Map<String, Object> atualizacoes = new HashMap<>();
+        atualizacoes.put("userPreferences", preferencias);
+
+        // Faz a chamada para a API
+        Call<Void> call = userApi.atualizarPreferencias(userId, atualizacoes);
+        call.enqueue(new Callback<Void>() {
+            @Override
+            public void onResponse(Call<Void> call, Response<Void> response) {
+                if (!response.isSuccessful()) {
+                    // Captura a mensagem de erro diretamente
+                    String errorMessage = "Erro: " + response.code();
+                    if (response.errorBody() != null) {
+                        try {
+                            // Lê o conteúdo da mensagem de erro
+                            errorMessage += " - " + response.errorBody().string();
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                    Toast.makeText(getActivity(), errorMessage, Toast.LENGTH_LONG).show();
+                    Log.e("Error", errorMessage);
+                } else {
+                    // A atualização foi bem-sucedida
+                    Toast.makeText(getActivity(), "Preferências atualizadas com sucesso!", Toast.LENGTH_SHORT).show();
+                    FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
+                    transaction.replace(R.id.frame_conteudo, new fragment_tela_perfil());
+                    transaction.commit();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Void> call, Throwable t) {
+                Toast.makeText(getActivity(), "Erro ao atualizar preferências: " + t.getMessage(), Toast.LENGTH_LONG).show();
+            }
+        });
     }
 }
