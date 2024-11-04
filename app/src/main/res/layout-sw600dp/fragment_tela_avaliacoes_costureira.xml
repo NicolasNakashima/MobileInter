@@ -10,8 +10,8 @@
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar2"
-        android:layout_width="392dp"
-        android:layout_height="84dp"
+        android:layout_width="702dp"
+        android:layout_height="88dp"
         android:background="?attr/colorPrimary"
         android:backgroundTint="#FAC552"
         android:minHeight="?attr/actionBarSize"
@@ -22,14 +22,15 @@
 
     <ImageView
         android:id="@+id/voltar_home"
-        android:layout_width="55dp"
-        android:layout_height="41dp"
+        android:layout_width="57dp"
+        android:layout_height="52dp"
+        android:layout_marginBottom="6dp"
         app:layout_constraintBottom_toBottomOf="@+id/toolbar2"
         app:layout_constraintEnd_toEndOf="@+id/toolbar2"
-        app:layout_constraintHorizontal_bias="0.047"
+        app:layout_constraintHorizontal_bias="0.167"
         app:layout_constraintStart_toStartOf="@+id/toolbar2"
         app:layout_constraintTop_toTopOf="@+id/toolbar2"
-        app:layout_constraintVertical_bias="0.558"
+        app:layout_constraintVertical_bias="0.611"
         app:srcCompat="@drawable/seta_retorno" />
 
     <TextView
@@ -38,7 +39,7 @@
         android:layout_height="wrap_content"
         android:text="Avaliações"
         android:textColor="#5A2D03"
-        android:textSize="24sp"
+        android:textSize="30sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="@+id/toolbar2"
         app:layout_constraintEnd_toEndOf="parent"
@@ -49,8 +50,8 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/cardView7"
-        android:layout_width="match_parent"
-        android:layout_height="140dp"
+        android:layout_width="614dp"
+        android:layout_height="180dp"
         android:background="#FFFFFF"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -58,9 +59,9 @@
 
         <ImageView
             android:id="@+id/img_costureira"
-            android:layout_width="119dp"
-            android:layout_height="122dp"
-            android:layout_marginStart="16dp"
+            android:layout_width="135dp"
+            android:layout_height="137dp"
+            android:layout_marginStart="32dp"
             android:scaleType="centerCrop"
             android:src="@drawable/empty_img"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -71,14 +72,12 @@
             android:id="@+id/nome_costureira"
             android:layout_width="197dp"
             android:layout_height="32dp"
-            android:layout_marginStart="20dp"
+            android:layout_marginStart="30dp"
             android:layout_marginTop="16dp"
             android:text="Nome"
             android:textColor="#000000"
-            android:textSize="25sp"
+            android:textSize="27sp"
             android:textStyle="bold"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.39"
             app:layout_constraintStart_toEndOf="@+id/img_costureira"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -87,18 +86,18 @@
             style="?android:attr/ratingBarStyleSmall"
             android:layout_width="79dp"
             android:layout_height="20dp"
-            android:layout_marginStart="50dp"
+            android:layout_marginStart="60dp"
             android:layout_marginTop="12dp"
-            android:scaleX="1.5"
-            android:scaleY="1.5"
+            android:scaleX="1.8"
+            android:scaleY="1.8"
             app:layout_constraintStart_toEndOf="@+id/img_costureira"
             app:layout_constraintTop_toBottomOf="@+id/nome_costureira" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/lista_avaliacoes_costureira"
-        android:layout_width="360dp"
-        android:layout_height="562dp"
+        android:layout_width="390dp"
+        android:layout_height="553dp"
         android:layout_marginTop="20dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.529"
@@ -108,12 +107,12 @@
 
     <ImageButton
         android:id="@+id/btn_adicionar_avaliacao_costureira"
-        android:layout_width="70dp"
-        android:layout_height="72dp"
-        android:layout_marginEnd="24dp"
-        android:layout_marginBottom="24dp"
+        android:layout_width="94dp"
+        android:layout_height="101dp"
+        android:layout_marginEnd="64dp"
+        android:layout_marginBottom="48dp"
         android:background="@android:color/transparent"
-        android:src="@drawable/btn_adicionar"
+        android:src="@drawable/btn_adicionar_tablet"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
 

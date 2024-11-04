@@ -9,11 +9,10 @@
     android:background="#EBEBEB">
 
     <ScrollView
-        android:layout_width="393dp"
-        android:layout_height="710dp"
+        android:layout_width="617dp"
+        android:layout_height="866dp"
         android:foregroundGravity="center"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/toolbar2">
 
@@ -26,8 +25,8 @@
 
             <ImageView
                 android:id="@+id/imageView5"
-                android:layout_width="match_parent"
-                android:layout_height="181dp"
+                android:layout_width="619dp"
+                android:layout_height="217dp"
                 android:background="#384384"
                 android:src="@drawable/logo_inicio" />
 
@@ -39,19 +38,19 @@
                 android:gravity="center"
                 android:text="Vantagens da conta premium"
                 android:textColor="#000000"
-                android:textSize="25sp"
+                android:textSize="27sp"
                 android:textStyle="bold" />
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/cardView3"
-                android:layout_width="283dp"
-                android:layout_height="49dp"
+                android:layout_width="315dp"
+                android:layout_height="52dp"
                 android:layout_marginTop="30dp">
 
                 <ImageView
                     android:id="@+id/imageView6"
-                    android:layout_width="35dp"
-                    android:layout_height="35dp"
+                    android:layout_width="37dp"
+                    android:layout_height="37dp"
                     android:layout_marginStart="4dp"
                     android:src="@drawable/beneficio2"
                     app:layout_constraintBottom_toBottomOf="parent"
@@ -60,12 +59,13 @@
 
                 <TextView
                     android:id="@+id/textView10"
-                    android:layout_width="220dp"
-                    android:layout_height="39dp"
+                    android:layout_width="248dp"
+                    android:layout_height="44dp"
                     android:layout_marginStart="16dp"
+                    android:gravity="center"
                     android:text="Cursos variados de costura"
                     android:textColor="#000000"
-                    android:textSize="17sp"
+                    android:textSize="19sp"
                     android:textStyle="bold"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toEndOf="@+id/imageView6"
@@ -75,14 +75,14 @@
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/cardView4"
-                android:layout_width="283dp"
-                android:layout_height="49dp"
+                android:layout_width="314dp"
+                android:layout_height="63dp"
                 android:layout_marginTop="15dp">
 
                 <ImageView
                     android:id="@+id/imageView14"
-                    android:layout_width="35dp"
-                    android:layout_height="35dp"
+                    android:layout_width="37dp"
+                    android:layout_height="37dp"
                     android:layout_marginStart="4dp"
                     android:src="@drawable/beneficio3"
                     app:layout_constraintBottom_toBottomOf="parent"
@@ -91,12 +91,13 @@
 
                 <TextView
                     android:id="@+id/textView17"
-                    android:layout_width="220dp"
-                    android:layout_height="40dp"
-                    android:layout_marginStart="16dp"
+                    android:layout_width="240dp"
+                    android:layout_height="50dp"
+                    android:layout_marginStart="25dp"
+                    android:gravity="center|start"
                     android:text="Descontos em produtos do marketplace"
                     android:textColor="#000000"
-                    android:textSize="17sp"
+                    android:textSize="19sp"
                     android:textStyle="bold"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toEndOf="@+id/imageView14"
@@ -105,14 +106,14 @@
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/cardView5"
-                android:layout_width="283dp"
-                android:layout_height="49dp"
+                android:layout_width="313dp"
+                android:layout_height="53dp"
                 android:layout_marginTop="15dp">
 
                 <ImageView
                     android:id="@+id/imageView17"
-                    android:layout_width="35dp"
-                    android:layout_height="35dp"
+                    android:layout_width="37dp"
+                    android:layout_height="37dp"
                     android:layout_marginStart="4dp"
                     android:src="@drawable/beneficio1"
                     app:layout_constraintBottom_toBottomOf="parent"
@@ -121,12 +122,13 @@
 
                 <TextView
                     android:id="@+id/textView19"
-                    android:layout_width="220dp"
-                    android:layout_height="40dp"
+                    android:layout_width="246dp"
+                    android:layout_height="42dp"
                     android:layout_marginStart="16dp"
+                    android:gravity="center"
                     android:text="Desconto em valor de frete"
                     android:textColor="#000000"
-                    android:textSize="17sp"
+                    android:textSize="19sp"
                     android:textStyle="bold"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toEndOf="@+id/imageView17"
@@ -135,14 +137,14 @@
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/cardView6"
-                android:layout_width="283dp"
-                android:layout_height="49dp"
+                android:layout_width="313dp"
+                android:layout_height="82dp"
                 android:layout_marginTop="15dp">
 
                 <ImageView
                     android:id="@+id/imageView21"
-                    android:layout_width="35dp"
-                    android:layout_height="35dp"
+                    android:layout_width="37dp"
+                    android:layout_height="37dp"
                     android:layout_marginStart="4dp"
                     android:src="@drawable/beneficio5"
                     app:layout_constraintBottom_toBottomOf="parent"
@@ -151,12 +153,13 @@
 
                 <TextView
                     android:id="@+id/textView21"
-                    android:layout_width="220dp"
-                    android:layout_height="40dp"
-                    android:layout_marginStart="16dp"
+                    android:layout_width="230dp"
+                    android:layout_height="65dp"
+                    android:layout_marginStart="25dp"
+                    android:gravity="center|start"
                     android:text="Destaque nas recomendações (somente costureiras)"
                     android:textColor="#000000"
-                    android:textSize="16sp"
+                    android:textSize="19sp"
                     android:textStyle="bold"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toEndOf="@+id/imageView21"
@@ -167,17 +170,17 @@
                 android:id="@+id/preco_premium"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
+                android:layout_marginTop="25dp"
                 android:gravity="center"
                 android:text="R$ 15.90 /mês"
                 android:textColor="#000000"
-                android:textSize="24sp"
+                android:textSize="27sp"
                 android:textStyle="bold" />
 
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="15dp"
+                android:layout_marginTop="20dp"
                 android:background="@drawable/switch_background"
                 android:orientation="horizontal"
                 android:padding="4dp">
@@ -191,7 +194,7 @@
                     android:paddingVertical="8dp"
                     android:text="Anual"
                     android:textColor="@android:color/black"
-                    android:textSize="14sp" />
+                    android:textSize="17sp" />
 
                 <TextView
                     android:id="@+id/textMensal"
@@ -201,18 +204,19 @@
                     android:paddingVertical="8dp"
                     android:text="Mensal"
                     android:textColor="@android:color/black"
-                    android:textSize="14sp" />
+                    android:textSize="17sp" />
             </LinearLayout>
 
             <Button
                 android:id="@+id/btn_adquirir_premium"
-                android:layout_width="254dp"
-                android:layout_height="wrap_content"
+                android:layout_width="262dp"
+                android:layout_height="57dp"
                 android:layout_marginTop="40dp"
                 android:layout_marginBottom="65dp"
                 android:background="@drawable/style_button1"
                 android:text="Adquirir Premium"
                 android:textColor="#ffffff"
+                android:textSize="20sp"
                 android:textStyle="bold" />
 
         </LinearLayout>
@@ -220,8 +224,8 @@
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar2"
-        android:layout_width="392dp"
-        android:layout_height="84dp"
+        android:layout_width="702dp"
+        android:layout_height="88dp"
         android:background="?attr/colorPrimary"
         android:backgroundTint="#FAC552"
         android:minHeight="?attr/actionBarSize"
@@ -232,14 +236,15 @@
 
     <ImageView
         android:id="@+id/voltar_home"
-        android:layout_width="55dp"
-        android:layout_height="41dp"
+        android:layout_width="57dp"
+        android:layout_height="52dp"
+        android:layout_marginBottom="6dp"
         app:layout_constraintBottom_toBottomOf="@+id/toolbar2"
         app:layout_constraintEnd_toEndOf="@+id/toolbar2"
-        app:layout_constraintHorizontal_bias="0.047"
+        app:layout_constraintHorizontal_bias="0.164"
         app:layout_constraintStart_toStartOf="@+id/toolbar2"
         app:layout_constraintTop_toTopOf="@+id/toolbar2"
-        app:layout_constraintVertical_bias="0.558"
+        app:layout_constraintVertical_bias="0.611"
         app:srcCompat="@drawable/seta_retorno" />
 
     <TextView
@@ -248,7 +253,7 @@
         android:layout_height="wrap_content"
         android:text="Plano Premium"
         android:textColor="#5A2D03"
-        android:textSize="24sp"
+        android:textSize="30sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="@+id/toolbar2"
         app:layout_constraintEnd_toEndOf="parent"
