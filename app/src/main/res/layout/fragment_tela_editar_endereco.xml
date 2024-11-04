@@ -34,24 +34,25 @@
                 android:textStyle="bold" />
 
             <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/textInputLayout46"
+                android:id="@+id/textInputLayout12"
                 android:layout_width="314dp"
                 android:layout_height="65dp"
-                android:layout_marginTop="45dp"
+                android:layout_marginTop="25dp"
                 android:background="@drawable/style_boxinput">
 
 
                 <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/atualizarDestinatario"
+                    android:id="@+id/atualizarEstado"
                     android:layout_width="313dp"
                     android:layout_height="53dp"
                     android:background="@null"
-                    android:hint="Destinatário:"
+                    android:hint="Estado:"
                     android:paddingLeft="16dp"
                     android:paddingBottom="10dp"
                     android:textColor="#000000"
                     android:textColorHint="#000000"
                     android:textStyle="bold" />
+
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
@@ -160,11 +161,47 @@
                     android:textStyle="bold" />
             </com.google.android.material.textfield.TextInputLayout>
 
+            <TextView
+                android:id="@+id/textView6"
+                android:layout_width="295dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="25dp"
+                android:text="Status:"
+                android:textColor="#000000"
+                android:textSize="18sp"
+                android:textStyle="bold" />
+
+            <RadioGroup
+                android:id="@+id/opcoesStatus"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:layout_marginRight="95dp">
+
+                <RadioButton
+                    android:id="@+id/opcaoAtivo"
+                    android:layout_width="109dp"
+                    android:layout_height="46dp"
+                    android:text="Ativar"
+                    android:textColor="#000000"
+                    android:textSize="16sp"
+                    android:textStyle="bold" />
+
+                <RadioButton
+                    android:id="@+id/opcaoInativo"
+                    android:layout_width="109dp"
+                    android:layout_height="46dp"
+                    android:text="Desativar"
+                    android:textColor="#000000"
+                    android:textSize="16sp"
+                    android:textStyle="bold" />
+            </RadioGroup>
+
             <Button
                 android:id="@+id/btn_atualizar_endereco"
                 android:layout_width="240dp"
                 android:layout_height="50dp"
-                android:layout_marginTop="25dp"
+                android:layout_marginTop="30dp"
                 android:background="@drawable/style_button1"
                 android:text="Salvar"
                 android:textColor="#ffffff"
@@ -176,7 +213,7 @@
                 android:layout_width="240dp"
                 android:layout_height="50dp"
                 android:layout_marginTop="30dp"
-                android:layout_marginBottom="35dp"
+                android:layout_marginBottom="45dp"
                 android:background="@drawable/style_button2"
                 android:text="Cancelar"
                 android:textSize="15sp"

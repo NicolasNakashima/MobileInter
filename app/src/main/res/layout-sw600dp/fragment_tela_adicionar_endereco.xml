@@ -73,24 +73,25 @@
                 android:textStyle="bold" />
 
             <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/textInputLayout46"
+                android:id="@+id/textInputLayout15"
                 android:layout_width="314dp"
                 android:layout_height="65dp"
-                android:layout_marginTop="50dp"
+                android:layout_marginTop="25dp"
                 android:background="@drawable/style_boxinput">
 
 
                 <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/editDestinatario"
+                    android:id="@+id/editEstado"
                     android:layout_width="313dp"
                     android:layout_height="53dp"
                     android:background="@null"
-                    android:hint="Destinatário:"
+                    android:hint="Estado:"
                     android:paddingLeft="16dp"
                     android:paddingBottom="10dp"
                     android:textColor="#000000"
                     android:textColorHint="#000000"
                     android:textStyle="bold" />
+
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout

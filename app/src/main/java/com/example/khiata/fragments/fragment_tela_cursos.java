@@ -105,10 +105,11 @@ public class fragment_tela_cursos extends Fragment {
 
         //Definindo os cursos
         lista_cursos = view.findViewById(R.id.lista_cursos);
-        cursos.add(new Course("Teste", "Categoria", "2h 10min", 4.5, "https://blog.maximustecidos.com.br/wp-content/uploads/2020/11/4-dicas-para-conservar-a-maquina-de-costura-1.jpg", "https://youtu.be/9QdUxdPcTsY?si=d3gFlY7VXMl6VMQH"));
+        cursos.add(new Course("10 dicas para você finalmente costurar suas próprias roupas", "Iniciante", "8min 8s", 0.0, "https://img.youtube.com/vi/rtfQkPO8bhA/maxresdefault.jpg", "https://www.youtube.com/watch?v=rtfQkPO8bhA"));
+        cursos.add(new Course("CURSO GRATUITO DE CORTE E COSTURA ONLINE PARA INICIANTES - AULA 01 - AULAS DISPONÍVEIS AINDA EM 2024", "Iniciante", "20min 38s", 0.0, "https://img.youtube.com/vi/SL9DiM8PMvA/maxresdefault.jpg", "https://www.youtube.com/watch?v=SL9DiM8PMvA"));
         AdapterCursos adapter = new AdapterCursos(getActivity(), cursos, FirebaseAuth.getInstance().getCurrentUser().getEmail());
         lista_cursos.setAdapter(adapter);
-        lista_cursos.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
+        lista_cursos.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
 
 
         return view;

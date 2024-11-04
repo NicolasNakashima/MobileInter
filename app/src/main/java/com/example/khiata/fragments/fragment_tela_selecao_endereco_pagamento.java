@@ -154,21 +154,61 @@ public class fragment_tela_selecao_endereco_pagamento extends Fragment {
             public void onResponse(Call<ArrayList<Address>> call, Response<ArrayList<Address>> response) {
                 if (response.isSuccessful()) {
                     ArrayList<Address> listaDeEnderecos = response.body();
-
                     if (listaDeEnderecos != null && !listaDeEnderecos.isEmpty()) {
                         enderecos.clear();
-                        enderecos.addAll(listaDeEnderecos);
 
-                        AdapterSelecaoEnderecosPagamento adapter = new AdapterSelecaoEnderecosPagamento(getActivity(), enderecos);
-                        lista_enderecos_pagamento.setAdapter(adapter);
-                        adapter.notifyDataSetChanged();
+                        //Filtrar apenas endereços ativos
+                        for(Address address : listaDeEnderecos){
+                            if(address.isDeactivate()){
+                                enderecos.add(address);
+                            }
+                        }
+                        if(!enderecos.isEmpty()){
+                            AdapterSelecaoEnderecosPagamento adapter = new AdapterSelecaoEnderecosPagamento(getActivity(), enderecos);
+                            lista_enderecos_pagamento.setAdapter(adapter);
+                            adapter.notifyDataSetChanged();
+                        } else{
+                            Dialog dialog = new Dialog(getActivity());
+                            LayoutInflater inflater = getLayoutInflater();
+                            View popup_opcao = inflater.inflate(R.layout.popup_opcao, null);
+
+                            TextView msgPopup = popup_opcao.findViewById(R.id.msg_popup);
+                            msgPopup.setText("Você não possuí endereços ativos.");
+                            ImageView imgPopup = popup_opcao.findViewById(R.id.img_popup);
+                            imgPopup.setImageResource(R.drawable.icon_pop_alert);
+                            Button btn_seguir = popup_opcao.findViewById(R.id.btn_seguir);
+                            btn_seguir.setText("Endereços");
+                            btn_seguir.setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View v) {
+                                    FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
+                                    transaction.replace(R.id.frame_conteudo, new fragment_tela_enderecos());
+                                    transaction.commit();
+                                    dialog.cancel();
+                                }
+                            });
+                            Button btn_cancelar = popup_opcao.findViewById(R.id.btn_cancelar);
+                            btn_cancelar.setText("Cancelar");
+                            btn_cancelar.setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View v) {
+                                    Intent intent = new Intent(getActivity(), tela_carrinho.class);
+                                    startActivity(intent);
+                                    dialog.cancel();
+                                }
+                            });
+
+                            dialog.setContentView(popup_opcao);
+                            dialog.setCancelable(true);
+                            dialog.show();
+                        }
                     } else {
                         Dialog dialog = new Dialog(getActivity());
                         LayoutInflater inflater = getLayoutInflater();
                         View popup_opcao = inflater.inflate(R.layout.popup_opcao, null);
 
                         TextView msgPopup = popup_opcao.findViewById(R.id.msg_popup);
-                        msgPopup.setText("Nenhum endereço encontrado. Cadastre um endereço para seguir com a compra");
+                        msgPopup.setText("Endereço não encontrado. Cadastre um endereço para seguir com a compra.");
                         ImageView imgPopup = popup_opcao.findViewById(R.id.img_popup);
                         imgPopup.setImageResource(R.drawable.icon_pop_alert);
                         Button btn_seguir = popup_opcao.findViewById(R.id.btn_seguir);

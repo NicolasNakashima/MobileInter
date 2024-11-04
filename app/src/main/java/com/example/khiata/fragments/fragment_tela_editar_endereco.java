@@ -12,6 +12,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.RadioGroup;
 import android.widget.Toast;
 
 import com.example.khiata.R;
@@ -116,7 +117,7 @@ public class fragment_tela_editar_endereco extends Fragment {
         btn_atualizar_endereco.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String atualizarDestinatario = ((EditText) view.findViewById(R.id.atualizarDestinatario)).getText().toString();
+                String atualizarEstado = ((EditText) view.findViewById(R.id.atualizarEstado)).getText().toString();
                 String atualizarRua = ((EditText) view.findViewById(R.id.atualizarRua)).getText().toString();
                 String atualizarComplemento = ((EditText) view.findViewById(R.id.atualizarComplemento)).getText().toString();
                 String atualizarRotulo = ((EditText) view.findViewById(R.id.atualizarRotulo)).getText().toString();
@@ -130,9 +131,21 @@ public class fragment_tela_editar_endereco extends Fragment {
                         Log.e("Error", "Idade inválida: " + e.getMessage());
                     }
                 }
+                RadioGroup opcoesStatus = view.findViewById(R.id.opcoesStatus);
+                int selectedId = opcoesStatus.getCheckedRadioButtonId();
+
                 Map<String, Object> atualizacoes = new HashMap<>();
-                if(!atualizarDestinatario.isEmpty()){
-                    atualizacoes.put("recipient", atualizarDestinatario);
+                if (selectedId != -1) {
+                    boolean novoStatus=true;
+                    if(selectedId == R.id.opcaoAtivo){
+                        novoStatus = true;
+                    } else if(selectedId == R.id.opcaoInativo){
+                        novoStatus = false;
+                    }
+                    atualizacoes.put("deactivate", novoStatus);
+                }
+                if(!atualizarEstado.isEmpty()){
+                    atualizacoes.put("state", atualizarEstado);
                 }
                 if(!atualizarRua.isEmpty()){
                     atualizacoes.put("street", atualizarRua);

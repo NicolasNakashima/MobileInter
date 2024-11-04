@@ -121,14 +121,14 @@ public class fragment_tela_adicionar_endereco extends Fragment {
         btn_adicionar_endereco.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String novoDestinatario = ((EditText) view.findViewById(R.id.editDestinatario)).getText().toString();
+                String novoEstado = ((EditText) view.findViewById(R.id.editEstado)).getText().toString();
                 String novaRua = ((EditText) view.findViewById(R.id.editRua)).getText().toString();
                 int novoNumero = Integer.parseInt(((EditText) view.findViewById(R.id.editNumero)).getText().toString());
                 String novoComplemento = ((EditText) view.findViewById(R.id.editComplemento)).getText().toString();
                 String novoRotulo = ((EditText) view.findViewById(R.id.editRotulo)).getText().toString();
                 String novoCEP = ((EditText) view.findViewById(R.id.editCEP)).getText().toString();
 
-                if(novoDestinatario.isEmpty() || novaRua.isEmpty() || novoNumero == 0 || novoRotulo.isEmpty() || novoCEP.isEmpty()) {
+                if(novoEstado.isEmpty() || novaRua.isEmpty() || novoNumero == 0 || novoRotulo.isEmpty() || novoCEP.isEmpty()) {
                     Dialog dialog = new Dialog(getActivity());
                     LayoutInflater inflater = getLayoutInflater();
                     View popupView = inflater.inflate(R.layout.popup_mensagem, null);
@@ -150,7 +150,7 @@ public class fragment_tela_adicionar_endereco extends Fragment {
                     if(novoComplemento.isEmpty()){
                         novoComplemento = null;
                     }
-                    Address novoEndereco = new Address(novoDestinatario, novaRua, novoNumero, novoComplemento, novoRotulo, novoCEP);
+                    Address novoEndereco = new Address(novoEstado,"Brasil" ,novaRua, novoNumero, novoComplemento, novoRotulo, novoCEP, true);
                     Log.d("Address", new Gson().toJson(novoEndereco));
                     buscarIdDoUsuario(FirebaseAuth.getInstance().getCurrentUser().getEmail(), novoEndereco);
                 }
