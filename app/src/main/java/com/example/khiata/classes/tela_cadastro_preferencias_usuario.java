@@ -283,9 +283,9 @@ public class tela_cadastro_preferencias_usuario extends AppCompatActivity {
                 } else {
                     // A atualização foi bem-sucedida
                     Toast.makeText(getApplicationContext(), "Preferências atualizadas com sucesso!", Toast.LENGTH_SHORT).show();
-                    FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-                    transaction.replace(R.id.frame_conteudo, new fragment_tela_perfil());
-                    transaction.commit();
+                    Intent intent = new Intent(tela_cadastro_preferencias_usuario.this, MainActivity.class);
+                    startActivity(intent);
+                    finish();
                 }
             }
 

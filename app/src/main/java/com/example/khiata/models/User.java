@@ -17,6 +17,7 @@ public class User {
     private String profilePictureUrl; //Deixa null no cadastro
     private List<Address> addresses;
     private double avaliation;
+    private boolean isAdmin;
     private List<UserPreference> userPreferences;
 
     // Constructor
@@ -174,6 +175,14 @@ public class User {
         this.userPreferences = userPreferences;
     }
 
+    public boolean isAdmin() {
+        return isAdmin;
+    }
+
+    public void setAdmin(boolean admin) {
+        isAdmin = admin;
+    }
+
     @Override
     public String toString() {
         return "User{" +
@@ -190,6 +199,7 @@ public class User {
                 ", profilePictureUrl='" + profilePictureUrl + '\'' +
                 ", addresses=" + addresses + '\'' +
                 ", avaliation=" + avaliation + '\'' +
+                ", isAdmin=" + isAdmin + '\'' +
                 ", userPreferences=" + userPreferences + '\'' +
                 '}';
     }

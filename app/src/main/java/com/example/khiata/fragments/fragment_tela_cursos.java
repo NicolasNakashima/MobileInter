@@ -109,7 +109,7 @@ public class fragment_tela_cursos extends Fragment {
         cursos.add(new Course("CURSO GRATUITO DE CORTE E COSTURA ONLINE PARA INICIANTES - AULA 01 - AULAS DISPONÍVEIS AINDA EM 2024", "Iniciante", "20min 38s", 0.0, "https://img.youtube.com/vi/SL9DiM8PMvA/maxresdefault.jpg", "https://www.youtube.com/watch?v=SL9DiM8PMvA"));
         AdapterCursos adapter = new AdapterCursos(getActivity(), cursos, FirebaseAuth.getInstance().getCurrentUser().getEmail());
         lista_cursos.setAdapter(adapter);
-        lista_cursos.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
+        lista_cursos.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
 
 
         return view;
