@@ -88,7 +88,15 @@ public class tela_cadastro extends AppCompatActivity {
                 String novoEmail = ((EditText) findViewById(R.id.novoEmail)).getText().toString();
                 String novoCPF = ((EditText) findViewById(R.id.novoCPF)).getText().toString();
                 String novoPhone = ((EditText) findViewById(R.id.novoPhone)).getText().toString();
-                int novaIdade = Integer.parseInt(((EditText) findViewById(R.id.novaIdade)).getText().toString());
+                int novaIdade = 0;
+                String novaIdadeTexto = ((EditText) findViewById(R.id.novaIdade)).getText().toString();
+                if (!novaIdadeTexto.isEmpty()) {
+                    try {
+                        novaIdade = Integer.parseInt(novaIdadeTexto);
+                    } catch (NumberFormatException e) {
+                        Log.e("Error", "Idade inválida: " + e.getMessage());
+                    }
+                }
                 String novaSenha = ((EditText) findViewById(R.id.novaSenha)).getText().toString();
                 String novaConfirmaSenha = ((EditText) findViewById(R.id.confirmNovaSenha)).getText().toString();
                 boolean confirmCostureira = ((CheckBox) findViewById(R.id.checkConfirmCostureira)).isChecked();
@@ -96,7 +104,7 @@ public class tela_cadastro extends AppCompatActivity {
                 RadioGroup opcoesGenero = findViewById(R.id.opcoesGenero);
                 int selectedId = opcoesGenero.getCheckedRadioButtonId();
 
-                if(novoNome.isEmpty() || novoEmail.isEmpty() || novoCPF.isEmpty() || novoPhone.isEmpty() || novaIdade == 0 || novaSenha.isEmpty() || novaConfirmaSenha.isEmpty() || selectedId == -1) {
+                if(novoNome.isEmpty() || novoEmail.isEmpty() || novoCPF.isEmpty() || novoPhone.isEmpty() || novaIdade <= 0 || novaSenha.isEmpty() || novaConfirmaSenha.isEmpty() || selectedId == -1) {
                     Dialog dialog = new Dialog(tela_cadastro.this);
                     LayoutInflater inflater = getLayoutInflater();
                     View popupView = inflater.inflate(R.layout.popup_mensagem, null);
@@ -194,21 +202,8 @@ public class tela_cadastro extends AppCompatActivity {
                     }
                 } else {
                     ResponseBody successMessage = response.body(); // Captura a mensagem de sucesso
-                    Toast.makeText(tela_cadastro.this, successMessage.toString(), Toast.LENGTH_LONG).show();
-                    cadastrarUsuarioFirebase(user.getEmail(), user.getPassword());
-                    FirebaseAuth auth = FirebaseAuth.getInstance();
-                    auth.signInWithEmailAndPassword(user.getEmail(), user.getPassword())
-                        .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-                            @Override
-                            public void onComplete(@NonNull Task<AuthResult> task) {
-                                if(task.isSuccessful()){
-                                    Intent intent = new Intent(tela_cadastro.this, MainActivity.class);
-                                    startActivity(intent);
-                                } else{
-                                    Toast.makeText(tela_cadastro.this, "Erro ao realizar o login: " + task.getException().getMessage(), Toast.LENGTH_LONG).show();
-                                }
-                            }
-                        });
+                    Toast.makeText(tela_cadastro.this, "Sucesso: " + successMessage.toString(), Toast.LENGTH_LONG).show();
+                    cadastrarUsuarioFirebase(user.getEmail(), user.getPassword(), user);
                 }
             }
 
@@ -222,7 +217,7 @@ public class tela_cadastro extends AppCompatActivity {
 
 
     // Método para cadastrar um novo usuário no Firebase
-    private void cadastrarUsuarioFirebase(String novoEmail, String novaSenha){
+    private void cadastrarUsuarioFirebase(String novoEmail, String novaSenha, User user) {
         FirebaseAuth autenticar = FirebaseAuth.getInstance();
 
         autenticar.createUserWithEmailAndPassword(novoEmail, novaSenha)
@@ -231,6 +226,22 @@ public class tela_cadastro extends AppCompatActivity {
                 public void onComplete(@NonNull Task<AuthResult> task) {
                     if (task.isSuccessful()) {
                         Toast.makeText(tela_cadastro.this, "Cadastro realizado com sucesso no Firebase", Toast.LENGTH_SHORT).show();
+                        FirebaseAuth auth = FirebaseAuth.getInstance();
+                        auth.signInWithEmailAndPassword(user.getEmail(), user.getPassword())
+                                .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                                    @Override
+                                    public void onComplete(@NonNull Task<AuthResult> task) {
+                                        if(task.isSuccessful()){
+                                            Log.d("Login", "Login efetuado com sucesso");
+                                            Intent intent = new Intent(tela_cadastro.this, tela_cadastro_preferencias_usuario.class);
+//                                            intent.putExtra("email", user.getEmail());
+//                                            intent.putExtra("password", user.getPassword());
+                                            startActivity(intent);
+                                        } else{
+                                            Toast.makeText(tela_cadastro.this, "Erro ao realizar o login: " + task.getException().getMessage(), Toast.LENGTH_LONG).show();
+                                        }
+                                    }
+                                });
                     } else {
                         Toast.makeText(tela_cadastro.this, "Erro: " + task.getException().getMessage(), Toast.LENGTH_SHORT).show();
                     }

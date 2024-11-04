@@ -11,8 +11,7 @@ public class Product {
     private String description;
     private String size;
 
-    public Product(int id, String name, double price, String imageUrl, int typeId, String dressMarkerName, double avaliation, String description, String size) {
-        this.id = id;
+    public Product(String name, double price, String imageUrl, int typeId, String dressMarkerName, double avaliation, String description, String size) {
         this.name = name;
         this.price = price;
         this.imageUrl = imageUrl;

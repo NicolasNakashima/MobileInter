@@ -10,7 +10,7 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="250dp"
-        android:layout_height="275dp">
+        android:layout_height="285dp">
 
         <ImageView
             android:id="@+id/img_produto"
@@ -27,7 +27,7 @@
             android:id="@+id/cart_id"
             android:layout_width="224dp"
             android:layout_height="41dp"
-            android:text="Blusa Tricot Manga Longa Inverno Cores Tendência"
+            android:text="Nome"
             android:textColor="#000000"
             android:textSize="16sp"
             android:textStyle="bold"
@@ -42,7 +42,7 @@
             android:id="@+id/preco_produto"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="R$ 36.99"
+            android:text="R$ 00.00"
             android:textColor="#000000"
             android:textSize="20sp"
             android:textStyle="bold"

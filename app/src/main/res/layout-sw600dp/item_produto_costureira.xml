@@ -9,13 +9,13 @@
     app:cardCornerRadius="5dp">
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="200dp"
-        android:layout_height="275dp">
+        android:layout_width="230dp"
+        android:layout_height="295dp">
 
         <ImageView
             android:id="@+id/img_produto"
-            android:layout_width="200dp"
-            android:layout_height="149dp"
+            android:layout_width="208dp"
+            android:layout_height="158dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
@@ -26,12 +26,12 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="12dp"
-            android:text="R$ 35.00"
+            android:text="R$ 00.00"
             android:textColor="#000000"
-            android:textSize="17sp"
+            android:textSize="19sp"
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.122"
+            app:layout_constraintHorizontal_bias="0.071"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/cart_id" />
 
@@ -40,12 +40,12 @@
             android:layout_width="169dp"
             android:layout_height="30dp"
             android:layout_marginTop="12dp"
-            android:text="Blusa Tricot Manga Longa Inverno Cores Tendência"
+            android:text="Nome"
             android:textColor="#000000"
-            android:textSize="13sp"
+            android:textSize="15sp"
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.483"
+            app:layout_constraintHorizontal_bias="0.18"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/img_produto" />
 
@@ -54,10 +54,10 @@
             style="?android:attr/ratingBarStyleSmall"
             android:layout_width="79dp"
             android:layout_height="20dp"
-            android:layout_marginStart="30dp"
+            android:layout_marginStart="38dp"
             android:layout_marginTop="12dp"
-            android:scaleX="1.5"
-            android:scaleY="1.5"
+            android:scaleX="1.8"
+            android:scaleY="1.8"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/preco_produto" />
 

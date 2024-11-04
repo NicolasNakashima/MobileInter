@@ -37,6 +37,8 @@ import com.example.khiata.fragments.fragment_tela_perfil;
 import com.example.khiata.fragments.fragment_tela_compras;
 import com.example.khiata.fragments.fragment_tela_favoritos;
 import com.example.khiata.fragments.fragment_tela_plan_premium;
+import com.example.khiata.fragments.fragment_tela_produto;
+import com.example.khiata.fragments.fragment_tela_selecao_endereco_pagamento;
 import com.example.khiata.fragments.fragment_tela_statistics;
 import com.example.khiata.fragments.fragment_tela_cadastrar_produto;
 import com.example.khiata.fragments.fragment_tela_area_costureira;
@@ -66,6 +68,7 @@ public class MainActivity extends AppCompatActivity {
     private fragment_tela_avaliacoes fragment_tela_avaliacoes = new fragment_tela_avaliacoes();
     private fragment_tela_plan_premium fragment_tela_plan_premium = new fragment_tela_plan_premium();
     private fragment_tela_cadastrar_produto fragment_tela_cadastrar_produto = new fragment_tela_cadastrar_produto();
+    private fragment_tela_produto fragment_tela_produto = new fragment_tela_produto();
     ImageButton btn_lateral_menu, btn_navigation_favoritos, btn_navigation_home, btn_navigation_compras, btn_navigation_perfil;
     ImageView foto_perfil;
     View navigation_perfil, navigation_cursos, navigation_statistics, navigation_area_costureira, navigation_enderecos, navigation_avaliacoes, btn_logout;
@@ -96,7 +99,16 @@ public class MainActivity extends AppCompatActivity {
         Intent intent = getIntent();
         if (intent != null) {
             String fragmentName = intent.getStringExtra("fragment");
+            Log.d("TAG", "FragmentName: " + fragmentName);
             String imgProductName = intent.getStringExtra("imgName");
+            Log.d("TAG", "ImgName: " + imgProductName);
+            String titulo_produto = intent.getStringExtra("titulo_produto");
+            String vendedor_produto = intent.getStringExtra("vendedor_produto");
+            double preco_produto = intent.getDoubleExtra("preco_produto", 0.0);
+            String imagem_produto = intent.getStringExtra("imagem_produto");
+            String descricao_produto = intent.getStringExtra("descricao_produto");
+            String tamanho_produto = intent.getStringExtra("tamanho_produto");
+            float avaliacao_produto = intent.getFloatExtra("avaliacao_produto", 0.0f);
             if ("cadastrar_produto".equals(fragmentName) && imgProductName != null) {
                 // Carregar o fragmento de cadastrar produto
                 FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
@@ -104,6 +116,31 @@ public class MainActivity extends AppCompatActivity {
                 bundle.putString("imgName", imgProductName);
                 fragment_tela_cadastrar_produto.setArguments(bundle);
                 transaction.replace(R.id.frame_conteudo, fragment_tela_cadastrar_produto);
+                transaction.commit();
+            }
+            if ("tela_produto".equals(fragmentName) && titulo_produto != null && vendedor_produto != null && preco_produto != 0.0 && imagem_produto != null && descricao_produto != null) {
+                // Carregar o fragmento da tela do produto
+                fragment_tela_produto telaProdutoFragment = new fragment_tela_produto();
+
+                Bundle bundle = new Bundle();
+                bundle.putString("titulo_produto", titulo_produto);
+                bundle.putString("vendedor_produto", vendedor_produto);
+                bundle.putDouble("preco_produto", preco_produto);
+                bundle.putString("imagem_produto", imagem_produto);
+                bundle.putString("descricao_produto", descricao_produto);
+                bundle.putString("tamanho_produto", tamanho_produto);
+                bundle.putFloat("avaliacao_produto", avaliacao_produto);
+                telaProdutoFragment.setArguments(bundle);
+
+                FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+                transaction.replace(R.id.frame_conteudo, telaProdutoFragment);
+                transaction.addToBackStack(null);
+                transaction.commit();
+            }
+            if("selecao_endereco_pagamento".equals(fragmentName)){
+                FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+                transaction.replace(R.id.frame_conteudo, new fragment_tela_selecao_endereco_pagamento());
+                transaction.addToBackStack(null);
                 transaction.commit();
             }
         }

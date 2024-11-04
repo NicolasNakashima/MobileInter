@@ -10,8 +10,8 @@
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar2"
-        android:layout_width="392dp"
-        android:layout_height="84dp"
+        android:layout_width="702dp"
+        android:layout_height="88dp"
         android:background="?attr/colorPrimary"
         android:backgroundTint="#FAC552"
         android:minHeight="?attr/actionBarSize"
@@ -22,22 +22,23 @@
 
     <ImageView
         android:id="@+id/voltar_home"
-        android:layout_width="55dp"
-        android:layout_height="41dp"
+        android:layout_width="57dp"
+        android:layout_height="52dp"
+        android:layout_marginBottom="6dp"
         app:layout_constraintBottom_toBottomOf="@+id/toolbar2"
         app:layout_constraintEnd_toEndOf="@+id/toolbar2"
-        app:layout_constraintHorizontal_bias="0.047"
+        app:layout_constraintHorizontal_bias="0.151"
         app:layout_constraintStart_toStartOf="@+id/toolbar2"
         app:layout_constraintTop_toTopOf="@+id/toolbar2"
-        app:layout_constraintVertical_bias="0.558"
+        app:layout_constraintVertical_bias="0.555"
         app:srcCompat="@drawable/seta_retorno" />
 
     <ImageView
         android:id="@+id/btn_carrinho"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:layout_marginEnd="24dp"
+        android:layout_width="49dp"
+        android:layout_height="47dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="64dp"
         android:src="@drawable/navigation_kart"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -57,8 +58,8 @@
 
             <ImageView
                 android:id="@+id/img_produto"
-                android:layout_width="280dp"
-                android:layout_height="wrap_content"
+                android:layout_width="289dp"
+                android:layout_height="252dp"
                 android:layout_marginTop="20dp"
                 android:src="@drawable/add_img" />
 
@@ -70,7 +71,7 @@
                 android:layout_marginTop="20dp"
                 android:text="Blusa de Trico Manga Longa Inverno Cores Tendência"
                 android:textColor="#000000"
-                android:textSize="22sp"
+                android:textSize="25sp"
                 android:textStyle="bold" />
 
             <TextView
@@ -79,9 +80,9 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="10dp"
                 android:layout_marginTop="15dp"
-                android:text="Tamanho: P"
+                android:text="Tamanho:"
                 android:textColor="#000000"
-                android:textSize="17sp" />
+                android:textSize="19sp" />
 
             <TextView
                 android:id="@+id/vendedor_produto"
@@ -89,9 +90,9 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="10dp"
                 android:layout_marginTop="15dp"
-                android:text="Vendedor: Nome"
+                android:text="Vendedor:"
                 android:textColor="#000000"
-                android:textSize="17sp" />
+                android:textSize="19sp" />
 
             <TextView
                 android:id="@+id/preco_produto"
@@ -99,9 +100,9 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="10dp"
                 android:layout_marginTop="25dp"
-                android:text="R$ 35.99"
+                android:text="R$ 00.00"
                 android:textColor="#000000"
-                android:textSize="22sp"
+                android:textSize="25sp"
                 android:textStyle="bold" />
 
             <TextView
@@ -112,7 +113,7 @@
                 android:layout_marginTop="30dp"
                 android:text="Descrição"
                 android:textColor="#000000"
-                android:textSize="20sp"
+                android:textSize="22sp"
                 android:textStyle="bold" />
 
             <TextView
@@ -123,53 +124,55 @@
                 android:layout_marginTop="10dp"
                 android:text="Blusa tamanho único vários modelos 65cm x 41 cm em media. tecido, linha, estica bem. produto NOVO qualquer duvida chamar chat"
                 android:textColor="#000000"
-                android:textSize="17sp" />
+                android:textSize="19sp" />
 
             <Button
                 android:id="@+id/btn_adicionar_produto_carrinho"
-                android:layout_width="254dp"
-                android:layout_height="wrap_content"
+                android:layout_width="262dp"
+                android:layout_height="57dp"
                 android:layout_marginTop="40dp"
                 android:background="@drawable/style_button1"
                 android:text="Adicionar ao Carrinho"
                 android:textColor="#ffffff"
+                android:textSize="19sp"
                 android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/textView23"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="25dp"
+                android:layout_marginTop="30dp"
                 android:gravity="center"
                 android:text="Avaliações"
                 android:textColor="#000000"
-                android:textSize="20sp"
+                android:textSize="22sp"
                 android:textStyle="bold" />
 
             <RatingBar
                 android:id="@+id/avaliacao_produto"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="15dp"
-                android:scaleX="1"
-                android:scaleY="1" />
+                android:layout_marginTop="20dp"
+                android:scaleX="1.2"
+                android:scaleY="1.2" />
 
             <Button
                 android:id="@+id/btn_adicionar_avaliacao_produto"
-                android:layout_width="254dp"
-                android:layout_height="wrap_content"
+                android:layout_width="262dp"
+                android:layout_height="57dp"
                 android:layout_marginTop="20dp"
                 android:background="@drawable/style_button1"
                 android:text="Adicionar Avaliação"
                 android:textColor="#ffffff"
+                android:textSize="20sp"
                 android:textStyle="bold" />
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/lista_avaliacoes_produto"
-                android:layout_width="360dp"
-                android:layout_height="500dp"
+                android:layout_width="370dp"
+                android:layout_height="520dp"
                 android:layout_marginTop="20dp"
-                android:layout_marginBottom="40dp"
+                android:layout_marginBottom="10dp"
                 android:background="#EBEBEB"
                 tools:listitem="@layout/item_avaliacao_produto" />
         </LinearLayout>

@@ -10,7 +10,7 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="300dp"
-        android:layout_height="200dp"
+        android:layout_height="185dp"
         android:background="#F5DA9E">
 
         <TextView
@@ -19,7 +19,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
             android:layout_marginTop="16dp"
-            android:text="Casa"
+            android:text="Rótulo"
             android:textColor="#5A2D03"
             android:textSize="17sp"
             android:textStyle="bold"
@@ -31,21 +31,21 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
-            android:text="Marcia Campos"
+            android:text="Remetente"
             android:textColor="#000000"
             android:textSize="20sp"
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.1"
+            app:layout_constraintHorizontal_bias="0.079"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/rotulo_endereco" />
 
         <TextView
             android:id="@+id/street_endereco"
             android:layout_width="280dp"
-            android:layout_height="45dp"
+            android:layout_height="wrap_content"
             android:layout_marginTop="24dp"
-            android:text="Av. Mutinga - 113 - 05154-000"
+            android:text="Rua - Nº - CEP"
             android:textColor="#000000"
             android:textSize="20sp"
             android:textStyle="bold"
@@ -59,11 +59,11 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="4dp"
-            android:text="Apartamentot 23, Bloco 4"
+            android:text="Complemento"
             android:textColor="#5A2D03"
             android:textSize="17sp"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.149"
+            app:layout_constraintHorizontal_bias="0.082"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/street_endereco" />
 

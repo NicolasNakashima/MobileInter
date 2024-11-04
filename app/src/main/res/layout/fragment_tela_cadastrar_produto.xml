@@ -76,12 +76,12 @@
                 android:id="@+id/cardView2"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_marginTop="40dp">
+                android:layout_marginTop="35dp">
 
                 <ImageView
                     android:id="@+id/img_produto"
                     android:layout_width="283dp"
-                    android:layout_height="225dp"
+                    android:layout_height="230dp"
                     android:src="@drawable/add_img"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -154,13 +154,23 @@
 <!--            </com.google.android.material.textfield.TextInputLayout>-->
 
 
+            <TextView
+                android:id="@+id/textView30"
+                android:layout_width="312dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="30dp"
+                android:text="Tamanho"
+                android:textColor="#000000"
+                android:textSize="20sp"
+                android:textStyle="bold" />
+
             <GridLayout
                 android:id="@+id/opcoesTamanho"
-                android:layout_width="wrap_content"
+                android:layout_width="219dp"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="80dp"
-                android:layout_marginTop="40dp"
-                android:layout_marginRight="95dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginRight="125dp"
                 android:columnCount="2"
                 android:rowCount="2">
 
@@ -236,6 +246,24 @@
                     android:textSize="16sp"
                     android:textStyle="bold" />
             </GridLayout>
+
+            <TextView
+                android:id="@+id/textView32"
+                android:layout_width="309dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:text="Categoria"
+                android:textColor="#000000"
+                android:textSize="20sp"
+                android:textStyle="bold" />
+
+            <RadioGroup
+                android:id="@+id/radioGroupCategorias"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:layout_marginRight="110dp"
+                android:orientation="vertical" />
 
             <EditText
                 android:background="@drawable/style_boxinput"

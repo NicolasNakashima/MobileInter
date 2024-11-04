@@ -14,7 +14,7 @@ import retrofit2.http.Query;
 
 public interface ProductApi {
 
-    @GET("/insert/product")
+    @POST("/insert/product")
     Call<String> insertProduct(
             @Query("name") String name,
             @Query("price") double price,
@@ -26,12 +26,15 @@ public interface ProductApi {
             @Query("size") String size
     );
 
+    @GET("/get/category")
+    Call<List<Product>> getProductsByCategory(@Query("category") String category);
+
     @DELETE("/delete")
     Call<String> deleteProduct(@Query("id") int id);
 
     @GET("/get/name")
-    Call<List<String>> getByName(@Query("name") String name);
+    Call<List<Product>> getByName(@Query("name") String name);
 
     @GET("/get/dressmarker")
-    Call<List<String>> getProductsByDressmarker(@Query("dressmarker") String dressmarker);
+    Call<List<Product>> getProductsByDressmarker(@Query("dressmarker") String dressmarker);
 }

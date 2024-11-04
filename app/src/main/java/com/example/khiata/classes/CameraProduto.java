@@ -6,6 +6,7 @@ import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
 import android.provider.MediaStore;
 import android.util.Log;
 import android.view.OrientationEventListener;
@@ -37,6 +38,8 @@ import com.example.khiata.fragments.fragment_tela_area_costureira;
 import com.example.khiata.fragments.fragment_tela_cadastrar_produto;
 import com.google.common.util.concurrent.ListenableFuture;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -61,6 +64,8 @@ public class CameraProduto extends AppCompatActivity {
     //Config camera
     private ImageCapture imageCapture;
     private CameraSelector cameraSelector = CameraSelector.DEFAULT_BACK_CAMERA;//Qual camera utilizar
+    FirebaseStorage storage = FirebaseStorage.getInstance();
+    StorageReference storageRef = storage.getReference();
 
     //Log
     private static final String TAG = "CameraXGaleria";
@@ -138,39 +143,35 @@ public class CameraProduto extends AppCompatActivity {
 
     private void takePhoto(String imgName) {
 
-        if(imageCapture == null){
+        if (imageCapture == null) {
             return;
         }
 
-        //Definir nome e caminho da imagem
-//        String name = new SimpleDateFormat(userName, Locale.US).format(System.currentTimeMillis());
+        // Definir nome e caminho da imagem
         ContentValues contentValues = new ContentValues();
         contentValues.put(MediaStore.MediaColumns.DISPLAY_NAME, imgName);
         contentValues.put(MediaStore.MediaColumns.MIME_TYPE, "image/jpeg");
         contentValues.put(MediaStore.MediaColumns.RELATIVE_PATH, "Pictures/CameraXGaleria");
 
-        //Carregando imagem com as configurações
+        // Configurar opções de saída da imagem
         ImageCapture.OutputFileOptions outputFileOptions = new ImageCapture.OutputFileOptions.Builder(
                 getContentResolver(),
                 MediaStore.Images.Media.EXTERNAL_CONTENT_URI,
                 contentValues
         ).build();
 
-        //Orientação da Imagem
+        // Configurar a orientação da imagem
         OrientationEventListener orientationEventListener = new OrientationEventListener(this) {
             @Override
             public void onOrientationChanged(int orientation) {
                 int rotation;
-                if(orientation >=45 && orientation < 135){
+                if (orientation >= 45 && orientation < 135) {
                     rotation = Surface.ROTATION_270;
-                }
-                else if(orientation >= 135 && orientation <= 224){
+                } else if (orientation >= 135 && orientation <= 224) {
                     rotation = Surface.ROTATION_180;
-                }
-                else if(orientation >= 225 && orientation <= 314){
+                } else if (orientation >= 225 && orientation <= 314) {
                     rotation = Surface.ROTATION_90;
-                }
-                else{
+                } else {
                     rotation = Surface.ROTATION_0;
                 }
                 imageCapture.setTargetRotation(rotation);
@@ -178,7 +179,7 @@ public class CameraProduto extends AppCompatActivity {
         };
         orientationEventListener.enable();
 
-        //Listener para gerar a Imagem
+        // Listener para capturar a imagem
         imageCapture.takePicture(outputFileOptions, ContextCompat.getMainExecutor(this),
                 new ImageCapture.OnImageSavedCallback() {
                     @Override
@@ -186,12 +187,27 @@ public class CameraProduto extends AppCompatActivity {
                         foto.setImageURI(outputFileResults.getSavedUri());
                         foto.setVisibility(View.VISIBLE);
                         Toast.makeText(getBaseContext(), "Imagem salva", Toast.LENGTH_SHORT).show();
-                        database.uploadFotoProduto(getBaseContext(), foto, docData, imgName);
 
-                        Intent intent = new Intent(getApplicationContext(), MainActivity.class);
-                        intent.putExtra("fragment", "cadastrar_produto");
-                        intent.putExtra("imgName", imgName);
-                        startActivity(intent);
+                        // Fazer o upload da foto para o Firebase Storage
+                        database.uploadFotoProduto(getBaseContext(), foto, docData, imgName);
+                        Log.d("TAG", "ImgName: " + imgName);
+
+                        // Implementar um mecanismo de espera antes de buscar a URL
+                        Handler handler = new Handler();
+                        handler.postDelayed(() -> {
+                            // Tentar obter a URL da imagem após um atraso
+                            StorageReference profileRef = storageRef.child("khiata_produtos/" + imgName + ".jpg");
+                            profileRef.getDownloadUrl().addOnSuccessListener(uri -> {
+                                // Quando a URL da imagem for carregada com sucesso, iniciar a MainActivity
+                                Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                                intent.putExtra("fragment", "cadastrar_produto");
+                                intent.putExtra("imgName", imgName);
+                                startActivity(intent);
+                            }).addOnFailureListener(e -> {
+                                Log.d("TAG", "Falha ao obter URL da imagem: " + e.getMessage());
+                                Toast.makeText(getBaseContext(), "Erro ao carregar a imagem", Toast.LENGTH_SHORT).show();
+                            });
+                        }, 3000); // Atraso de 3 segundos para esperar que a imagem esteja disponível
                     }
 
                     @Override
@@ -199,7 +215,9 @@ public class CameraProduto extends AppCompatActivity {
                         Log.e(TAG, "Photo capture failed: " + exception.getMessage());
                     }
                 });
+
     }
+
 
     private void startCamera() {
         ListenableFuture<ProcessCameraProvider> cameraProviderFuture = ProcessCameraProvider.getInstance(this);

@@ -19,6 +19,7 @@ import android.widget.Toast;
 import com.example.khiata.R;
 import com.example.khiata.adapters.AdapterEnderecosUsuario;
 import com.example.khiata.adapters.AdapterProdutosAdicionados;
+import com.example.khiata.adapters.AdapterProdutosCostureira;
 import com.example.khiata.apis.AddressApi;
 import com.example.khiata.apis.ProductApi;
 import com.example.khiata.apis.UserApi;
@@ -157,50 +158,29 @@ public class fragment_tela_area_costureira extends Fragment {
     //Método para buscar os produtos do usuário
     private void pegarProdutosDoUsuario(String userName) {
         Log.e("userName", userName);
-        String API_BASE_URL = "https://interdisciplinarr.onrender.com/";
+        String API_BASE_URL = "https://khiata-api.onrender.com/";
         retrofit = new Retrofit.Builder()
                 .baseUrl(API_BASE_URL)
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
 
         ProductApi productApi = retrofit.create(ProductApi.class);
-        Call<List<String>> call = productApi.getProductsByDressmarker(userName);
+        Call<List<Product>> call = productApi.getProductsByDressmarker(userName);
 
-        call.enqueue(new Callback<List<String>>() {
+        call.enqueue(new Callback<List<Product>>() {
             @Override
-            public void onResponse(Call<List<String>> call, Response<List<String>> response) {
+            public void onResponse(Call<List<Product>> call, Response<List<Product>> response) {
                 if (response.isSuccessful()) {
-                    List<String> jsonStringList = response.body();
+                    List<Product> productList = response.body();
 
-                    if(jsonStringList != null && !jsonStringList.isEmpty()) {
-                        Gson gson = new Gson();
-                        Type productType = new TypeToken<Product>(){}.getType();
-
+                    if(productList != null && !productList.isEmpty()) {
                         produtos.clear();  // Limpa a lista de produtos antes de adicionar novos
+                        produtos.addAll(productList);
 
-                        for (String jsonString : jsonStringList) {
-                            // Converte cada String JSON da lista em um objeto Product
-                            jsonString = jsonString.replace("'", "\"");
-                            Product produto = gson.fromJson(jsonString, productType);
-
-                            if (produto != null) {
-                                produtos.add(produto);  // Adiciona o produto na lista
-                            } else {
-                                Log.e("Error", "Erro ao converter produto.");
-                            }
-                        }
-
-                        if (!produtos.isEmpty()) {
-                            Toast.makeText(getActivity(), "Produtos encontrados.", Toast.LENGTH_SHORT).show();
-
-                            AdapterProdutosAdicionados adapter = new AdapterProdutosAdicionados(getActivity(), produtos);
-                            lista_produtos_adicionados.setAdapter(adapter);
-                            adapter.notifyDataSetChanged();
-
-                        } else {
-                            Toast.makeText(getActivity(), "Nenhum produto cadastrado.", Toast.LENGTH_SHORT).show();
-                            Log.e("Error", "Nenhum produto encontrado.");
-                        }
+                        Toast.makeText(getActivity(), "Produtos encontrados.", Toast.LENGTH_SHORT).show();
+                        AdapterProdutosAdicionados adapter = new AdapterProdutosAdicionados(getActivity(), produtos);
+                        lista_produtos_adicionados.setAdapter(adapter);
+                        adapter.notifyDataSetChanged();
                     } else{
                         Toast.makeText(getActivity(), "Nenhum produto cadastrado.", Toast.LENGTH_SHORT).show();
                         Log.e("Error", "Nenhum produto encontrado.");
@@ -212,7 +192,7 @@ public class fragment_tela_area_costureira extends Fragment {
             }
 
             @Override
-            public void onFailure(Call<List<String>> call, Throwable throwable) {
+            public void onFailure(Call<List<Product>> call, Throwable throwable) {
                 Toast.makeText(getActivity(), throwable.getMessage(), Toast.LENGTH_SHORT).show();
                 Log.e("Error", throwable.getMessage());
             }

@@ -9,25 +9,24 @@
     app:cardCornerRadius="5dp">
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="385dp"
-        android:layout_height="150dp">
+        android:layout_width="390dp"
+        android:layout_height="160dp">
 
         <ImageView
             android:id="@+id/img_produto"
-            android:layout_width="138dp"
-            android:layout_height="131dp"
-            app:layout_constraintBottom_toBottomOf="parent"
+            android:layout_width="154dp"
+            android:layout_height="130dp"
+            android:layout_marginTop="14dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.024"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.526"
             app:srcCompat="@drawable/add_img" />
 
         <ImageView
             android:id="@+id/btn_excluir_item"
-            android:layout_width="35dp"
-            android:layout_height="37dp"
+            android:layout_width="34dp"
+            android:layout_height="33dp"
             android:layout_marginStart="5dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
@@ -41,13 +40,12 @@
             android:id="@+id/preco_produto"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="R$ 36.99"
+            android:layout_marginStart="9dp"
+            android:text="R$ 00.00"
             android:textColor="#000000"
-            android:textSize="17sp"
+            android:textSize="19sp"
             android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.046"
             app:layout_constraintStart_toEndOf="@+id/img_produto"
             app:layout_constraintTop_toBottomOf="@+id/tamanho_produto"
             app:layout_constraintVertical_bias="0.526" />
@@ -56,26 +54,23 @@
             android:id="@+id/vendedor_produto"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Vendido por Carla"
+            android:layout_marginStart="9dp"
+            android:layout_marginTop="10dp"
+            android:text="Vendido por"
             android:textColor="#000000"
-            android:textSize="13sp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.065"
+            android:textSize="15sp"
             app:layout_constraintStart_toEndOf="@+id/img_produto"
-            app:layout_constraintTop_toBottomOf="@+id/cart_id"
-            app:layout_constraintVertical_bias="0.054" />
+            app:layout_constraintTop_toBottomOf="@+id/cart_id" />
 
         <TextView
             android:id="@+id/tamanho_produto"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Tamanho: P"
+            android:layout_marginStart="9dp"
+            android:text="Tamanho:"
             android:textColor="#000000"
-            android:textSize="13sp"
+            android:textSize="15sp"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.047"
             app:layout_constraintStart_toEndOf="@+id/img_produto"
             app:layout_constraintTop_toBottomOf="@+id/vendedor_produto"
             app:layout_constraintVertical_bias="0.129" />
@@ -83,10 +78,10 @@
         <TextView
             android:id="@+id/cart_id"
             android:layout_width="176dp"
-            android:layout_height="46dp"
-            android:text="Blusa Tricot Manga Longa  Inverno Cores Tendência"
+            android:layout_height="wrap_content"
+            android:text="Nome"
             android:textColor="#000000"
-            android:textSize="15sp"
+            android:textSize="19sp"
             android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"

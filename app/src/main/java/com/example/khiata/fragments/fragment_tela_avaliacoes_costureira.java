@@ -117,8 +117,20 @@ public class fragment_tela_avaliacoes_costureira extends Fragment {
         voltar_home.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                // Cria um novo fragmento de perfil da costureira
+                fragment_tela_perfil_costureira perfilCostureiraFragment = new fragment_tela_perfil_costureira();
+
+                // Cria um Bundle para passar o email da costureira
+                Bundle bundle = new Bundle();
+                bundle.putString("email_costureira", email_costureira); // Passa o email da costureira para o fragmento
+
+                // Define o argumento no fragmento de edição
+                perfilCostureiraFragment.setArguments(bundle);
+
+                // Inicia a transação de fragmento para substituir o fragmento atual
                 FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
-                transaction.replace(R.id.frame_conteudo, new fragment_tela_home());
+                transaction.replace(R.id.frame_conteudo, perfilCostureiraFragment);
+                transaction.addToBackStack(null); // Adiciona a transação à pilha de navegação
                 transaction.commit();
             }
         });

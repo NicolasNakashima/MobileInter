@@ -10,8 +10,8 @@
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar2"
-        android:layout_width="392dp"
-        android:layout_height="84dp"
+        android:layout_width="702dp"
+        android:layout_height="88dp"
         android:background="?attr/colorPrimary"
         android:backgroundTint="#FAC552"
         android:minHeight="?attr/actionBarSize"
@@ -22,63 +22,64 @@
 
     <ImageView
         android:id="@+id/voltar_home"
-        android:layout_width="55dp"
-        android:layout_height="41dp"
+        android:layout_width="57dp"
+        android:layout_height="52dp"
+        android:layout_marginBottom="12dp"
         app:layout_constraintBottom_toBottomOf="@+id/toolbar2"
         app:layout_constraintEnd_toEndOf="@+id/toolbar2"
-        app:layout_constraintHorizontal_bias="0.047"
+        app:layout_constraintHorizontal_bias="0.155"
         app:layout_constraintStart_toStartOf="@+id/toolbar2"
         app:layout_constraintTop_toTopOf="@+id/toolbar2"
-        app:layout_constraintVertical_bias="0.558"
+        app:layout_constraintVertical_bias="0.774"
         app:srcCompat="@drawable/seta_retorno" />
 
     <TextView
         android:id="@+id/textView4"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="5dp"
         android:text="Favoritos"
         android:textColor="#5A2D03"
-        android:textSize="24sp"
+        android:textSize="30sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="@+id/toolbar2"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/toolbar2"
-        app:layout_constraintVertical_bias="0.461" />
+        app:layout_constraintVertical_bias="0.553" />
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/cardView12"
-        android:layout_width="347dp"
-        android:layout_height="418dp"
-        android:layout_marginTop="104dp"
-        android:background="#FFFFFF"
+        android:layout_width="407dp"
+        android:layout_height="530dp"
+        android:layout_marginTop="116dp"
+        android:background="@drawable/rounded_card"
         app:cardCornerRadius="5dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.488"
+        app:layout_constraintHorizontal_bias="0.501"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/toolbar2">
 
         <ImageView
             android:id="@+id/imageView9"
-            android:layout_width="151dp"
-            android:layout_height="136dp"
-            android:layout_marginTop="24dp"
+            android:layout_width="164dp"
+            android:layout_height="150dp"
+            android:layout_marginTop="25dp"
             android:src="@drawable/icon_pop_alert"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.502"
+            app:layout_constraintHorizontal_bias="0.497"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
             android:id="@+id/textView27"
-            android:layout_width="239dp"
-            android:layout_height="103dp"
-            android:layout_marginTop="30dp"
+            android:layout_width="257dp"
+            android:layout_height="154dp"
+            android:layout_marginTop="35dp"
             android:gravity="center"
-            android:text="Está funcionalidade não está disponível numa futura atualização. Por favor, volte para a home"
+            android:text="Está funcionalidade estará disponível numa futura atualização. Por favor, volte para a home"
             android:textColor="#000000"
-            android:textSize="18sp"
+            android:textSize="22sp"
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -86,15 +87,16 @@
 
         <Button
             android:id="@+id/btn_voltar_home"
-            android:layout_width="224dp"
-            android:layout_height="47dp"
-            android:layout_marginTop="36dp"
+            android:layout_width="262dp"
+            android:layout_height="57dp"
+            android:layout_marginTop="56dp"
             android:background="@drawable/style_button1"
             android:text="Voltar"
             android:textColor="#ffffff"
+            android:textSize="20sp"
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.495"
+            app:layout_constraintHorizontal_bias="0.496"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textView27" />
     </androidx.constraintlayout.widget.ConstraintLayout>

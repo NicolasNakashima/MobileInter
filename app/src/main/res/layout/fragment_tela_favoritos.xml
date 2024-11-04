@@ -52,7 +52,7 @@
         android:layout_width="347dp"
         android:layout_height="418dp"
         android:layout_marginTop="104dp"
-        android:background="#FFFFFF"
+        android:background="@drawable/rounded_card"
         app:cardCornerRadius="5dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.488"

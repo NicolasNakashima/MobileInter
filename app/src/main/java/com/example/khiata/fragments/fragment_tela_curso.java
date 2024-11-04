@@ -7,6 +7,7 @@ import android.graphics.drawable.Drawable;
 import android.graphics.drawable.LayerDrawable;
 import android.net.Uri;
 import android.os.Bundle;
+import android.content.pm.ActivityInfo;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
@@ -18,14 +19,17 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.webkit.WebChromeClient;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.example.khiata.R;
@@ -156,14 +160,83 @@ public class fragment_tela_curso extends Fragment {
                 LayerDrawable stars = (LayerDrawable) avaliacao_curso.getProgressDrawable();
                 stars.getDrawable(2).setColorFilter(Color.parseColor("#FAC552"), PorterDuff.Mode.SRC_ATOP);
                 avaliacao_curso.setRating(avaliacao_curso_txt);
-                //Configurando o WebView para o video do YouTube
+
+                // Configuração do WebView para vídeo do YouTube
                 youtubeWebView = view.findViewById(R.id.youtubeWebView);
+
+                // Configurar o WebChromeClient para suporte a tela cheia
+                youtubeWebView.setWebChromeClient(new WebChromeClient() {
+                    private View customView;
+                    private WebChromeClient.CustomViewCallback customViewCallback;
+                    private FrameLayout fullscreenContainer;
+                    private int originalOrientation;
+                    private int originalSystemUiVisibility;
+
+                    @Override
+                    public void onShowCustomView(View view, WebChromeClient.CustomViewCallback callback) {
+                        // Se já estiver no modo de tela cheia, saia primeiro
+                        if (customView != null) {
+                            callback.onCustomViewHidden();
+                            return;
+                        }
+
+                        // Salva a configuração original
+                        originalSystemUiVisibility = getActivity().getWindow().getDecorView().getSystemUiVisibility();
+                        originalOrientation = getActivity().getRequestedOrientation();
+
+                        // Configura a nova visualização de tela cheia
+                        fullscreenContainer = new FrameLayout(getActivity());
+                        fullscreenContainer.addView(view, new FrameLayout.LayoutParams(
+                                FrameLayout.LayoutParams.MATCH_PARENT, FrameLayout.LayoutParams.MATCH_PARENT));
+                        getActivity().getWindow().getDecorView().setSystemUiVisibility(
+                                View.SYSTEM_UI_FLAG_FULLSCREEN | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION);
+                        getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+
+                        // Adiciona o contêiner de tela cheia à View principal
+                        ((FrameLayout) getActivity().getWindow().getDecorView()).addView(fullscreenContainer);
+                        customView = view;
+                        customViewCallback = callback;
+                    }
+
+                    @Override
+                    public void onHideCustomView() {
+                        // Volta à visualização original
+                        ((FrameLayout) getActivity().getWindow().getDecorView()).removeView(fullscreenContainer);
+                        customView = null;
+                        fullscreenContainer = null;
+                        customViewCallback.onCustomViewHidden();
+                        getActivity().getWindow().getDecorView().setSystemUiVisibility(originalSystemUiVisibility);
+                        getActivity().setRequestedOrientation(originalOrientation);
+                    }
+
+                    @Override
+                    public View getVideoLoadingProgressView() {
+                        // Retorna uma View personalizada ou null se não houver
+                        return super.getVideoLoadingProgressView();
+                    }
+                });
+
+                // Configuração do WebView
                 youtubeWebView.setWebViewClient(new WebViewClient());
                 WebSettings webSettings = youtubeWebView.getSettings();
                 webSettings.setJavaScriptEnabled(true);
-                String videoId = video_url_txt.substring(video_url_txt.indexOf("v=") + 2, video_url_txt.indexOf("v=") + 13);
-                String embedUrl = "https://www.youtube.com/embed/" + videoId + "?rel=0&showinfo=0&controls=1&modestbranding=1";
-                youtubeWebView.loadUrl(embedUrl);
+
+                // Lógica para extrair o ID do vídeo e carregar a URL embutida do YouTube
+                String videoId;
+                if (video_url_txt.contains("youtu.be/")) {
+                    videoId = video_url_txt.substring(video_url_txt.lastIndexOf("/") + 1);
+                } else if (video_url_txt.contains("v=")) {
+                    videoId = video_url_txt.substring(video_url_txt.indexOf("v=") + 2, video_url_txt.indexOf("v=") + 13);
+                } else {
+                    videoId = "";
+                }
+
+                if (!videoId.isEmpty()) {
+                    String embedUrl = "https://www.youtube.com/embed/" + videoId + "?rel=0&showinfo=0&controls=1&modestbranding=1";
+                    youtubeWebView.loadUrl(embedUrl);
+                } else {
+                    Toast.makeText(getActivity(), "ID de vídeo inexistente", Toast.LENGTH_SHORT).show();
+                }
             }
         }
 

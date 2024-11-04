@@ -9,68 +9,70 @@
     app:cardCornerRadius="5dp">
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="385dp"
-        android:layout_height="150dp">
-
-        <ImageView
-            android:id="@+id/img_produto"
-            android:layout_width="168dp"
-            android:layout_height="134dp"
-            android:layout_marginStart="5dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/add_img" />
+        android:layout_width="360dp"
+        android:layout_height="145dp">
 
         <TextView
             android:id="@+id/cart_id"
-            android:layout_width="186dp"
-            android:layout_height="39dp"
+            android:layout_width="183dp"
+            android:layout_height="22dp"
             android:layout_marginStart="16dp"
-            android:layout_marginTop="8dp"
-            android:text="Blusa Tricot Manga Longa  Inverno Cores Tendência"
+            android:layout_marginTop="12dp"
+            android:text="ID: #23456ygfdfg"
             android:textColor="#000000"
+            android:textSize="17sp"
             android:textStyle="bold"
-            app:layout_constraintStart_toEndOf="@+id/img_produto"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
             android:id="@+id/status_pedido"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="8dp"
+            android:layout_marginStart="64dp"
+            android:layout_marginTop="12dp"
             android:text="@string/finalizado"
             android:textColor="#384384"
-            android:textSize="12sp"
+            android:textSize="15sp"
             android:textStyle="bold"
-            app:layout_constraintStart_toEndOf="@+id/img_produto"
-            app:layout_constraintTop_toBottomOf="@+id/cart_id" />
+            app:layout_constraintStart_toEndOf="@+id/cart_id"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
             android:id="@+id/total_pedido"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
-            android:layout_marginTop="12dp"
-            android:text="Total: R$ 35.00"
+            android:layout_marginTop="18dp"
+            android:text="Total: R$ 00.00"
             android:textColor="#000000"
-            android:textSize="16sp"
+            android:textSize="17sp"
             android:textStyle="bold"
-            app:layout_constraintStart_toEndOf="@+id/img_produto"
-            app:layout_constraintTop_toBottomOf="@+id/status_pedido" />
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/data_pedido" />
 
         <TextView
-            android:id="@+id/btn_adicionar_carrinho"
+            android:id="@+id/forma_pagamento"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
-            android:layout_marginTop="12dp"
-            android:text="@string/comprar_novamente"
-            android:textColor="#384384"
-            android:textStyle="bold"
-            app:layout_constraintStart_toEndOf="@+id/img_produto"
-            app:layout_constraintTop_toBottomOf="@+id/total_pedido" />
+            android:layout_marginTop="8dp"
+            android:text="Forma de pagamento:"
+            android:textColor="#000000"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/cart_id" />
+
+        <TextView
+            android:id="@+id/data_pedido"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="8dp"
+            android:text="Data: DD-MM-AAAA"
+            android:textColor="#000000"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/forma_pagamento" />
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </androidx.cardview.widget.CardView>

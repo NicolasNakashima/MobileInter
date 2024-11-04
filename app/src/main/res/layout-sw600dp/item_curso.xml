@@ -9,13 +9,13 @@
     app:cardCornerRadius="5dp">
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="325dp"
-        android:layout_height="262dp">
+        android:layout_width="425dp"
+        android:layout_height="340dp">
 
         <ImageView
             android:id="@+id/img_curso"
-            android:layout_width="323dp"
-            android:layout_height="150dp"
+            android:layout_width="424dp"
+            android:layout_height="165dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
@@ -25,11 +25,11 @@
             android:id="@+id/titulo_curso"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="12dp"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="20dp"
             android:text="Título - Nível"
             android:textColor="#000000"
-            android:textSize="20sp"
+            android:textSize="25sp"
             android:textStyle="bold"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/img_curso" />
@@ -38,11 +38,11 @@
             android:id="@+id/tempo_curso"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="8dp"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="10dp"
             android:text="Duração: *h *min"
             android:textColor="#000000"
-            android:textSize="14sp"
+            android:textSize="19sp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/titulo_curso" />
 
@@ -51,10 +51,10 @@
             style="?android:attr/ratingBarStyleSmall"
             android:layout_width="79dp"
             android:layout_height="20dp"
-            android:layout_marginStart="30dp"
-            android:layout_marginTop="12dp"
-            android:scaleX="1.5"
-            android:scaleY="1.5"
+            android:layout_marginStart="48dp"
+            android:layout_marginTop="20dp"
+            android:scaleX="1.9"
+            android:scaleY="1.9"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/tempo_curso" />
 

@@ -15,14 +15,13 @@
         <TextView
             android:id="@+id/nome_usuario"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="23dp"
+            android:layout_marginStart="20dp"
             android:layout_marginTop="10dp"
-            android:text="Daniel Nascimento"
+            android:text="Nome"
             android:textColor="#000000"
             android:textSize="17sp"
             android:textStyle="bold"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.088"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -44,7 +43,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
             android:layout_marginBottom="15dp"
-            android:text="Atendeu perfeitamente o que eu pedi, acredito que seja uma das melhores aqui no app, recomendo!"
+            android:text="Comentário"
             android:textColor="#000000"
             android:textSize="13sp"
             app:layout_constraintBottom_toBottomOf="parent"

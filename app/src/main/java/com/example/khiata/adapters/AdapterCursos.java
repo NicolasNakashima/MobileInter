@@ -85,7 +85,7 @@ public class AdapterCursos extends RecyclerView.Adapter<AdapterCursos.MeuViewHol
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Log.e("premium", String.valueOf(premiumStatus));
+                Log.d("premiumStatus", String.valueOf(premiumStatus));
                 if(premiumStatus == 1) {
                     fragment_tela_curso telaCursoFragment = new fragment_tela_curso();
 
@@ -142,6 +142,7 @@ public class AdapterCursos extends RecyclerView.Adapter<AdapterCursos.MeuViewHol
                 if (response.isSuccessful() && response.body() != null) {
                     User userResponse = response.body();
                     premiumStatus = userResponse.getPremiumStatus();
+                    Log.d("API Response", "Premium status: " + premiumStatus);
                 } else {
                     Toast.makeText(context, "Usuário não encontrado ou resposta inválida", Toast.LENGTH_SHORT).show();
                     Log.e("API Error", "Response code: " + response.code() + " | Error body: " + response.errorBody());

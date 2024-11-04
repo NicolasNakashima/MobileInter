@@ -9,17 +9,17 @@
     app:cardCornerRadius="5dp">
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="350dp"
-        android:layout_height="140dp"
+        android:layout_width="390dp"
+        android:layout_height="160dp"
         android:background="#FFFFFF">
 
         <ImageView
             android:id="@+id/img_produto"
-            android:layout_width="121dp"
-            android:layout_height="106dp"
-            android:layout_marginTop="16dp"
+            android:layout_width="154dp"
+            android:layout_height="130dp"
+            android:layout_marginTop="14dp"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.03"
+            app:layout_constraintHorizontal_bias="0.067"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:srcCompat="@drawable/add_img" />
@@ -30,8 +30,9 @@
             android:layout_height="53dp"
             android:layout_marginStart="12dp"
             android:layout_marginTop="16dp"
-            android:text="Blusa Tricot Manga Longa  Inverno Cores Tendência"
+            android:text="Nome"
             android:textColor="#000000"
+            android:textSize="17sp"
             android:textStyle="bold"
             app:layout_constraintStart_toEndOf="@+id/img_produto"
             app:layout_constraintTop_toTopOf="parent" />
@@ -41,11 +42,11 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="12dp"
-            android:layout_marginTop="8dp"
-            android:text="R$ 35.99"
+            android:layout_marginTop="20dp"
+            android:text="R$ 00.00"
             android:textColor="#000000"
 
-            android:textSize="17sp"
+            android:textSize="19sp"
             android:textStyle="bold"
             app:layout_constraintStart_toEndOf="@+id/img_produto"
             app:layout_constraintTop_toBottomOf="@+id/vendedor_produto" />
@@ -55,8 +56,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="12dp"
-            android:layout_marginTop="5dp"
-            android:text="Vendido por Carla"
+            android:layout_marginTop="10dp"
+            android:text="Vendido por"
             android:textColor="#000000"
             android:textSize="12sp"
             app:layout_constraintStart_toEndOf="@+id/img_produto"

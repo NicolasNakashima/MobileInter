@@ -35,8 +35,8 @@
 
     <Button
         android:id="@+id/btn_capture_img"
-        android:layout_width="110dp"
-        android:layout_height="110dp"
+        android:layout_width="138dp"
+        android:layout_height="132dp"
         android:layout_marginBottom="120dp"
         android:background="@drawable/btn_camera"
         android:elevation="2dp"
@@ -47,28 +47,15 @@
 
     <ImageButton
         android:id="@+id/mudar_lente"
-        android:layout_width="54dp"
-        android:layout_height="54dp"
+        android:layout_width="89dp"
+        android:layout_height="89dp"
+        android:layout_marginEnd="170dp"
         android:layout_marginBottom="40dp"
         android:background="@drawable/bt_fundo"
         android:gravity="center_horizontal|center_vertical"
-        android:src="@drawable/icon_lente"
+        android:src="@drawable/icon_lente_tablet"
         android:textAlignment="gravity"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/salvar_img"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent" />
-
-    <ImageButton
-        android:id="@+id/salvar_img"
-        android:layout_width="54dp"
-        android:layout_height="54dp"
-        android:layout_marginBottom="40dp"
-        android:background="@drawable/bt_fundo"
-        android:src="@drawable/ic_galeria_24"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/mudar_lente" />
+        app:layout_constraintEnd_toEndOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

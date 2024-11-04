@@ -9,15 +9,15 @@
     app:cardCornerRadius="10dp">
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="350dp"
-        android:layout_height="390dp">
+        android:layout_width="395dp"
+        android:layout_height="445dp">
 
         <TextView
             android:id="@+id/msg_popup"
-            android:layout_width="264dp"
-            android:layout_height="85dp"
-            android:layout_marginTop="32dp"
-            android:text="Usuário cadastrado com sucesso!"
+            android:layout_width="241dp"
+            android:layout_height="123dp"
+            android:layout_marginTop="25dp"
+            android:text="Mensagem"
             android:textAlignment="center"
             android:textColor="#000000"
             android:textSize="20sp"
@@ -28,23 +28,23 @@
 
         <Button
             android:id="@+id/btn_popup"
-            android:layout_width="185dp"
-            android:layout_height="53dp"
-            android:layout_marginTop="28dp"
+            android:layout_width="216dp"
+            android:layout_height="57dp"
+            android:layout_marginTop="30dp"
             android:background="@drawable/style_button1"
             android:text="Fechar"
             android:textColor="#ffffff"
-            android:textSize="15sp"
+            android:textSize="18sp"
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.503"
+            app:layout_constraintHorizontal_bias="0.497"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/msg_popup" />
 
         <ImageView
             android:id="@+id/img_popup"
-            android:layout_width="146dp"
-            android:layout_height="139dp"
+            android:layout_width="167dp"
+            android:layout_height="164dp"
             android:layout_marginTop="16dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"

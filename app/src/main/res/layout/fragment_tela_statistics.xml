@@ -47,5 +47,13 @@
         app:layout_constraintTop_toTopOf="@+id/toolbar2"
         app:layout_constraintVertical_bias="0.461" />
 
+    <WebView
+        android:layout_width="394dp"
+        android:layout_height="727dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/toolbar2" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

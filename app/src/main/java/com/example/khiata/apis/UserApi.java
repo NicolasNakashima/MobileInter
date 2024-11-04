@@ -29,4 +29,7 @@ public interface UserApi {
     @GET("api/users/selecionar")
     Call<ArrayList<User>> selecionarTodos();
 
+    @PATCH("atualizar-preferencias/{userId}")
+    Call<Void> atualizarPreferencias(@Path("userId") String userId, @Body Map<String, Object> atualizacoes);
+
 }
