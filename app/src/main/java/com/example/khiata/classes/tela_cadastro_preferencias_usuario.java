@@ -135,7 +135,7 @@ public class tela_cadastro_preferencias_usuario extends AppCompatActivity {
                         userPreferences.add(pref);  // Adiciona cada preferência na lista
                     }
                     // Chama o método para atualizar as preferências
-                    atualizarPreferenciasUsuario(FirebaseAuth.getInstance().getCurrentUser().getEmail(), userPreferences);
+                    atualizarPreferenciasUsuario(userId, userPreferences);
                 } else {
                     // Mostra o pop-up de alerta se nenhuma categoria for selecionada
                     Dialog dialog = new Dialog(tela_cadastro_preferencias_usuario.this);
@@ -250,7 +250,7 @@ public class tela_cadastro_preferencias_usuario extends AppCompatActivity {
     }
 
     //Método para atualizar o perfil do usuário para definir as preferências dele
-    private void atualizarPreferenciasUsuario(String userId, List<UserPreference> preferencias) {
+    private void atualizarPreferenciasUsuario(int userId, List<UserPreference> preferencias) {
         String API_BASE_URL = "https://apikhiata.onrender.com/";
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(API_BASE_URL)

@@ -44,6 +44,7 @@ public class AdapterEnderecosUsuario extends RecyclerView.Adapter<AdapterEnderec
         this.enderecos = enderecos;
     }
     private Retrofit retrofit;
+    String userName;
     @NonNull
     @Override
     public AdapterEnderecosUsuario.MeuViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -62,11 +63,19 @@ public class AdapterEnderecosUsuario extends RecyclerView.Adapter<AdapterEnderec
         TextView complement_endereco = holder.complement_endereco;
         ImageView btn_excluir_endereco = holder.btn_excluir_endereco;
         ImageView btn_editar_endereco = holder.btn_editar_endereco;
+        TextView status_endereco = holder.status_endereco;
 
         rotulo_endereco.setText(enderecos.get(position).getLabel());
         street_endereco.setText(enderecos.get(position).getStreet() + " - " + enderecos.get(position).getNumber() + " - " + enderecos.get(position).getCep());
         complement_endereco.setText(enderecos.get(position).getComplement());
-        destinatario_endereco.setText(enderecos.get(position).getRecipient());
+        destinatario_endereco.setText(userName);
+        boolean statusEndereco = enderecos.get(position).isDeactivate();
+
+        if(statusEndereco){
+            status_endereco.setText("Ativo");
+        } else{
+            status_endereco.setText("Inativo");
+        }
 
         int enderecoId = enderecos.get(position).getId();
 
@@ -100,6 +109,29 @@ public class AdapterEnderecosUsuario extends RecyclerView.Adapter<AdapterEnderec
                 transaction.replace(R.id.frame_conteudo, editarEnderecoFragment);
                 transaction.addToBackStack(null); // Adiciona a transação à pilha de navegação
                 transaction.commit();
+            }
+        });
+    }
+
+    //Método responsável por buscar o nome do usuário
+    private void buscarNomeDoUsuario(String userEmail) {
+        String API_BASE_URL = "https://apikhiata.onrender.com/";
+        retrofit = new Retrofit.Builder()
+                .baseUrl(API_BASE_URL)
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+        UserApi userApi = retrofit.create(UserApi.class);
+        Call<User> call = userApi.buscarUsuarioPorEmail(userEmail);
+        call.enqueue(new Callback<User>() {
+            @Override
+            public void onResponse(Call<User> call, Response<User> response) {
+                User userResponse = response.body();
+                userName = userResponse.getName();
+            }
+
+            @Override
+            public void onFailure(Call<User> call, Throwable throwable) {
+                Toast.makeText(context, throwable.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -141,7 +173,7 @@ public class AdapterEnderecosUsuario extends RecyclerView.Adapter<AdapterEnderec
     public int getItemCount() {return enderecos.size();}
 
     public class MeuViewHolder extends RecyclerView.ViewHolder{
-        TextView rotulo_endereco, destinatario_endereco, street_endereco, complement_endereco;
+        TextView rotulo_endereco, destinatario_endereco, street_endereco, complement_endereco, status_endereco;
         ImageView btn_excluir_endereco, btn_editar_endereco;
 
         public MeuViewHolder(@NonNull View itemView) {
@@ -152,6 +184,7 @@ public class AdapterEnderecosUsuario extends RecyclerView.Adapter<AdapterEnderec
             complement_endereco = itemView.findViewById(R.id.complement_endereco);
             btn_excluir_endereco = itemView.findViewById(R.id.btn_excluir_endereco);
             btn_editar_endereco = itemView.findViewById(R.id.btn_editar_endereco);
+            status_endereco = itemView.findViewById(R.id.status_endereco);
         }
     }
 }

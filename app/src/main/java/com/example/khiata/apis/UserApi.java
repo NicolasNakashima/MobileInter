@@ -30,6 +30,6 @@ public interface UserApi {
     Call<ArrayList<User>> selecionarTodos();
 
     @PATCH("atualizar-preferencias/{userId}")
-    Call<Void> atualizarPreferencias(@Path("userId") String userId, @Body Map<String, Object> atualizacoes);
+    Call<Void> atualizarPreferencias(@Path("userId") int userId, @Body Map<String, Object> atualizacoes);
 
 }
