@@ -202,21 +202,8 @@ public class tela_cadastro extends AppCompatActivity {
                     }
                 } else {
                     ResponseBody successMessage = response.body(); // Captura a mensagem de sucesso
-                    Toast.makeText(tela_cadastro.this, successMessage.toString(), Toast.LENGTH_LONG).show();
-                    cadastrarUsuarioFirebase(user.getEmail(), user.getPassword());
-                    FirebaseAuth auth = FirebaseAuth.getInstance();
-                    auth.signInWithEmailAndPassword(user.getEmail(), user.getPassword())
-                        .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-                            @Override
-                            public void onComplete(@NonNull Task<AuthResult> task) {
-                                if(task.isSuccessful()){
-                                    Intent intent = new Intent(tela_cadastro.this, MainActivity.class);
-                                    startActivity(intent);
-                                } else{
-                                    Toast.makeText(tela_cadastro.this, "Erro ao realizar o login: " + task.getException().getMessage(), Toast.LENGTH_LONG).show();
-                                }
-                            }
-                        });
+                    Toast.makeText(tela_cadastro.this, "Sucesso: " + successMessage.toString(), Toast.LENGTH_LONG).show();
+                    cadastrarUsuarioFirebase(user.getEmail(), user.getPassword(), user);
                 }
             }
 
@@ -230,7 +217,7 @@ public class tela_cadastro extends AppCompatActivity {
 
 
     // Método para cadastrar um novo usuário no Firebase
-    private void cadastrarUsuarioFirebase(String novoEmail, String novaSenha){
+    private void cadastrarUsuarioFirebase(String novoEmail, String novaSenha, User user) {
         FirebaseAuth autenticar = FirebaseAuth.getInstance();
 
         autenticar.createUserWithEmailAndPassword(novoEmail, novaSenha)
@@ -239,6 +226,22 @@ public class tela_cadastro extends AppCompatActivity {
                 public void onComplete(@NonNull Task<AuthResult> task) {
                     if (task.isSuccessful()) {
                         Toast.makeText(tela_cadastro.this, "Cadastro realizado com sucesso no Firebase", Toast.LENGTH_SHORT).show();
+                        FirebaseAuth auth = FirebaseAuth.getInstance();
+                        auth.signInWithEmailAndPassword(user.getEmail(), user.getPassword())
+                                .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                                    @Override
+                                    public void onComplete(@NonNull Task<AuthResult> task) {
+                                        if(task.isSuccessful()){
+                                            Log.d("Login", "Login efetuado com sucesso");
+                                            Intent intent = new Intent(tela_cadastro.this, tela_cadastro_preferencias_usuario.class);
+//                                            intent.putExtra("email", user.getEmail());
+//                                            intent.putExtra("password", user.getPassword());
+                                            startActivity(intent);
+                                        } else{
+                                            Toast.makeText(tela_cadastro.this, "Erro ao realizar o login: " + task.getException().getMessage(), Toast.LENGTH_LONG).show();
+                                        }
+                                    }
+                                });
                     } else {
                         Toast.makeText(tela_cadastro.this, "Erro: " + task.getException().getMessage(), Toast.LENGTH_SHORT).show();
                     }

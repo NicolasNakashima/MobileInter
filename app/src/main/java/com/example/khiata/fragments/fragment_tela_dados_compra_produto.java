@@ -148,7 +148,7 @@ public class fragment_tela_dados_compra_produto extends Fragment {
         if(bundle != null){
             String street_endereco_txt = bundle.getString("street_endereco");
             String complement_endereco_txt = bundle.getString("complement_endereco");
-            String number_endereco_txt = String.valueOf(bundle.getDouble("number_endereco"));
+            String number_endereco_txt = bundle.getString("number_endereco");
             String cep_endereco_txt = bundle.getString("cep_endereco");
             if (street_endereco_txt != null && complement_endereco_txt != null && number_endereco_txt != null && cep_endereco_txt != null) {
                 street_endereco.setText(street_endereco_txt + " - " + number_endereco_txt + " - " + cep_endereco_txt);

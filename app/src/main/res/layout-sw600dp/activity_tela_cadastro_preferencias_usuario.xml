@@ -5,6 +5,7 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#FFFFFF"
     tools:context=".classes.tela_cadastro_preferencias_usuario">
 
     <androidx.appcompat.widget.Toolbar
@@ -19,6 +20,18 @@
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/voltar_inicio"
+        android:layout_width="55dp"
+        android:layout_height="41dp"
+        app:layout_constraintBottom_toBottomOf="@+id/toolbar"
+        app:layout_constraintEnd_toEndOf="@+id/toolbar"
+        app:layout_constraintHorizontal_bias="0.046"
+        app:layout_constraintStart_toStartOf="@+id/toolbar"
+        app:layout_constraintTop_toTopOf="@+id/toolbar"
+        app:layout_constraintVertical_bias="0.551"
+        app:srcCompat="@drawable/seta_retorno" />
 
 
     <TextView
@@ -50,11 +63,12 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/toolbar" />
 
+
     <Button
         android:id="@+id/salvar_preferencias"
         android:layout_width="240dp"
         android:layout_height="50dp"
-        android:layout_marginTop="152dp"
+        android:layout_marginTop="204dp"
         android:background="@drawable/style_button1"
         android:text="Salvar"
         android:textColor="#ffffff"
@@ -65,11 +79,25 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/scrollView2" />
 
+    <Button
+        android:id="@+id/btn_home"
+        android:layout_width="240dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="30dp"
+        android:background="@drawable/style_button2"
+        android:text="Seguir para home"
+        android:textSize="15sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.496"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/salvar_preferencias" />
+
     <ScrollView
         android:id="@+id/scrollView2"
         android:layout_width="wrap_content"
-        android:layout_height="200dp"
-        android:layout_marginTop="30dp"
+        android:layout_height="100dp"
+        android:layout_marginTop="50dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView39">

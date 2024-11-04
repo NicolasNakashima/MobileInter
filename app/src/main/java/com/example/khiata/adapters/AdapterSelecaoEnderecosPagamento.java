@@ -48,10 +48,12 @@ public class AdapterSelecaoEnderecosPagamento extends RecyclerView.Adapter<Adapt
         TextView street_endereco = holder.street_endereco;
         TextView complement_endereco = holder.complement_endereco;
 
-        rotulo_endereco.setText(enderecos.get(position).getLabel());
-        street_endereco.setText(enderecos.get(position).getStreet() + " - " + enderecos.get(position).getNumber() + " - " + enderecos.get(position).getCep());
-        complement_endereco.setText(enderecos.get(position).getComplement());
-        destinatario_endereco.setText(enderecos.get(position).getRecipient());
+        Address endereco = enderecos.get(position);
+
+        rotulo_endereco.setText(endereco.getLabel());
+        street_endereco.setText(endereco.getStreet() + " - " + endereco.getNumber() + " - " + endereco.getCep());
+        complement_endereco.setText(endereco.getComplement());
+        destinatario_endereco.setText(endereco.getRecipient());
 
         //Ir para a tela de confirmação de dados
         holder.itemView.setOnClickListener(new View.OnClickListener() {
@@ -60,10 +62,10 @@ public class AdapterSelecaoEnderecosPagamento extends RecyclerView.Adapter<Adapt
                 fragment_tela_dados_compra_produto telaDadosCompraProduto = new fragment_tela_dados_compra_produto();
 
                 Bundle bundle = new Bundle();
-                bundle.putString("street_endereco", enderecos.get(position).getStreet());
-                bundle.putString("number_endereco", String.valueOf(enderecos.get(position).getNumber()));
-                bundle.putString("cep_endereco", enderecos.get(position).getCep());
-                bundle.putString("complement_endereco", enderecos.get(position).getComplement());
+                bundle.putString("street_endereco", endereco.getStreet());
+                bundle.putString("number_endereco", String.valueOf(endereco.getNumber()));
+                bundle.putString("cep_endereco", endereco.getCep());
+                bundle.putString("complement_endereco", endereco.getComplement());
                 telaDadosCompraProduto.setArguments(bundle);
 
                 FragmentTransaction transaction = ((AppCompatActivity) context).getSupportFragmentManager().beginTransaction();

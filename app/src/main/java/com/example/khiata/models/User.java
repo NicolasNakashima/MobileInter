@@ -17,6 +17,7 @@ public class User {
     private String profilePictureUrl; //Deixa null no cadastro
     private List<Address> addresses;
     private double avaliation;
+    private List<UserPreference> userPreferences;
 
     // Constructor
     public User(String name, String cpf, int genderId, int age, boolean isDressmaker,
@@ -36,7 +37,7 @@ public class User {
         this.avaliation = avaliation;
     }
 
-    public User(String name, String cpf, int genderId, int age, boolean isDressmaker, int premiumStatus, String phones, String imageURL, String password, String email, String profilePictureUrl, List<Address> addresses, double avaliation) {
+    public User(String name, String cpf, int genderId, int age, boolean isDressmaker, int premiumStatus, String phones, String imageURL, String password, String email, String profilePictureUrl, List<Address> addresses, double avaliation, List<UserPreference> userPreferences) {
         this.name = name;
         this.cpf = cpf;
         this.genderId = genderId;
@@ -50,6 +51,7 @@ public class User {
         this.profilePictureUrl = profilePictureUrl;
         this.addresses = addresses;
         this.avaliation = avaliation;
+        this.userPreferences = userPreferences;
     }
 
     public int getId() {
@@ -164,6 +166,14 @@ public class User {
         this.avaliation = avaliation;
     }
 
+    public List<UserPreference> getUserPreferences() {
+        return userPreferences;
+    }
+
+    public void setUserPreferences(List<UserPreference> userPreferences) {
+        this.userPreferences = userPreferences;
+    }
+
     @Override
     public String toString() {
         return "User{" +
@@ -180,6 +190,7 @@ public class User {
                 ", profilePictureUrl='" + profilePictureUrl + '\'' +
                 ", addresses=" + addresses + '\'' +
                 ", avaliation=" + avaliation + '\'' +
+                ", userPreferences=" + userPreferences + '\'' +
                 '}';
     }
 }

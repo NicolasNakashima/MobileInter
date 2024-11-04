@@ -257,36 +257,20 @@ public class fragment_tela_cadastrar_produto extends Fragment {
                 .build();
 
         CategoryApi categoryApi = retrofit.create(CategoryApi.class);
-        Call<List<String>> call = categoryApi.getCategories();
+        Call<List<Category>> call = categoryApi.getCategories(); // Mudança no tipo de retorno para List<Category>
 
-        call.enqueue(new Callback<List<String>>() {
+        call.enqueue(new Callback<List<Category>>() {
             @Override
-            public void onResponse(Call<List<String>> call, Response<List<String>> response) {
+            public void onResponse(Call<List<Category>> call, Response<List<Category>> response) {
                 if (!response.isSuccessful()) {
                     Toast.makeText(getActivity(), "Erro: " + response.code(), Toast.LENGTH_SHORT).show();
                     Log.e("Error", response.code() + "");
                     return;
                 }
 
-                List<String> jsonStringList = response.body();
-                if (jsonStringList != null && !jsonStringList.isEmpty()) {
+                List<Category> categories = response.body(); // Usa diretamente a lista de objetos Category
+                if (categories != null && !categories.isEmpty()) {
                     radioGroup.removeAllViews(); // Limpa o RadioGroup antes de adicionar novos itens
-
-                    Gson gson = new Gson();
-                    Type categoryType = new TypeToken<Category>() {}.getType();
-                    List<Category> categories = new ArrayList();
-
-                    // Processa cada String JSON
-                    for (String jsonString : jsonStringList) {
-                        jsonString = jsonString.replace("'", "\""); // Corrige as aspas simples para aspas duplas
-                        Category category = gson.fromJson(jsonString, categoryType);
-
-                        if (category != null) {
-                            categories.add(category);
-                        } else {
-                            Log.e("Error", "Erro ao converter categoria.");
-                        }
-                    }
 
                     // Popula o RadioGroup com os RadioButton das categorias
                     for (Category category : categories) {
@@ -300,16 +284,13 @@ public class fragment_tela_cadastrar_produto extends Fragment {
                     }
 
                     // Listener para capturar o ID da categoria selecionada
-                    radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
-                        @Override
-                        public void onCheckedChanged(RadioGroup group, int checkedId) {
-                            RadioButton selectedRadioButton = group.findViewById(checkedId);
-                            if (selectedRadioButton != null) {
-                                int selectedCategoryId = (int) selectedRadioButton.getTag();
-                                // Salve ou use o ID da categoria conforme necessário
-                                Log.d("Categoria Selecionada", "ID: " + selectedCategoryId);
-                                categoriaSelecionada = selectedCategoryId;
-                            }
+                    radioGroup.setOnCheckedChangeListener((group, checkedId) -> {
+                        RadioButton selectedRadioButton = group.findViewById(checkedId);
+                        if (selectedRadioButton != null) {
+                            int selectedCategoryId = (int) selectedRadioButton.getTag();
+                            // Salve ou use o ID da categoria conforme necessário
+                            Log.d("Categoria Selecionada", "ID: " + selectedCategoryId);
+                            categoriaSelecionada = selectedCategoryId;
                         }
                     });
                 } else {
@@ -319,12 +300,13 @@ public class fragment_tela_cadastrar_produto extends Fragment {
             }
 
             @Override
-            public void onFailure(Call<List<String>> call, Throwable throwable) {
+            public void onFailure(Call<List<Category>> call, Throwable throwable) {
                 Toast.makeText(getActivity(), throwable.getMessage(), Toast.LENGTH_SHORT).show();
                 Log.e("Error", throwable.getMessage());
             }
         });
     }
+
 
     //Pega o nome do usuário atual
     private void buscarNomeDoUsuario(String userEmail, String novoTitulo, double novoPreco, String novaDescricao, String imgName, String novoTamanho, int categoriaSelecionada) {
