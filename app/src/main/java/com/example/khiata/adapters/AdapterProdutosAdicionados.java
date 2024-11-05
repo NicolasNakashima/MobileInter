@@ -175,7 +175,7 @@ public class AdapterProdutosAdicionados extends RecyclerView.Adapter<AdapterProd
                     TextView msgPopup = popupView.findViewById(R.id.msg_popup);
                     msgPopup.setText("Produto excluído com sucesso");
                     ImageView imgPopup = popupView.findViewById(R.id.img_popup);
-                    imgPopup.setImageResource(R.drawable.icon_pop_alert);
+                    imgPopup.setImageResource(R.drawable.icon_pop_sucesso);
                     Button btnPopup = popupView.findViewById(R.id.btn_popup);
                     btnPopup.setOnClickListener(new View.OnClickListener() {
                         @Override

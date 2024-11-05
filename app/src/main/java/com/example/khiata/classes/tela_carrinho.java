@@ -73,7 +73,6 @@ public class tela_carrinho extends AppCompatActivity {
 
         //Definir a lista de produtos
         lista_produtos_carrinho = findViewById(R.id.lista_produtos_carrinho);
-        produtos.add(new Product("Camiseta regata", 23.00, "Imagem", 1, "Joana", 3.2, "Camiseta regata branca, tamanho adulto", "M"));
         AdapterProdutosCarrinho adapterProdutosCarrinho = new AdapterProdutosCarrinho(getApplicationContext(), produtos);
         lista_produtos_carrinho.setAdapter(adapterProdutosCarrinho);
         lista_produtos_carrinho.setLayoutManager(new LinearLayoutManager(getApplicationContext(), LinearLayoutManager.HORIZONTAL, false));
