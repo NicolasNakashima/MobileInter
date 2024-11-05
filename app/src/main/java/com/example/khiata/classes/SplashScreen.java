@@ -17,11 +17,6 @@ import com.example.khiata.R;
 
 public class SplashScreen extends AppCompatActivity {
 
-    // Duração da Splash Screen em milissegundos (3 segundos)
-    private static final int SPLASH_DURATION = 3000;
-
-    ImageView splash_logo;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -32,11 +27,6 @@ public class SplashScreen extends AppCompatActivity {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
-
-//        splash_logo = findViewById(R.id.splash_logo);
-//        Glide.with(this)
-//                .asGif().load(R.drawable.splash_screen).centerCrop()
-//                .into(splash_logo);
 
         new Handler(Looper.getMainLooper()).postDelayed(new Runnable() {
             @Override
