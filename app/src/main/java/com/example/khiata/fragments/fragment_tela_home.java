@@ -184,7 +184,9 @@ public class fragment_tela_home extends Fragment {
 
             @Override
             public void onFailure(Call<ArrayList<User>> call, Throwable throwable) {
-                Toast.makeText(getActivity(), throwable.getMessage(), Toast.LENGTH_SHORT).show();
+                if (getActivity() != null) {
+                    Toast.makeText(getActivity(), throwable.getMessage(), Toast.LENGTH_SHORT).show();
+                }
             }
         });
     }

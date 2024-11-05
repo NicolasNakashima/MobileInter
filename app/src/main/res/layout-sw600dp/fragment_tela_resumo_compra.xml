@@ -10,8 +10,8 @@
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar2"
-        android:layout_width="392dp"
-        android:layout_height="84dp"
+        android:layout_width="702dp"
+        android:layout_height="88dp"
         android:background="?attr/colorPrimary"
         android:backgroundTint="#FAC552"
         android:minHeight="?attr/actionBarSize"
@@ -22,30 +22,31 @@
 
     <ImageView
         android:id="@+id/voltar_compras"
-        android:layout_width="55dp"
-        android:layout_height="41dp"
+        android:layout_width="57dp"
+        android:layout_height="52dp"
+        android:layout_marginBottom="6dp"
         app:layout_constraintBottom_toBottomOf="@+id/toolbar2"
         app:layout_constraintEnd_toEndOf="@+id/toolbar2"
-        app:layout_constraintHorizontal_bias="0.047"
+        app:layout_constraintHorizontal_bias="0.19"
         app:layout_constraintStart_toStartOf="@+id/toolbar2"
         app:layout_constraintTop_toTopOf="@+id/toolbar2"
-        app:layout_constraintVertical_bias="0.558"
+        app:layout_constraintVertical_bias="0.555"
         app:srcCompat="@drawable/seta_retorno" />
 
     <ImageView
         android:id="@+id/btn_carrinho"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:layout_marginEnd="24dp"
+        android:layout_width="49dp"
+        android:layout_height="47dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="64dp"
         android:src="@drawable/navigation_kart"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/cardView13"
-        android:layout_width="343dp"
-        android:layout_height="184dp"
+        android:layout_width="350dp"
+        android:layout_height="195dp"
         android:layout_marginTop="40dp"
         android:background="@drawable/card_informacoes_compra"
         app:layout_constraintEnd_toEndOf="parent"
@@ -60,7 +61,7 @@
             android:layout_marginTop="16dp"
             android:text="Dados do pedido"
             android:textColor="#5A2D03"
-            android:textSize="15sp"
+            android:textSize="17sp"
             android:textStyle="bold"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -73,7 +74,7 @@
             android:layout_marginTop="15dp"
             android:text="ID:"
             android:textColor="#5A2D03"
-            android:textSize="17sp"
+            android:textSize="19sp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textView35" />
 
@@ -85,7 +86,7 @@
             android:layout_marginTop="8dp"
             android:text="Data:"
             android:textColor="#5A2D03"
-            android:textSize="17sp"
+            android:textSize="19sp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/cpf_usuario" />
 
@@ -97,7 +98,7 @@
             android:layout_marginTop="8dp"
             android:text="Forma de pagamento:"
             android:textColor="#5A2D03"
-            android:textSize="17sp"
+            android:textSize="19sp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/data_pedido" />
 
@@ -107,9 +108,9 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
             android:layout_marginTop="8dp"
-            android:text="CPF"
+            android:text="CPF:"
             android:textColor="#5A2D03"
-            android:textSize="17sp"
+            android:textSize="19sp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/cart_id" />
     </androidx.constraintlayout.widget.ConstraintLayout>
@@ -118,10 +119,10 @@
         android:id="@+id/textView41"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="40dp"
+        android:layout_marginTop="50dp"
         android:text="Informações da sua compra"
         android:textColor="#000000"
-        android:textSize="22sp"
+        android:textSize="25sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -129,8 +130,8 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/cardView14"
-        android:layout_width="343dp"
-        android:layout_height="190dp"
+        android:layout_width="350dp"
+        android:layout_height="200dp"
         android:layout_marginTop="36dp"
         android:background="@drawable/card_informacoes_compra"
         app:layout_constraintEnd_toEndOf="parent"
@@ -145,7 +146,7 @@
             android:layout_marginTop="16dp"
             android:text="Dados de entrega"
             android:textColor="#5A2D03"
-            android:textSize="15sp"
+            android:textSize="17sp"
             android:textStyle="bold"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -156,9 +157,9 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
             android:layout_marginTop="15dp"
-            android:text="Remetente"
+            android:text="Destinatário"
             android:textColor="#000000"
-            android:textSize="19sp"
+            android:textSize="20sp"
             android:textStyle="bold"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textView35" />
@@ -171,7 +172,7 @@
             android:layout_marginTop="8dp"
             android:text="Complemento"
             android:textColor="#5A2D03"
-            android:textSize="17sp"
+            android:textSize="19sp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/rua_pedido" />
 
@@ -183,7 +184,7 @@
             android:layout_marginTop="8dp"
             android:text="Rua - N° - CEP"
             android:textColor="#000000"
-            android:textSize="17sp"
+            android:textSize="19sp"
             android:textStyle="bold"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/rotulo_pedido" />
@@ -193,7 +194,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
-            android:layout_marginTop="14dp"
+            android:layout_marginTop="16dp"
             android:text="Rótulo"
             android:textColor="#5A2D03"
             android:textSize="15sp"

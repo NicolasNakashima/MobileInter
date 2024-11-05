@@ -10,13 +10,13 @@
 
     <Button
         android:id="@+id/btn_pagar"
-        android:layout_width="240dp"
-        android:layout_height="50dp"
-        android:layout_marginTop="40dp"
+        android:layout_width="262dp"
+        android:layout_height="57dp"
+        android:layout_marginTop="50dp"
         android:background="@drawable/style_button1"
         android:text="Pagar"
         android:textColor="#ffffff"
-        android:textSize="15sp"
+        android:textSize="20sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
@@ -25,8 +25,8 @@
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar2"
-        android:layout_width="392dp"
-        android:layout_height="84dp"
+        android:layout_width="702dp"
+        android:layout_height="88dp"
         android:background="?attr/colorPrimary"
         android:backgroundTint="#FAC552"
         android:minHeight="?attr/actionBarSize"
@@ -37,14 +37,15 @@
 
     <ImageView
         android:id="@+id/voltar_resumo_dados_pagamento"
-        android:layout_width="55dp"
-        android:layout_height="41dp"
+        android:layout_width="57dp"
+        android:layout_height="52dp"
+        android:layout_marginBottom="6dp"
         app:layout_constraintBottom_toBottomOf="@+id/toolbar2"
         app:layout_constraintEnd_toEndOf="@+id/toolbar2"
-        app:layout_constraintHorizontal_bias="0.047"
+        app:layout_constraintHorizontal_bias="0.196"
         app:layout_constraintStart_toStartOf="@+id/toolbar2"
         app:layout_constraintTop_toTopOf="@+id/toolbar2"
-        app:layout_constraintVertical_bias="0.558"
+        app:layout_constraintVertical_bias="0.611"
         app:srcCompat="@drawable/seta_retorno" />
 
     <TextView
@@ -53,7 +54,7 @@
         android:layout_height="wrap_content"
         android:text="Pagamento"
         android:textColor="#5A2D03"
-        android:textSize="24sp"
+        android:textSize="30sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="@+id/toolbar2"
         app:layout_constraintEnd_toEndOf="parent"
@@ -66,11 +67,11 @@
         android:id="@+id/textView11"
         android:layout_width="233dp"
         android:layout_height="64dp"
-        android:layout_marginTop="40dp"
+        android:layout_marginTop="50dp"
         android:gravity="center"
         android:text="Utilize este QR Code para pagar"
         android:textColor="#000000"
-        android:textSize="22sp"
+        android:textSize="25sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -78,12 +79,12 @@
 
     <Button
         android:id="@+id/btn_cancelar_pagamento"
-        android:layout_width="240dp"
-        android:layout_height="50dp"
-        android:layout_marginTop="30dp"
+        android:layout_width="262dp"
+        android:layout_height="57dp"
+        android:layout_marginTop="40dp"
         android:background="@drawable/style_button2"
         android:text="Cancelar"
-        android:textSize="15sp"
+        android:textSize="20sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.496"
@@ -92,8 +93,8 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/cardView10"
-        android:layout_width="305dp"
-        android:layout_height="325dp"
+        android:layout_width="315dp"
+        android:layout_height="345dp"
         android:layout_marginTop="45dp"
         android:background="@drawable/card_informacoes_compra"
         app:cardCornerRadius="10dp"
@@ -109,15 +110,15 @@
             android:layout_marginTop="25dp"
             android:text="Pix"
             android:textColor="#5A2D03"
-            android:textSize="22sp"
+            android:textSize="25sp"
             android:textStyle="bold"
             app:layout_constraintStart_toEndOf="@+id/imageView13"
             app:layout_constraintTop_toTopOf="parent" />
 
         <ImageView
             android:id="@+id/imageView13"
-            android:layout_width="51dp"
-            android:layout_height="46dp"
+            android:layout_width="58dp"
+            android:layout_height="58dp"
             android:layout_marginStart="16dp"
             android:layout_marginTop="16dp"
             android:src="@drawable/icon_pix"
@@ -126,9 +127,9 @@
 
         <ImageView
             android:id="@+id/imageView7"
-            android:layout_width="201dp"
-            android:layout_height="212dp"
-            android:layout_marginTop="85dp"
+            android:layout_width="221dp"
+            android:layout_height="229dp"
+            android:layout_marginTop="90dp"
             android:src="@drawable/qr_code"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
