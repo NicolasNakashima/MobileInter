@@ -39,7 +39,6 @@ import com.example.khiata.fragments.fragment_tela_favoritos;
 import com.example.khiata.fragments.fragment_tela_plan_premium;
 import com.example.khiata.fragments.fragment_tela_produto;
 import com.example.khiata.fragments.fragment_tela_selecao_endereco_pagamento;
-import com.example.khiata.fragments.fragment_tela_statistics;
 import com.example.khiata.fragments.fragment_tela_cadastrar_produto;
 import com.example.khiata.fragments.fragment_tela_area_costureira;
 import com.example.khiata.models.User;
@@ -62,7 +61,6 @@ public class MainActivity extends AppCompatActivity {
     private fragment_tela_compras fragment_tela_compras = new fragment_tela_compras();
     private fragment_tela_perfil fragment_tela_perfil = new fragment_tela_perfil();
     private fragment_tela_cursos fragment_tela_cursos = new fragment_tela_cursos();
-    private fragment_tela_statistics fragment_tela_statistics = new fragment_tela_statistics();
     private fragment_tela_area_costureira fragment_tela_area_costureira = new fragment_tela_area_costureira();
     private fragment_tela_enderecos fragment_tela_enderecos = new fragment_tela_enderecos();
     private fragment_tela_avaliacoes fragment_tela_avaliacoes = new fragment_tela_avaliacoes();
@@ -99,9 +97,7 @@ public class MainActivity extends AppCompatActivity {
         Intent intent = getIntent();
         if (intent != null) {
             String fragmentName = intent.getStringExtra("fragment");
-            Log.d("TAG", "FragmentName: " + fragmentName);
             String imgProductName = intent.getStringExtra("imgName");
-            Log.d("TAG", "ImgName: " + imgProductName);
             String titulo_produto = intent.getStringExtra("titulo_produto");
             String vendedor_produto = intent.getStringExtra("vendedor_produto");
             double preco_produto = intent.getDoubleExtra("preco_produto", 0.0);
@@ -116,6 +112,12 @@ public class MainActivity extends AppCompatActivity {
                 bundle.putString("imgName", imgProductName);
                 fragment_tela_cadastrar_produto.setArguments(bundle);
                 transaction.replace(R.id.frame_conteudo, fragment_tela_cadastrar_produto);
+                transaction.commit();
+            }
+            if("perfil".equals(fragmentName)){
+                // Carregar o fragmento de perfil quando tirar um foto de perfil
+                FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+                transaction.replace(R.id.frame_conteudo, fragment_tela_perfil);
                 transaction.commit();
             }
             if ("tela_produto".equals(fragmentName) && titulo_produto != null && vendedor_produto != null && preco_produto != 0.0 && imagem_produto != null && descricao_produto != null) {
@@ -240,18 +242,6 @@ public class MainActivity extends AppCompatActivity {
                     public void onClick(View v) {
                         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
                         transaction.replace(R.id.frame_conteudo, fragment_tela_cursos);
-                        transaction.commit();
-                        dialog.cancel();
-                    }
-                });
-
-                //Ir para tela de estatísticas
-                navigation_statistics = menu_lateral.findViewById(R.id.navigation_statistics);
-                navigation_statistics.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-                        transaction.replace(R.id.frame_conteudo, fragment_tela_statistics);
                         transaction.commit();
                         dialog.cancel();
                     }
@@ -427,6 +417,6 @@ public class MainActivity extends AppCompatActivity {
                 Toast.makeText(getApplicationContext(), throwable.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
-
     }
+
 }

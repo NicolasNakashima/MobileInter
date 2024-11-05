@@ -60,11 +60,12 @@ public class AdapterProdutosCostureira extends RecyclerView.Adapter<AdapterProdu
         ImageView img_produto = holder.img_produto;
         RatingBar avaliacao_produto_costureira = holder.avaliacao_produto_costureira;
         LayerDrawable stars = (LayerDrawable) avaliacao_produto_costureira.getProgressDrawable();
-        stars.getDrawable(2).setColorFilter(Color.parseColor("#FAC552"), PorterDuff.Mode.SRC_ATOP);
+        stars.getDrawable(2).setColorFilter(Color.parseColor("#FAC552"), PorterDuff.Mode.SRC_ATOP);//Definindo a cor das estrelas preenchidas
         TextView titulo_produto = holder.titulo_produto;
         TextView preco_produto = holder.preco_produto;
 
         Product produto = produtos.get(position);
+
         titulo_produto.setText(produto.getName());
         preco_produto.setText("R$ " + String.valueOf(produto.getPrice()));
         avaliacao_produto_costureira.setRating((float) produto.getAvaliation());
@@ -88,7 +89,7 @@ public class AdapterProdutosCostureira extends RecyclerView.Adapter<AdapterProdu
             @Override
             public void onClick(View v) {
                 fragment_tela_produto telaProdutoFragment = new fragment_tela_produto();
-
+                //Passar os dados para a tela do produto
                 Bundle bundle = new Bundle();
                 bundle.putString("titulo_produto", produto.getName());
                 bundle.putString("vendedor_produto", produto.getDressMarkerName());

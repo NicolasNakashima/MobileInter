@@ -8,6 +8,7 @@ import retrofit2.Call;
 import retrofit2.http.GET;
 
 public interface CategoryApi {
+    //Rota para buscar todas as categorias
     @GET("/category")
     Call<List<Category>> getCategories();
 }

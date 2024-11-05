@@ -8,19 +8,18 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="#EBEBEB">
 
+
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar"
-        android:layout_width="392dp"
-        android:layout_height="84dp"
+        android:layout_width="702dp"
+        android:layout_height="88dp"
         android:background="?attr/colorPrimary"
         android:backgroundTint="#FAC552"
         android:minHeight="?attr/actionBarSize"
         android:theme="?attr/actionBarTheme"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
-
 
     <TextView
         android:id="@+id/textView4"
@@ -28,7 +27,7 @@
         android:layout_height="wrap_content"
         android:text="Área costureira"
         android:textColor="#5A2D03"
-        android:textSize="27sp"
+        android:textSize="30sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="@+id/toolbar"
         app:layout_constraintEnd_toEndOf="parent"
@@ -38,21 +37,22 @@
 
     <ImageView
         android:id="@+id/voltar_home"
-        android:layout_width="53dp"
-        android:layout_height="46dp"
-        app:srcCompat="@drawable/seta_retorno"
+        android:layout_width="57dp"
+        android:layout_height="52dp"
+        android:layout_marginBottom="6dp"
         app:layout_constraintBottom_toBottomOf="@+id/toolbar"
         app:layout_constraintEnd_toEndOf="@+id/toolbar"
-        app:layout_constraintHorizontal_bias="0.058"
+        app:layout_constraintHorizontal_bias="0.173"
         app:layout_constraintStart_toStartOf="@+id/toolbar"
         app:layout_constraintTop_toTopOf="@+id/toolbar"
-        app:layout_constraintVertical_bias="0.605" />
+        app:layout_constraintVertical_bias="0.638"
+        app:srcCompat="@drawable/seta_retorno" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/lista_produtos_adicionados"
-        android:layout_width="364dp"
-        android:layout_height="705dp"
-        android:layout_marginTop="20dp"
+        android:layout_width="416dp"
+        android:layout_height="910dp"
+        android:layout_marginTop="30dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/toolbar"
@@ -60,12 +60,12 @@
 
     <ImageButton
         android:id="@+id/btn_adicionar_produto"
-        android:layout_width="70dp"
-        android:layout_height="72dp"
-        android:layout_marginEnd="24dp"
-        android:layout_marginBottom="32dp"
+        android:layout_width="94dp"
+        android:layout_height="101dp"
+        android:layout_marginEnd="64dp"
+        android:layout_marginBottom="48dp"
         android:background="@android:color/transparent"
-        android:src="@drawable/btn_adicionar"
+        android:src="@drawable/btn_adicionar_tablet"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
 

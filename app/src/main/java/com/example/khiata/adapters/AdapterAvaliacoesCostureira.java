@@ -46,12 +46,14 @@ public class AdapterAvaliacoesCostureira extends RecyclerView.Adapter<AdapterAva
         TextView nome_usuario = holder.nome_usuario;
         RatingBar avaliacao_usuario = holder.avaliacao_usuario;
         LayerDrawable stars = (LayerDrawable) avaliacao_usuario.getProgressDrawable();
-        stars.getDrawable(2).setColorFilter(Color.parseColor("#FAC552"), PorterDuff.Mode.SRC_ATOP);
+        stars.getDrawable(2).setColorFilter(Color.parseColor("#FAC552"), PorterDuff.Mode.SRC_ATOP);//Define cor da estrela preenchida
         TextView comentario_usuario = holder.comentario_usuario;
 
-        nome_usuario.setText(avaliacoes.get(position).getUserName());
-        avaliacao_usuario.setRating((float) avaliacoes.get(position).getRating());
-        comentario_usuario.setText(avaliacoes.get(position).getComment());
+        Avaliation avaliacao = avaliacoes.get(position);
+
+        nome_usuario.setText(avaliacao.getUserName());
+        avaliacao_usuario.setRating((float) avaliacao.getRating());
+        comentario_usuario.setText(avaliacao.getComment());
     }
 
     @Override

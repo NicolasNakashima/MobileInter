@@ -104,9 +104,8 @@ public class fragment_tela_avaliacoes extends Fragment {
             }
         });
 
-        //Definindo as avaliações do usuario
+        //Definindo as avaliações do usuario, por hora não implementado
         lista_avaliacoes_usuario = view.findViewById(R.id.lista_avaliacoes_usuario);
-        avaliacoes.add(new Avaliation("Joaquim", "Serviço muito bom, comprarei novamente", 4));
         AdapterAvaliacoesUsuario adapter = new AdapterAvaliacoesUsuario(getActivity(), avaliacoes);
         lista_avaliacoes_usuario.setAdapter(adapter);
         lista_avaliacoes_usuario.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));

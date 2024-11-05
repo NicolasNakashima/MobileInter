@@ -10,29 +10,29 @@
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar"
-        android:layout_width="393dp"
-        android:layout_height="84dp"
+        android:layout_width="702dp"
+        android:layout_height="88dp"
         android:background="?attr/colorPrimary"
         android:backgroundTint="#FAC552"
         android:minHeight="?attr/actionBarSize"
         android:theme="?attr/actionBarTheme"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
+
     <ImageView
         android:id="@+id/voltar_perfil"
-        android:layout_width="55dp"
-        android:layout_height="41dp"
+        android:layout_width="57dp"
+        android:layout_height="52dp"
+        android:layout_marginBottom="6dp"
         app:layout_constraintBottom_toBottomOf="@+id/toolbar"
         app:layout_constraintEnd_toEndOf="@+id/toolbar"
-        app:layout_constraintHorizontal_bias="0.046"
+        app:layout_constraintHorizontal_bias="0.195"
         app:layout_constraintStart_toStartOf="@+id/toolbar"
         app:layout_constraintTop_toTopOf="@+id/toolbar"
-        app:layout_constraintVertical_bias="0.551"
+        app:layout_constraintVertical_bias="0.638"
         app:srcCompat="@drawable/seta_retorno" />
-
 
     <TextView
         android:id="@+id/textView4"
@@ -40,7 +40,7 @@
         android:layout_height="wrap_content"
         android:text="Editar preferências"
         android:textColor="#5A2D03"
-        android:textSize="27sp"
+        android:textSize="30sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="@+id/toolbar"
         app:layout_constraintEnd_toEndOf="parent"
@@ -52,11 +52,11 @@
         android:id="@+id/textView39"
         android:layout_width="327dp"
         android:layout_height="100dp"
-        android:layout_marginTop="40dp"
+        android:layout_marginTop="50dp"
         android:gravity="center"
         android:text="Selecione as suas novas preferências (incluindo as que você já possuí)"
         android:textColor="#000000"
-        android:textSize="22sp"
+        android:textSize="25sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.49"
@@ -65,13 +65,13 @@
 
     <Button
         android:id="@+id/salvar_preferencias"
-        android:layout_width="240dp"
-        android:layout_height="50dp"
-        android:layout_marginTop="204dp"
+        android:layout_width="262dp"
+        android:layout_height="57dp"
+        android:layout_marginTop="188dp"
         android:background="@drawable/style_button1"
         android:text="Salvar"
         android:textColor="#ffffff"
-        android:textSize="15sp"
+        android:textSize="20sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.496"
@@ -80,12 +80,12 @@
 
     <Button
         android:id="@+id/btn_cancelar"
-        android:layout_width="240dp"
-        android:layout_height="50dp"
-        android:layout_marginTop="30dp"
+        android:layout_width="262dp"
+        android:layout_height="57dp"
+        android:layout_marginTop="40dp"
         android:background="@drawable/style_button2"
         android:text="Cancelar"
-        android:textSize="15sp"
+        android:textSize="20sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.496"
@@ -96,7 +96,7 @@
         android:id="@+id/scrollView2"
         android:layout_width="wrap_content"
         android:layout_height="100dp"
-        android:layout_marginTop="50dp"
+        android:layout_marginTop="55dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView39">

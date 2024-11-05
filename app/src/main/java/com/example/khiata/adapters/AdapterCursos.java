@@ -70,7 +70,7 @@ public class AdapterCursos extends RecyclerView.Adapter<AdapterCursos.MeuViewHol
         TextView tempo_curso = holder.tempo_curso;
         RatingBar avaliacao_curso = holder.avaliacao_curso;
         LayerDrawable stars = (LayerDrawable) avaliacao_curso.getProgressDrawable();
-        stars.getDrawable(2).setColorFilter(Color.parseColor("#FAC552"), PorterDuff.Mode.SRC_ATOP);
+        stars.getDrawable(2).setColorFilter(Color.parseColor("#FAC552"), PorterDuff.Mode.SRC_ATOP);//Define a cor da estrela preenchida
 
         Course curso = cursos.get(position);
 
@@ -85,7 +85,6 @@ public class AdapterCursos extends RecyclerView.Adapter<AdapterCursos.MeuViewHol
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Log.d("premiumStatus", String.valueOf(premiumStatus));
                 if(premiumStatus == 1) {
                     fragment_tela_curso telaCursoFragment = new fragment_tela_curso();
 
@@ -142,16 +141,34 @@ public class AdapterCursos extends RecyclerView.Adapter<AdapterCursos.MeuViewHol
                 if (response.isSuccessful() && response.body() != null) {
                     User userResponse = response.body();
                     premiumStatus = userResponse.getPremiumStatus();
-                    Log.d("API Response", "Premium status: " + premiumStatus);
+                    Log.d("premiumStatus", String.valueOf(premiumStatus));
                 } else {
-                    Toast.makeText(context, "Usuário não encontrado ou resposta inválida", Toast.LENGTH_SHORT).show();
                     Log.e("API Error", "Response code: " + response.code() + " | Error body: " + response.errorBody());
                 }
             }
 
             @Override
             public void onFailure(Call<User> call, Throwable throwable) {
-                Toast.makeText(context, throwable.getMessage(), Toast.LENGTH_SHORT).show();
+                Dialog dialog = new Dialog(context);
+
+                LayoutInflater inflater = LayoutInflater.from(context);
+                View popupView = inflater.inflate(R.layout.popup_mensagem, null);
+
+                TextView msgPopup = popupView.findViewById(R.id.msg_popup);
+                msgPopup.setText(throwable.getMessage());
+                ImageView imgPopup = popupView.findViewById(R.id.img_popup);
+                imgPopup.setImageResource(R.drawable.icon_pop_alert);
+                Button btnPopup = popupView.findViewById(R.id.btn_popup);
+                btnPopup.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        dialog.cancel();
+                    }
+                });
+
+                dialog.setContentView(popupView);
+                dialog.setCancelable(true);
+                dialog.show();
             }
         });
     }

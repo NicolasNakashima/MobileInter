@@ -1,5 +1,6 @@
 package com.example.khiata.adapters;
 
+import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -7,6 +8,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -19,6 +21,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.khiata.R;
 import com.example.khiata.apis.AddressApi;
 import com.example.khiata.apis.UserApi;
+import com.example.khiata.classes.tela_login;
 import com.example.khiata.fragments.fragment_tela_editar_endereco;
 import com.example.khiata.fragments.fragment_tela_enderecos;
 import com.example.khiata.models.Address;
@@ -44,7 +47,7 @@ public class AdapterEnderecosUsuario extends RecyclerView.Adapter<AdapterEnderec
         this.enderecos = enderecos;
     }
     private Retrofit retrofit;
-    String userName;
+
     @NonNull
     @Override
     public AdapterEnderecosUsuario.MeuViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -65,19 +68,24 @@ public class AdapterEnderecosUsuario extends RecyclerView.Adapter<AdapterEnderec
         ImageView btn_editar_endereco = holder.btn_editar_endereco;
         TextView status_endereco = holder.status_endereco;
 
-        rotulo_endereco.setText(enderecos.get(position).getLabel());
-        street_endereco.setText(enderecos.get(position).getStreet() + " - " + enderecos.get(position).getNumber() + " - " + enderecos.get(position).getCep());
-        complement_endereco.setText(enderecos.get(position).getComplement());
-        destinatario_endereco.setText(userName);
-        boolean statusEndereco = enderecos.get(position).isDeactivate();
+        //Buscando e definindo o nome do destinatário
+        buscarNomeDoUsuario(FirebaseAuth.getInstance().getCurrentUser().getEmail(), destinatario_endereco);
 
+        Address endereco = enderecos.get(position);
+
+        rotulo_endereco.setText(endereco.getLabel());
+        street_endereco.setText(endereco.getStreet() + " - " + endereco.getNumber() + " - " + endereco.getCep());
+        complement_endereco.setText(endereco.getComplement());
+
+        //Buscando e definindo o status do endereço
+        boolean statusEndereco = endereco.isDeactivate();
         if(statusEndereco){
             status_endereco.setText("Ativo");
         } else{
             status_endereco.setText("Inativo");
         }
 
-        int enderecoId = enderecos.get(position).getId();
+        int enderecoId = endereco.getId();
 
         //Acionar o botão de excluir
         btn_excluir_endereco.setOnClickListener(new View.OnClickListener() {
@@ -97,24 +105,21 @@ public class AdapterEnderecosUsuario extends RecyclerView.Adapter<AdapterEnderec
                 // Cria um novo fragmento de edição
                 fragment_tela_editar_endereco editarEnderecoFragment = new fragment_tela_editar_endereco();
 
-                // Cria um Bundle para passar o enderecoId
+                // Cria um Bundle para passar o enderecoId e ir para a tela de edição
                 Bundle bundle = new Bundle();
-                bundle.putInt("enderecoId", enderecoId); // Passa o enderecoId para o fragmento
-
-                // Define o argumento no fragmento de edição
+                bundle.putInt("enderecoId", enderecoId);
+                Log.d("TAG", "enderecoId: "+enderecoId);
                 editarEnderecoFragment.setArguments(bundle);
-
-                // Inicia a transação de fragmento para substituir o fragmento atual
                 FragmentTransaction transaction = ((AppCompatActivity) context).getSupportFragmentManager().beginTransaction();
                 transaction.replace(R.id.frame_conteudo, editarEnderecoFragment);
-                transaction.addToBackStack(null); // Adiciona a transação à pilha de navegação
+                transaction.addToBackStack(null);
                 transaction.commit();
             }
         });
     }
 
     //Método responsável por buscar o nome do usuário
-    private void buscarNomeDoUsuario(String userEmail) {
+    private void buscarNomeDoUsuario(String userEmail, TextView destinatario_endereco) {
         String API_BASE_URL = "https://apikhiata.onrender.com/";
         retrofit = new Retrofit.Builder()
                 .baseUrl(API_BASE_URL)
@@ -125,19 +130,44 @@ public class AdapterEnderecosUsuario extends RecyclerView.Adapter<AdapterEnderec
         call.enqueue(new Callback<User>() {
             @Override
             public void onResponse(Call<User> call, Response<User> response) {
-                User userResponse = response.body();
-                userName = userResponse.getName();
+                if (response.isSuccessful() && response.body() != null) {
+                    User userResponse = response.body();
+                    destinatario_endereco.setText(userResponse.getName());
+                } else {
+                    Toast.makeText(context, "Não foi possível encontrar o destinatário.", Toast.LENGTH_SHORT).show();
+                    Log.e("Error", "Erro na resposta da API: " + response.code());
+                }
             }
 
             @Override
             public void onFailure(Call<User> call, Throwable throwable) {
-                Toast.makeText(context, throwable.getMessage(), Toast.LENGTH_SHORT).show();
+                Dialog dialog = new Dialog(context);
+
+                LayoutInflater inflater = LayoutInflater.from(context);
+                View popupView = inflater.inflate(R.layout.popup_mensagem, null);
+                TextView msgPopup = popupView.findViewById(R.id.msg_popup);
+                msgPopup.setText(throwable.getMessage());
+                ImageView imgPopup = popupView.findViewById(R.id.img_popup);
+                imgPopup.setImageResource(R.drawable.icon_pop_alert);
+                Button btnPopup = popupView.findViewById(R.id.btn_popup);
+                btnPopup.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        dialog.cancel();
+                    }
+                });
+
+                dialog.setContentView(popupView);
+                dialog.setCancelable(true);
+                dialog.show();
             }
         });
     }
 
     //Método responsável por deletar o endereço do usuaário
     private void deletarEnderecoDoUsuario(int addressId, int position) {
+        Log.d("position", String.valueOf(position));
+        Log.d("addressId", String.valueOf(addressId));
         String API_BASE_URL = "https://apikhiata.onrender.com/";
         retrofit = new Retrofit.Builder()
                 .baseUrl(API_BASE_URL)
@@ -145,8 +175,6 @@ public class AdapterEnderecosUsuario extends RecyclerView.Adapter<AdapterEnderec
                 .build();
         AddressApi addressApi = retrofit.create(AddressApi.class);
         Call<String> call = addressApi.deletarEndereco(addressId);
-        Log.e("userId", String.valueOf(addressId));
-        Log.e("position", String.valueOf(position));
         call.enqueue(new Callback<String>() {
             @Override
             public void onResponse(Call<String> call, Response<String> response) {
@@ -155,16 +183,71 @@ public class AdapterEnderecosUsuario extends RecyclerView.Adapter<AdapterEnderec
                     notifyItemRemoved(position);
                     notifyItemRangeChanged(position, enderecos.size());
 
-                    Toast.makeText(context, "Endereço excluído com sucesso!", Toast.LENGTH_SHORT).show();
+                    //Pop-up de sucesso
+                    Dialog dialog = new Dialog(context);
+                    LayoutInflater inflater = LayoutInflater.from(context);
+                    View popupView = inflater.inflate(R.layout.popup_mensagem, null);
+                    TextView msgPopup = popupView.findViewById(R.id.msg_popup);
+                    msgPopup.setText("Endereço excluído com sucesso!");
+                    ImageView imgPopup = popupView.findViewById(R.id.img_popup);
+                    imgPopup.setImageResource(R.drawable.icon_pop_alert);
+                    Button btnPopup = popupView.findViewById(R.id.btn_popup);
+                    btnPopup.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            dialog.cancel();
+                        }
+                    });
+
+                    dialog.setContentView(popupView);
+                    dialog.setCancelable(true);
+                    dialog.show();
                 } else {
                     Log.e("Erro", response.message());
-                    Toast.makeText(context, "Falha ao excluir o endereço", Toast.LENGTH_SHORT).show();
+                    //Pop-up de falha
+                    Dialog dialog = new Dialog(context);
+                    LayoutInflater inflater = LayoutInflater.from(context);
+                    View popupView = inflater.inflate(R.layout.popup_mensagem, null);
+                    TextView msgPopup = popupView.findViewById(R.id.msg_popup);
+                    msgPopup.setText("Falha ao excluir o endereço!");
+                    ImageView imgPopup = popupView.findViewById(R.id.img_popup);
+                    imgPopup.setImageResource(R.drawable.icon_pop_alert);
+                    Button btnPopup = popupView.findViewById(R.id.btn_popup);
+                    btnPopup.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            dialog.cancel();
+                        }
+                    });
+
+                    dialog.setContentView(popupView);
+                    dialog.setCancelable(true);
+                    dialog.show();
                 }
             }
 
             @Override
             public void onFailure(Call<String> call, Throwable throwable) {
-                Toast.makeText(context, throwable.getMessage(), Toast.LENGTH_SHORT).show();
+                Dialog dialog = new Dialog(context);
+
+                LayoutInflater inflater = LayoutInflater.from(context);
+                View popupView = inflater.inflate(R.layout.popup_mensagem, null);
+
+                TextView msgPopup = popupView.findViewById(R.id.msg_popup);
+                msgPopup.setText(throwable.getMessage());
+                ImageView imgPopup = popupView.findViewById(R.id.img_popup);
+                imgPopup.setImageResource(R.drawable.icon_pop_alert);
+                Button btnPopup = popupView.findViewById(R.id.btn_popup);
+                btnPopup.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        dialog.cancel();
+                    }
+                });
+
+                dialog.setContentView(popupView);
+                dialog.setCancelable(true);
+                dialog.show();
             }
         });
     }

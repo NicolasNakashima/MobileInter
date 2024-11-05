@@ -8,19 +8,18 @@
     android:background="#FFFFFF"
     tools:context=".fragments.fragment_tela_cadastrar_produto">
 
+
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar"
-        android:layout_width="392dp"
-        android:layout_height="84dp"
+        android:layout_width="702dp"
+        android:layout_height="88dp"
         android:background="?attr/colorPrimary"
         android:backgroundTint="#FAC552"
         android:minHeight="?attr/actionBarSize"
         android:theme="?attr/actionBarTheme"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
-
 
     <TextView
         android:id="@+id/textView4"
@@ -28,7 +27,7 @@
         android:layout_height="wrap_content"
         android:text="Novo produto"
         android:textColor="#5A2D03"
-        android:textSize="27sp"
+        android:textSize="30sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="@+id/toolbar"
         app:layout_constraintEnd_toEndOf="parent"
@@ -38,14 +37,15 @@
 
     <ImageView
         android:id="@+id/voltar_area_costureira"
-        android:layout_width="53dp"
-        android:layout_height="46dp"
+        android:layout_width="57dp"
+        android:layout_height="52dp"
+        android:layout_marginBottom="6dp"
         app:layout_constraintBottom_toBottomOf="@+id/toolbar"
         app:layout_constraintEnd_toEndOf="@+id/toolbar"
-        app:layout_constraintHorizontal_bias="0.058"
+        app:layout_constraintHorizontal_bias="0.153"
         app:layout_constraintStart_toStartOf="@+id/toolbar"
         app:layout_constraintTop_toTopOf="@+id/toolbar"
-        app:layout_constraintVertical_bias="0.605"
+        app:layout_constraintVertical_bias="0.638"
         app:srcCompat="@drawable/seta_retorno" />
 
     <ScrollView
@@ -65,12 +65,12 @@
                 android:id="@+id/textView2"
                 android:layout_width="282dp"
                 android:layout_height="64dp"
-                android:layout_marginTop="40dp"
+                android:layout_marginTop="50dp"
                 android:text="Insira as informações necessárias"
                 android:textAlignment="center"
                 android:textColor="#000000"
-                android:textSize="22sp"
-                android:textStyle="bold"  />
+                android:textSize="25sp"
+                android:textStyle="bold" />
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/cardView2"
@@ -80,8 +80,8 @@
 
                 <ImageView
                     android:id="@+id/img_produto"
-                    android:layout_width="283dp"
-                    android:layout_height="225dp"
+                    android:layout_width="325dp"
+                    android:layout_height="251dp"
                     android:src="@drawable/add_img"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -89,12 +89,12 @@
 
                 <ImageView
                     android:id="@+id/btn_tirar_foto_produto"
-                    android:layout_width="55dp"
-                    android:layout_height="53dp"
+                    android:layout_width="63dp"
+                    android:layout_height="61dp"
                     android:src="@drawable/icon_camera"
                     app:layout_constraintBottom_toBottomOf="@+id/img_produto"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintHorizontal_bias="0.846"
+                    app:layout_constraintHorizontal_bias="0.871"
                     app:layout_constraintStart_toStartOf="parent" />
             </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -161,7 +161,7 @@
                 android:layout_marginTop="30dp"
                 android:text="Tamanho"
                 android:textColor="#000000"
-                android:textSize="20sp"
+                android:textSize="22sp"
                 android:textStyle="bold" />
 
             <GridLayout
@@ -180,7 +180,7 @@
                     android:layout_height="46dp"
                     android:text="PP"
                     android:textColor="#000000"
-                    android:textSize="16sp"
+                    android:textSize="18sp"
                     android:textStyle="bold" />
 
                 <RadioButton
@@ -189,7 +189,7 @@
                     android:layout_height="46dp"
                     android:text="P"
                     android:textColor="#000000"
-                    android:textSize="16sp"
+                    android:textSize="18sp"
                     android:textStyle="bold" />
 
                 <RadioButton
@@ -198,7 +198,7 @@
                     android:layout_height="46dp"
                     android:text="M"
                     android:textColor="#000000"
-                    android:textSize="16sp"
+                    android:textSize="18sp"
                     android:textStyle="bold" />
 
                 <RadioButton
@@ -207,16 +207,16 @@
                     android:layout_height="46dp"
                     android:text="G"
                     android:textColor="#000000"
-                    android:textSize="16sp"
+                    android:textSize="18sp"
                     android:textStyle="bold" />
 
                 <RadioButton
                     android:id="@+id/opcaoGG"
                     android:layout_width="109dp"
-                    android:layout_height="46dp"
+                    android:layout_height="52dp"
                     android:text="GG"
                     android:textColor="#000000"
-                    android:textSize="16sp"
+                    android:textSize="18sp"
                     android:textStyle="bold" />
 
                 <RadioButton
@@ -225,7 +225,7 @@
                     android:layout_height="46dp"
                     android:text="XP"
                     android:textColor="#000000"
-                    android:textSize="16sp"
+                    android:textSize="18sp"
                     android:textStyle="bold" />
 
                 <RadioButton
@@ -234,7 +234,7 @@
                     android:layout_height="46dp"
                     android:text="XM"
                     android:textColor="#000000"
-                    android:textSize="16sp"
+                    android:textSize="18sp"
                     android:textStyle="bold" />
 
                 <RadioButton
@@ -243,7 +243,7 @@
                     android:layout_height="46dp"
                     android:text="XG"
                     android:textColor="#000000"
-                    android:textSize="16sp"
+                    android:textSize="18sp"
                     android:textStyle="bold" />
             </GridLayout>
 
@@ -254,7 +254,7 @@
                 android:layout_marginTop="20dp"
                 android:text="Categoria"
                 android:textColor="#000000"
-                android:textSize="20sp"
+                android:textSize="22sp"
                 android:textStyle="bold" />
 
             <RadioGroup
@@ -282,24 +282,24 @@
 
             <Button
                 android:id="@+id/btn_adicionar_produto"
-                android:layout_width="240dp"
-                android:layout_height="50dp"
-                android:layout_marginTop="30dp"
+                android:layout_width="262dp"
+                android:layout_height="57dp"
+                android:layout_marginTop="40dp"
                 android:background="@drawable/style_button1"
                 android:text="Adicionar Produto"
                 android:textColor="#ffffff"
-                android:textSize="15sp"
+                android:textSize="20sp"
                 android:textStyle="bold" />
 
             <Button
                 android:id="@+id/btn_cancelar_cadastrar_produto"
-                android:layout_width="240dp"
-                android:layout_height="50dp"
+                android:layout_width="262dp"
+                android:layout_height="57dp"
                 android:layout_marginTop="25dp"
-                android:layout_marginBottom="80dp"
+                android:layout_marginBottom="50dp"
                 android:background="@drawable/style_button2"
                 android:text="Cancelar"
-                android:textSize="15sp"
+                android:textSize="20sp"
                 android:textStyle="bold" />
 
         </LinearLayout>

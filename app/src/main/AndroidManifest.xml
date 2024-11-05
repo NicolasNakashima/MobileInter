@@ -32,6 +32,12 @@
         android:theme="@style/Theme.Khiata"
         tools:targetApi="31">
         <activity
+            android:name=".classes.tela_admin"
+            android:exported="false" />
+        <activity
+            android:name=".classes.tela_forms"
+            android:exported="false" />
+        <activity
             android:name=".classes.tela_cadastro_preferencias_usuario"
             android:exported="false" />
         <activity

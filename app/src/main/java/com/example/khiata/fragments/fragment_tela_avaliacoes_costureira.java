@@ -189,9 +189,8 @@ public class fragment_tela_avaliacoes_costureira extends Fragment {
             }
         });
 
-        //Definindo as avaliações da costureira
+        //Definindo as avaliações da costureira, por hora não implementado
         lista_avaliacoes_costureira = view.findViewById(R.id.lista_avaliacoes_costureira);
-        avaliacoes.add(new Avaliation("Joaquim", "Serviço muito bom, comprarei novamente", 4));
         AdapterAvaliacoesCostureira adapter = new AdapterAvaliacoesCostureira(getActivity(), avaliacoes);
         lista_avaliacoes_costureira.setAdapter(adapter);
         lista_avaliacoes_costureira.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));

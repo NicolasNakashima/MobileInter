@@ -2,8 +2,7 @@ package com.example.khiata.classes;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Looper;
+import android.view.View;
 import android.widget.ImageView;
 
 import androidx.activity.EdgeToEdge;
@@ -11,38 +10,34 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
+import androidx.fragment.app.FragmentTransaction;
 
-import com.bumptech.glide.Glide;
 import com.example.khiata.R;
+import com.example.khiata.fragments.fragment_tela_home;
 
-public class SplashScreen extends AppCompatActivity {
+public class tela_admin extends AppCompatActivity {
 
+    ImageView voltar_inicio;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
-        setContentView(R.layout.activity_splash_screen);
+        setContentView(R.layout.activity_tela_admin);
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
 
-        new Handler(Looper.getMainLooper()).postDelayed(new Runnable() {
+        //Botão para voltar para a tela inicial
+        voltar_inicio = findViewById(R.id.voltar_inicio);
+        voltar_inicio.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void run() {
-                abrirTela();
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(), tela_inicial.class);
+                startActivity(intent);
+                finish();
             }
-        }, 4000);
-    }
-
-    private void abrirTela(){
-        Intent intent = new Intent(SplashScreen.this, tela_inicial.class);
-        startActivity(intent);
-        // Aplique as animações de transição
-        overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
-
-        // Finalize a SplashScreen
-        finish();
+        });
     }
 }

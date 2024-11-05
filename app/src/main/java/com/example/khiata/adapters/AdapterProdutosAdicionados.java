@@ -21,6 +21,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.example.khiata.R;
 import com.example.khiata.apis.ProductApi;
+import com.example.khiata.classes.tela_login;
 import com.example.khiata.fragments.fragment_tela_produto;
 import com.example.khiata.models.Product;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -71,6 +72,7 @@ public class AdapterProdutosAdicionados extends RecyclerView.Adapter<AdapterProd
         titulo_produto.setText(produto.getName());
         preco_produto.setText("R$ " + String.valueOf(produto.getPrice()));
 
+        // Carregar a imagem do produto
         StorageReference profileRef = storageRef.child("khiata_produtos/"+produto.getImageUrl()+".jpg");
         profileRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
             @Override
@@ -166,16 +168,70 @@ public class AdapterProdutosAdicionados extends RecyclerView.Adapter<AdapterProd
                     notifyItemRemoved(position);
                     notifyItemRangeChanged(position, produtos.size());
 
-                    Toast.makeText(context, "Produto excluído com sucesso!", Toast.LENGTH_SHORT).show();
+                    //Pop-up sucesso
+                    Dialog dialog = new Dialog(context);
+                    LayoutInflater inflater = LayoutInflater.from(context);
+                    View popupView = inflater.inflate(R.layout.popup_mensagem, null);
+                    TextView msgPopup = popupView.findViewById(R.id.msg_popup);
+                    msgPopup.setText("Produto excluído com sucesso");
+                    ImageView imgPopup = popupView.findViewById(R.id.img_popup);
+                    imgPopup.setImageResource(R.drawable.icon_pop_alert);
+                    Button btnPopup = popupView.findViewById(R.id.btn_popup);
+                    btnPopup.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            dialog.cancel();
+                        }
+                    });
+                    dialog.setContentView(popupView);
+                    dialog.setCancelable(true);
+                    dialog.show();
                 } else {
                     Log.e("Erro", response.message());
-                    Toast.makeText(context, "Falha ao excluir o produto", Toast.LENGTH_SHORT).show();
+
+                    //Pop-up falha
+                    Dialog dialog = new Dialog(context);
+                    LayoutInflater inflater = LayoutInflater.from(context);
+                    View popupView = inflater.inflate(R.layout.popup_mensagem, null);
+                    TextView msgPopup = popupView.findViewById(R.id.msg_popup);
+                    msgPopup.setText("Falha ao excluir o produto");
+                    ImageView imgPopup = popupView.findViewById(R.id.img_popup);
+                    imgPopup.setImageResource(R.drawable.icon_pop_alert);
+                    Button btnPopup = popupView.findViewById(R.id.btn_popup);
+                    btnPopup.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            dialog.cancel();
+                        }
+                    });
+                    dialog.setContentView(popupView);
+                    dialog.setCancelable(true);
+                    dialog.show();
                 }
             }
 
             @Override
             public void onFailure(Call<String> call, Throwable throwable) {
-                Toast.makeText(context, throwable.getMessage(), Toast.LENGTH_SHORT).show();
+                Dialog dialog = new Dialog(context);
+
+                LayoutInflater inflater = LayoutInflater.from(context);
+                View popupView = inflater.inflate(R.layout.popup_mensagem, null);
+
+                TextView msgPopup = popupView.findViewById(R.id.msg_popup);
+                msgPopup.setText(throwable.getMessage());
+                ImageView imgPopup = popupView.findViewById(R.id.img_popup);
+                imgPopup.setImageResource(R.drawable.icon_pop_alert);
+                Button btnPopup = popupView.findViewById(R.id.btn_popup);
+                btnPopup.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        dialog.cancel();
+                    }
+                });
+
+                dialog.setContentView(popupView);
+                dialog.setCancelable(true);
+                dialog.show();
             }
         });
     }

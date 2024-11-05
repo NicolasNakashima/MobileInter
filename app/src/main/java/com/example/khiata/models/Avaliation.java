@@ -1,17 +1,20 @@
 package com.example.khiata.models;
 
 public class Avaliation {
+    //Campos
     private int id;
     private String userName;
     private String comment;
     private double rating;
 
+    //Construtor
     public Avaliation(String userName, String comment, double rating) {
         this.userName = userName;
         this.comment = comment;
         this.rating = rating;
     }
 
+    //Getters e Setters
     public int getId() {
         return id;
     }
@@ -44,6 +47,7 @@ public class Avaliation {
         this.rating = rating;
     }
 
+    //ToString
     @Override
     public String toString() {
         return "Avaliation{" +

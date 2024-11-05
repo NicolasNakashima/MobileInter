@@ -333,14 +333,11 @@ public class fragment_tela_perfil extends Fragment {
                     Toast.makeText(getContext(), "Usuário não encontrado ou resposta inválida", Toast.LENGTH_SHORT).show();
                     Log.e("API Error", "Response code: " + response.code() + " | Error body: " + response.errorBody());
                 }
-
-//                btn_seguir.setEnabled(true);
             }
 
             @Override
             public void onFailure(Call<User> call, Throwable throwable) {
                 Toast.makeText(getContext(), throwable.getMessage(), Toast.LENGTH_SHORT).show();
-//                btn_seguir.setEnabled(true);
             }
         });
     }
@@ -369,15 +366,12 @@ public class fragment_tela_perfil extends Fragment {
                 } else {
                     // A atualização foi bem-sucedida
                     Toast.makeText(getActivity(), "Você é costureira!", Toast.LENGTH_SHORT).show();
-//                    dialog.dismiss();
                 }
-//                btn_seguir.setEnabled(true);
             }
 
             @Override
             public void onFailure(Call<Void> call, Throwable t) {
                 Toast.makeText(getActivity(), "Erro ao atualizar perfil: " + t.getMessage(), Toast.LENGTH_LONG).show();
-//                btn_seguir.setEnabled(true);
             }
         });
     }

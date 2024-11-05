@@ -3,14 +3,17 @@ package com.example.khiata.models;
 import java.util.List;
 
 public class Cart {
+    //Campos
     private List<CartItem> items;
     private String total;
 
+    //Constructor
     public Cart(List<CartItem> items, String total) {
         this.items = items;
         this.total = total;
     }
 
+    //Getters and Setters
     public List<CartItem> getItems() {
         return items;
     }

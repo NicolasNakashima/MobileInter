@@ -30,14 +30,11 @@ import androidx.core.content.ContextCompat;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
-import androidx.fragment.app.FragmentTransaction;
 
 import com.example.khiata.R;
-import com.example.khiata.databases_classes.Database;
-import com.example.khiata.fragments.fragment_tela_area_costureira;
+import com.example.khiata.databases_classes.DatabaseCamera;
 import com.example.khiata.fragments.fragment_tela_cadastrar_produto;
 import com.google.common.util.concurrent.ListenableFuture;
-import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
@@ -59,7 +56,7 @@ public class CameraProduto extends AppCompatActivity {
     private androidx.camera.view.PreviewView viewFinder;
 
     private Map<String, String> docData = new HashMap<>();
-    private Database database = new Database();
+    private DatabaseCamera database = new DatabaseCamera();
 
     //Config camera
     private ImageCapture imageCapture;

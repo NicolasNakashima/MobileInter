@@ -68,6 +68,7 @@ public class AdapterProdutosCarrinho extends RecyclerView.Adapter<AdapterProduto
         ImageView btn_excluir_item = holder.btn_excluir_item;
 
         Product produto = produtos.get(position);
+
         preco_produto.setText("R$" + String.valueOf(produto.getPrice()));
         vendedor_produto.setText("Vendido por " + produto.getDressMarkerName());
         titulo_produto.setText(produto.getName());
@@ -91,7 +92,7 @@ public class AdapterProdutosCarrinho extends RecyclerView.Adapter<AdapterProduto
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                //Envia os dados para a tela do produto
                 Intent intent = new Intent(context, MainActivity.class);
                 intent.putExtra("fragment", "tela_produto");
                 intent.putExtra("titulo_produto", produto.getName());

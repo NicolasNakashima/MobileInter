@@ -8,12 +8,13 @@ import java.util.List;
 import retrofit2.Call;
 import retrofit2.http.DELETE;
 import retrofit2.http.GET;
+import retrofit2.http.PATCH;
 import retrofit2.http.POST;
 import retrofit2.http.Path;
 import retrofit2.http.Query;
 
 public interface ProductApi {
-
+    //Rota para inserir um novo produto
     @POST("/insert/product")
     Call<String> insertProduct(
             @Query("name") String name,
@@ -26,15 +27,23 @@ public interface ProductApi {
             @Query("size") String size
     );
 
+    //Rota para buscar produtos por categoria
     @GET("/get/category")
     Call<List<Product>> getProductsByCategory(@Query("category") String category);
 
+    //Rota para deletar um produto
     @DELETE("/delete")
     Call<String> deleteProduct(@Query("id") int id);
 
+    //Rota para buscar um produto pelo nome
     @GET("/get/name")
     Call<List<Product>> getByName(@Query("name") String name);
 
+    //Rota para buscar todos os produtos de uma costureira
     @GET("/get/dressmarker")
     Call<List<Product>> getProductsByDressmarker(@Query("dressmarker") String dressmarker);
+
+    //Rota para atualizar um produto
+    @PATCH("/update/id")
+    Call<String> updateProduct(@Query("id") int id, @Query("dressmarker") String dressmarker);
 }

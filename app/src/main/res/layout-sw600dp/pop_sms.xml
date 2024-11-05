@@ -9,18 +9,18 @@
     app:cardCornerRadius="10dp">
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="350dp"
-        android:layout_height="390dp">
+        android:layout_width="395dp"
+        android:layout_height="425dp">
 
         <TextView
             android:id="@+id/titulo"
-            android:layout_width="271dp"
-            android:layout_height="67dp"
-            android:layout_marginTop="14dp"
+            android:layout_width="296dp"
+            android:layout_height="69dp"
+            android:layout_marginTop="15dp"
             android:gravity="center|top"
             android:text="Entre em contato direto com Nome (SMS)"
             android:textColor="#000000"
-            android:textSize="22sp"
+            android:textSize="25sp"
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.506"
@@ -29,9 +29,9 @@
 
         <EditText
             android:id="@+id/msgSMS"
-            android:layout_width="261dp"
+            android:layout_width="328dp"
             android:layout_height="209dp"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="20dp"
             android:background="@drawable/style_boxinput"
             android:ems="10"
             android:gravity="start|top"
@@ -48,26 +48,28 @@
 
         <Button
             android:id="@+id/btn_enviar"
-            android:layout_width="168dp"
-            android:layout_height="49dp"
-            android:layout_marginStart="5dp"
-            android:layout_marginTop="20dp"
+            android:layout_width="182dp"
+            android:layout_height="51dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="30dp"
             android:background="@drawable/style_button1"
             android:text="Enviar"
             android:textColor="#ffffff"
+            android:textSize="18sp"
             android:textStyle="bold"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/msgSMS" />
 
         <Button
             android:id="@+id/btn_cancelar"
-            android:layout_width="168dp"
-            android:layout_height="49dp"
-            android:layout_marginTop="20dp"
-            android:layout_marginEnd="5dp"
+            android:layout_width="182dp"
+            android:layout_height="51dp"
+            android:layout_marginTop="30dp"
+            android:layout_marginEnd="10dp"
             android:background="@drawable/style_button2"
             android:text="Cancelar"
             android:textColor="#384384"
+            android:textSize="18sp"
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/msgSMS" />

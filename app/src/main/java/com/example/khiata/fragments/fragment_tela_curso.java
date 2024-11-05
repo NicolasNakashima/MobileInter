@@ -35,6 +35,7 @@ import com.bumptech.glide.Glide;
 import com.example.khiata.R;
 import com.example.khiata.adapters.AdapterAvaliacoesCostureira;
 import com.example.khiata.adapters.AdapterAvaliacoesCurso;
+import com.example.khiata.classes.tela_login;
 import com.example.khiata.models.Avaliation;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -121,21 +122,23 @@ public class fragment_tela_curso extends Fragment {
             @Override
             public void onClick(View v) {
                 Dialog dialog = new Dialog(getActivity());
-                LayoutInflater inflater = getLayoutInflater();
-                View pop_avaliacao = inflater.inflate(R.layout.pop_avaliacao, null);
 
-                RatingBar avaliation_bar = pop_avaliacao.findViewById(R.id.avaliation_bar);
-                EditText edit_comment = pop_avaliacao.findViewById(R.id.edit_comment);
-                Button btn_enviar = pop_avaliacao.findViewById(R.id.btn_enviar);
-                Button btn_cancelar = pop_avaliacao.findViewById(R.id.btn_cancelar);
-                btn_cancelar.setOnClickListener(new View.OnClickListener() {
+                LayoutInflater inflater = getLayoutInflater();
+                View popupView = inflater.inflate(R.layout.popup_mensagem, null);
+
+                TextView msgPopup = popupView.findViewById(R.id.msg_popup);
+                msgPopup.setText("Está funcionalidade estará disponível no futuro.");
+                ImageView imgPopup = popupView.findViewById(R.id.img_popup);
+                imgPopup.setImageResource(R.drawable.icon_pop_alert);
+                Button btnPopup = popupView.findViewById(R.id.btn_popup);
+                btnPopup.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         dialog.cancel();
                     }
                 });
 
-                dialog.setContentView(pop_avaliacao);
+                dialog.setContentView(popupView);
                 dialog.setCancelable(true);
                 dialog.show();
             }
@@ -240,9 +243,8 @@ public class fragment_tela_curso extends Fragment {
             }
         }
 
-        //Definindo as avaliações do curso
+        //Definindo as avaliações do curso, por hora não será implementado
         lista_avaliacoes_curso = view.findViewById(R.id.lista_avaliacoes_curso);
-        avaliacoes.add(new Avaliation("Joaquim", "Serviço muito bom, comprarei novamente", 4));
         AdapterAvaliacoesCurso adapter = new AdapterAvaliacoesCurso(getActivity(), avaliacoes);
         lista_avaliacoes_curso.setAdapter(adapter);
         lista_avaliacoes_curso.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));

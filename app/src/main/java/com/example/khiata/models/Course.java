@@ -1,6 +1,7 @@
 package com.example.khiata.models;
 
 public class Course {
+    //Campos
     private int id;
     private String title;
     private String category;
@@ -9,6 +10,7 @@ public class Course {
     private String thumbnailUrl;
     private String videoUrl;
 
+    //Constructor
     public Course(String title, String category, String duration, double avaliation, String thumbnailUrl, String videoUrl) {
         this.title = title;
         this.category = category;
@@ -18,6 +20,7 @@ public class Course {
         this.videoUrl = videoUrl;
     }
 
+    //Getters and Setters
     public int getId() {
         return id;
     }
@@ -74,6 +77,7 @@ public class Course {
         this.videoUrl = videoUrl;
     }
 
+    //toString
     @Override
     public String toString() {
         return "Course{" +

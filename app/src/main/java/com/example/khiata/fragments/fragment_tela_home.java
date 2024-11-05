@@ -8,6 +8,7 @@ import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,20 +17,21 @@ import android.widget.Toast;
 
 import com.example.khiata.R;
 import com.example.khiata.adapters.AdapterCostureirasRecomendadas;
-import com.example.khiata.adapters.AdapterEnderecosUsuario;
+import com.example.khiata.adapters.AdapterProdutosAdicionados;
 import com.example.khiata.adapters.AdapterProdutosRecomendados;
-import com.example.khiata.apis.AddressApi;
+import com.example.khiata.apis.ProductApi;
 import com.example.khiata.apis.UserApi;
-import com.example.khiata.classes.MainActivity;
 import com.example.khiata.classes.tela_carrinho;
-import com.example.khiata.classes.tela_inicial;
-import com.example.khiata.models.Address;
-import com.example.khiata.models.Produto;
+import com.example.khiata.models.Product;
 import com.example.khiata.models.User;
+import com.example.khiata.models.UserPreference;
 import com.google.firebase.auth.FirebaseAuth;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.prefs.Preferences;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -85,9 +87,10 @@ public class fragment_tela_home extends Fragment {
     }
 
     RecyclerView costureiras_recomendas, produtos_recomendados;
-    List<Produto> listaProdutos = new ArrayList();
+    List<Product> produtos = new ArrayList();
     List<User> listaCostureira = new ArrayList();
     ImageView btn_pesquisa, btn_carrinho;
+    List<String> userPreferences = new ArrayList();
     private Retrofit retrofit;
 
     @Override
@@ -104,16 +107,8 @@ public class fragment_tela_home extends Fragment {
 
         // Carregar a lista de produtos recomendados
         produtos_recomendados = view.findViewById(R.id.produtos_recomendados);
-        try{
-            listaProdutos.add(new Produto("Blusa Tricot Manga Longa Inverno Cores Tendência",35.99));
-            listaProdutos.add(new Produto("edtrfgyuhiy",35.99));
-        } catch (Exception e){
-            throw new RuntimeException(e);
-        }
-        AdapterProdutosRecomendados produtosRecomendados = new AdapterProdutosRecomendados(getActivity(), listaProdutos);
-        produtos_recomendados.setAdapter(produtosRecomendados);
         produtos_recomendados.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
-
+        buscarPreferenciasUsuario(FirebaseAuth.getInstance().getCurrentUser().getEmail());
 
         //Botão para ir para pesquisa
         btn_pesquisa = view.findViewById(R.id.btn_pesquisa);
@@ -140,7 +135,7 @@ public class fragment_tela_home extends Fragment {
     }
 
     //Método para buscar os usuários que são costureiras
-    private void buscarCostureiras(String emailLogado){
+    private void buscarCostureiras(String emailUsuario) {
         String API_BASE_URL = "https://apikhiata.onrender.com/";
         retrofit = new Retrofit.Builder()
                 .baseUrl(API_BASE_URL)
@@ -160,7 +155,7 @@ public class fragment_tela_home extends Fragment {
 
                         // Filtrar apenas costureiras (isDressmaker == true) e e-mail diferente do logado
                         for (User usuario : listaDeCostureiras) {
-                            if (usuario.isDressmaker() && !usuario.getEmail().equals(emailLogado)) {
+                            if (usuario.isDressmaker() && !usuario.getEmail().equals(emailUsuario)) {
                                 listaCostureira.add(usuario);
                             }
                         }
@@ -184,9 +179,94 @@ public class fragment_tela_home extends Fragment {
 
             @Override
             public void onFailure(Call<ArrayList<User>> call, Throwable throwable) {
-                Toast.makeText(getActivity(), throwable.getMessage(), Toast.LENGTH_SHORT).show();
+                if (getActivity() != null) {
+                    Toast.makeText(getActivity(), throwable.getMessage(), Toast.LENGTH_SHORT).show();
+                }
             }
         });
     }
+
+    //Método para buscar as preferências do usuário
+    private void  buscarPreferenciasUsuario(String userEmail) {
+        String API_BASE_URL = "https://apikhiata.onrender.com/";
+        retrofit = new Retrofit.Builder()
+                .baseUrl(API_BASE_URL)
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+        UserApi userApi = retrofit.create(UserApi.class);
+        Call<User> call = userApi.buscarUsuarioPorEmail(userEmail);
+        call.enqueue(new Callback<User>() {
+            @Override
+            public void onResponse(Call<User> call, Response<User> response) {
+                if (response.isSuccessful() && response.body() != null) {
+                    User userResponse = response.body();
+
+                    List<UserPreference> preferences = userResponse.getUserPreferences();
+                    if(preferences != null) {
+                        for (UserPreference preference : preferences) {
+                            userPreferences.add(preference.getValue());
+                        }
+                        pegarProdutosPreferenciais(userPreferences);
+                    }
+
+                } else {
+                    Toast.makeText(getContext(), "Usuário não encontrado ou resposta inválida", Toast.LENGTH_SHORT).show();
+                    Log.e("API Error", "Response code: " + response.code() + " | Error body: " + response.errorBody());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<User> call, Throwable throwable) {
+                Toast.makeText(getContext(), throwable.getMessage(), Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+    //Método para buscar os produtos com base na preferência do usuário
+    private void pegarProdutosPreferenciais(List<String> userPreferences) {
+        String API_BASE_URL = "https://api-khiata.onrender.com/";
+        retrofit = new Retrofit.Builder()
+                .baseUrl(API_BASE_URL)
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+
+        ProductApi productApi = retrofit.create(ProductApi.class);
+        produtos.clear();  // Limpe a lista antes de iniciar o loop
+
+        for (String preference : userPreferences) {
+            Call<List<Product>> call = productApi.getProductsByCategory(preference);
+
+            call.enqueue(new Callback<List<Product>>() {
+                @Override
+                public void onResponse(Call<List<Product>> call, Response<List<Product>> response) {
+                    if (response.isSuccessful()) {
+                        List<Product> productList = response.body();
+
+                        if (productList != null && !productList.isEmpty()) {
+                            produtos.addAll(productList);  // Adicione os produtos à lista
+                        } else {
+                            Log.e("Error", "Nenhum produto encontrado para a preferência: " + preference);
+                        }
+
+                        // Atualize o adapter após cada adição
+                        if (produtos_recomendados.getAdapter() == null) {
+                            AdapterProdutosRecomendados adapter = new AdapterProdutosRecomendados(getActivity(), produtos);
+                            produtos_recomendados.setAdapter(adapter);
+                        } else {
+                            produtos_recomendados.getAdapter().notifyDataSetChanged();
+                        }
+                    } else {
+                        Log.e("Error", response.message());
+                    }
+                }
+
+                @Override
+                public void onFailure(Call<List<Product>> call, Throwable throwable) {
+                    Log.e("Error", throwable.getMessage());
+                }
+            });
+        }
+    }
+
 
 }
