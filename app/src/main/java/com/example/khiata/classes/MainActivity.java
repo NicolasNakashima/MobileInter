@@ -99,9 +99,7 @@ public class MainActivity extends AppCompatActivity {
         Intent intent = getIntent();
         if (intent != null) {
             String fragmentName = intent.getStringExtra("fragment");
-            Log.d("TAG", "FragmentName: " + fragmentName);
             String imgProductName = intent.getStringExtra("imgName");
-            Log.d("TAG", "ImgName: " + imgProductName);
             String titulo_produto = intent.getStringExtra("titulo_produto");
             String vendedor_produto = intent.getStringExtra("vendedor_produto");
             double preco_produto = intent.getDoubleExtra("preco_produto", 0.0);
@@ -116,6 +114,12 @@ public class MainActivity extends AppCompatActivity {
                 bundle.putString("imgName", imgProductName);
                 fragment_tela_cadastrar_produto.setArguments(bundle);
                 transaction.replace(R.id.frame_conteudo, fragment_tela_cadastrar_produto);
+                transaction.commit();
+            }
+            if("perfil".equals(fragmentName)){
+                // Carregar o fragmento de perfil quando tirar um foto de perfil
+                FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+                transaction.replace(R.id.frame_conteudo, fragment_tela_perfil);
                 transaction.commit();
             }
             if ("tela_produto".equals(fragmentName) && titulo_produto != null && vendedor_produto != null && preco_produto != 0.0 && imagem_produto != null && descricao_produto != null) {

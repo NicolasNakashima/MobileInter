@@ -1,9 +1,6 @@
 package com.example.khiata.fragments;
 
 import android.content.Intent;
-import android.graphics.Color;
-import android.graphics.PorterDuff;
-import android.graphics.drawable.LayerDrawable;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -13,8 +10,6 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.webkit.WebSettings;
-import android.webkit.WebViewClient;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -80,7 +75,7 @@ public class fragment_tela_resumo_compra extends Fragment {
 
     ImageView voltar_compras, btn_carrinho;
     private Retrofit retrofit;
-    TextView cart_id, cpf_usuario, data_pedido, forma_pagamento;
+    TextView cart_id, cpf_usuario, data_pedido, forma_pagamento, destinatario_pedido;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -108,8 +103,9 @@ public class fragment_tela_resumo_compra extends Fragment {
             }
         });
 
+        destinatario_pedido = view.findViewById(R.id.destinatario_pedido);
         cpf_usuario = view.findViewById(R.id.cpf_usuario);
-        buscarCPFDoUsuario(FirebaseAuth.getInstance().getCurrentUser().getEmail());
+        buscarInformacoesDoUsuario(FirebaseAuth.getInstance().getCurrentUser().getEmail());
         //Pegando informações do pedido
         Bundle bundle = getArguments();
         if(bundle != null){
@@ -128,8 +124,8 @@ public class fragment_tela_resumo_compra extends Fragment {
         return view;
     }
 
-    //Método para buscar o CPF do perfil
-    private void buscarCPFDoUsuario(String userEmail) {
+    //Método para buscar as informações do usuario
+    private void buscarInformacoesDoUsuario(String userEmail) {
         String API_BASE_URL = "https://apikhiata.onrender.com/";
         retrofit = new Retrofit.Builder()
                 .baseUrl(API_BASE_URL)
@@ -143,6 +139,7 @@ public class fragment_tela_resumo_compra extends Fragment {
                 if (response.isSuccessful() && response.body() != null) {
                     User userResponse = response.body();
                     cpf_usuario.setText("CPF: " + userResponse.getCpf());
+                    destinatario_pedido.setText(userResponse.getName());
                 } else {
                     Toast.makeText(getContext(), "Usuário não encontrado ou resposta inválida", Toast.LENGTH_SHORT).show();
                     Log.e("API Error", "Response code: " + response.code() + " | Error body: " + response.errorBody());

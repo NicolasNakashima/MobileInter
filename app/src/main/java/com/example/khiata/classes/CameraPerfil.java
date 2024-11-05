@@ -6,6 +6,7 @@ import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
 import android.provider.MediaStore;
 import android.util.Log;
 import android.view.OrientationEventListener;
@@ -49,6 +50,8 @@ import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import com.example.khiata.fragments.fragment_tela_perfil;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 
 public class CameraPerfil extends AppCompatActivity {
 
@@ -64,6 +67,9 @@ public class CameraPerfil extends AppCompatActivity {
     //Config camera
     private ImageCapture imageCapture;
     private CameraSelector cameraSelector = CameraSelector.DEFAULT_BACK_CAMERA;//Qual camera utilizar
+
+    FirebaseStorage storage = FirebaseStorage.getInstance();
+    StorageReference storageRef = storage.getReference();
 
     //Log
     private static final String TAG = "CameraXGaleria";
@@ -207,9 +213,21 @@ public class CameraPerfil extends AppCompatActivity {
                     database.uploadFotoPerfil(getBaseContext(), foto, docData, userEmail);
 
 //                    // Iniciar a MainActivity e carregar o fragmento de perfil
-//                    Intent intent = new Intent(getBaseContext(), MainActivity.class);
-//                    intent.putExtra("fragment_tela_perfil", "fragment_tela_perfil");
-//                    startActivity(intent);
+                    // Implementar um mecanismo de espera antes de buscar a URL
+                        Handler handler = new Handler();
+                        handler.postDelayed(() -> {
+                            // Tentar obter a URL da imagem após um atraso
+                            StorageReference profileRef = storageRef.child("khiata_perfis/foto_" + FirebaseAuth.getInstance().getCurrentUser().getEmail() + ".jpg");
+                            profileRef.getDownloadUrl().addOnSuccessListener(uri -> {
+                                // Quando a URL da imagem for carregada com sucesso, iniciar a MainActivity
+                                Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                                intent.putExtra("fragment", "perfil");
+                                startActivity(intent);
+                            }).addOnFailureListener(e -> {
+                                Log.d("TAG", "Falha ao obter URL da imagem: " + e.getMessage());
+                                Toast.makeText(getBaseContext(), "Erro ao carregar a imagem", Toast.LENGTH_SHORT).show();
+                            });
+                        }, 3000); // Atraso de 3 segundos para esperar que a imagem esteja disponível
                 }
 
                 @Override

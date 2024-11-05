@@ -151,7 +151,7 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
-            android:id="@+id/remetende_pedido"
+            android:id="@+id/destinatario_pedido"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
@@ -199,7 +199,7 @@
             android:textSize="15sp"
             android:textStyle="bold"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/remetende_pedido" />
+            app:layout_constraintTop_toBottomOf="@+id/destinatario_pedido" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 

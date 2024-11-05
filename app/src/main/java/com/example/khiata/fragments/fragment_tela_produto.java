@@ -23,19 +23,33 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.example.khiata.R;
 import com.example.khiata.adapters.AdapterAvaliacoesCostureira;
+import com.example.khiata.adapters.AdapterProdutosPesquisados;
+import com.example.khiata.apis.CartApi;
+import com.example.khiata.apis.ProductApi;
+import com.example.khiata.apis.UserApi;
 import com.example.khiata.classes.tela_carrinho;
 import com.example.khiata.models.Avaliation;
+import com.example.khiata.models.Product;
+import com.example.khiata.models.User;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -92,11 +106,16 @@ public class fragment_tela_produto extends Fragment {
     List<Avaliation> avaliacoes = new ArrayList();
     FirebaseStorage storage = FirebaseStorage.getInstance();
     StorageReference storageRef = storage.getReference();
+    String userCpf;
+    private Retrofit retrofit;
+    String nomeProduto;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_tela_produto, container, false);
+
+        buscarCPFDoUsuario(FirebaseAuth.getInstance().getCurrentUser().getEmail());
 
         //Botão para voltar para a tela home
         voltar_home = view.findViewById(R.id.voltar_home);
@@ -123,22 +142,16 @@ public class fragment_tela_produto extends Fragment {
         Bundle bundle = getArguments();
         if(bundle != null){
             String titulo_produto_txt = bundle.getString("titulo_produto");
-            Log.d("titulo", titulo_produto_txt);
             String vendedor_produto_txt = bundle.getString("vendedor_produto");
-            Log.d("vendedor", vendedor_produto_txt);
             String preco_produto_txt = String.valueOf(bundle.getDouble("preco_produto"));
-            Log.d("preco", preco_produto_txt);
             String imagem_produto_txt = bundle.getString("imagem_produto");
-            Log.d("imagem", imagem_produto_txt);
             String descricao_produto_txt = bundle.getString("descricao_produto");
-            Log.d("descricao", descricao_produto_txt);
             String tamanho_produto_txt = bundle.getString("tamanho_produto");
-            Log.d("tamanho", tamanho_produto_txt);
             float avaliacao_produto_txt = bundle.getFloat("avaliacao_produto");
-            Log.d("avaliacao", String.valueOf(avaliacao_produto_txt));
             if (titulo_produto_txt != null && vendedor_produto_txt != null && preco_produto_txt != null && imagem_produto_txt != null && descricao_produto_txt != null) {
                 titulo_produto = view.findViewById(R.id.cart_id);
                 titulo_produto.setText(titulo_produto_txt);
+                nomeProduto = titulo_produto_txt;
                 vendedor_produto = view.findViewById(R.id.vendedor_produto);
                 vendedor_produto.setText("Vendedor: " + vendedor_produto_txt);
                 preco_produto = view.findViewById(R.id.preco_produto);
@@ -177,7 +190,7 @@ public class fragment_tela_produto extends Fragment {
         btn_adicionar_produto_carrinho.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                inserirProdutoNoCarrinho(userCpf, nomeProduto);
             }
         });
 
@@ -215,5 +228,68 @@ public class fragment_tela_produto extends Fragment {
         lista_avaliacoes_produto.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
 
         return view;
+    }
+
+    //Método para buscar o CPF do usário
+    private void buscarCPFDoUsuario(String userEmail) {
+        String API_BASE_URL = "https://apikhiata.onrender.com/";
+        retrofit = new Retrofit.Builder()
+                .baseUrl(API_BASE_URL)
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+        UserApi userApi = retrofit.create(UserApi.class);
+        Call<User> call = userApi.buscarUsuarioPorEmail(userEmail);
+        call.enqueue(new Callback<User>() {
+            @Override
+            public void onResponse(Call<User> call, Response<User> response) {
+                if (response.isSuccessful() && response.body() != null) {
+                    User userResponse = response.body();
+                    userCpf= userResponse.getCpf();
+                } else {
+                    Toast.makeText(getContext(), "Usuário não encontrado ou resposta inválida", Toast.LENGTH_SHORT).show();
+                    Log.e("API Error", "Response code: " + response.code() + " | Error body: " + response.errorBody());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<User> call, Throwable throwable) {
+                Toast.makeText(getContext(), throwable.getMessage(), Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+    //Método para inserir um produto no carrinho
+    private void inserirProdutoNoCarrinho(String userCpf, String productName) {
+        String API_BASE_URL = "https://khiata-api.onrender.com/";
+
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl(API_BASE_URL)
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+
+        CartApi cartApi = retrofit.create(CartApi.class);
+        Call<Void> call = cartApi.updateCart(userCpf, 1,productName);
+
+        call.enqueue(new Callback<Void>() {
+            @Override
+            public void onResponse(Call<Void> call, Response<Void> response) {
+                if (response.isSuccessful()) {
+                    Toast.makeText(getActivity(), "Produto inserido no carrinho.", Toast.LENGTH_SHORT).show();
+                    Log.d("Success", response.message());
+                    Intent intent = new Intent(getActivity(), tela_carrinho.class);
+                    startActivity(intent);
+                    getActivity().finish();
+                } else {
+                    Toast.makeText(getActivity(), "Falha ao inseririr o produto no carrinho.", Toast.LENGTH_SHORT).show();
+                    Log.e("Error", response.message());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Void> call, Throwable throwable) {
+                Toast.makeText(getActivity(), throwable.getMessage(), Toast.LENGTH_SHORT).show();
+                Log.e("Error", throwable.getMessage());
+            }
+        });
     }
 }
