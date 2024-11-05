@@ -57,11 +57,12 @@ public class AdapterProdutosComprados extends RecyclerView.Adapter<AdapterProdut
         forma_pagamento.setText("Forma de pagamento: " + pedido.getPaymentmethod());
         data_pedido.setText("Data: " + pedido.getOrderDate());
 
+        //Botão para ir para tela de resumo de compra ao clicar em card
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 fragment_tela_resumo_compra telaResumoCompraFragment = new fragment_tela_resumo_compra();
-
+                //Enviando os dados para o fragment
                 Bundle bundle = new Bundle();
                 bundle.putString("cart_id", String.valueOf(pedido.getCart_id()));
                 bundle.putString("forma_pagamento", pedido.getPaymentmethod());

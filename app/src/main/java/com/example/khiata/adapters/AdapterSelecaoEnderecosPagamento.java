@@ -1,11 +1,14 @@
 package com.example.khiata.adapters;
 
+import android.app.Dialog;
 import android.content.Context;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -72,7 +75,7 @@ public class AdapterSelecaoEnderecosPagamento extends RecyclerView.Adapter<Adapt
             @Override
             public void onClick(View v) {
                 fragment_tela_dados_compra_produto telaDadosCompraProduto = new fragment_tela_dados_compra_produto();
-
+                //Passando dados para o fragment
                 Bundle bundle = new Bundle();
                 bundle.putString("street_endereco", endereco.getStreet());
                 bundle.putString("number_endereco", String.valueOf(endereco.getNumber()));
@@ -104,14 +107,32 @@ public class AdapterSelecaoEnderecosPagamento extends RecyclerView.Adapter<Adapt
                     User userResponse = response.body();
                     destinatario_endereco.setText(userResponse.getName());
                 } else {
-                    // Trata caso a resposta não seja bem-sucedida
+                    Toast.makeText(context, "Não foi possível encontrar o destinatário", Toast.LENGTH_SHORT).show();
                     Log.e("Error", "Erro na resposta da API: " + response.code());
                 }
             }
 
             @Override
             public void onFailure(Call<User> call, Throwable throwable) {
-                Toast.makeText(context, throwable.getMessage(), Toast.LENGTH_SHORT).show();
+                Dialog dialog = new Dialog(context);
+
+                LayoutInflater inflater = LayoutInflater.from(context);
+                View popupView = inflater.inflate(R.layout.popup_mensagem, null);
+                TextView msgPopup = popupView.findViewById(R.id.msg_popup);
+                msgPopup.setText(throwable.getMessage());
+                ImageView imgPopup = popupView.findViewById(R.id.img_popup);
+                imgPopup.setImageResource(R.drawable.icon_pop_alert);
+                Button btnPopup = popupView.findViewById(R.id.btn_popup);
+                btnPopup.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        dialog.cancel();
+                    }
+                });
+
+                dialog.setContentView(popupView);
+                dialog.setCancelable(true);
+                dialog.show();
             }
         });
     }

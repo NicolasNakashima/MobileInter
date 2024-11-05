@@ -220,9 +220,8 @@ public class fragment_tela_produto extends Fragment {
             }
         });
 
-        //Definindo as avaliações do produto
+        //Definindo as avaliações do produto, por hora não será implementado
         lista_avaliacoes_produto = view.findViewById(R.id.lista_avaliacoes_produto);
-        avaliacoes.add(new Avaliation("Joaquim", "Serviço muito bom, comprarei novamente", 4));
         AdapterAvaliacoesCostureira adapter = new AdapterAvaliacoesCostureira(getActivity(), avaliacoes);
         lista_avaliacoes_produto.setAdapter(adapter);
         lista_avaliacoes_produto.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));

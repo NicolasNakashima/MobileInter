@@ -59,6 +59,7 @@ public class AdapterProdutosPesquisados extends RecyclerView.Adapter<AdapterProd
         TextView preco_produto = holder.preco_produto;
 
         Product product = produtos.get(position);
+
         titulo_produto.setText(product.getName());
         vendedor_produto.setText("Vendido por "+product.getDressMarkerName());
         preco_produto.setText("R$ "+product.getPrice());
@@ -82,7 +83,7 @@ public class AdapterProdutosPesquisados extends RecyclerView.Adapter<AdapterProd
             @Override
             public void onClick(View v) {
                 fragment_tela_produto telaProdutoFragment = new fragment_tela_produto();
-
+                //Passar os dados para o fragment
                 Bundle bundle = new Bundle();
                 bundle.putString("titulo_produto", product.getName());
                 bundle.putString("vendedor_produto", product.getDressMarkerName());

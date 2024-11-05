@@ -81,7 +81,7 @@ public class AdapterProdutosRecomendados extends RecyclerView.Adapter<AdapterPro
             @Override
             public void onClick(View v) {
                 fragment_tela_produto telaProdutoFragment = new fragment_tela_produto();
-
+                //Passar os dados para o fragment
                 Bundle bundle = new Bundle();
                 bundle.putString("titulo_produto", produto.getName());
                 bundle.putString("vendedor_produto", produto.getDressMarkerName());

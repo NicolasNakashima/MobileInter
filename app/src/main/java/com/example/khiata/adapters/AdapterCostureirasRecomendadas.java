@@ -59,7 +59,9 @@ public class AdapterCostureirasRecomendadas extends RecyclerView.Adapter<Adapter
         ImageView img_costureira = holder.img_costureira;
         Button btn_perfil_costureira = holder.btn_perfil_costureira;
 
-        String email_costureira = costureiras.get(position).getEmail();
+        User costureira = costureiras.get(position);
+
+        String email_costureira = costureira.getEmail();
 
         //Carregar a imagem dos perfis de costureiras
         StorageReference profileRef = storageRef.child("khiata_perfis/foto_"+email_costureira+".jpg");
@@ -71,7 +73,6 @@ public class AdapterCostureirasRecomendadas extends RecyclerView.Adapter<Adapter
         }).addOnFailureListener(new OnFailureListener() {
             @Override
             public void onFailure(@NonNull Exception e) {
-//                Toast.makeText(getContext(), "Falha ao obter URL da imagem"+ e.getMessage(), Toast.LENGTH_SHORT).show();
                 Log.d("TAG", "Falha ao obter URL da imagem"+ e.getMessage());
                 img_costureira.setImageResource(R.drawable.empty_img);
             }
@@ -84,17 +85,13 @@ public class AdapterCostureirasRecomendadas extends RecyclerView.Adapter<Adapter
                 // Cria um novo fragmento de perfil da costureira
                 fragment_tela_perfil_costureira perfilCostureiraFragment = new fragment_tela_perfil_costureira();
 
-                // Cria um Bundle para passar o email da costureira
+                // Cria um Bundle para passar o email da costureira e mudar para a tela de perfil da costureira
                 Bundle bundle = new Bundle();
-                bundle.putString("email_costureira", email_costureira); // Passa o email da costureira para o fragmento
-
-                // Define o argumento no fragmento de edição
+                bundle.putString("email_costureira", email_costureira);
                 perfilCostureiraFragment.setArguments(bundle);
-
-                // Inicia a transação de fragmento para substituir o fragmento atual
                 FragmentTransaction transaction = ((AppCompatActivity) context).getSupportFragmentManager().beginTransaction();
                 transaction.replace(R.id.frame_conteudo, perfilCostureiraFragment);
-                transaction.addToBackStack(null); // Adiciona a transação à pilha de navegação
+                transaction.addToBackStack(null);
                 transaction.commit();
             }
         });
