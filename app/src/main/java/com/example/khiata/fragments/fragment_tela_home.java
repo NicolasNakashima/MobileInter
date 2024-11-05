@@ -224,7 +224,7 @@ public class fragment_tela_home extends Fragment {
 
     //Método para buscar os produtos com base na preferência do usuário
     private void pegarProdutosPreferenciais(List<String> userPreferences) {
-        String API_BASE_URL = "https://khiata-api.onrender.com/";
+        String API_BASE_URL = "https://api-khiata.onrender.com/";
         retrofit = new Retrofit.Builder()
                 .baseUrl(API_BASE_URL)
                 .addConverterFactory(GsonConverterFactory.create())

@@ -39,7 +39,6 @@ import com.example.khiata.fragments.fragment_tela_favoritos;
 import com.example.khiata.fragments.fragment_tela_plan_premium;
 import com.example.khiata.fragments.fragment_tela_produto;
 import com.example.khiata.fragments.fragment_tela_selecao_endereco_pagamento;
-import com.example.khiata.fragments.fragment_tela_statistics;
 import com.example.khiata.fragments.fragment_tela_cadastrar_produto;
 import com.example.khiata.fragments.fragment_tela_area_costureira;
 import com.example.khiata.models.User;
@@ -62,7 +61,6 @@ public class MainActivity extends AppCompatActivity {
     private fragment_tela_compras fragment_tela_compras = new fragment_tela_compras();
     private fragment_tela_perfil fragment_tela_perfil = new fragment_tela_perfil();
     private fragment_tela_cursos fragment_tela_cursos = new fragment_tela_cursos();
-    private fragment_tela_statistics fragment_tela_statistics = new fragment_tela_statistics();
     private fragment_tela_area_costureira fragment_tela_area_costureira = new fragment_tela_area_costureira();
     private fragment_tela_enderecos fragment_tela_enderecos = new fragment_tela_enderecos();
     private fragment_tela_avaliacoes fragment_tela_avaliacoes = new fragment_tela_avaliacoes();
@@ -249,16 +247,6 @@ public class MainActivity extends AppCompatActivity {
                     }
                 });
 
-                //Ir para tela de estatísticas
-                navigation_statistics = menu_lateral.findViewById(R.id.navigation_statistics);
-                navigation_statistics.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        usuarioAdmin(userEmail);
-                        dialog.cancel();
-                    }
-                });
-
                 //Ir para tela da área de costureira
                 navigation_area_costureira = menu_lateral.findViewById(R.id.navigation_area_costureira);
                 navigation_area_costureira.setOnClickListener(new View.OnClickListener() {
@@ -429,54 +417,6 @@ public class MainActivity extends AppCompatActivity {
                 Toast.makeText(getApplicationContext(), throwable.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
-    }
-
-    //Verifica se o usuário é Admin
-    private void usuarioAdmin(String userEmail) {
-        String API_BASE_URL = "https://apikhiata.onrender.com/";
-        retrofit = new Retrofit.Builder()
-                .baseUrl(API_BASE_URL)
-                .addConverterFactory(GsonConverterFactory.create())
-                .build();
-        UserApi userApi = retrofit.create(UserApi.class);
-        Call<User> call = userApi.buscarUsuarioPorEmail(userEmail);
-        call.enqueue(new Callback<User>() {
-            @Override
-            public void onResponse(Call<User> call, Response<User> response) {
-                User userResponse = response.body();
-                if (userResponse.isAdmin()) {
-                    FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-                    transaction.replace(R.id.frame_conteudo, fragment_tela_statistics);
-                    transaction.commit();
-                }
-                else{
-                    Dialog dialog = new Dialog(MainActivity.this);
-                    LayoutInflater inflater = getLayoutInflater();
-                    View popupView = inflater.inflate(R.layout.popup_mensagem, null);
-
-                    TextView msgPopup = popupView.findViewById(R.id.msg_popup);
-                    msgPopup.setText("Está área somente pode ser acessada por Admins.");
-                    ImageView imgPopup = popupView.findViewById(R.id.img_popup);
-                    imgPopup.setImageResource(R.drawable.icon_pop_alert);
-                    Button btnPopup = popupView.findViewById(R.id.btn_popup);
-                    btnPopup.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            dialog.cancel();
-                        }
-                    });
-
-                    dialog.setContentView(popupView);
-                    dialog.setCancelable(true);
-                    dialog.show();
-                }
-            }
-            @Override
-            public void onFailure(Call<User> call, Throwable throwable) {
-                Toast.makeText(getApplicationContext(), throwable.getMessage(), Toast.LENGTH_SHORT).show();
-            }
-        });
-
     }
 
 }

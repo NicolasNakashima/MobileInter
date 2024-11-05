@@ -1,14 +1,17 @@
 package com.example.khiata.models;
 
 public class CartItem {
+    //Carmpos
     private String name;
     private String quantity;
 
+    //Constructor
     public CartItem(String name, String quantity) {
         this.name = name;
         this.quantity = quantity;
     }
 
+    //Getters and Setters
     public String getName() {
         return name;
     }

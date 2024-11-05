@@ -16,19 +16,23 @@ import retrofit2.http.POST;
 import retrofit2.http.Path;
 
 public interface UserApi {
-
+    //Rota para cadastrar usuário
     @POST("api/users/inserir")
     Call<ResponseBody> inserirUsuario(@Body User user);
 
+    //Rota para selecionar usuário pelo email
     @GET("api/users/selecionar/email/{email}")
     Call<User> buscarUsuarioPorEmail(@Path("email") String email);
 
+    //Rota para atualizar usuário
     @PATCH("api/users/atualizar/email/{email}")
     Call<Void> atualizarUsuario(@Path("email") String email, @Body Map<String, Object> atualizacoes);
 
+    //Rota para selecionar todos os usuários
     @GET("api/users/selecionar")
     Call<ArrayList<User>> selecionarTodos();
 
+    //Rota para atualizar as preferências do usuário
     @PATCH("api/users/atualizar-preferencias/{userId}")
     Call<Void> atualizarPreferencias(@Path("userId") int userId, @Body Map<String, Object> atualizacoes);
 

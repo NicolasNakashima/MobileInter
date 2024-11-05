@@ -260,7 +260,7 @@ public class fragment_tela_produto extends Fragment {
 
     //Método para inserir um produto no carrinho
     private void inserirProdutoNoCarrinho(String userCpf, String productName) {
-        String API_BASE_URL = "https://khiata-api.onrender.com/";
+        String API_BASE_URL = "https://api-khiata.onrender.com/";
 
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(API_BASE_URL)

@@ -1,6 +1,7 @@
 package com.example.khiata.models;
 
 public class Historic {
+    //Campos
     private int id;
     private int cart_id;
     private double FinalValue;
@@ -11,6 +12,7 @@ public class Historic {
     private String orderDate;
     private String deliveryDate;
 
+    //Constructor
     public Historic(int cart_id, double finalValue, String userCpf, String paymentmethod, String status, String created_Date, String orderDate, String deliveryDate) {
         this.cart_id = cart_id;
         FinalValue = finalValue;
@@ -22,6 +24,7 @@ public class Historic {
         this.deliveryDate = deliveryDate;
     }
 
+    //Getters and Setters
     public int getId() {
         return id;
     }
@@ -94,6 +97,7 @@ public class Historic {
         this.deliveryDate = deliveryDate;
     }
 
+    //toString
     @Override
     public String toString() {
         return "Historic{" +

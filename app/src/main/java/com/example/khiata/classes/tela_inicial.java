@@ -20,7 +20,7 @@ import com.google.firebase.auth.FirebaseAuth;
 
 public class tela_inicial extends AppCompatActivity {
 
-    Button btn_login_inicio, btn_cadastrar_inicio;
+    Button btn_login_inicio, btn_cadastrar_inicio, btn_admin;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,6 +53,17 @@ public class tela_inicial extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intent = new Intent(tela_inicial.this, tela_cadastro.class);
                 startActivity(intent);
+            }
+        });
+
+        //Botão para ir para tela de admin
+        btn_admin = findViewById(R.id.btn_admin);
+        btn_admin.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(tela_inicial.this, tela_admin.class);
+                startActivity(intent);
+                finish();
             }
         });
     }

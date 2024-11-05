@@ -1,6 +1,7 @@
 package com.example.khiata.models;
 
 public class Product {
+    //Campos
     private int id;
     private String name;
     private double price;
@@ -11,6 +12,7 @@ public class Product {
     private String description;
     private String size;
 
+    //Construtor
     public Product(String name, double price, String imageUrl, int typeId, String dressMarkerName, double avaliation, String description, String size) {
         this.name = name;
         this.price = price;
@@ -22,6 +24,7 @@ public class Product {
         this.size = size;
     }
 
+    //Getters e Setters
     public int getId() {
         return id;
     }
@@ -94,6 +97,7 @@ public class Product {
         this.size = size;
     }
 
+    //ToString
     @Override
     public String toString() {
         return "Product{" +

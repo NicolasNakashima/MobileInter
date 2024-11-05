@@ -15,9 +15,9 @@ import com.google.firebase.storage.UploadTask;
 import java.io.ByteArrayOutputStream;
 import java.util.Map;
 
-public class Database {
+public class DatabaseCamera {
 
-    //Upload da foto de perfil
+    //Upload da foto de perfil no Firebase
     public void uploadFotoPerfil(Context c, ImageView foto, Map<String, String> docData, String userName){
         //Conversão
         Bitmap bitmap = ((BitmapDrawable)foto.getDrawable()).getBitmap();
@@ -25,7 +25,7 @@ public class Database {
         bitmap.compress(Bitmap.CompressFormat.JPEG, 20, baos);
         byte[] databyte = baos.toByteArray();
 
-        //Abrir Database
+        //Abrir Database e definindo o caminho da imagem
         FirebaseStorage storage = FirebaseStorage.getInstance();
         storage.getReference("khiata_perfis").child("foto_"+userName+".jpg").putBytes(databyte).
             addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
@@ -51,7 +51,7 @@ public class Database {
         Glide.with(img.getContext()).asBitmap().load(urlFirebase).into(img);
     }
 
-    //Upload da foto do produto
+    //Upload da foto do produto no Firebase
     public void uploadFotoProduto(Context c, ImageView foto, Map<String, String> docData, String ProductName){
         //Conversão
         Bitmap bitmap = ((BitmapDrawable)foto.getDrawable()).getBitmap();
@@ -59,7 +59,7 @@ public class Database {
         bitmap.compress(Bitmap.CompressFormat.JPEG, 20, baos);
         byte[] databyte = baos.toByteArray();
 
-        //Abrir Database
+        //Abrir Database e definindo o caminho da imagem
         FirebaseStorage storage = FirebaseStorage.getInstance();
         storage.getReference("khiata_produtos").child(ProductName+".jpg").putBytes(databyte).
             addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {

@@ -1,6 +1,7 @@
 package com.example.khiata.models;
 
 public class Address {
+    //Campos
     private int id;
     private String state;
     private String country;
@@ -11,6 +12,7 @@ public class Address {
     private String cep;
     private boolean deactivate;
 
+    //Construtor
     public Address(String state, String country, String street, int number, String complement, String label, String cep, boolean deactivate) {
         this.state = state;
         this.country = country;
@@ -22,6 +24,7 @@ public class Address {
         this.deactivate = deactivate;
     }
 
+    //Getters and setters
     public int getId() {
         return id;
     }
@@ -93,6 +96,7 @@ public class Address {
         this.deactivate = deactivate;
     }
 
+    //ToString
     @Override
     public String toString() {
         return "Address{" +

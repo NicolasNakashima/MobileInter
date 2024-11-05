@@ -3,6 +3,7 @@ package com.example.khiata.models;
 import java.util.List;
 
 public class User {
+    //Campos
     private int id;
     private String name;
     private String cpf;
@@ -20,7 +21,7 @@ public class User {
     private boolean isAdmin;
     private List<UserPreference> userPreferences;
 
-    // Constructor
+    // Constructors
     public User(String name, String cpf, int genderId, int age, boolean isDressmaker,
                 int premiumStatus, String phones, String imageURL, String password,
                 String email, String profilePictureUrl, double avaliation, boolean isAdmin) {
@@ -57,6 +58,7 @@ public class User {
         this.userPreferences = userPreferences;
     }
 
+    //Getters and Setters
     public int getId() {
         return id;
     }
@@ -64,8 +66,6 @@ public class User {
     public void setId(int id) {
         this.id = id;
     }
-
-    // Getters and Setters
 
     public String getName() {
         return name;
@@ -185,6 +185,7 @@ public class User {
         isAdmin = admin;
     }
 
+    //toString
     @Override
     public String toString() {
         return "User{" +

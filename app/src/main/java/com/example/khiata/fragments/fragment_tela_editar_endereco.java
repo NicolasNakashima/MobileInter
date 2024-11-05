@@ -183,7 +183,6 @@ public class fragment_tela_editar_endereco extends Fragment {
 
     //Método para atualizar um endereço do usário
     private void atualizarEndercoDoUsuario(int addressId, Map<String, Object> atualizacoes) {
-        Log.d("TAG", "atualizarEndercoDoUsuario: ID do endereço: " + addressId);
         String API_BASE_URL = "https://apikhiata.onrender.com/";
 
         // Configuração do Retrofit

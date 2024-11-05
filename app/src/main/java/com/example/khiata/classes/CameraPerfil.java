@@ -32,24 +32,20 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
 import com.example.khiata.R;
-import com.example.khiata.databases_classes.Database;
-import com.example.khiata.fragments.fragment_tela_home;
+import com.example.khiata.databases_classes.DatabaseCamera;
 import com.example.khiata.fragments.fragment_tela_perfil;
 import com.google.common.util.concurrent.ListenableFuture;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
 
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Locale;
 import java.util.Map;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
-import com.example.khiata.fragments.fragment_tela_perfil;
+
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
@@ -61,7 +57,7 @@ public class CameraPerfil extends AppCompatActivity {
     private androidx.camera.view.PreviewView viewFinder;
 
     private Map<String, String> docData = new HashMap<>();
-    private Database database = new Database();
+    private DatabaseCamera database = new DatabaseCamera();
     FirebaseAuth auth = FirebaseAuth.getInstance();
 
     //Config camera
