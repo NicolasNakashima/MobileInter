@@ -16,9 +16,11 @@ public interface OrderApi {
     @GET("/historyOrder")
     Call<List<Order>> getHistoric(@Query("cpf") String cpf);
 
+    //Rota para alterar o status de um pedido
     @PUT("/alterStatus")
     Call<Void> alterStatus(@Query("cpf") String cpf, @Query("status") String status);
 
+    //Rota para criar um pedido
     @POST("/createOrder")
     Call<String> createOrder(@Body Order order);
 }

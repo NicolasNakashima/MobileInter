@@ -75,7 +75,7 @@ public class fragment_tela_resumo_compra extends Fragment {
 
     ImageView voltar_compras, btn_carrinho;
     private Retrofit retrofit;
-    TextView cart_id, cpf_usuario, data_pedido, forma_pagamento, destinatario_pedido;
+    TextView cart_id, cpf_usuario, data_pedido, forma_pagamento, status, total_pedido;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -103,7 +103,7 @@ public class fragment_tela_resumo_compra extends Fragment {
             }
         });
 
-        destinatario_pedido = view.findViewById(R.id.destinatario_pedido);
+
         cpf_usuario = view.findViewById(R.id.cpf_usuario);
         buscarInformacoesDoUsuario(FirebaseAuth.getInstance().getCurrentUser().getEmail());
         //Pegando informações do pedido
@@ -112,6 +112,8 @@ public class fragment_tela_resumo_compra extends Fragment {
             String cart_id_txt = bundle.getString("cart_id");
             String forma_pagamento_txt = bundle.getString("forma_pagamento");
             String data_pedido_txt = bundle.getString("data_pedido");
+            String status_txt = bundle.getString("status");
+            String total_pedido_txt = bundle.getString("total");
             if (cart_id_txt != null && forma_pagamento_txt != null && data_pedido_txt != null) {
                 cart_id = view.findViewById(R.id.cart_id);
                 cart_id.setText("ID: " + cart_id_txt);
@@ -119,6 +121,10 @@ public class fragment_tela_resumo_compra extends Fragment {
                 forma_pagamento.setText("Forma de pagamento: " + forma_pagamento_txt);
                 data_pedido = view.findViewById(R.id.data_pedido);
                 data_pedido.setText("Data: " + data_pedido_txt);
+                status = view.findViewById(R.id.status);
+                status.setText(status_txt);
+                total_pedido = view.findViewById(R.id.total_pedido);
+                total_pedido.setText("Total: " + total_pedido_txt);
             }
         }
         return view;
@@ -139,7 +145,6 @@ public class fragment_tela_resumo_compra extends Fragment {
                 if (response.isSuccessful() && response.body() != null) {
                     User userResponse = response.body();
                     cpf_usuario.setText("CPF: " + userResponse.getCpf());
-                    destinatario_pedido.setText(userResponse.getName());
                 } else {
                     Toast.makeText(getContext(), "Usuário não encontrado ou resposta inválida", Toast.LENGTH_SHORT).show();
                     Log.e("API Error", "Response code: " + response.code() + " | Error body: " + response.errorBody());

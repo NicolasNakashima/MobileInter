@@ -16,10 +16,14 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.example.khiata.R;
+import com.example.khiata.adapters.AdapterProdutosAdicionados;
 import com.example.khiata.adapters.AdapterProdutosComprados;
+import com.example.khiata.apis.OrderApi;
+import com.example.khiata.apis.ProductApi;
 import com.example.khiata.apis.UserApi;
 import com.example.khiata.classes.tela_carrinho;
 import com.example.khiata.models.Order;
+import com.example.khiata.models.Product;
 import com.example.khiata.models.User;
 import com.google.firebase.auth.FirebaseAuth;
 
@@ -116,16 +120,15 @@ public class fragment_tela_compras extends Fragment {
         buscarCPFDoUsuario(FirebaseAuth.getInstance().getCurrentUser().getEmail());
         //Definindo a lista de pedidos
         lista_pedidos = view.findViewById(R.id.lista_pedidos);
-        pedidos.add(new Order(23, 50.00, cpf_usuario, "Pix", "Finalizado", "10/10/2021", "10/10/2021", "10/10/2021"));
-        AdapterProdutosComprados adapterProdutosComprados = new AdapterProdutosComprados(getActivity(), pedidos);
-        lista_pedidos.setAdapter(adapterProdutosComprados);
         lista_pedidos.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
+        buscarCPFDoUsuario(FirebaseAuth.getInstance().getCurrentUser().getEmail());
 
         return view;
     }
 
     //Método para buscar o CPF do perfil
     private void buscarCPFDoUsuario(String userEmail) {
+        Log.d("userEmail", userEmail);
         String API_BASE_URL = "https://apikhiata.onrender.com/";
         retrofit = new Retrofit.Builder()
                 .baseUrl(API_BASE_URL)
@@ -139,6 +142,8 @@ public class fragment_tela_compras extends Fragment {
                 if (response.isSuccessful() && response.body() != null) {
                     User userResponse = response.body();
                     cpf_usuario = userResponse.getCpf();
+                    Log.d("userCpf", userResponse.getCpf());
+                    pegarPedidosDoUsuario(cpf_usuario);
                 } else {
                     Toast.makeText(getContext(), "Usuário não encontrado ou resposta inválida", Toast.LENGTH_SHORT).show();
                     Log.e("API Error", "Response code: " + response.code() + " | Error body: " + response.errorBody());
@@ -148,6 +153,50 @@ public class fragment_tela_compras extends Fragment {
             @Override
             public void onFailure(Call<User> call, Throwable throwable) {
                 Toast.makeText(getContext(), throwable.getMessage(), Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+    //Método para buscar os pedidos do usuário
+    private void pegarPedidosDoUsuario(String userCpf) {
+        Log.e("userCpf", userCpf);
+        String API_BASE_URL = "https://api-khiata.onrender.com/";
+        retrofit = new Retrofit.Builder()
+                .baseUrl(API_BASE_URL)
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+
+        OrderApi orderApi = retrofit.create(OrderApi.class);
+        Call<List<Order>> call = orderApi.getHistoric(userCpf);
+
+        call.enqueue(new Callback<List<Order>>() {
+            @Override
+            public void onResponse(Call<List<Order>> call, Response<List<Order>> response) {
+                if (response.isSuccessful()) {
+                    List<Order> orderList = response.body();
+
+                    if(orderList != null && !orderList.isEmpty()) {
+                        pedidos.clear();  // Limpa a lista de produtos antes de adicionar novos
+                        pedidos.addAll(orderList);
+
+                        Toast.makeText(getActivity(), "Pedidos encontrados.", Toast.LENGTH_SHORT).show();
+                        AdapterProdutosComprados adapter = new AdapterProdutosComprados(getActivity(), pedidos);
+                        lista_pedidos.setAdapter(adapter);
+                        adapter.notifyDataSetChanged();
+                    } else{
+                        Toast.makeText(getActivity(), "Nenhum pedido encontrado.", Toast.LENGTH_SHORT).show();
+                        Log.e("Error", "Nenhum pedido encontrado.");
+                    }
+                } else {
+                    Toast.makeText(getActivity(), "Falha ao carregar pedidos", Toast.LENGTH_SHORT).show();
+                    Log.e("Error", response.message());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<List<Order>> call, Throwable throwable) {
+                Toast.makeText(getActivity(), throwable.getMessage(), Toast.LENGTH_SHORT).show();
+                Log.e("Error", throwable.getMessage());
             }
         });
     }
