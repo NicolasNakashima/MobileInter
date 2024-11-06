@@ -20,10 +20,13 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.khiata.R;
 import com.example.khiata.adapters.AdapterProdutosCarrinho;
 import com.example.khiata.apis.CartApi;
+import com.example.khiata.apis.UserApi;
 import com.example.khiata.fragments.fragment_tela_selecao_endereco_pagamento;
 import com.example.khiata.models.Cart;
 import com.example.khiata.models.CartItem;
 import com.example.khiata.models.Product;
+import com.example.khiata.models.User;
+import com.google.firebase.auth.FirebaseAuth;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -41,6 +44,7 @@ public class tela_carrinho extends AppCompatActivity {
     RecyclerView lista_produtos_carrinho;
     List<Product> produtos = new ArrayList();
     private Retrofit retrofit;
+    String userCpf;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -83,14 +87,13 @@ public class tela_carrinho extends AppCompatActivity {
             }
         });
 
+        buscarCPFDoUsuario(FirebaseAuth.getInstance().getCurrentUser().getEmail());
+
         //Definir a lista de produtos
         lista_produtos_carrinho = findViewById(R.id.lista_produtos_carrinho);
         AdapterProdutosCarrinho adapterProdutosCarrinho = new AdapterProdutosCarrinho(getApplicationContext(), produtos);
         lista_produtos_carrinho.setAdapter(adapterProdutosCarrinho);
         lista_produtos_carrinho.setLayoutManager(new LinearLayoutManager(getApplicationContext(), LinearLayoutManager.HORIZONTAL, false));
-
-        //Buscar os itens do carrinho do usuário
-        pegarItensDoCarrinho("98765432100");
     }
 
     // Método para buscar os itens do carrinho do usuário
@@ -165,6 +168,35 @@ public class tela_carrinho extends AppCompatActivity {
             public void onFailure(Call<List<List<String>>> call, Throwable throwable) {
                 Toast.makeText(getApplicationContext(), throwable.getMessage(), Toast.LENGTH_SHORT).show();
                 Log.e("Error", throwable.getMessage());
+            }
+        });
+    }
+
+    //Método para buscar o CPF do usário
+    private void buscarCPFDoUsuario(String userEmail) {
+        String API_BASE_URL = "https://apikhiata.onrender.com/";
+        retrofit = new Retrofit.Builder()
+                .baseUrl(API_BASE_URL)
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+        UserApi userApi = retrofit.create(UserApi.class);
+        Call<User> call = userApi.buscarUsuarioPorEmail(userEmail);
+        call.enqueue(new Callback<User>() {
+            @Override
+            public void onResponse(Call<User> call, Response<User> response) {
+                if (response.isSuccessful() && response.body() != null) {
+                    User userResponse = response.body();
+                    userCpf= userResponse.getCpf();
+                    pegarItensDoCarrinho(userCpf);
+                } else {
+                    Toast.makeText(getApplicationContext(), "Usuário não encontrado ou resposta inválida", Toast.LENGTH_SHORT).show();
+                    Log.e("API Error", "Response code: " + response.code() + " | Error body: " + response.errorBody());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<User> call, Throwable throwable) {
+                Toast.makeText(getApplicationContext(), throwable.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
     }

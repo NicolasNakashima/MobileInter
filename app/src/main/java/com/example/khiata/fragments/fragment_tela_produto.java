@@ -30,12 +30,14 @@ import com.example.khiata.R;
 import com.example.khiata.adapters.AdapterAvaliacoesCostureira;
 import com.example.khiata.adapters.AdapterProdutosPesquisados;
 import com.example.khiata.apis.CartApi;
+import com.example.khiata.apis.OrderApi;
 import com.example.khiata.apis.ProductApi;
 import com.example.khiata.apis.UserApi;
 import com.example.khiata.classes.tela_carrinho;
 import com.example.khiata.models.Avaliation;
 import com.example.khiata.models.Cart;
 import com.example.khiata.models.CartItem;
+import com.example.khiata.models.Order;
 import com.example.khiata.models.Product;
 import com.example.khiata.models.User;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -44,6 +46,8 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
+import java.io.IOException;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -52,6 +56,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
+import retrofit2.converter.scalars.ScalarsConverterFactory;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -111,12 +116,14 @@ public class fragment_tela_produto extends Fragment {
     String userCpf;
     private Retrofit retrofit;
     String nomeProduto;
+    double preco;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_tela_produto, container, false);
 
+        //Buscar o CPF do usuário
         buscarCPFDoUsuario(FirebaseAuth.getInstance().getCurrentUser().getEmail());
 
         //Botão para voltar para a tela home
@@ -158,6 +165,7 @@ public class fragment_tela_produto extends Fragment {
                 vendedor_produto.setText("Vendedor: " + vendedor_produto_txt);
                 preco_produto = view.findViewById(R.id.preco_produto);
                 preco_produto.setText("R$ " + preco_produto_txt);
+                preco = Double.parseDouble(preco_produto_txt);
                 tamanho_produto = view.findViewById(R.id.tamanho_produto);
                 if(tamanho_produto_txt == null){
                     tamanho_produto.setText("Tamanho: Nenhum");
@@ -192,7 +200,7 @@ public class fragment_tela_produto extends Fragment {
         btn_adicionar_produto_carrinho.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                inserirProdutoNoCarrinho(userCpf, nomeProduto);
+                pegarItensDoCarrinho(userCpf, nomeProduto);
             }
         });
 
@@ -233,74 +241,8 @@ public class fragment_tela_produto extends Fragment {
         return view;
     }
 
-    //Método para buscar o CPF do usário
-    private void buscarCPFDoUsuario(String userEmail) {
-        String API_BASE_URL = "https://apikhiata.onrender.com/";
-        retrofit = new Retrofit.Builder()
-                .baseUrl(API_BASE_URL)
-                .addConverterFactory(GsonConverterFactory.create())
-                .build();
-        UserApi userApi = retrofit.create(UserApi.class);
-        Call<User> call = userApi.buscarUsuarioPorEmail(userEmail);
-        call.enqueue(new Callback<User>() {
-            @Override
-            public void onResponse(Call<User> call, Response<User> response) {
-                if (response.isSuccessful() && response.body() != null) {
-                    User userResponse = response.body();
-                    userCpf= userResponse.getCpf();
-                } else {
-                    Toast.makeText(getContext(), "Usuário não encontrado ou resposta inválida", Toast.LENGTH_SHORT).show();
-                    Log.e("API Error", "Response code: " + response.code() + " | Error body: " + response.errorBody());
-                }
-            }
-
-            @Override
-            public void onFailure(Call<User> call, Throwable throwable) {
-                Toast.makeText(getContext(), throwable.getMessage(), Toast.LENGTH_SHORT).show();
-            }
-        });
-    }
-
-    //Método para inserir um produto no carrinho
-    private void inserirProdutoNoCarrinho(String userCpf, String productName) {
-        Log.d("CPF", userCpf);
-        Log.d("productName", productName);
-        String API_BASE_URL = "https://api-khiata.onrender.com/";
-
-        Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(API_BASE_URL)
-                .addConverterFactory(GsonConverterFactory.create())
-                .build();
-
-        CartApi cartApi = retrofit.create(CartApi.class);
-        Call<Void> call = cartApi.updateCart(userCpf, 1,productName);
-
-        call.enqueue(new Callback<Void>() {
-            @Override
-            public void onResponse(Call<Void> call, Response<Void> response) {
-                if (response.isSuccessful()) {
-                    Toast.makeText(getActivity(), "Produto inserido no carrinho.", Toast.LENGTH_SHORT).show();
-                    Log.d("Success", response.message());
-                    pegarCarrinhoDoUsuario(userCpf);
-//                    Intent intent = new Intent(getActivity(), tela_carrinho.class);
-//                    startActivity(intent);
-//                    getActivity().finish();
-                } else {
-                    Toast.makeText(getActivity(), "Falha ao inseririr o produto no carrinho.", Toast.LENGTH_SHORT).show();
-                    Log.e("Error", response.errorBody().toString());
-                }
-            }
-
-            @Override
-            public void onFailure(Call<Void> call, Throwable throwable) {
-                Toast.makeText(getActivity(), throwable.getMessage(), Toast.LENGTH_SHORT).show();
-                Log.e("Error", throwable.getMessage());
-            }
-        });
-    }
-
     // Método para buscar o carrinho do usuário
-    private void pegarCarrinhoDoUsuario(String userCpf) {
+    private void pegarItensDoCarrinho(String userCpf, String productName) {
         Log.e("userCpf", userCpf);
         String API_BASE_URL = "https://api-khiata.onrender.com/";
         retrofit = new Retrofit.Builder()
@@ -361,9 +303,17 @@ public class fragment_tela_produto extends Fragment {
                         Log.e("Error", "Nenhum item no carrinho encontrado.");
                     }
 
+                    //Inseririr um novo item no carrinho se o carrinho existir
+                    inserirProdutoNoCarrinho(userCpf, productName);
+
                 } else {
-                    Toast.makeText(getActivity(), "Falha ao carregar o carrinho", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getActivity(), "Carrinho não existe", Toast.LENGTH_SHORT).show();
                     Log.e("Error", "Response code: " + response.code());
+                    //Criar um novo carrinho se o carrinho não existir
+                    LocalDate dataAtual = LocalDate.now();
+                    String data = dataAtual.toString();
+                    Order order = new Order(0, userCpf, "Pix", "Pendente", data, data, data);
+                    criarNovoPedido(order, userCpf, productName);
                 }
             }
 
@@ -373,7 +323,114 @@ public class fragment_tela_produto extends Fragment {
                 Log.e("Error", throwable.getMessage());
             }
         });
+    }
 
-        //Método para criar um pedido
+    // Método para inserir um produto no carrinho
+    private void inserirProdutoNoCarrinho(String userCpf, String productName) {
+        Log.d("CPF", userCpf);
+        Log.d("productName", productName);
+        String API_BASE_URL = "https://api-khiata.onrender.com/";
+
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl(API_BASE_URL)
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+
+        CartApi cartApi = retrofit.create(CartApi.class);
+        Call<Void> call = cartApi.updateCart(userCpf, 1, productName);
+
+        call.enqueue(new Callback<Void>() {
+            @Override
+            public void onResponse(Call<Void> call, Response<Void> response) {
+                if (response.isSuccessful()) {
+                    Toast.makeText(getActivity(), "Produto inserido no carrinho.", Toast.LENGTH_SHORT).show();
+                    Log.d("Success", response.message());
+//                Intent intent = new Intent(getActivity(), tela_carrinho.class);
+//                startActivity(intent);
+//                getActivity().finish();
+                } else {
+                    Toast.makeText(getActivity(), "Falha ao inserir o produto no carrinho.", Toast.LENGTH_SHORT).show();
+                    try {
+                        if (response.errorBody() != null) {
+                            String errorResponse = response.errorBody().string();
+                            Log.e("Error", errorResponse);
+                        }
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Void> call, Throwable throwable) {
+                Toast.makeText(getActivity(), throwable.getMessage(), Toast.LENGTH_SHORT).show();
+                Log.e("Error", throwable.getMessage());
+            }
+        });
+    }
+
+
+    //Método para criar um novo carrinho/pedido
+    private void criarNovoPedido(Order order, String userCpf, String productName) {
+        String API_BASE_URL = "https://api-khiata.onrender.com/";
+        retrofit = new Retrofit.Builder()
+                .baseUrl(API_BASE_URL)
+                .addConverterFactory(ScalarsConverterFactory.create())
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+        OrderApi orderApi = retrofit.create(OrderApi.class);
+        Call<String> call = orderApi.createOrder(order);
+        call.enqueue(new Callback<String>() {
+            @Override
+            public void onResponse(Call<String> call, Response<String> response) {
+                if (!response.isSuccessful()) {
+                    try {
+                        String errorBody = response.errorBody().string();
+                        Toast.makeText(getActivity(), "Erro: " + errorBody, Toast.LENGTH_LONG).show();
+                        Log.e("Error", errorBody);
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                        Log.e("Error", e.getMessage());
+                    }
+                } else {
+                    Toast.makeText(getActivity(), "Carrinho criado com sucesso", Toast.LENGTH_LONG).show();
+                    inserirProdutoNoCarrinho(userCpf, productName);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<String> call, Throwable t) {
+                Toast.makeText(getActivity(), "Erro ao criar carrinho: " + t.getMessage(), Toast.LENGTH_LONG).show();
+                Log.e("Error", t.getMessage());
+            }
+        });
+    }
+
+    //Método para buscar o CPF do usário
+    private void buscarCPFDoUsuario(String userEmail) {
+        String API_BASE_URL = "https://apikhiata.onrender.com/";
+        retrofit = new Retrofit.Builder()
+                .baseUrl(API_BASE_URL)
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+        UserApi userApi = retrofit.create(UserApi.class);
+        Call<User> call = userApi.buscarUsuarioPorEmail(userEmail);
+        call.enqueue(new Callback<User>() {
+            @Override
+            public void onResponse(Call<User> call, Response<User> response) {
+                if (response.isSuccessful() && response.body() != null) {
+                    User userResponse = response.body();
+                    userCpf= userResponse.getCpf();
+                } else {
+                    Toast.makeText(getContext(), "Usuário não encontrado ou resposta inválida", Toast.LENGTH_SHORT).show();
+                    Log.e("API Error", "Response code: " + response.code() + " | Error body: " + response.errorBody());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<User> call, Throwable throwable) {
+                Toast.makeText(getContext(), throwable.getMessage(), Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 }

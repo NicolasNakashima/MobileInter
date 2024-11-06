@@ -15,7 +15,17 @@ public class Order {
     //Constructor
     public Order(int cart_id, double finalValue, String userCpf, String paymentmethod, String status, String created_Date, String orderDate, String deliveryDate) {
         this.cart_id = cart_id;
-        FinalValue = finalValue;
+        this.FinalValue = finalValue;
+        this.userCpf = userCpf;
+        this.paymentmethod = paymentmethod;
+        this.status = status;
+        this.created_Date = created_Date;
+        this.orderDate = orderDate;
+        this.deliveryDate = deliveryDate;
+    }
+
+    public Order(double finalValue, String userCpf, String paymentmethod, String status, String created_Date, String orderDate, String deliveryDate) {
+        this.FinalValue = finalValue;
         this.userCpf = userCpf;
         this.paymentmethod = paymentmethod;
         this.status = status;
