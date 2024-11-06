@@ -5,7 +5,6 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -15,8 +14,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.khiata.R;
 import com.example.khiata.fragments.fragment_tela_resumo_compra;
-import com.example.khiata.models.Historic;
-import com.example.khiata.models.Product;
+import com.example.khiata.models.Order;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -24,10 +22,10 @@ import java.util.List;
 import retrofit2.Retrofit;
 
 public class AdapterProdutosComprados extends RecyclerView.Adapter<AdapterProdutosComprados.MeuViewHolder> {
-    private List<Historic> pedidos = new ArrayList();
+    private List<Order> pedidos = new ArrayList();
     private Context context;
 
-    public AdapterProdutosComprados(Context context, List<Historic> pedidos) {
+    public AdapterProdutosComprados(Context context, List<Order> pedidos) {
         this.context = context;
         this.pedidos = pedidos;
     }
@@ -44,14 +42,14 @@ public class AdapterProdutosComprados extends RecyclerView.Adapter<AdapterProdut
 
     @Override
     public void onBindViewHolder(@NonNull AdapterProdutosComprados.MeuViewHolder holder, int position) {
-        TextView cart_id = holder.cart_id;
+        TextView id_pedido = holder.id_pedido;
         TextView status_pedido = holder.status_pedido;
         TextView total_pedido = holder.total_pedido;
         TextView forma_pagamento = holder.forma_pagamento;
         TextView data_pedido = holder.data_pedido;
 
-        Historic pedido = pedidos.get(position);
-        cart_id.setText("ID: " + pedido.getCart_id());
+        Order pedido = pedidos.get(position);
+        id_pedido.setText("Cart ID: " + pedido.getCart_id());
         status_pedido.setText(pedido.getStatus());
         total_pedido.setText("Total: R$ " + pedido.getFinalValue());
         forma_pagamento.setText("Forma de pagamento: " + pedido.getPaymentmethod());
@@ -67,6 +65,8 @@ public class AdapterProdutosComprados extends RecyclerView.Adapter<AdapterProdut
                 bundle.putString("cart_id", String.valueOf(pedido.getCart_id()));
                 bundle.putString("forma_pagamento", pedido.getPaymentmethod());
                 bundle.putString("data_pedido", pedido.getOrderDate());
+                bundle.putString("total", String.valueOf(pedido.getFinalValue()));
+                bundle.putString("status", pedido.getStatus());
                 telaResumoCompraFragment.setArguments(bundle);
 
                 FragmentTransaction transaction = ((AppCompatActivity) context).getSupportFragmentManager().beginTransaction();
@@ -81,10 +81,10 @@ public class AdapterProdutosComprados extends RecyclerView.Adapter<AdapterProdut
     public int getItemCount() {return pedidos.size();}
 
     public class MeuViewHolder extends RecyclerView.ViewHolder {
-        TextView cart_id, status_pedido, total_pedido, forma_pagamento, data_pedido;
+        TextView id_pedido, status_pedido, total_pedido, forma_pagamento, data_pedido;
         public MeuViewHolder(@NonNull View itemView) {
             super(itemView);
-            cart_id = itemView.findViewById(R.id.cart_id);
+            id_pedido = itemView.findViewById(R.id.id_pedido);
             status_pedido = itemView.findViewById(R.id.status_pedido);
             total_pedido = itemView.findViewById(R.id.total_pedido);
             forma_pagamento = itemView.findViewById(R.id.forma_pagamento);

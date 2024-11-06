@@ -143,6 +143,26 @@ public class AdapterCursos extends RecyclerView.Adapter<AdapterCursos.MeuViewHol
                     premiumStatus = userResponse.getPremiumStatus();
                     Log.d("premiumStatus", String.valueOf(premiumStatus));
                 } else {
+                    Dialog dialog = new Dialog(context);
+
+                    LayoutInflater inflater = LayoutInflater.from(context);
+                    View popupView = inflater.inflate(R.layout.popup_mensagem, null);
+
+                    TextView msgPopup = popupView.findViewById(R.id.msg_popup);
+                    msgPopup.setText("Erro:"+response.errorBody());
+                    ImageView imgPopup = popupView.findViewById(R.id.img_popup);
+                    imgPopup.setImageResource(R.drawable.icon_pop_alert);
+                    Button btnPopup = popupView.findViewById(R.id.btn_popup);
+                    btnPopup.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            dialog.cancel();
+                        }
+                    });
+
+                    dialog.setContentView(popupView);
+                    dialog.setCancelable(true);
+                    dialog.show();
                     Log.e("API Error", "Response code: " + response.code() + " | Error body: " + response.errorBody());
                 }
             }
@@ -155,7 +175,7 @@ public class AdapterCursos extends RecyclerView.Adapter<AdapterCursos.MeuViewHol
                 View popupView = inflater.inflate(R.layout.popup_mensagem, null);
 
                 TextView msgPopup = popupView.findViewById(R.id.msg_popup);
-                msgPopup.setText(throwable.getMessage());
+                msgPopup.setText("Erro:"+throwable.getMessage());
                 ImageView imgPopup = popupView.findViewById(R.id.img_popup);
                 imgPopup.setImageResource(R.drawable.icon_pop_alert);
                 Button btnPopup = popupView.findViewById(R.id.btn_popup);

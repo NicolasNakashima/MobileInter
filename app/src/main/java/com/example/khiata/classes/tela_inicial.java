@@ -20,7 +20,8 @@ import com.google.firebase.auth.FirebaseAuth;
 
 public class tela_inicial extends AppCompatActivity {
 
-    Button btn_login_inicio, btn_cadastrar_inicio, btn_admin;
+    Button btn_login_inicio, btn_cadastrar_inicio;
+    TextView btn_admin;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -76,7 +77,7 @@ public class tela_inicial extends AppCompatActivity {
         TextView msgPopup = popup_opcao.findViewById(R.id.msg_popup);
         msgPopup.setText("Gostaria de relizar um pesquisa forms do aplicativo?");
         ImageView imgPopup = popup_opcao.findViewById(R.id.img_popup);
-        imgPopup.setImageResource(R.drawable.icon_pop_alert);
+        imgPopup.setImageResource(R.drawable.icon_pop_forms);
         Button btn_seguir = popup_opcao.findViewById(R.id.btn_seguir);
         btn_seguir.setText("Sim");
         btn_seguir.setOnClickListener(new View.OnClickListener() {

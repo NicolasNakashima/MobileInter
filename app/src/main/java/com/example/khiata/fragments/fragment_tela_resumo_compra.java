@@ -1,5 +1,6 @@
 package com.example.khiata.fragments;
 
+import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
 
@@ -10,6 +11,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -75,7 +77,7 @@ public class fragment_tela_resumo_compra extends Fragment {
 
     ImageView voltar_compras, btn_carrinho;
     private Retrofit retrofit;
-    TextView cart_id, cpf_usuario, data_pedido, forma_pagamento, destinatario_pedido;
+    TextView cart_id, cpf_usuario, data_pedido, forma_pagamento, status, total_pedido;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -103,7 +105,7 @@ public class fragment_tela_resumo_compra extends Fragment {
             }
         });
 
-        destinatario_pedido = view.findViewById(R.id.destinatario_pedido);
+
         cpf_usuario = view.findViewById(R.id.cpf_usuario);
         buscarInformacoesDoUsuario(FirebaseAuth.getInstance().getCurrentUser().getEmail());
         //Pegando informações do pedido
@@ -112,6 +114,8 @@ public class fragment_tela_resumo_compra extends Fragment {
             String cart_id_txt = bundle.getString("cart_id");
             String forma_pagamento_txt = bundle.getString("forma_pagamento");
             String data_pedido_txt = bundle.getString("data_pedido");
+            String status_txt = bundle.getString("status");
+            String total_pedido_txt = bundle.getString("total");
             if (cart_id_txt != null && forma_pagamento_txt != null && data_pedido_txt != null) {
                 cart_id = view.findViewById(R.id.cart_id);
                 cart_id.setText("ID: " + cart_id_txt);
@@ -119,6 +123,10 @@ public class fragment_tela_resumo_compra extends Fragment {
                 forma_pagamento.setText("Forma de pagamento: " + forma_pagamento_txt);
                 data_pedido = view.findViewById(R.id.data_pedido);
                 data_pedido.setText("Data: " + data_pedido_txt);
+                status = view.findViewById(R.id.status);
+                status.setText(status_txt);
+                total_pedido = view.findViewById(R.id.total_pedido);
+                total_pedido.setText("Total: " + total_pedido_txt);
             }
         }
         return view;
@@ -139,16 +147,51 @@ public class fragment_tela_resumo_compra extends Fragment {
                 if (response.isSuccessful() && response.body() != null) {
                     User userResponse = response.body();
                     cpf_usuario.setText("CPF: " + userResponse.getCpf());
-                    destinatario_pedido.setText(userResponse.getName());
                 } else {
-                    Toast.makeText(getContext(), "Usuário não encontrado ou resposta inválida", Toast.LENGTH_SHORT).show();
+                    Dialog dialog = new Dialog(getActivity());
+                    LayoutInflater inflater = getLayoutInflater();
+                    View popupView = inflater.inflate(R.layout.popup_mensagem, null);
+
+                    TextView msgPopup = popupView.findViewById(R.id.msg_popup);
+                    msgPopup.setText("Erro:" + response.message());
+                    ImageView imgPopup = popupView.findViewById(R.id.img_popup);
+                    imgPopup.setImageResource(R.drawable.icon_pop_alert);
+                    Button btnPopup = popupView.findViewById(R.id.btn_popup);
+                    btnPopup.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            dialog.cancel();
+                        }
+                    });
+
+                    dialog.setContentView(popupView);
+                    dialog.setCancelable(true);
+                    dialog.show();
                     Log.e("API Error", "Response code: " + response.code() + " | Error body: " + response.errorBody());
                 }
             }
 
             @Override
             public void onFailure(Call<User> call, Throwable throwable) {
-                Toast.makeText(getContext(), throwable.getMessage(), Toast.LENGTH_SHORT).show();
+                Dialog dialog = new Dialog(getActivity());
+                LayoutInflater inflater = getLayoutInflater();
+                View popupView = inflater.inflate(R.layout.popup_mensagem, null);
+
+                TextView msgPopup = popupView.findViewById(R.id.msg_popup);
+                msgPopup.setText("Erro:" + throwable.getMessage());
+                ImageView imgPopup = popupView.findViewById(R.id.img_popup);
+                imgPopup.setImageResource(R.drawable.icon_pop_alert);
+                Button btnPopup = popupView.findViewById(R.id.btn_popup);
+                btnPopup.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        dialog.cancel();
+                    }
+                });
+
+                dialog.setContentView(popupView);
+                dialog.setCancelable(true);
+                dialog.show();
             }
         });
     }

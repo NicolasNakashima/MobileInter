@@ -1,6 +1,6 @@
 package com.example.khiata.models;
 
-public class Historic {
+public class Order {
     //Campos
     private int id;
     private int cart_id;
@@ -13,9 +13,19 @@ public class Historic {
     private String deliveryDate;
 
     //Constructor
-    public Historic(int cart_id, double finalValue, String userCpf, String paymentmethod, String status, String created_Date, String orderDate, String deliveryDate) {
+    public Order(int cart_id, double finalValue, String userCpf, String paymentmethod, String status, String created_Date, String orderDate, String deliveryDate) {
         this.cart_id = cart_id;
-        FinalValue = finalValue;
+        this.FinalValue = finalValue;
+        this.userCpf = userCpf;
+        this.paymentmethod = paymentmethod;
+        this.status = status;
+        this.created_Date = created_Date;
+        this.orderDate = orderDate;
+        this.deliveryDate = deliveryDate;
+    }
+
+    public Order(double finalValue, String userCpf, String paymentmethod, String status, String created_Date, String orderDate, String deliveryDate) {
+        this.FinalValue = finalValue;
         this.userCpf = userCpf;
         this.paymentmethod = paymentmethod;
         this.status = status;
@@ -100,7 +110,7 @@ public class Historic {
     //toString
     @Override
     public String toString() {
-        return "Historic{" +
+        return "Order{" +
                 "id=" + id +
                 ", cart_id=" + cart_id +
                 ", FinalValue=" + FinalValue +

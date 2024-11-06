@@ -224,7 +224,7 @@ public class fragment_tela_curso extends Fragment {
                 WebSettings webSettings = youtubeWebView.getSettings();
                 webSettings.setJavaScriptEnabled(true);
 
-                // Lógica para extrair o ID do vídeo e carregar a URL embutida do YouTube
+                // Lógica para extrair o ID do vídeo e carregar a URL do YouTube
                 String videoId;
                 if (video_url_txt.contains("youtu.be/")) {
                     videoId = video_url_txt.substring(video_url_txt.lastIndexOf("/") + 1);
@@ -238,7 +238,26 @@ public class fragment_tela_curso extends Fragment {
                     String embedUrl = "https://www.youtube.com/embed/" + videoId + "?rel=0&showinfo=0&controls=1&modestbranding=1";
                     youtubeWebView.loadUrl(embedUrl);
                 } else {
-                    Toast.makeText(getActivity(), "ID de vídeo inexistente", Toast.LENGTH_SHORT).show();
+                    Dialog dialog = new Dialog(getActivity());
+
+                    inflater = getLayoutInflater();
+                    View popupView = inflater.inflate(R.layout.popup_mensagem, null);
+
+                    TextView msgPopup = popupView.findViewById(R.id.msg_popup);
+                    msgPopup.setText("Erro ao carregar o vídeo, tente novamente mais tarde.");
+                    ImageView imgPopup = popupView.findViewById(R.id.img_popup);
+                    imgPopup.setImageResource(R.drawable.icon_pop_alert);
+                    Button btnPopup = popupView.findViewById(R.id.btn_popup);
+                    btnPopup.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            dialog.cancel();
+                        }
+                    });
+
+                    dialog.setContentView(popupView);
+                    dialog.setCancelable(true);
+                    dialog.show();
                 }
             }
         }

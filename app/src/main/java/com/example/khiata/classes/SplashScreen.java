@@ -28,6 +28,7 @@ public class SplashScreen extends AppCompatActivity {
             return insets;
         });
 
+        //Definindo um tempo para abrir a tela inicial após o splash screen finalizar
         new Handler(Looper.getMainLooper()).postDelayed(new Runnable() {
             @Override
             public void run() {
@@ -36,6 +37,7 @@ public class SplashScreen extends AppCompatActivity {
         }, 4000);
     }
 
+    //Método para abrir a tela inicial
     private void abrirTela(){
         Intent intent = new Intent(SplashScreen.this, tela_inicial.class);
         startActivity(intent);

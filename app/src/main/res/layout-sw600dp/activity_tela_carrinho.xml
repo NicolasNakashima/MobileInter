@@ -60,11 +60,12 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/cardView8"
-        android:layout_width="587dp"
+        android:layout_width="595dp"
         android:layout_height="230dp"
         android:background="#FFFFFF"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.502"
         app:layout_constraintStart_toStartOf="parent">
 
         <TextView

@@ -1,5 +1,6 @@
 package com.example.khiata.classes;
 
+import android.app.Dialog;
 import android.content.ContentValues;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -9,11 +10,14 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.provider.MediaStore;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.OrientationEventListener;
 import android.view.Surface;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
@@ -130,20 +134,6 @@ public class CameraPerfil extends AppCompatActivity {
         foto.setOnClickListener(v -> {
             foto.setVisibility(View.INVISIBLE);
         });
-
-        //Selecionar imagem da galeria
-//        ImageButton btn4 = findViewById(R.id.salvar_img);
-//        btn4.setOnClickListener(v -> {
-//            Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-//            resultLauncherGaleria.launch(intent);
-//        });
-
-        //Baixar imagem do firebase
-//        ImageButton btn2 = findViewById(R.id.salvar_img);
-//        btn2.setOnClickListener(v -> {
-//            foto.setVisibility(View.VISIBLE);
-//            database.downloadFotoPerfil(foto, Uri.parse(docData.get("url")));
-//        });
     }
 
     private ActivityResultLauncher<Intent> resultLauncherGaleria =
@@ -205,7 +195,27 @@ public class CameraPerfil extends AppCompatActivity {
                 public void onImageSaved(@NonNull ImageCapture.OutputFileResults outputFileResults) {
                     foto.setImageURI(outputFileResults.getSavedUri());
                     foto.setVisibility(View.VISIBLE);
-                    Toast.makeText(getBaseContext(), "Imagem salva", Toast.LENGTH_SHORT).show();
+
+                    //popup imagem salva
+                    Dialog dialog = new Dialog(CameraPerfil.this);
+                    LayoutInflater inflater = getLayoutInflater();
+                    View popupView = inflater.inflate(R.layout.popup_mensagem, null);
+                    TextView msgPopup = popupView.findViewById(R.id.msg_popup);
+                    msgPopup.setText("Imagem Salva");
+                    ImageView imgPopup = popupView.findViewById(R.id.img_popup);
+                    imgPopup.setImageResource(R.drawable.icon_pop_sucesso);
+                    Button btnPopup = popupView.findViewById(R.id.btn_popup);
+                    btnPopup.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            dialog.cancel();
+                        }
+                    });
+                    dialog.setContentView(popupView);
+                    dialog.setCancelable(true); //Permite fechar ao clicar fora do pop-up
+
+                    dialog.show();
+
                     database.uploadFotoPerfil(getBaseContext(), foto, docData, userEmail);
 
 //                    // Iniciar a MainActivity e carregar o fragmento de perfil
@@ -221,7 +231,21 @@ public class CameraPerfil extends AppCompatActivity {
                                 startActivity(intent);
                             }).addOnFailureListener(e -> {
                                 Log.d("TAG", "Falha ao obter URL da imagem: " + e.getMessage());
-                                Toast.makeText(getBaseContext(), "Erro ao carregar a imagem", Toast.LENGTH_SHORT).show();
+
+                                //popup erro ao carregar imagem
+                                msgPopup.setText("Erro ao carregar imagem");
+                                imgPopup.setImageResource(R.drawable.icon_pop_alert);
+                                btnPopup.setOnClickListener(new View.OnClickListener() {
+                                    @Override
+                                    public void onClick(View v) {
+                                        dialog.cancel();
+                                    }
+                                });
+
+                                dialog.setContentView(popupView);
+                                dialog.setCancelable(true);
+
+                                dialog.show();
                             });
                         }, 3000); // Atraso de 3 segundos para esperar que a imagem esteja disponível
                 }
@@ -295,7 +319,27 @@ public class CameraPerfil extends AppCompatActivity {
                 }
             }
             if (!permissionGranted) {
-                Toast.makeText(getApplicationContext(),"Permissão NEGADA. Tente novamente.",Toast.LENGTH_SHORT).show();
+                Dialog dialog = new Dialog(CameraPerfil.this);
+
+                LayoutInflater inflater = getLayoutInflater();
+                View popupView = inflater.inflate(R.layout.popup_mensagem, null);
+
+                TextView msgPopup = popupView.findViewById(R.id.msg_popup);
+                msgPopup.setText("Permissão negada, tente novamente");
+                ImageView imgPopup = popupView.findViewById(R.id.img_popup);
+                imgPopup.setImageResource(R.drawable.icon_pop_alert);
+                Button btnPopup = popupView.findViewById(R.id.btn_popup);
+                btnPopup.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        dialog.cancel();
+                    }
+                });
+
+                dialog.setContentView(popupView);
+                dialog.setCancelable(true); //Permite fechar ao clicar fora do pop-up
+
+                dialog.show();
             } else {
                 startCamera();
             }

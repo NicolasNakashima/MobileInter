@@ -13,7 +13,7 @@
         android:layout_height="165dp">
 
         <TextView
-            android:id="@+id/cart_id"
+            android:id="@+id/id_pedido"
             android:layout_width="194dp"
             android:layout_height="27dp"
             android:layout_marginStart="16dp"
@@ -35,7 +35,7 @@
             android:textColor="#384384"
             android:textSize="17sp"
             android:textStyle="bold"
-            app:layout_constraintStart_toEndOf="@+id/cart_id"
+            app:layout_constraintStart_toEndOf="@+id/id_pedido"
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
@@ -61,7 +61,7 @@
             android:textColor="#000000"
             android:textSize="16sp"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/cart_id" />
+            app:layout_constraintTop_toBottomOf="@+id/id_pedido" />
 
         <TextView
             android:id="@+id/data_pedido"

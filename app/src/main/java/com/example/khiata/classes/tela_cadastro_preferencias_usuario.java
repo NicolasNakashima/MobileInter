@@ -85,7 +85,7 @@ public class tela_cadastro_preferencias_usuario extends AppCompatActivity {
                 View popup_opcao = inflater.inflate(R.layout.popup_opcao, null);
 
                 TextView msgPopup = popup_opcao.findViewById(R.id.msg_popup);
-                msgPopup.setText("Você está prestes a realizar o logout.\n Deseja prosseguir?");
+                msgPopup.setText("Se você for para home, você pode defnir suas preferências depois.\n Deseja prosseguir?");
                 ImageView imgPopup = popup_opcao.findViewById(R.id.img_popup);
                 imgPopup.setImageResource(R.drawable.icon_pop_alert);
                 Button btn_seguir = popup_opcao.findViewById(R.id.btn_seguir);
@@ -179,11 +179,13 @@ public class tela_cadastro_preferencias_usuario extends AppCompatActivity {
                     // Popula o LinearLayout com CheckBoxes das categorias
                     for (Category category : categories) {
                         CheckBox checkBox = new CheckBox(getApplicationContext());
-                        checkBox.setText(category.getType());
+                        checkBox.setText(category.getCategory());
                         checkBox.setTag(category.getId()); // Armazena o ID da categoria no CheckBox
                         checkBox.setTextColor(Color.BLACK);
                         checkBox.setTextSize(25);
                         checkBox.setTypeface(null, Typeface.BOLD);
+
+                        Log.d("Categorias", category.getCategory());
 
                         // Listener para armazenar/remover a seleção
                         checkBox.setOnCheckedChangeListener((buttonView, isChecked) -> {
@@ -204,7 +206,26 @@ public class tela_cadastro_preferencias_usuario extends AppCompatActivity {
                         lista_categorias.addView(checkBox); // Adiciona o CheckBox ao LinearLayout
                     }
                 } else {
-                    Toast.makeText(getApplicationContext(), "Nenhuma categoria encontrada.", Toast.LENGTH_SHORT).show();
+                    Dialog dialog = new Dialog(tela_cadastro_preferencias_usuario.this);
+
+                    LayoutInflater inflater = getLayoutInflater();
+                    View popupView = inflater.inflate(R.layout.popup_mensagem, null);
+
+                    TextView msgPopup = popupView.findViewById(R.id.msg_popup);
+                    msgPopup.setText("Não foi possível encontrar as categorias. Tente novamente mais tarde.");
+                    ImageView imgPopup = popupView.findViewById(R.id.img_popup);
+                    imgPopup.setImageResource(R.drawable.icon_pop_alert);
+                    Button btnPopup = popupView.findViewById(R.id.btn_popup);
+                    btnPopup.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            dialog.cancel();
+                        }
+                    });
+
+                    dialog.setContentView(popupView);
+                    dialog.setCancelable(true);
+                    dialog.show();
                     Log.e("Error", "Nenhuma categoria encontrada.");
                 }
             }
@@ -236,7 +257,26 @@ public class tela_cadastro_preferencias_usuario extends AppCompatActivity {
 
             @Override
             public void onFailure(Call<User> call, Throwable throwable) {
-                Toast.makeText(getApplicationContext(), throwable.getMessage(), Toast.LENGTH_SHORT).show();
+                Dialog dialog = new Dialog(tela_cadastro_preferencias_usuario.this);
+
+                LayoutInflater inflater = getLayoutInflater();
+                View popupView = inflater.inflate(R.layout.popup_mensagem, null);
+
+                TextView msgPopup = popupView.findViewById(R.id.msg_popup);
+                msgPopup.setText(throwable.getMessage());
+                ImageView imgPopup = popupView.findViewById(R.id.img_popup);
+                imgPopup.setImageResource(R.drawable.icon_pop_alert);
+                Button btnPopup = popupView.findViewById(R.id.btn_popup);
+                btnPopup.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        dialog.cancel();
+                    }
+                });
+
+                dialog.setContentView(popupView);
+                dialog.setCancelable(true);
+                dialog.show();
             }
         });
     }
@@ -270,11 +310,48 @@ public class tela_cadastro_preferencias_usuario extends AppCompatActivity {
                             e.printStackTrace();
                         }
                     }
-                    Toast.makeText(getApplicationContext(), errorMessage, Toast.LENGTH_LONG).show();
+                    // Pop up de erro
+                    Dialog dialog = new Dialog(tela_cadastro_preferencias_usuario.this);
+                    LayoutInflater inflater = getLayoutInflater();
+                    View popupView = inflater.inflate(R.layout.popup_mensagem, null);
+                    TextView msgPopup = popupView.findViewById(R.id.msg_popup);
+                    msgPopup.setText("Erro ao cadastrar as preferências: " + errorMessage);
+                    ImageView imgPopup = popupView.findViewById(R.id.img_popup);
+                    imgPopup.setImageResource(R.drawable.icon_pop_alert);
+                    Button btnPopup = popupView.findViewById(R.id.btn_popup);
+                    btnPopup.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            dialog.cancel();
+                        }
+                    });
+                    dialog.setContentView(popupView);
+                    dialog.setCancelable(true);
+                    dialog.show();
+
                     Log.e("Error", errorMessage);
                 } else {
                     // A atualização foi bem-sucedida
-                    Toast.makeText(getApplicationContext(), "Preferências atualizadas com sucesso!", Toast.LENGTH_SHORT).show();
+                    Dialog dialog = new Dialog(tela_cadastro_preferencias_usuario.this);
+
+                    LayoutInflater inflater = getLayoutInflater();
+                    View popupView = inflater.inflate(R.layout.popup_mensagem, null);
+
+                    TextView msgPopup = popupView.findViewById(R.id.msg_popup);
+                    msgPopup.setText("Preferências cadastradas com sucesso!");
+                    ImageView imgPopup = popupView.findViewById(R.id.img_popup);
+                    imgPopup.setImageResource(R.drawable.icon_pop_sucesso);
+                    Button btnPopup = popupView.findViewById(R.id.btn_popup);
+                    btnPopup.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            dialog.cancel();
+                        }
+                    });
+
+                    dialog.setContentView(popupView);
+                    dialog.setCancelable(true);
+                    dialog.show();
                     Intent intent = new Intent(tela_cadastro_preferencias_usuario.this, MainActivity.class);
                     startActivity(intent);
                     finish();
@@ -283,7 +360,26 @@ public class tela_cadastro_preferencias_usuario extends AppCompatActivity {
 
             @Override
             public void onFailure(Call<Void> call, Throwable t) {
-                Toast.makeText(getApplicationContext(), "Erro ao atualizar preferências: " + t.getMessage(), Toast.LENGTH_LONG).show();
+                Dialog dialog = new Dialog(tela_cadastro_preferencias_usuario.this);
+
+                LayoutInflater inflater = getLayoutInflater();
+                View popupView = inflater.inflate(R.layout.popup_mensagem, null);
+
+                TextView msgPopup = popupView.findViewById(R.id.msg_popup);
+                msgPopup.setText("Erro ao cadastrar preferências: " + t.getMessage());
+                ImageView imgPopup = popupView.findViewById(R.id.img_popup);
+                imgPopup.setImageResource(R.drawable.icon_pop_alert);
+                Button btnPopup = popupView.findViewById(R.id.btn_popup);
+                btnPopup.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        dialog.cancel();
+                    }
+                });
+
+                dialog.setContentView(popupView);
+                dialog.setCancelable(true);
+                dialog.show();
             }
         });
     }
