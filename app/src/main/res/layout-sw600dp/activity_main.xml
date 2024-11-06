@@ -32,48 +32,48 @@
 
         <ImageButton
             android:id="@+id/btn_lateral_menu"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="30dp"
             android:background="@android:color/transparent"
-            app:srcCompat="@drawable/menu_lateral" />
+            app:srcCompat="@drawable/menu_lateral_tablet" />
 
         <ImageButton
             android:id="@+id/btn_navigation_favoritos"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:layout_marginLeft="20dp"
-            android:layout_marginRight="10dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="30dp"
+            android:layout_marginRight="30dp"
             android:background="@android:color/transparent"
-            app:srcCompat="@drawable/menu_favoritos" />
+            app:srcCompat="@drawable/menu_favoritos_tablet" />
 
         <ImageButton
             android:id="@+id/btn_navigation_home"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:layout_marginLeft="20dp"
-            android:layout_marginRight="20dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="40dp"
+            android:layout_marginRight="40dp"
             android:background="@android:color/transparent"
-            app:srcCompat="@drawable/menu_home" />
+            app:srcCompat="@drawable/menu_home_tablet" />
 
         <ImageButton
             android:id="@+id/btn_navigation_compras"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="20dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="30dp"
+            android:layout_marginRight="30dp"
             android:background="@android:color/transparent"
-            app:srcCompat="@drawable/menu_compras" />
+            app:srcCompat="@drawable/menu_compras_tablet" />
 
         <ImageButton
             android:id="@+id/btn_navigation_perfil"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="30dp"
+            android:layout_marginRight="5dp"
             android:background="@android:color/transparent"
-            app:srcCompat="@drawable/menu_perfil" />
+            app:srcCompat="@drawable/menu_perfil_tablet" />
     </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

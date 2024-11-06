@@ -212,7 +212,7 @@
                 android:layout_width="262dp"
                 android:layout_height="57dp"
                 android:layout_marginTop="40dp"
-                android:layout_marginBottom="65dp"
+                android:layout_marginBottom="130dp"
                 android:background="@drawable/style_button1"
                 android:text="Adquirir Premium"
                 android:textColor="#ffffff"

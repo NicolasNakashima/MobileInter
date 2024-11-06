@@ -68,7 +68,7 @@
         android:id="@+id/salvar_preferencias"
         android:layout_width="262dp"
         android:layout_height="52dp"
-        android:layout_marginTop="188dp"
+        android:layout_marginTop="168dp"
         android:background="@drawable/style_button1"
         android:text="Salvar"
         android:textColor="#ffffff"
@@ -96,7 +96,7 @@
     <ScrollView
         android:id="@+id/scrollView2"
         android:layout_width="wrap_content"
-        android:layout_height="100dp"
+        android:layout_height="120dp"
         android:layout_marginTop="55dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
