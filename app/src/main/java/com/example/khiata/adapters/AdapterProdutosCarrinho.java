@@ -65,7 +65,6 @@ public class AdapterProdutosCarrinho extends RecyclerView.Adapter<AdapterProduto
         TextView vendedor_produto = holder.vendedor_produto;
         TextView titulo_produto = holder.titulo_produto;
         TextView tamanho_produto = holder.tamanho_produto;
-        ImageView btn_excluir_item = holder.btn_excluir_item;
 
         Product produto = produtos.get(position);
 
@@ -114,13 +113,12 @@ public class AdapterProdutosCarrinho extends RecyclerView.Adapter<AdapterProduto
     public int getItemCount() {return produtos.size();}
 
     public class MeuViewHolder extends RecyclerView.ViewHolder {
-        ImageView img_produto, btn_excluir_item;
+        ImageView img_produto;
         TextView preco_produto, vendedor_produto, titulo_produto, tamanho_produto;
 
         public MeuViewHolder(View view) {
             super(view);
             img_produto = view.findViewById(R.id.img_produto);
-            btn_excluir_item = view.findViewById(R.id.btn_excluir_item);
             preco_produto = view.findViewById(R.id.preco_produto);
             vendedor_produto = view.findViewById(R.id.vendedor_produto);
             titulo_produto = view.findViewById(R.id.cart_id);

@@ -3,6 +3,7 @@ package com.example.khiata.classes;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.webkit.WebView;
 import android.widget.ImageView;
 
 import androidx.activity.EdgeToEdge;
@@ -18,6 +19,7 @@ import com.example.khiata.fragments.fragment_tela_home;
 public class tela_admin extends AppCompatActivity {
 
     ImageView voltar_inicio;
+    WebView webViewAreaOculta;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -39,5 +41,9 @@ public class tela_admin extends AppCompatActivity {
                 finish();
             }
         });
+
+        //Carregando a Área Oculta no WebView
+        webViewAreaOculta = findViewById(R.id.webViewAreaOculta);
+        webViewAreaOculta.loadUrl("http://ec2-54-161-187-70.compute-1.amazonaws.com:3000/login");
     }
 }

@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.webkit.WebView;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -22,6 +23,7 @@ public class tela_forms extends AppCompatActivity {
 
     ImageView voltar_inicio;
     Button btn_encerrar_forms;
+    WebView webViewForms;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -83,5 +85,9 @@ public class tela_forms extends AppCompatActivity {
                 dialog.show();
             }
         });
+
+        //WebView para exibir o Formulário da IA
+        webViewForms = findViewById(R.id.webViewForms);
+        webViewForms.loadUrl("");
     }
 }

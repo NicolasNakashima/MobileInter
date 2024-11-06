@@ -144,6 +144,7 @@ public class fragment_tela_produto extends Fragment {
             public void onClick(View v) {
                 Intent intent = new Intent(getActivity(), tela_carrinho.class);
                 startActivity(intent);
+                getActivity().finish();
             }
         });
 
@@ -287,19 +288,14 @@ public class fragment_tela_produto extends Fragment {
                     // Cria o objeto Cart e exibe os itens no Adapter
                     Cart cart = new Cart(items, cartId, total);
 
-                    // Logando as variáveis separadas
+                    // Pegando valores do carrinho e mostrando separadamente
                     Log.d("Cart ID", cartId);
                     Log.d("Total Value", total);
-                    Log.d("Item Names", itemNames.toString());
 
                     if (!items.isEmpty()) {
-                        Toast.makeText(getActivity(), "Itens do carrinho encontrados.", Toast.LENGTH_SHORT).show();
+                        Log.d("Item Names", itemNames.toString());
                         Log.d("Cart", cart.toString());
-//                    AdapterItensCarrinho adapter = new AdapterItensCarrinho(getApplicationContext(), items);
-//                    lista_itens_carrinho.setAdapter(adapter);
-//                    adapter.notifyDataSetChanged();
                     } else {
-                        Toast.makeText(getActivity(), "Nenhum item no carrinho encontrado.", Toast.LENGTH_SHORT).show();
                         Log.e("Error", "Nenhum item no carrinho encontrado.");
                     }
 
@@ -307,7 +303,7 @@ public class fragment_tela_produto extends Fragment {
                     inserirProdutoNoCarrinho(userCpf, productName);
 
                 } else {
-                    Toast.makeText(getActivity(), "Carrinho não existe", Toast.LENGTH_SHORT).show();
+                    Log.d("Error Carrinho", "Carrinho não existe");
                     Log.e("Error", "Response code: " + response.code());
                     //Criar um novo carrinho se o carrinho não existir
                     LocalDate dataAtual = LocalDate.now();
@@ -319,7 +315,25 @@ public class fragment_tela_produto extends Fragment {
 
             @Override
             public void onFailure(Call<List<List<String>>> call, Throwable throwable) {
-                Toast.makeText(getActivity(), throwable.getMessage(), Toast.LENGTH_SHORT).show();
+                Dialog dialog = new Dialog(getActivity());
+                LayoutInflater inflater = getLayoutInflater();
+                View popupView = inflater.inflate(R.layout.popup_mensagem, null);
+
+                TextView msgPopup = popupView.findViewById(R.id.msg_popup);
+                msgPopup.setText("Erro:" + throwable.getMessage());
+                ImageView imgPopup = popupView.findViewById(R.id.img_popup);
+                imgPopup.setImageResource(R.drawable.icon_pop_alert);
+                Button btnPopup = popupView.findViewById(R.id.btn_popup);
+                btnPopup.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        dialog.cancel();
+                    }
+                });
+
+                dialog.setContentView(popupView);
+                dialog.setCancelable(true);
+                dialog.show();
                 Log.e("Error", throwable.getMessage());
             }
         });
@@ -343,27 +357,119 @@ public class fragment_tela_produto extends Fragment {
             @Override
             public void onResponse(Call<Void> call, Response<Void> response) {
                 if (response.isSuccessful()) {
-                    Toast.makeText(getActivity(), "Produto inserido no carrinho.", Toast.LENGTH_SHORT).show();
                     Log.d("Success", response.message());
-//                Intent intent = new Intent(getActivity(), tela_carrinho.class);
-//                startActivity(intent);
-//                getActivity().finish();
+
+                    Dialog dialog = new Dialog(getActivity());
+                    LayoutInflater inflater = getLayoutInflater();
+                    View popupView = inflater.inflate(R.layout.popup_opcao, null);
+
+                    TextView msgPopup = popupView.findViewById(R.id.msg_popup);
+                    msgPopup.setText("Produto inserido no carrinho.");
+                    ImageView imgPopup = popupView.findViewById(R.id.img_popup);
+                    imgPopup.setImageResource(R.drawable.icon_pop_sucesso);
+                    Button btnCancel = popupView.findViewById(R.id.btn_cancelar);
+                    btnCancel.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            dialog.cancel();
+                        }
+                    });
+                    Button btnSeguir = popupView.findViewById(R.id.btn_seguir);
+                    btnSeguir.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            Intent intent = new Intent(getActivity(), tela_carrinho.class);
+                            startActivity(intent);
+                            getActivity().finish();
+                            dialog.cancel();
+                        }
+                    });
+
+                    dialog.setContentView(popupView);
+                    dialog.setCancelable(true);
+                    dialog.show();
+
                 } else {
-                    Toast.makeText(getActivity(), "Falha ao inserir o produto no carrinho.", Toast.LENGTH_SHORT).show();
+                    Dialog dialog = new Dialog(getActivity());
+                    LayoutInflater inflater = getLayoutInflater();
+                    View popupView = inflater.inflate(R.layout.popup_mensagem, null);
+
+                    TextView msgPopup = popupView.findViewById(R.id.msg_popup);
+                    msgPopup.setText("Falha ao inserir o produto no carrinho");
+                    ImageView imgPopup = popupView.findViewById(R.id.img_popup);
+                    imgPopup.setImageResource(R.drawable.icon_pop_alert);
+                    Button btnPopup = popupView.findViewById(R.id.btn_popup);
+                    btnPopup.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            dialog.cancel();
+                        }
+                    });
+
+                    dialog.setContentView(popupView);
+                    dialog.setCancelable(true);
+                    dialog.show();
+
                     try {
                         if (response.errorBody() != null) {
                             String errorResponse = response.errorBody().string();
                             Log.e("Error", errorResponse);
+
+                            popupView = inflater.inflate(R.layout.popup_mensagem, null);
+                            msgPopup.setText("Erro:" + errorResponse);
+                            imgPopup.setImageResource(R.drawable.icon_pop_alert);
+                            btnPopup.setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View v) {
+                                    dialog.cancel();
+                                }
+                            });
+
+                            dialog.setContentView(popupView);
+                            dialog.setCancelable(true);
+                            dialog.show();
                         }
                     } catch (IOException e) {
                         e.printStackTrace();
+
+                        popupView = inflater.inflate(R.layout.popup_mensagem, null);
+                        msgPopup.setText("Erro:" + e.getMessage());
+                        imgPopup.setImageResource(R.drawable.icon_pop_alert);
+                        btnPopup.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                dialog.cancel();
+                            }
+                        });
+
+                        dialog.setContentView(popupView);
+                        dialog.setCancelable(true);
+                        dialog.show();
                     }
                 }
             }
 
             @Override
             public void onFailure(Call<Void> call, Throwable throwable) {
-                Toast.makeText(getActivity(), throwable.getMessage(), Toast.LENGTH_SHORT).show();
+                Dialog dialog = new Dialog(getActivity());
+                LayoutInflater inflater = getLayoutInflater();
+                View popupView = inflater.inflate(R.layout.popup_mensagem, null);
+
+                TextView msgPopup = popupView.findViewById(R.id.msg_popup);
+                msgPopup.setText("Erro:" + throwable.getMessage());
+                ImageView imgPopup = popupView.findViewById(R.id.img_popup);
+                imgPopup.setImageResource(R.drawable.icon_pop_alert);
+                Button btnPopup = popupView.findViewById(R.id.btn_popup);
+                btnPopup.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        dialog.cancel();
+                    }
+                });
+
+                dialog.setContentView(popupView);
+                dialog.setCancelable(true);
+                dialog.show();
                 Log.e("Error", throwable.getMessage());
             }
         });
@@ -386,14 +492,53 @@ public class fragment_tela_produto extends Fragment {
                 if (!response.isSuccessful()) {
                     try {
                         String errorBody = response.errorBody().string();
-                        Toast.makeText(getActivity(), "Erro: " + errorBody, Toast.LENGTH_LONG).show();
                         Log.e("Error", errorBody);
+
+                        Dialog dialog = new Dialog(getActivity());
+                        LayoutInflater inflater = getLayoutInflater();
+                        View popupView = inflater.inflate(R.layout.popup_mensagem, null);
+
+                        TextView msgPopup = popupView.findViewById(R.id.msg_popup);
+                        msgPopup.setText("Erro:" + errorBody);
+                        ImageView imgPopup = popupView.findViewById(R.id.img_popup);
+                        imgPopup.setImageResource(R.drawable.icon_pop_alert);
+                        Button btnPopup = popupView.findViewById(R.id.btn_popup);
+                        btnPopup.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                dialog.cancel();
+                            }
+                        });
+
+                        dialog.setContentView(popupView);
+                        dialog.setCancelable(true);
+                        dialog.show();
                     } catch (IOException e) {
                         e.printStackTrace();
                         Log.e("Error", e.getMessage());
+
+                        Dialog dialog = new Dialog(getActivity());
+                        LayoutInflater inflater = getLayoutInflater();
+                        View popupView = inflater.inflate(R.layout.popup_mensagem, null);
+
+                        TextView msgPopup = popupView.findViewById(R.id.msg_popup);
+                        msgPopup.setText("Erro:" + e.getMessage());
+                        ImageView imgPopup = popupView.findViewById(R.id.img_popup);
+                        imgPopup.setImageResource(R.drawable.icon_pop_alert);
+                        Button btnPopup = popupView.findViewById(R.id.btn_popup);
+                        btnPopup.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                dialog.cancel();
+                            }
+                        });
+
+                        dialog.setContentView(popupView);
+                        dialog.setCancelable(true);
+                        dialog.show();
                     }
                 } else {
-                    Toast.makeText(getActivity(), "Carrinho criado com sucesso", Toast.LENGTH_LONG).show();
+                    Log.d("Carrinho", "Carrinho e pedido criado com sucesso");
                     inserirProdutoNoCarrinho(userCpf, productName);
                 }
             }

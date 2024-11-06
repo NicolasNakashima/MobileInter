@@ -123,7 +123,7 @@ public class fragment_tela_compras extends Fragment {
         buscarCPFDoUsuario(FirebaseAuth.getInstance().getCurrentUser().getEmail());
         //Definindo a lista de pedidos
         lista_pedidos = view.findViewById(R.id.lista_pedidos);
-        lista_pedidos.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
+        lista_pedidos.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
         buscarCPFDoUsuario(FirebaseAuth.getInstance().getCurrentUser().getEmail());
 
         return view;
