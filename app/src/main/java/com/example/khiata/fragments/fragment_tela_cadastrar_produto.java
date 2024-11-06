@@ -278,9 +278,10 @@ public class fragment_tela_cadastrar_produto extends Fragment {
                         radioButton.setTextColor(Color.BLACK);
                         radioButton.setTextSize(16);
                         radioButton.setTypeface(null, Typeface.BOLD);
-                        radioButton.setText(category.getType());
+                        radioButton.setText(category.getCategory());
                         radioButton.setTag(category.getId()); // Armazena o ID da categoria no RadioButton
                         radioGroup.addView(radioButton);
+                        Log.d("Categoria", category.getCategory());
                     }
 
                     // Listener para capturar o ID da categoria selecionada

@@ -3,12 +3,12 @@ package com.example.khiata.models;
 public class Category {
     //Campos
     private int id;
-    private String type;
+    private String category;
 
     //Constructor
-    public Category(int id, String type) {
+    public Category(int id, String category) {
         this.id = id;
-        this.type = type;
+        this.category = category;
     }
 
     //Getters and Setters
@@ -20,12 +20,12 @@ public class Category {
         this.id = id;
     }
 
-    public String getType() {
-        return type;
+    public String getCategory() {
+        return category;
     }
 
-    public void setType(String type) {
-        this.type = type;
+    public void setCategory(String category) {
+        this.category = category;
     }
 
     //toString
@@ -33,7 +33,7 @@ public class Category {
     public String toString() {
         return "Category{" +
                 "id=" + id +
-                ", type='" + type + '\'' +
+                ", category='" + category + '\'' +
                 '}';
     }
 }

@@ -5,7 +5,6 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -15,8 +14,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.khiata.R;
 import com.example.khiata.fragments.fragment_tela_resumo_compra;
-import com.example.khiata.models.Historic;
-import com.example.khiata.models.Product;
+import com.example.khiata.models.Order;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -24,10 +22,10 @@ import java.util.List;
 import retrofit2.Retrofit;
 
 public class AdapterProdutosComprados extends RecyclerView.Adapter<AdapterProdutosComprados.MeuViewHolder> {
-    private List<Historic> pedidos = new ArrayList();
+    private List<Order> pedidos = new ArrayList();
     private Context context;
 
-    public AdapterProdutosComprados(Context context, List<Historic> pedidos) {
+    public AdapterProdutosComprados(Context context, List<Order> pedidos) {
         this.context = context;
         this.pedidos = pedidos;
     }
@@ -50,7 +48,7 @@ public class AdapterProdutosComprados extends RecyclerView.Adapter<AdapterProdut
         TextView forma_pagamento = holder.forma_pagamento;
         TextView data_pedido = holder.data_pedido;
 
-        Historic pedido = pedidos.get(position);
+        Order pedido = pedidos.get(position);
         cart_id.setText("ID: " + pedido.getCart_id());
         status_pedido.setText(pedido.getStatus());
         total_pedido.setText("Total: R$ " + pedido.getFinalValue());

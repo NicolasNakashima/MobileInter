@@ -198,10 +198,8 @@ public class CameraPerfil extends AppCompatActivity {
 
                     //popup imagem salva
                     Dialog dialog = new Dialog(CameraPerfil.this);
-
                     LayoutInflater inflater = getLayoutInflater();
                     View popupView = inflater.inflate(R.layout.popup_mensagem, null);
-
                     TextView msgPopup = popupView.findViewById(R.id.msg_popup);
                     msgPopup.setText("Imagem Salva");
                     ImageView imgPopup = popupView.findViewById(R.id.img_popup);
@@ -213,7 +211,6 @@ public class CameraPerfil extends AppCompatActivity {
                             dialog.cancel();
                         }
                     });
-
                     dialog.setContentView(popupView);
                     dialog.setCancelable(true); //Permite fechar ao clicar fora do pop-up
 

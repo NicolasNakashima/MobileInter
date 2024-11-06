@@ -19,7 +19,7 @@ import com.example.khiata.R;
 import com.example.khiata.adapters.AdapterProdutosComprados;
 import com.example.khiata.apis.UserApi;
 import com.example.khiata.classes.tela_carrinho;
-import com.example.khiata.models.Historic;
+import com.example.khiata.models.Order;
 import com.example.khiata.models.User;
 import com.google.firebase.auth.FirebaseAuth;
 
@@ -82,7 +82,7 @@ public class fragment_tela_compras extends Fragment {
     ImageView voltar_home, btn_carrinho;
     private fragment_tela_home fragment_tela_home = new fragment_tela_home();
     RecyclerView lista_pedidos;
-    List<Historic> pedidos = new ArrayList();
+    List<Order> pedidos = new ArrayList();
     String cpf_usuario;
     private Retrofit retrofit;
     @Override
@@ -116,7 +116,7 @@ public class fragment_tela_compras extends Fragment {
         buscarCPFDoUsuario(FirebaseAuth.getInstance().getCurrentUser().getEmail());
         //Definindo a lista de pedidos
         lista_pedidos = view.findViewById(R.id.lista_pedidos);
-        pedidos.add(new Historic(23, 50.00, cpf_usuario, "Pix", "Finalizado", "10/10/2021", "10/10/2021", "10/10/2021"));
+        pedidos.add(new Order(23, 50.00, cpf_usuario, "Pix", "Finalizado", "10/10/2021", "10/10/2021", "10/10/2021"));
         AdapterProdutosComprados adapterProdutosComprados = new AdapterProdutosComprados(getActivity(), pedidos);
         lista_pedidos.setAdapter(adapterProdutosComprados);
         lista_pedidos.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));

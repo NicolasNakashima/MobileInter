@@ -217,11 +217,13 @@ public class fragment_tela_atualizar_preferencias extends Fragment {
                     // Popula o LinearLayout com CheckBoxes das categorias
                     for (Category category : categories) {
                         CheckBox checkBox = new CheckBox(getActivity());
-                        checkBox.setText(category.getType());
+                        checkBox.setText(category.getCategory());
                         checkBox.setTag(category.getId()); // Armazena o ID da categoria no CheckBox
                         checkBox.setTextColor(Color.BLACK);
                         checkBox.setTextSize(25);
                         checkBox.setTypeface(null, Typeface.BOLD);
+
+                        Log.d("Categorias", category.getCategory());
 
                         // Listener para armazenar/remover a seleção
                         checkBox.setOnCheckedChangeListener((buttonView, isChecked) -> {

@@ -259,6 +259,8 @@ public class fragment_tela_produto extends Fragment {
 
     //Método para inserir um produto no carrinho
     private void inserirProdutoNoCarrinho(String userCpf, String productName) {
+        Log.d("CPF", userCpf);
+        Log.d("productName", productName);
         String API_BASE_URL = "https://api-khiata.onrender.com/";
 
         Retrofit retrofit = new Retrofit.Builder()
@@ -280,7 +282,7 @@ public class fragment_tela_produto extends Fragment {
                     getActivity().finish();
                 } else {
                     Toast.makeText(getActivity(), "Falha ao inseririr o produto no carrinho.", Toast.LENGTH_SHORT).show();
-                    Log.e("Error", response.message());
+                    Log.e("Error", response.errorBody().toString());
                 }
             }
 

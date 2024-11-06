@@ -206,6 +206,7 @@ public class fragment_tela_home extends Fragment {
                         for (UserPreference preference : preferences) {
                             userPreferences.add(preference.getValue());
                         }
+                        Log.d("UserPreferences", userPreferences.toString());
                         pegarProdutosPreferenciais(userPreferences);
                     }
 

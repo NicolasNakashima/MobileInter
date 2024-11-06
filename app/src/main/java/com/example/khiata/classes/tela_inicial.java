@@ -20,7 +20,8 @@ import com.google.firebase.auth.FirebaseAuth;
 
 public class tela_inicial extends AppCompatActivity {
 
-    Button btn_login_inicio, btn_cadastrar_inicio, btn_admin;
+    Button btn_login_inicio, btn_cadastrar_inicio;
+    TextView btn_admin;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
