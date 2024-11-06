@@ -19,6 +19,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.khiata.R;
 import com.example.khiata.apis.UserApi;
+import com.example.khiata.classes.tela_login;
 import com.example.khiata.fragments.fragment_tela_dados_compra_produto;
 import com.example.khiata.models.Address;
 import com.example.khiata.models.Avaliation;
@@ -107,7 +108,26 @@ public class AdapterSelecaoEnderecosPagamento extends RecyclerView.Adapter<Adapt
                     User userResponse = response.body();
                     destinatario_endereco.setText(userResponse.getName());
                 } else {
-                    Toast.makeText(context, "Não foi possível encontrar o destinatário", Toast.LENGTH_SHORT).show();
+                    Dialog dialog = new Dialog(context);
+
+                    LayoutInflater inflater = LayoutInflater.from(context);
+                    View popupView = inflater.inflate(R.layout.popup_mensagem, null);
+
+                    TextView msgPopup = popupView.findViewById(R.id.msg_popup);
+                    msgPopup.setText("Erro: " + response.errorBody());
+                    ImageView imgPopup = popupView.findViewById(R.id.img_popup);
+                    imgPopup.setImageResource(R.drawable.icon_pop_alert);
+                    Button btnPopup = popupView.findViewById(R.id.btn_popup);
+                    btnPopup.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            dialog.cancel();
+                        }
+                    });
+
+                    dialog.setContentView(popupView);
+                    dialog.setCancelable(true);
+                    dialog.show();
                     Log.e("Error", "Erro na resposta da API: " + response.code());
                 }
             }
@@ -119,7 +139,7 @@ public class AdapterSelecaoEnderecosPagamento extends RecyclerView.Adapter<Adapt
                 LayoutInflater inflater = LayoutInflater.from(context);
                 View popupView = inflater.inflate(R.layout.popup_mensagem, null);
                 TextView msgPopup = popupView.findViewById(R.id.msg_popup);
-                msgPopup.setText(throwable.getMessage());
+                msgPopup.setText("Erro:"+throwable.getMessage());
                 ImageView imgPopup = popupView.findViewById(R.id.img_popup);
                 imgPopup.setImageResource(R.drawable.icon_pop_alert);
                 Button btnPopup = popupView.findViewById(R.id.btn_popup);

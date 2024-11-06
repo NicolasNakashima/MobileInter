@@ -1,5 +1,6 @@
 package com.example.khiata.fragments;
 
+import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
 
@@ -12,7 +13,9 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.khiata.R;
@@ -145,14 +148,50 @@ public class fragment_tela_compras extends Fragment {
                     Log.d("userCpf", userResponse.getCpf());
                     pegarPedidosDoUsuario(cpf_usuario);
                 } else {
-                    Toast.makeText(getContext(), "Usuário não encontrado ou resposta inválida", Toast.LENGTH_SHORT).show();
+                    Dialog dialog = new Dialog(getActivity());
+                    LayoutInflater inflater = getLayoutInflater();
+                    View popupView = inflater.inflate(R.layout.popup_mensagem, null);
+
+                    TextView msgPopup = popupView.findViewById(R.id.msg_popup);
+                    msgPopup.setText("Erro: " + response.message());
+                    ImageView imgPopup = popupView.findViewById(R.id.img_popup);
+                    imgPopup.setImageResource(R.drawable.icon_pop_alert);
+                    Button btnPopup = popupView.findViewById(R.id.btn_popup);
+                    btnPopup.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            dialog.cancel();
+                        }
+                    });
+
+                    dialog.setContentView(popupView);
+                    dialog.setCancelable(true);
+                    dialog.show();
                     Log.e("API Error", "Response code: " + response.code() + " | Error body: " + response.errorBody());
                 }
             }
 
             @Override
             public void onFailure(Call<User> call, Throwable throwable) {
-                Toast.makeText(getContext(), throwable.getMessage(), Toast.LENGTH_SHORT).show();
+                Dialog dialog = new Dialog(getActivity());
+                LayoutInflater inflater = getLayoutInflater();
+                View popupView = inflater.inflate(R.layout.popup_mensagem, null);
+
+                TextView msgPopup = popupView.findViewById(R.id.msg_popup);
+                msgPopup.setText("Erro: " + throwable.getMessage());
+                ImageView imgPopup = popupView.findViewById(R.id.img_popup);
+                imgPopup.setImageResource(R.drawable.icon_pop_alert);
+                Button btnPopup = popupView.findViewById(R.id.btn_popup);
+                btnPopup.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        dialog.cancel();
+                    }
+                });
+
+                dialog.setContentView(popupView);
+                dialog.setCancelable(true);
+                dialog.show();
             }
         });
     }
@@ -179,23 +218,60 @@ public class fragment_tela_compras extends Fragment {
                         pedidos.clear();  // Limpa a lista de produtos antes de adicionar novos
                         pedidos.addAll(orderList);
 
-                        Toast.makeText(getActivity(), "Pedidos encontrados.", Toast.LENGTH_SHORT).show();
                         AdapterProdutosComprados adapter = new AdapterProdutosComprados(getActivity(), pedidos);
                         lista_pedidos.setAdapter(adapter);
                         adapter.notifyDataSetChanged();
                     } else{
-                        Toast.makeText(getActivity(), "Nenhum pedido encontrado.", Toast.LENGTH_SHORT).show();
+                        //Nenhum pedido encontrado
                         Log.e("Error", "Nenhum pedido encontrado.");
                     }
                 } else {
-                    Toast.makeText(getActivity(), "Falha ao carregar pedidos", Toast.LENGTH_SHORT).show();
+                    Dialog dialog = new Dialog(getActivity());
+
+                    LayoutInflater inflater = getLayoutInflater();
+                    View popupView = inflater.inflate(R.layout.popup_mensagem, null);
+
+                    TextView msgPopup = popupView.findViewById(R.id.msg_popup);
+                    msgPopup.setText("Falha ao carregar pedidos.");
+                    ImageView imgPopup = popupView.findViewById(R.id.img_popup);
+                    imgPopup.setImageResource(R.drawable.icon_pop_alert);
+                    Button btnPopup = popupView.findViewById(R.id.btn_popup);
+                    btnPopup.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            dialog.cancel();
+                        }
+                    });
+
+                    dialog.setContentView(popupView);
+                    dialog.setCancelable(true);
+                    dialog.show();
                     Log.e("Error", response.message());
                 }
             }
 
             @Override
             public void onFailure(Call<List<Order>> call, Throwable throwable) {
-                Toast.makeText(getActivity(), throwable.getMessage(), Toast.LENGTH_SHORT).show();
+                Dialog dialog = new Dialog(getActivity());
+
+                LayoutInflater inflater = getLayoutInflater();
+                View popupView = inflater.inflate(R.layout.popup_mensagem, null);
+
+                TextView msgPopup = popupView.findViewById(R.id.msg_popup);
+                msgPopup.setText("Erro: " + throwable.getMessage());
+                ImageView imgPopup = popupView.findViewById(R.id.img_popup);
+                imgPopup.setImageResource(R.drawable.icon_pop_alert);
+                Button btnPopup = popupView.findViewById(R.id.btn_popup);
+                btnPopup.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        dialog.cancel();
+                    }
+                });
+
+                dialog.setContentView(popupView);
+                dialog.setCancelable(true);
+                dialog.show();
                 Log.e("Error", throwable.getMessage());
             }
         });

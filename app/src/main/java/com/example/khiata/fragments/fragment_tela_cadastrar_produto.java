@@ -263,7 +263,26 @@ public class fragment_tela_cadastrar_produto extends Fragment {
             @Override
             public void onResponse(Call<List<Category>> call, Response<List<Category>> response) {
                 if (!response.isSuccessful()) {
-                    Toast.makeText(getActivity(), "Erro: " + response.code(), Toast.LENGTH_SHORT).show();
+                    Dialog dialog = new Dialog(getActivity());
+
+                    LayoutInflater inflater = getLayoutInflater();
+                    View popupView = inflater.inflate(R.layout.popup_mensagem, null);
+
+                    TextView msgPopup = popupView.findViewById(R.id.msg_popup);
+                    msgPopup.setText("Erro: " + response.message());
+                    ImageView imgPopup = popupView.findViewById(R.id.img_popup);
+                    imgPopup.setImageResource(R.drawable.icon_pop_alert);
+                    Button btnPopup = popupView.findViewById(R.id.btn_popup);
+                    btnPopup.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            dialog.cancel();
+                        }
+                    });
+
+                    dialog.setContentView(popupView);
+                    dialog.setCancelable(true);
+                    dialog.show();
                     Log.e("Error", response.code() + "");
                     return;
                 }
@@ -295,14 +314,52 @@ public class fragment_tela_cadastrar_produto extends Fragment {
                         }
                     });
                 } else {
-                    Toast.makeText(getActivity(), "Nenhuma categoria encontrada.", Toast.LENGTH_SHORT).show();
+                    Dialog dialog = new Dialog(getActivity());
+
+                    LayoutInflater inflater = getLayoutInflater();
+                    View popupView = inflater.inflate(R.layout.popup_mensagem, null);
+
+                    TextView msgPopup = popupView.findViewById(R.id.msg_popup);
+                    msgPopup.setText("Não foi possível encontrar nenhuma categoria, tente novamente mais tarde.");
+                    ImageView imgPopup = popupView.findViewById(R.id.img_popup);
+                    imgPopup.setImageResource(R.drawable.icon_pop_alert);
+                    Button btnPopup = popupView.findViewById(R.id.btn_popup);
+                    btnPopup.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            dialog.cancel();
+                        }
+                    });
+
+                    dialog.setContentView(popupView);
+                    dialog.setCancelable(true);
+                    dialog.show();
                     Log.e("Error", "Nenhuma categoria encontrada.");
                 }
             }
 
             @Override
             public void onFailure(Call<List<Category>> call, Throwable throwable) {
-                Toast.makeText(getActivity(), throwable.getMessage(), Toast.LENGTH_SHORT).show();
+                Dialog dialog = new Dialog(getActivity());
+
+                LayoutInflater inflater = getLayoutInflater();
+                View popupView = inflater.inflate(R.layout.popup_mensagem, null);
+
+                TextView msgPopup = popupView.findViewById(R.id.msg_popup);
+                msgPopup.setText("Erro: " + throwable.getMessage());
+                ImageView imgPopup = popupView.findViewById(R.id.img_popup);
+                imgPopup.setImageResource(R.drawable.icon_pop_alert);
+                Button btnPopup = popupView.findViewById(R.id.btn_popup);
+                btnPopup.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        dialog.cancel();
+                    }
+                });
+
+                dialog.setContentView(popupView);
+                dialog.setCancelable(true);
+                dialog.show();
                 Log.e("Error", throwable.getMessage());
             }
         });
@@ -329,7 +386,26 @@ public class fragment_tela_cadastrar_produto extends Fragment {
 
             @Override
             public void onFailure(Call<User> call, Throwable throwable) {
-                Toast.makeText(getActivity(), throwable.getMessage(), Toast.LENGTH_SHORT).show();
+                Dialog dialog = new Dialog(getActivity());
+
+                LayoutInflater inflater = getLayoutInflater();
+                View popupView = inflater.inflate(R.layout.popup_mensagem, null);
+
+                TextView msgPopup = popupView.findViewById(R.id.msg_popup);
+                msgPopup.setText("Erro: " + throwable.getMessage());
+                ImageView imgPopup = popupView.findViewById(R.id.img_popup);
+                imgPopup.setImageResource(R.drawable.icon_pop_alert);
+                Button btnPopup = popupView.findViewById(R.id.btn_popup);
+                btnPopup.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        dialog.cancel();
+                    }
+                });
+
+                dialog.setContentView(popupView);
+                dialog.setCancelable(true);
+                dialog.show();
                 Log.e("Error", throwable.getMessage());
             }
         });
@@ -353,12 +429,72 @@ public class fragment_tela_cadastrar_produto extends Fragment {
                         String errorBody = response.errorBody().string();
                         Toast.makeText(getActivity(), "Erro: " + errorBody, Toast.LENGTH_LONG).show();
                         Log.e("Error", errorBody);
+                        Dialog dialog = new Dialog(getActivity());
+
+                        LayoutInflater inflater = getLayoutInflater();
+                        View popupView = inflater.inflate(R.layout.popup_mensagem, null);
+
+                        TextView msgPopup = popupView.findViewById(R.id.msg_popup);
+                        msgPopup.setText("Erro: " + errorBody);
+                        ImageView imgPopup = popupView.findViewById(R.id.img_popup);
+                        imgPopup.setImageResource(R.drawable.icon_pop_alert);
+                        Button btnPopup = popupView.findViewById(R.id.btn_popup);
+                        btnPopup.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                dialog.cancel();
+                            }
+                        });
+
+                        dialog.setContentView(popupView);
+                        dialog.setCancelable(true);
+                        dialog.show();
                     } catch (IOException e) {
                         e.printStackTrace();
+                        Dialog dialog = new Dialog(getActivity());
+
+                        LayoutInflater inflater = getLayoutInflater();
+                        View popupView = inflater.inflate(R.layout.popup_mensagem, null);
+
+                        TextView msgPopup = popupView.findViewById(R.id.msg_popup);
+                        msgPopup.setText("Erro: " + e.getMessage());
+                        ImageView imgPopup = popupView.findViewById(R.id.img_popup);
+                        imgPopup.setImageResource(R.drawable.icon_pop_alert);
+                        Button btnPopup = popupView.findViewById(R.id.btn_popup);
+                        btnPopup.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                dialog.cancel();
+                            }
+                        });
+
+                        dialog.setContentView(popupView);
+                        dialog.setCancelable(true);
+                        dialog.show();
                         Log.e("Error", e.getMessage());
                     }
                 } else {
-                    Toast.makeText(getActivity(), "produto cadastrado com sucesso", Toast.LENGTH_LONG).show();
+                    Dialog dialog = new Dialog(getActivity());
+
+                    LayoutInflater inflater = getLayoutInflater();
+                    View popupView = inflater.inflate(R.layout.popup_mensagem, null);
+
+                    TextView msgPopup = popupView.findViewById(R.id.msg_popup);
+                    msgPopup.setText("Produto cadastrado com sucesso.");
+                    ImageView imgPopup = popupView.findViewById(R.id.img_popup);
+                    imgPopup.setImageResource(R.drawable.icon_pop_sucesso);
+                    Button btnPopup = popupView.findViewById(R.id.btn_popup);
+                    btnPopup.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            dialog.cancel();
+                        }
+                    });
+
+                    dialog.setContentView(popupView);
+                    dialog.setCancelable(true);
+                    dialog.show();
+
                     FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
                     transaction.replace(R.id.frame_conteudo, new fragment_tela_area_costureira());
                     transaction.commit();
@@ -367,7 +503,26 @@ public class fragment_tela_cadastrar_produto extends Fragment {
 
             @Override
             public void onFailure(Call<String> call, Throwable t) {
-                Toast.makeText(getActivity(), "Erro ao cadastrar endereço: " + t.getMessage(), Toast.LENGTH_LONG).show();
+                Dialog dialog = new Dialog(getActivity());
+
+                LayoutInflater inflater = getLayoutInflater();
+                View popupView = inflater.inflate(R.layout.popup_mensagem, null);
+
+                TextView msgPopup = popupView.findViewById(R.id.msg_popup);
+                msgPopup.setText("Erro: " + t.getMessage());
+                ImageView imgPopup = popupView.findViewById(R.id.img_popup);
+                imgPopup.setImageResource(R.drawable.icon_pop_alert);
+                Button btnPopup = popupView.findViewById(R.id.btn_popup);
+                btnPopup.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        dialog.cancel();
+                    }
+                });
+
+                dialog.setContentView(popupView);
+                dialog.setCancelable(true);
+                dialog.show();
                 Log.e("Error", t.getMessage());
             }
         });

@@ -231,7 +231,25 @@ public class fragment_tela_perfil_costureira extends Fragment {
                         msg_sms = msgSmsEditText.getText().toString();
                         Log.e("msg_sms", msg_sms);
                         if(msg_sms.isEmpty()) {
-                            Toast.makeText(getActivity(), "Não é possível enviar uma mensagem vazia", Toast.LENGTH_SHORT).show();
+                            Dialog dialog = new Dialog(getActivity());
+                            LayoutInflater inflater = getLayoutInflater();
+                            View popupView = inflater.inflate(R.layout.popup_mensagem, null);
+
+                            TextView msgPopup = popupView.findViewById(R.id.msg_popup);
+                            msgPopup.setText("Por favor, insira uma mensagem antes de enviar.");
+                            ImageView imgPopup = popupView.findViewById(R.id.img_popup);
+                            imgPopup.setImageResource(R.drawable.icon_pop_alert);
+                            Button btnPopup = popupView.findViewById(R.id.btn_popup);
+                            btnPopup.setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View v) {
+                                    dialog.cancel();
+                                }
+                            });
+
+                            dialog.setContentView(popupView);
+                            dialog.setCancelable(true);
+                            dialog.show();
                         }
                         else{
                             buscarTelefoneUsuario(FirebaseAuth.getInstance().getCurrentUser().getEmail());
@@ -274,14 +292,51 @@ public class fragment_tela_perfil_costureira extends Fragment {
                     avaliacao_costureira.setRating((float) userResponse.getAvaliation());
                     pegarProdutosDaCostureira(userResponse.getName());
                 } else {
-                    Toast.makeText(getContext(), "Usuário não encontrado ou resposta inválida", Toast.LENGTH_SHORT).show();
+                    Dialog dialog = new Dialog(getActivity());
+                    LayoutInflater inflater = getLayoutInflater();
+                    View popupView = inflater.inflate(R.layout.popup_mensagem, null);
+
+                    TextView msgPopup = popupView.findViewById(R.id.msg_popup);
+                    msgPopup.setText("Erro:" + response.message());
+                    ImageView imgPopup = popupView.findViewById(R.id.img_popup);
+                    imgPopup.setImageResource(R.drawable.icon_pop_alert);
+                    Button btnPopup = popupView.findViewById(R.id.btn_popup);
+                    btnPopup.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            dialog.cancel();
+                        }
+                    });
+
+                    dialog.setContentView(popupView);
+                    dialog.setCancelable(true);
+                    dialog.show();
                     Log.e("API Error", "Response code: " + response.code() + " | Error body: " + response.errorBody());
                 }
             }
 
             @Override
             public void onFailure(Call<User> call, Throwable throwable) {
-                Toast.makeText(getContext(), throwable.getMessage(), Toast.LENGTH_SHORT).show();
+                Dialog dialog = new Dialog(getActivity());
+                LayoutInflater inflater = getLayoutInflater();
+                View popupView = inflater.inflate(R.layout.popup_mensagem, null);
+
+                TextView msgPopup = popupView.findViewById(R.id.msg_popup);
+                msgPopup.setText("Erro:" + throwable.getMessage());
+                ImageView imgPopup = popupView.findViewById(R.id.img_popup);
+                imgPopup.setImageResource(R.drawable.icon_pop_alert);
+                Button btnPopup = popupView.findViewById(R.id.btn_popup);
+                btnPopup.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        dialog.cancel();
+                    }
+                });
+
+                dialog.setContentView(popupView);
+                dialog.setCancelable(true);
+                dialog.show();
+                Log.e("Error", throwable.getMessage());
             }
         });
     }
@@ -302,14 +357,51 @@ public class fragment_tela_perfil_costureira extends Fragment {
                     User userResponse = response.body();
                     phone_user = userResponse.getPhone();
                 } else {
-                    Toast.makeText(getContext(), "Usuário não encontrado ou resposta inválida", Toast.LENGTH_SHORT).show();
+                    Dialog dialog = new Dialog(getActivity());
+                    LayoutInflater inflater = getLayoutInflater();
+                    View popupView = inflater.inflate(R.layout.popup_mensagem, null);
+
+                    TextView msgPopup = popupView.findViewById(R.id.msg_popup);
+                    msgPopup.setText("Erro:" + response.message());
+                    ImageView imgPopup = popupView.findViewById(R.id.img_popup);
+                    imgPopup.setImageResource(R.drawable.icon_pop_alert);
+                    Button btnPopup = popupView.findViewById(R.id.btn_popup);
+                    btnPopup.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            dialog.cancel();
+                        }
+                    });
+
+                    dialog.setContentView(popupView);
+                    dialog.setCancelable(true);
+                    dialog.show();
                     Log.e("API Error", "Response code: " + response.code() + " | Error body: " + response.errorBody());
                 }
             }
 
             @Override
             public void onFailure(Call<User> call, Throwable throwable) {
-                Toast.makeText(getContext(), throwable.getMessage(), Toast.LENGTH_SHORT).show();
+                Dialog dialog = new Dialog(getActivity());
+                LayoutInflater inflater = getLayoutInflater();
+                View popupView = inflater.inflate(R.layout.popup_mensagem, null);
+
+                TextView msgPopup = popupView.findViewById(R.id.msg_popup);
+                msgPopup.setText("Erro:" + throwable.getMessage());
+                ImageView imgPopup = popupView.findViewById(R.id.img_popup);
+                imgPopup.setImageResource(R.drawable.icon_pop_alert);
+                Button btnPopup = popupView.findViewById(R.id.btn_popup);
+                btnPopup.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        dialog.cancel();
+                    }
+                });
+
+                dialog.setContentView(popupView);
+                dialog.setCancelable(true);
+                dialog.show();
+                Log.e("Error", throwable.getMessage());
             }
         });
     }
@@ -322,9 +414,45 @@ public class fragment_tela_perfil_costureira extends Fragment {
         SmsManager smsManager = SmsManager.getDefault();
         smsManager.sendTextMessage(String.valueOf(phone_costureira), String.valueOf(phone_user), msg_sms, pi, null);
         if (smsManager != null) {
-            Toast.makeText(getActivity(), "Mensagem enviada!", Toast.LENGTH_SHORT).show();
+            Dialog dialog = new Dialog(getActivity());
+            LayoutInflater inflater = getLayoutInflater();
+            View popupView = inflater.inflate(R.layout.popup_mensagem, null);
+
+            TextView msgPopup = popupView.findViewById(R.id.msg_popup);
+            msgPopup.setText("SMS enviado com sucesso");
+            ImageView imgPopup = popupView.findViewById(R.id.img_popup);
+            imgPopup.setImageResource(R.drawable.icon_pop_sucesso);
+            Button btnPopup = popupView.findViewById(R.id.btn_popup);
+            btnPopup.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    dialog.cancel();
+                }
+            });
+
+            dialog.setContentView(popupView);
+            dialog.setCancelable(true);
+            dialog.show();
         } else {
-            Toast.makeText(getActivity(), "Erro ao enviar mensagem!", Toast.LENGTH_SHORT).show();
+            Dialog dialog = new Dialog(getActivity());
+            LayoutInflater inflater = getLayoutInflater();
+            View popupView = inflater.inflate(R.layout.popup_mensagem, null);
+
+            TextView msgPopup = popupView.findViewById(R.id.msg_popup);
+            msgPopup.setText("Falha ao enviar SMS");
+            ImageView imgPopup = popupView.findViewById(R.id.img_popup);
+            imgPopup.setImageResource(R.drawable.icon_pop_alert);
+            Button btnPopup = popupView.findViewById(R.id.btn_popup);
+            btnPopup.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    dialog.cancel();
+                }
+            });
+
+            dialog.setContentView(popupView);
+            dialog.setCancelable(true);
+            dialog.show();
         }
     }
 
@@ -349,23 +477,57 @@ public class fragment_tela_perfil_costureira extends Fragment {
                         produtos.clear();  // Limpa a lista de produtos antes de adicionar novos
                         produtos.addAll(productList);
 
-                        Toast.makeText(getActivity(), "Produtos encontrados.", Toast.LENGTH_SHORT).show();
                         AdapterProdutosCostureira adapter = new AdapterProdutosCostureira(getActivity(), produtos);
                         lista_produtos_costureira.setAdapter(adapter);
                         adapter.notifyDataSetChanged();
                     } else{
-                        Toast.makeText(getActivity(), "Nenhum produto cadastrado.", Toast.LENGTH_SHORT).show();
-                        Log.e("Error", "Nenhum produto encontrado.");
+                        Log.e("Error", "Nenhum produto da costureira cadastrado.");
                     }
                 } else {
-                    Toast.makeText(getActivity(), "Falha ao carregar produtos", Toast.LENGTH_SHORT).show();
+                    Dialog dialog = new Dialog(getActivity());
+                    LayoutInflater inflater = getLayoutInflater();
+                    View popupView = inflater.inflate(R.layout.popup_mensagem, null);
+
+                    TextView msgPopup = popupView.findViewById(R.id.msg_popup);
+                    msgPopup.setText("Falha ao carregar produtos da costureira.");
+                    ImageView imgPopup = popupView.findViewById(R.id.img_popup);
+                    imgPopup.setImageResource(R.drawable.icon_pop_alert);
+                    Button btnPopup = popupView.findViewById(R.id.btn_popup);
+                    btnPopup.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            dialog.cancel();
+                        }
+                    });
+
+                    dialog.setContentView(popupView);
+                    dialog.setCancelable(true);
+                    dialog.show();
                     Log.e("Error", response.message());
                 }
             }
 
             @Override
             public void onFailure(Call<List<Product>> call, Throwable throwable) {
-                Toast.makeText(getActivity(), throwable.getMessage(), Toast.LENGTH_SHORT).show();
+                Dialog dialog = new Dialog(getActivity());
+                LayoutInflater inflater = getLayoutInflater();
+                View popupView = inflater.inflate(R.layout.popup_mensagem, null);
+
+                TextView msgPopup = popupView.findViewById(R.id.msg_popup);
+                msgPopup.setText("Erro:" + throwable.getMessage());
+                ImageView imgPopup = popupView.findViewById(R.id.img_popup);
+                imgPopup.setImageResource(R.drawable.icon_pop_alert);
+                Button btnPopup = popupView.findViewById(R.id.btn_popup);
+                btnPopup.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        dialog.cancel();
+                    }
+                });
+
+                dialog.setContentView(popupView);
+                dialog.setCancelable(true);
+                dialog.show();
                 Log.e("Error", throwable.getMessage());
             }
         });
@@ -397,7 +559,25 @@ public class fragment_tela_perfil_costureira extends Fragment {
                 }
             }
             if (!permissionGranted) {
-                Toast.makeText(getActivity(),"Permissão NEGADA. Tente novamente.",Toast.LENGTH_SHORT).show();
+                Dialog dialog = new Dialog(getActivity());
+                LayoutInflater inflater = getLayoutInflater();
+                View popupView = inflater.inflate(R.layout.popup_mensagem, null);
+
+                TextView msgPopup = popupView.findViewById(R.id.msg_popup);
+                msgPopup.setText("Permissão negada, tente novamente mais tarde.");
+                ImageView imgPopup = popupView.findViewById(R.id.img_popup);
+                imgPopup.setImageResource(R.drawable.icon_pop_alert);
+                Button btnPopup = popupView.findViewById(R.id.btn_popup);
+                btnPopup.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        dialog.cancel();
+                    }
+                });
+
+                dialog.setContentView(popupView);
+                dialog.setCancelable(true);
+                dialog.show();
             } else {
                 enviarSms(phone_costureira, msg_sms, phone_user);
             }

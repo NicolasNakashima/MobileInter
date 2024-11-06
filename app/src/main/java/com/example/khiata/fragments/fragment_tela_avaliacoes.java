@@ -1,5 +1,6 @@
 package com.example.khiata.fragments;
 
+import android.app.Dialog;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.graphics.drawable.Drawable;
@@ -15,13 +16,16 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.RatingBar;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.khiata.R;
 import com.example.khiata.adapters.AdapterAvaliacoesUsuario;
 import com.example.khiata.apis.UserApi;
+import com.example.khiata.classes.tela_login;
 import com.example.khiata.models.Avaliation;
 import com.example.khiata.models.User;
 import com.google.firebase.auth.FirebaseAuth;
@@ -113,7 +117,7 @@ public class fragment_tela_avaliacoes extends Fragment {
         //Definindo a avaliação do usuario
         avaliacao_usuario = view.findViewById(R.id.avaliacao_usuario);
         LayerDrawable stars = (LayerDrawable) avaliacao_usuario.getProgressDrawable();
-        stars.getDrawable(2).setColorFilter(Color.parseColor("#FAC552"), PorterDuff.Mode.SRC_ATOP);
+        stars.getDrawable(2).setColorFilter(Color.parseColor("#FAC552"), PorterDuff.Mode.SRC_ATOP);//Define a cor das estrelas preenchidas
         buscarAvaliacaoDoUsuario(FirebaseAuth.getInstance().getCurrentUser().getEmail());
 
         return view;
@@ -136,14 +140,52 @@ public class fragment_tela_avaliacoes extends Fragment {
                     avaliacao_usuario.setRating((float) userResponse.getAvaliation());
 
                 } else {
-                    Toast.makeText(getContext(), "Usuário não encontrado ou resposta inválida", Toast.LENGTH_SHORT).show();
+                    Dialog dialog = new Dialog(getActivity());
+
+                    LayoutInflater inflater = getLayoutInflater();
+                    View popupView = inflater.inflate(R.layout.popup_mensagem, null);
+
+                    TextView msgPopup = popupView.findViewById(R.id.msg_popup);
+                    msgPopup.setText("Erro: " + response.errorBody());
+                    ImageView imgPopup = popupView.findViewById(R.id.img_popup);
+                    imgPopup.setImageResource(R.drawable.icon_pop_alert);
+                    Button btnPopup = popupView.findViewById(R.id.btn_popup);
+                    btnPopup.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            dialog.cancel();
+                        }
+                    });
+
+                    dialog.setContentView(popupView);
+                    dialog.setCancelable(true);
+                    dialog.show();
                     Log.e("API Error", "Response code: " + response.code() + " | Error body: " + response.errorBody());
                 }
             }
 
             @Override
             public void onFailure(Call<User> call, Throwable throwable) {
-                Toast.makeText(getContext(), throwable.getMessage(), Toast.LENGTH_SHORT).show();
+                Dialog dialog = new Dialog(getActivity());
+
+                LayoutInflater inflater = getLayoutInflater();
+                View popupView = inflater.inflate(R.layout.popup_mensagem, null);
+
+                TextView msgPopup = popupView.findViewById(R.id.msg_popup);
+                msgPopup.setText("Erro: " + throwable.getMessage());
+                ImageView imgPopup = popupView.findViewById(R.id.img_popup);
+                imgPopup.setImageResource(R.drawable.icon_pop_alert);
+                Button btnPopup = popupView.findViewById(R.id.btn_popup);
+                btnPopup.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        dialog.cancel();
+                    }
+                });
+
+                dialog.setContentView(popupView);
+                dialog.setCancelable(true);
+                dialog.show();
             }
         });
     }

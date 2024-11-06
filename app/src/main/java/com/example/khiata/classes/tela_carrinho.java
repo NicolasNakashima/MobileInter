@@ -1,11 +1,14 @@
 package com.example.khiata.classes;
 
+import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
@@ -98,7 +101,7 @@ public class tela_carrinho extends AppCompatActivity {
 
     // Método para buscar os itens do carrinho do usuário
     private void pegarItensDoCarrinho(String userCpf) {
-        Log.e("userCpf", userCpf);
+        Log.d("userCpf", userCpf);
         String API_BASE_URL = "https://api-khiata.onrender.com/";
         retrofit = new Retrofit.Builder()
                 .baseUrl(API_BASE_URL)
@@ -145,28 +148,61 @@ public class tela_carrinho extends AppCompatActivity {
                     // Logando as variáveis separadas
                     Log.d("Cart ID", cartId);
                     Log.d("Total Value", total);
-                    Log.d("Item Names", itemNames.toString());
 
                     if (!items.isEmpty()) {
-                        Toast.makeText(getApplicationContext(), "Itens do carrinho encontrados.", Toast.LENGTH_SHORT).show();
+                        Log.d("Item Names", itemNames.toString());
                         Log.d("Cart", cart.toString());
-//                    AdapterItensCarrinho adapter = new AdapterItensCarrinho(getApplicationContext(), items);
-//                    lista_itens_carrinho.setAdapter(adapter);
-//                    adapter.notifyDataSetChanged();
                     } else {
-                        Toast.makeText(getApplicationContext(), "Nenhum item no carrinho encontrado.", Toast.LENGTH_SHORT).show();
                         Log.e("Error", "Nenhum item no carrinho encontrado.");
                     }
 
                 } else {
-                    Toast.makeText(getApplicationContext(), "Falha ao carregar o carrinho", Toast.LENGTH_SHORT).show();
-                    Log.e("Error", "Response code: " + response.code());
+                    //Pop-up de falha
+                    Dialog dialog = new Dialog(tela_carrinho.this);
+                    LayoutInflater inflater = getLayoutInflater();
+                    View popupView = inflater.inflate(R.layout.popup_mensagem, null);
+
+                    TextView msgPopup = popupView.findViewById(R.id.msg_popup);
+                    msgPopup.setText("Falha ao carregar o carrinho, tente novamente mais tarde.");
+                    ImageView imgPopup = popupView.findViewById(R.id.img_popup);
+                    imgPopup.setImageResource(R.drawable.icon_pop_alert);
+                    Button btnPopup = popupView.findViewById(R.id.btn_popup);
+                    btnPopup.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            dialog.cancel();
+                        }
+                    });
+
+                    dialog.setContentView(popupView);
+                    dialog.setCancelable(true);
+                    dialog.show();
+                    Log.e("Error", "Falha ao carregar o carrinho: " + response.code());
                 }
             }
 
             @Override
             public void onFailure(Call<List<List<String>>> call, Throwable throwable) {
-                Toast.makeText(getApplicationContext(), throwable.getMessage(), Toast.LENGTH_SHORT).show();
+                Dialog dialog = new Dialog(tela_carrinho.this);
+
+                LayoutInflater inflater = getLayoutInflater();
+                View popupView = inflater.inflate(R.layout.popup_mensagem, null);
+
+                TextView msgPopup = popupView.findViewById(R.id.msg_popup);
+                msgPopup.setText("Erro:" + throwable.getMessage());
+                ImageView imgPopup = popupView.findViewById(R.id.img_popup);
+                imgPopup.setImageResource(R.drawable.icon_pop_alert);
+                Button btnPopup = popupView.findViewById(R.id.btn_popup);
+                btnPopup.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        dialog.cancel();
+                    }
+                });
+
+                dialog.setContentView(popupView);
+                dialog.setCancelable(true);
+                dialog.show();
                 Log.e("Error", throwable.getMessage());
             }
         });
@@ -189,14 +225,52 @@ public class tela_carrinho extends AppCompatActivity {
                     userCpf= userResponse.getCpf();
                     pegarItensDoCarrinho(userCpf);
                 } else {
-                    Toast.makeText(getApplicationContext(), "Usuário não encontrado ou resposta inválida", Toast.LENGTH_SHORT).show();
+                    Dialog dialog = new Dialog(tela_carrinho.this);
+
+                    LayoutInflater inflater = getLayoutInflater();
+                    View popupView = inflater.inflate(R.layout.popup_mensagem, null);
+
+                    TextView msgPopup = popupView.findViewById(R.id.msg_popup);
+                    msgPopup.setText("Erro:"+response.errorBody());
+                    ImageView imgPopup = popupView.findViewById(R.id.img_popup);
+                    imgPopup.setImageResource(R.drawable.icon_pop_alert);
+                    Button btnPopup = popupView.findViewById(R.id.btn_popup);
+                    btnPopup.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            dialog.cancel();
+                        }
+                    });
+
+                    dialog.setContentView(popupView);
+                    dialog.setCancelable(true);
+                    dialog.show();
                     Log.e("API Error", "Response code: " + response.code() + " | Error body: " + response.errorBody());
                 }
             }
 
             @Override
             public void onFailure(Call<User> call, Throwable throwable) {
-                Toast.makeText(getApplicationContext(), throwable.getMessage(), Toast.LENGTH_SHORT).show();
+                Dialog dialog = new Dialog(tela_carrinho.this);
+
+                LayoutInflater inflater = getLayoutInflater();
+                View popupView = inflater.inflate(R.layout.popup_mensagem, null);
+
+                TextView msgPopup = popupView.findViewById(R.id.msg_popup);
+                msgPopup.setText("Erro:" + throwable.getMessage());
+                ImageView imgPopup = popupView.findViewById(R.id.img_popup);
+                imgPopup.setImageResource(R.drawable.icon_pop_alert);
+                Button btnPopup = popupView.findViewById(R.id.btn_popup);
+                btnPopup.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        dialog.cancel();
+                    }
+                });
+
+                dialog.setContentView(popupView);
+                dialog.setCancelable(true);
+                dialog.show();
             }
         });
     }

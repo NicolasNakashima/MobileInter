@@ -1,5 +1,6 @@
 package com.example.khiata.fragments;
 
+import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
 
@@ -12,8 +13,10 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.khiata.R;
@@ -113,7 +116,25 @@ public class fragment_tela_pesquisa extends Fragment {
                 String busca = ((EditText) view.findViewById(R.id.barra_pesquisa)).getText().toString();
                 if(busca.isEmpty()){
                     Log.e("busca", busca);
-                    Toast.makeText(getActivity(), "Preencha o campo de pesquisa", Toast.LENGTH_SHORT).show();
+                    Dialog dialog = new Dialog(getActivity());
+                    LayoutInflater inflater = getLayoutInflater();
+                    View popupView = inflater.inflate(R.layout.popup_mensagem, null);
+
+                    TextView msgPopup = popupView.findViewById(R.id.msg_popup);
+                    msgPopup.setText("Por favor, digite algo para pesquisar");
+                    ImageView imgPopup = popupView.findViewById(R.id.img_popup);
+                    imgPopup.setImageResource(R.drawable.icon_pop_alert);
+                    Button btnPopup = popupView.findViewById(R.id.btn_popup);
+                    btnPopup.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            dialog.cancel();
+                        }
+                    });
+
+                    dialog.setContentView(popupView);
+                    dialog.setCancelable(true);
+                    dialog.show();
                 }
                 else{
                     Log.e("busca", busca);
@@ -160,23 +181,76 @@ public class fragment_tela_pesquisa extends Fragment {
                         produtos.clear();
                         produtos.addAll(productList);  // Adiciona todos os produtos à lista
 
-                        Toast.makeText(getActivity(), "Produtos encontrados.", Toast.LENGTH_SHORT).show();
                         AdapterProdutosPesquisados adapter = new AdapterProdutosPesquisados(getActivity(), produtos);
                         lista_produtos_pesquisados.setAdapter(adapter);
                         adapter.notifyDataSetChanged();
                     } else {
-                        Toast.makeText(getActivity(), "Nenhum produto encontrado.", Toast.LENGTH_SHORT).show();
+                        Dialog dialog = new Dialog(getActivity());
+                        LayoutInflater inflater = getLayoutInflater();
+                        View popupView = inflater.inflate(R.layout.popup_mensagem, null);
+
+                        TextView msgPopup = popupView.findViewById(R.id.msg_popup);
+                        msgPopup.setText("Nenhum produto encontrado.");
+                        ImageView imgPopup = popupView.findViewById(R.id.img_popup);
+                        imgPopup.setImageResource(R.drawable.icon_pop_alert);
+                        Button btnPopup = popupView.findViewById(R.id.btn_popup);
+                        btnPopup.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                dialog.cancel();
+                            }
+                        });
+
+                        dialog.setContentView(popupView);
+                        dialog.setCancelable(true);
+                        dialog.show();
                         Log.e("Error", "Nenhum produto encontrado.");
                     }
                 } else {
-                    Toast.makeText(getActivity(), "Falha ao carregar produtos", Toast.LENGTH_SHORT).show();
+                    Dialog dialog = new Dialog(getActivity());
+                    LayoutInflater inflater = getLayoutInflater();
+                    View popupView = inflater.inflate(R.layout.popup_mensagem, null);
+
+                    TextView msgPopup = popupView.findViewById(R.id.msg_popup);
+                    msgPopup.setText("Falha ao carregar produtos, tente novamente mais tarde.");
+                    ImageView imgPopup = popupView.findViewById(R.id.img_popup);
+                    imgPopup.setImageResource(R.drawable.icon_pop_alert);
+                    Button btnPopup = popupView.findViewById(R.id.btn_popup);
+                    btnPopup.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            dialog.cancel();
+                        }
+                    });
+
+                    dialog.setContentView(popupView);
+                    dialog.setCancelable(true);
+                    dialog.show();
                     Log.e("Error", response.message());
                 }
             }
 
             @Override
             public void onFailure(Call<List<Product>> call, Throwable throwable) {
-                Toast.makeText(getActivity(), throwable.getMessage(), Toast.LENGTH_SHORT).show();
+                Dialog dialog = new Dialog(getActivity());
+                LayoutInflater inflater = getLayoutInflater();
+                View popupView = inflater.inflate(R.layout.popup_mensagem, null);
+
+                TextView msgPopup = popupView.findViewById(R.id.msg_popup);
+                msgPopup.setText("Erro:" + throwable.getMessage());
+                ImageView imgPopup = popupView.findViewById(R.id.img_popup);
+                imgPopup.setImageResource(R.drawable.icon_pop_alert);
+                Button btnPopup = popupView.findViewById(R.id.btn_popup);
+                btnPopup.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        dialog.cancel();
+                    }
+                });
+
+                dialog.setContentView(popupView);
+                dialog.setCancelable(true);
+                dialog.show();
                 Log.e("Error", throwable.getMessage());
             }
         });

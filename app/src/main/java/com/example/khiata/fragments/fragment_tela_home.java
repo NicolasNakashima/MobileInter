@@ -1,5 +1,6 @@
 package com.example.khiata.fragments;
 
+import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
 
@@ -12,7 +13,9 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.khiata.R;
@@ -166,21 +169,56 @@ public class fragment_tela_home extends Fragment {
                             costureiras_recomendas.setAdapter(adapter);
                             adapter.notifyDataSetChanged();
                         } else {
-                            Toast.makeText(getActivity(), "Nenhuma costureira encontrada.", Toast.LENGTH_SHORT).show();
-                            // Exibir uma view alternativa aqui, se necessário
+                            Log.e("Erro", "Nenhuma costureira encontrada.");
                         }
                     } else {
-                        Toast.makeText(getActivity(), "Nenhum usuário encontrado.", Toast.LENGTH_SHORT).show();
+                        Log.e("Erro", "Nenhum usuário encontrado.");
                     }
                 } else {
-                    Toast.makeText(getActivity(), "Falha ao carregar usuários", Toast.LENGTH_SHORT).show();
+                    Dialog dialog = new Dialog(getActivity());
+                    LayoutInflater inflater = getLayoutInflater();
+                    View popupView = inflater.inflate(R.layout.popup_mensagem, null);
+
+                    TextView msgPopup = popupView.findViewById(R.id.msg_popup);
+                    msgPopup.setText("Falha ao carregar costureiras recomendadas, tente novamente mais tarde.");
+                    ImageView imgPopup = popupView.findViewById(R.id.img_popup);
+                    imgPopup.setImageResource(R.drawable.icon_pop_alert);
+                    Button btnPopup = popupView.findViewById(R.id.btn_popup);
+                    btnPopup.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            dialog.cancel();
+                        }
+                    });
+
+                    dialog.setContentView(popupView);
+                    dialog.setCancelable(true);
+                    dialog.show();
                 }
             }
 
             @Override
             public void onFailure(Call<ArrayList<User>> call, Throwable throwable) {
                 if (getActivity() != null) {
-                    Toast.makeText(getActivity(), throwable.getMessage(), Toast.LENGTH_SHORT).show();
+                    Dialog dialog = new Dialog(getActivity());
+                    LayoutInflater inflater = getLayoutInflater();
+                    View popupView = inflater.inflate(R.layout.popup_mensagem, null);
+
+                    TextView msgPopup = popupView.findViewById(R.id.msg_popup);
+                    msgPopup.setText("Erro:" + throwable.getMessage());
+                    ImageView imgPopup = popupView.findViewById(R.id.img_popup);
+                    imgPopup.setImageResource(R.drawable.icon_pop_alert);
+                    Button btnPopup = popupView.findViewById(R.id.btn_popup);
+                    btnPopup.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            dialog.cancel();
+                        }
+                    });
+
+                    dialog.setContentView(popupView);
+                    dialog.setCancelable(true);
+                    dialog.show();
                 }
             }
         });
@@ -211,14 +249,50 @@ public class fragment_tela_home extends Fragment {
                     }
 
                 } else {
-                    Toast.makeText(getContext(), "Usuário não encontrado ou resposta inválida", Toast.LENGTH_SHORT).show();
+                    Dialog dialog = new Dialog(getActivity());
+                    LayoutInflater inflater = getLayoutInflater();
+                    View popupView = inflater.inflate(R.layout.popup_mensagem, null);
+
+                    TextView msgPopup = popupView.findViewById(R.id.msg_popup);
+                    msgPopup.setText("Erro:" + response.message());
+                    ImageView imgPopup = popupView.findViewById(R.id.img_popup);
+                    imgPopup.setImageResource(R.drawable.icon_pop_alert);
+                    Button btnPopup = popupView.findViewById(R.id.btn_popup);
+                    btnPopup.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            dialog.cancel();
+                        }
+                    });
+
+                    dialog.setContentView(popupView);
+                    dialog.setCancelable(true);
+                    dialog.show();
                     Log.e("API Error", "Response code: " + response.code() + " | Error body: " + response.errorBody());
                 }
             }
 
             @Override
             public void onFailure(Call<User> call, Throwable throwable) {
-                Toast.makeText(getContext(), throwable.getMessage(), Toast.LENGTH_SHORT).show();
+                Dialog dialog = new Dialog(getActivity());
+                LayoutInflater inflater = getLayoutInflater();
+                View popupView = inflater.inflate(R.layout.popup_mensagem, null);
+
+                TextView msgPopup = popupView.findViewById(R.id.msg_popup);
+                msgPopup.setText("Erro:" + throwable.getMessage());
+                ImageView imgPopup = popupView.findViewById(R.id.img_popup);
+                imgPopup.setImageResource(R.drawable.icon_pop_alert);
+                Button btnPopup = popupView.findViewById(R.id.btn_popup);
+                btnPopup.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        dialog.cancel();
+                    }
+                });
+
+                dialog.setContentView(popupView);
+                dialog.setCancelable(true);
+                dialog.show();
             }
         });
     }
@@ -246,6 +320,25 @@ public class fragment_tela_home extends Fragment {
                         if (productList != null && !productList.isEmpty()) {
                             produtos.addAll(productList);  // Adicione os produtos à lista
                         } else {
+                            Dialog dialog = new Dialog(getActivity());
+                            LayoutInflater inflater = getLayoutInflater();
+                            View popupView = inflater.inflate(R.layout.popup_mensagem, null);
+
+                            TextView msgPopup = popupView.findViewById(R.id.msg_popup);
+                            msgPopup.setText("Você não possuí produtos recomendados.");
+                            ImageView imgPopup = popupView.findViewById(R.id.img_popup);
+                            imgPopup.setImageResource(R.drawable.icon_pop_alert);
+                            Button btnPopup = popupView.findViewById(R.id.btn_popup);
+                            btnPopup.setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View v) {
+                                    dialog.cancel();
+                                }
+                            });
+
+                            dialog.setContentView(popupView);
+                            dialog.setCancelable(true);
+                            dialog.show();
                             Log.e("Error", "Nenhum produto encontrado para a preferência: " + preference);
                         }
 
@@ -257,13 +350,50 @@ public class fragment_tela_home extends Fragment {
                             produtos_recomendados.getAdapter().notifyDataSetChanged();
                         }
                     } else {
+                        Dialog dialog = new Dialog(getActivity());
+                        LayoutInflater inflater = getLayoutInflater();
+                        View popupView = inflater.inflate(R.layout.popup_mensagem, null);
+
+                        TextView msgPopup = popupView.findViewById(R.id.msg_popup);
+                        msgPopup.setText("Erro:" + response.message());
+                        ImageView imgPopup = popupView.findViewById(R.id.img_popup);
+                        imgPopup.setImageResource(R.drawable.icon_pop_alert);
+                        Button btnPopup = popupView.findViewById(R.id.btn_popup);
+                        btnPopup.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                dialog.cancel();
+                            }
+                        });
+
+                        dialog.setContentView(popupView);
+                        dialog.setCancelable(true);
+                        dialog.show();
                         Log.e("Error", response.message());
                     }
                 }
 
                 @Override
                 public void onFailure(Call<List<Product>> call, Throwable throwable) {
-                    Log.e("Error", throwable.getMessage());
+                    Dialog dialog = new Dialog(getActivity());
+                    LayoutInflater inflater = getLayoutInflater();
+                    View popupView = inflater.inflate(R.layout.popup_mensagem, null);
+
+                    TextView msgPopup = popupView.findViewById(R.id.msg_popup);
+                    msgPopup.setText("Erro:" + throwable.getMessage());
+                    ImageView imgPopup = popupView.findViewById(R.id.img_popup);
+                    imgPopup.setImageResource(R.drawable.icon_pop_alert);
+                    Button btnPopup = popupView.findViewById(R.id.btn_popup);
+                    btnPopup.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            dialog.cancel();
+                        }
+                    });
+
+                    dialog.setContentView(popupView);
+                    dialog.setCancelable(true);
+                    dialog.show();
                 }
             });
         }

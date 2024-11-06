@@ -146,7 +146,7 @@ public class AdapterEnderecosUsuario extends RecyclerView.Adapter<AdapterEnderec
                 LayoutInflater inflater = LayoutInflater.from(context);
                 View popupView = inflater.inflate(R.layout.popup_mensagem, null);
                 TextView msgPopup = popupView.findViewById(R.id.msg_popup);
-                msgPopup.setText(throwable.getMessage());
+                msgPopup.setText("Erro:"+throwable.getMessage());
                 ImageView imgPopup = popupView.findViewById(R.id.img_popup);
                 imgPopup.setImageResource(R.drawable.icon_pop_alert);
                 Button btnPopup = popupView.findViewById(R.id.btn_popup);
@@ -234,7 +234,7 @@ public class AdapterEnderecosUsuario extends RecyclerView.Adapter<AdapterEnderec
                 View popupView = inflater.inflate(R.layout.popup_mensagem, null);
 
                 TextView msgPopup = popupView.findViewById(R.id.msg_popup);
-                msgPopup.setText(throwable.getMessage());
+                msgPopup.setText("Erro:"+throwable.getMessage());
                 ImageView imgPopup = popupView.findViewById(R.id.img_popup);
                 imgPopup.setImageResource(R.drawable.icon_pop_alert);
                 Button btnPopup = popupView.findViewById(R.id.btn_popup);
