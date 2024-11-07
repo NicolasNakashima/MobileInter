@@ -22,7 +22,9 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.khiata.R;
 import com.example.khiata.adapters.AdapterProdutosCarrinho;
+import com.example.khiata.adapters.AdapterProdutosRecomendados;
 import com.example.khiata.apis.CartApi;
+import com.example.khiata.apis.ProductApi;
 import com.example.khiata.apis.UserApi;
 import com.example.khiata.fragments.fragment_tela_selecao_endereco_pagamento;
 import com.example.khiata.models.Cart;
@@ -43,9 +45,11 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class tela_carrinho extends AppCompatActivity {
 
     ImageView voltar_home;
+    TextView valor_total;
     Button btn_continuar_comprando, btn_finalizar_compra;
     RecyclerView lista_produtos_carrinho;
     List<Product> produtos = new ArrayList();
+    List<String> itensNames = new ArrayList();
     private Retrofit retrofit;
     String userCpf;
     @Override
@@ -90,13 +94,12 @@ public class tela_carrinho extends AppCompatActivity {
             }
         });
 
-        buscarCPFDoUsuario(FirebaseAuth.getInstance().getCurrentUser().getEmail());
-
+        valor_total = findViewById(R.id.valor_total);
         //Definir a lista de produtos
         lista_produtos_carrinho = findViewById(R.id.lista_produtos_carrinho);
-        AdapterProdutosCarrinho adapterProdutosCarrinho = new AdapterProdutosCarrinho(getApplicationContext(), produtos);
-        lista_produtos_carrinho.setAdapter(adapterProdutosCarrinho);
-        lista_produtos_carrinho.setLayoutManager(new LinearLayoutManager(getApplicationContext(), LinearLayoutManager.HORIZONTAL, false));
+        lista_produtos_carrinho.setLayoutManager(new LinearLayoutManager(getApplicationContext(), LinearLayoutManager.VERTICAL, false));
+
+        buscarCPFDoUsuario(FirebaseAuth.getInstance().getCurrentUser().getEmail());
     }
 
     // Método para buscar os itens do carrinho do usuário
@@ -138,6 +141,7 @@ public class tela_carrinho extends AppCompatActivity {
                             } else {
                                 items.add(new CartItem(key, value));
                                 itemNames.add(key); // Adiciona apenas o nome do item à lista
+                                itensNames.add(key);
                             }
                         }
                     }
@@ -148,10 +152,12 @@ public class tela_carrinho extends AppCompatActivity {
                     // Logando as variáveis separadas
                     Log.d("Cart ID", cartId);
                     Log.d("Total Value", total);
+                    valor_total.setText("R$ " + total);
 
                     if (!items.isEmpty()) {
                         Log.d("Item Names", itemNames.toString());
                         Log.d("Cart", cart.toString());
+                        pegarProdutosDoCarrinho(itensNames);
                     } else {
                         Log.e("Error", "Nenhum item no carrinho encontrado.");
                     }
@@ -206,6 +212,108 @@ public class tela_carrinho extends AppCompatActivity {
                 Log.e("Error", throwable.getMessage());
             }
         });
+    }
+
+    //Método para buscar os produtos com base nos itens do carrinho
+    private void pegarProdutosDoCarrinho(List<String> itensNames) {
+        String API_BASE_URL = "https://api-khiata.onrender.com/";
+        retrofit = new Retrofit.Builder()
+                .baseUrl(API_BASE_URL)
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+
+        ProductApi productApi = retrofit.create(ProductApi.class);
+        produtos.clear();  // Limpe a lista antes de iniciar o loop
+
+        for (String productName : itensNames) {
+            Call<List<Product>> call = productApi.getByName(productName);
+
+            call.enqueue(new Callback<List<Product>>() {
+                @Override
+                public void onResponse(Call<List<Product>> call, Response<List<Product>> response) {
+                    if (response.isSuccessful()) {
+                        List<Product> productList = response.body();
+
+                        if (productList != null && !productList.isEmpty()) {
+                            produtos.addAll(productList);  // Adicione os produtos à lista
+                        } else {
+                            Dialog dialog = new Dialog(getApplicationContext());
+                            LayoutInflater inflater = getLayoutInflater();
+                            View popupView = inflater.inflate(R.layout.popup_mensagem, null);
+
+                            TextView msgPopup = popupView.findViewById(R.id.msg_popup);
+                            msgPopup.setText("Você não possuí produtos no carrinho.");
+                            ImageView imgPopup = popupView.findViewById(R.id.img_popup);
+                            imgPopup.setImageResource(R.drawable.icon_pop_alert);
+                            Button btnPopup = popupView.findViewById(R.id.btn_popup);
+                            btnPopup.setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View v) {
+                                    dialog.cancel();
+                                }
+                            });
+
+                            dialog.setContentView(popupView);
+                            dialog.setCancelable(true);
+                            dialog.show();
+                            Log.e("Error", "Sem produtos no carrinho.");
+                        }
+
+                        // Atualize o adapter após cada adição
+                        if (lista_produtos_carrinho.getAdapter() == null) {
+                            AdapterProdutosCarrinho adapter = new AdapterProdutosCarrinho(getApplicationContext(), produtos);
+                            lista_produtos_carrinho.setAdapter(adapter);
+                        } else {
+                            lista_produtos_carrinho.getAdapter().notifyDataSetChanged();
+                        }
+                    } else {
+                        Dialog dialog = new Dialog(tela_carrinho.this);
+                        LayoutInflater inflater = getLayoutInflater();
+                        View popupView = inflater.inflate(R.layout.popup_mensagem, null);
+
+                        TextView msgPopup = popupView.findViewById(R.id.msg_popup);
+                        msgPopup.setText("Erro:" + response.message());
+                        ImageView imgPopup = popupView.findViewById(R.id.img_popup);
+                        imgPopup.setImageResource(R.drawable.icon_pop_alert);
+                        Button btnPopup = popupView.findViewById(R.id.btn_popup);
+                        btnPopup.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                dialog.cancel();
+                            }
+                        });
+
+                        dialog.setContentView(popupView);
+                        dialog.setCancelable(true);
+                        dialog.show();
+                        Log.e("Error", response.message());
+                    }
+                }
+
+                @Override
+                public void onFailure(Call<List<Product>> call, Throwable throwable) {
+                    Dialog dialog = new Dialog(tela_carrinho.this);
+                    LayoutInflater inflater = getLayoutInflater();
+                    View popupView = inflater.inflate(R.layout.popup_mensagem, null);
+
+                    TextView msgPopup = popupView.findViewById(R.id.msg_popup);
+                    msgPopup.setText("Erro:" + throwable.getMessage());
+                    ImageView imgPopup = popupView.findViewById(R.id.img_popup);
+                    imgPopup.setImageResource(R.drawable.icon_pop_alert);
+                    Button btnPopup = popupView.findViewById(R.id.btn_popup);
+                    btnPopup.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            dialog.cancel();
+                        }
+                    });
+
+                    dialog.setContentView(popupView);
+                    dialog.setCancelable(true);
+                    dialog.show();
+                }
+            });
+        }
     }
 
     //Método para buscar o CPF do usário

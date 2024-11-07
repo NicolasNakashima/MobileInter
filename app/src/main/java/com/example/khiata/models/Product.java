@@ -6,7 +6,7 @@ public class Product {
     private String name;
     private double price;
     private String imageUrl;
-    private int typeId;
+    private int category;
     private String dressMarkerName;
     private double avaliation;
     private String description;
@@ -17,7 +17,7 @@ public class Product {
         this.name = name;
         this.price = price;
         this.imageUrl = imageUrl;
-        this.typeId = typeId;
+        this.category = typeId;
         this.dressMarkerName = dressMarkerName;
         this.avaliation = avaliation;
         this.description = description;
@@ -58,11 +58,11 @@ public class Product {
     }
 
     public int getTypeId() {
-        return typeId;
+        return category;
     }
 
     public void setTypeId(int typeId) {
-        this.typeId = typeId;
+        this.category = typeId;
     }
 
     public String getDressMarkerName() {
@@ -105,7 +105,7 @@ public class Product {
                 ", name='" + name + '\'' +
                 ", price=" + price +
                 ", imageUrl='" + imageUrl + '\'' +
-                ", typeId=" + typeId +
+                ", category=" + category +
                 ", dressMarkerName='" + dressMarkerName + '\'' +
                 ", avaliation=" + avaliation +
                 ", description='" + description + '\'' +
