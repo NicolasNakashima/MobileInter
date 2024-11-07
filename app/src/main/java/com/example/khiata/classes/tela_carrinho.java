@@ -45,7 +45,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class tela_carrinho extends AppCompatActivity {
 
     ImageView voltar_home;
-    TextView valor_total, quantidade_produtos;
+    TextView valor_total;
     Button btn_continuar_comprando, btn_finalizar_compra;
     RecyclerView lista_produtos_carrinho;
     List<Product> produtos = new ArrayList();
@@ -94,11 +94,12 @@ public class tela_carrinho extends AppCompatActivity {
             }
         });
 
-        buscarCPFDoUsuario(FirebaseAuth.getInstance().getCurrentUser().getEmail());
-
+        valor_total = findViewById(R.id.valor_total);
         //Definir a lista de produtos
         lista_produtos_carrinho = findViewById(R.id.lista_produtos_carrinho);
         lista_produtos_carrinho.setLayoutManager(new LinearLayoutManager(getApplicationContext(), LinearLayoutManager.VERTICAL, false));
+
+        buscarCPFDoUsuario(FirebaseAuth.getInstance().getCurrentUser().getEmail());
     }
 
     // Método para buscar os itens do carrinho do usuário
@@ -151,6 +152,7 @@ public class tela_carrinho extends AppCompatActivity {
                     // Logando as variáveis separadas
                     Log.d("Cart ID", cartId);
                     Log.d("Total Value", total);
+                    valor_total.setText("R$ " + total);
 
                     if (!items.isEmpty()) {
                         Log.d("Item Names", itemNames.toString());

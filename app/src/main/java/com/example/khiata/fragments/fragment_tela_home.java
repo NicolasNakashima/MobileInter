@@ -95,6 +95,7 @@ public class fragment_tela_home extends Fragment {
     ImageView btn_pesquisa, btn_carrinho;
     List<String> userPreferences = new ArrayList();
     private Retrofit retrofit;
+    String userName;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -238,6 +239,7 @@ public class fragment_tela_home extends Fragment {
             public void onResponse(Call<User> call, Response<User> response) {
                 if (response.isSuccessful() && response.body() != null) {
                     User userResponse = response.body();
+                    userName = userResponse.getName();
 
                     List<UserPreference> preferences = userResponse.getUserPreferences();
                     if(preferences != null) {
@@ -245,7 +247,7 @@ public class fragment_tela_home extends Fragment {
                             userPreferences.add(preference.getValue());
                         }
                         Log.d("UserPreferences", userPreferences.toString());
-                        pegarProdutosPreferenciais(userPreferences);
+                        pegarProdutosPreferenciais(userPreferences, userName);
                     }
 
                 } else {
@@ -298,7 +300,7 @@ public class fragment_tela_home extends Fragment {
     }
 
     //Método para buscar os produtos com base na preferência do usuário
-    private void pegarProdutosPreferenciais(List<String> userPreferences) {
+    private void pegarProdutosPreferenciais(List<String> userPreferences, String userName) {
         String API_BASE_URL = "https://api-khiata.onrender.com/";
         retrofit = new Retrofit.Builder()
                 .baseUrl(API_BASE_URL)

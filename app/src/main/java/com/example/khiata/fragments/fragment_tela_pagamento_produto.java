@@ -32,6 +32,7 @@ import android.widget.Toast;
 
 import com.example.khiata.R;
 import com.example.khiata.adapters.AdapterProdutosComprados;
+import com.example.khiata.apis.CartApi;
 import com.example.khiata.apis.OrderApi;
 import com.example.khiata.apis.UserApi;
 import com.example.khiata.classes.NotificationReceiver;
@@ -190,7 +191,7 @@ public class fragment_tela_pagamento_produto extends Fragment {
                 if (response.isSuccessful() && response.body() != null) {
                     User userResponse = response.body();
                     userCpf = userResponse.getCpf();
-                    mudarStatusDoPedido(userCpf);
+                    salvarCarrinhoMongo(userCpf);
                 } else {
                     Dialog dialog = new Dialog(getActivity());
                     LayoutInflater inflater = getLayoutInflater();
@@ -236,6 +237,74 @@ public class fragment_tela_pagamento_produto extends Fragment {
                 dialog.setContentView(popupView);
                 dialog.setCancelable(true);
                 dialog.show();
+            }
+        });
+    }
+
+    //Método para salvar carrinho no Mongo
+    private void salvarCarrinhoMongo(String userCpf) {
+        Log.e("userCpf", userCpf);
+        String API_BASE_URL = "https://api-khiata.onrender.com/";
+        retrofit = new Retrofit.Builder()
+                .baseUrl(API_BASE_URL)
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+
+        CartApi cartApi = retrofit.create(CartApi.class);
+        Call<Void> call = cartApi.updateMongoCart(userCpf);
+
+        call.enqueue(new Callback<Void>() {
+            @Override
+            public void onResponse(Call<Void> call, Response<Void> response) {
+                if (response.isSuccessful()) {
+                    Log.d("Response", "Carrinho salvo no MongoDB com sucesso");
+                    mudarStatusDoPedido(userCpf);
+                } else {
+                    Dialog dialog = new Dialog(getActivity());
+                    LayoutInflater inflater = getLayoutInflater();
+                    View popupView = inflater.inflate(R.layout.popup_mensagem, null);
+
+                    TextView msgPopup = popupView.findViewById(R.id.msg_popup);
+                    msgPopup.setText("Falha ao realizar compra, tente novamente mais tarde.");
+                    ImageView imgPopup = popupView.findViewById(R.id.img_popup);
+                    imgPopup.setImageResource(R.drawable.icon_pop_alert);
+                    Button btnPopup = popupView.findViewById(R.id.btn_popup);
+                    btnPopup.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            dialog.cancel();
+                        }
+                    });
+
+                    dialog.setContentView(popupView);
+                    dialog.setCancelable(true);
+                    dialog.show();
+                    Log.e("Error", response.message());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Void> call, Throwable throwable) {
+                Dialog dialog = new Dialog(getActivity());
+                LayoutInflater inflater = getLayoutInflater();
+                View popupView = inflater.inflate(R.layout.popup_mensagem, null);
+
+                TextView msgPopup = popupView.findViewById(R.id.msg_popup);
+                msgPopup.setText("Erro:" + throwable.getMessage());
+                ImageView imgPopup = popupView.findViewById(R.id.img_popup);
+                imgPopup.setImageResource(R.drawable.icon_pop_alert);
+                Button btnPopup = popupView.findViewById(R.id.btn_popup);
+                btnPopup.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        dialog.cancel();
+                    }
+                });
+
+                dialog.setContentView(popupView);
+                dialog.setCancelable(true);
+                dialog.show();
+                Log.e("Error", throwable.getMessage());
             }
         });
     }

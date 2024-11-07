@@ -2,20 +2,26 @@ package com.example.khiata.classes;
 
 import android.app.Dialog;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.webkit.WebView;
+import android.webkit.WebViewClient;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
-
+import android.Manifest;
 import com.example.khiata.R;
 import com.google.firebase.auth.FirebaseAuth;
 
@@ -24,6 +30,7 @@ public class tela_forms extends AppCompatActivity {
     ImageView voltar_inicio;
     Button btn_encerrar_forms;
     WebView webViewForms;
+    private static final int REQUEST_BLUETOOTH_CONNECT_PERMISSION = 1;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -86,8 +93,23 @@ public class tela_forms extends AppCompatActivity {
             }
         });
 
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+            if (ContextCompat.checkSelfPermission(this, Manifest.permission.BLUETOOTH_CONNECT)
+                    != PackageManager.PERMISSION_GRANTED) {
+                ActivityCompat.requestPermissions(this,
+                        new String[]{Manifest.permission.BLUETOOTH_CONNECT},
+                        REQUEST_BLUETOOTH_CONNECT_PERMISSION);
+            }
+        }
+
         //WebView para exibir o Formulário da IA
         webViewForms = findViewById(R.id.webViewForms);
-        webViewForms.loadUrl("");
+        webViewForms.setWebViewClient(new WebViewClient());
+        webViewForms.getSettings().setJavaScriptEnabled(true);
+        webViewForms.getSettings().setDomStorageEnabled(true);
+        webViewForms.setWebViewClient(new WebViewClient());
+        WebView.setWebContentsDebuggingEnabled(true);
+        Log.d("Site", "forms");
+        webViewForms.loadUrl("http://ec2-54-161-187-70.compute-1.amazonaws.com:3000/user/formulario");
     }
 }
