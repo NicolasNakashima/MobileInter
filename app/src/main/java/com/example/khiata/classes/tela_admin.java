@@ -24,7 +24,6 @@ import com.example.khiata.fragments.fragment_tela_home;
 
 public class tela_admin extends AppCompatActivity {
 
-    ImageView voltar_inicio;
     WebView webViewAreaOculta;
     private static final int REQUEST_BLUETOOTH_CONNECT_PERMISSION = 1;
     @Override
@@ -37,18 +36,6 @@ public class tela_admin extends AppCompatActivity {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
-
-        //Botão para voltar para a tela inicial
-        voltar_inicio = findViewById(R.id.voltar_inicio);
-        voltar_inicio.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(getApplicationContext(), tela_inicial.class);
-                startActivity(intent);
-                finish();
-            }
-        });
-
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
             if (ContextCompat.checkSelfPermission(this, Manifest.permission.BLUETOOTH_CONNECT)

@@ -126,25 +126,46 @@ public class tela_cadastro extends AppCompatActivity {
                 } else{
                     //Verificar se as senhas conferem
                     if(novaSenha.equals(novaConfirmaSenha)){
-                        //Verificar se o telefone tem o formato correto
-                        if(novoPhone.matches(regexTelefone)){
-                            int novoGenero = 0;
-                            if(selectedId == R.id.opcaoHomem){
-                                novoGenero = 2;
-                            } else if(selectedId == R.id.opcaoMulher){
-                                novoGenero = 1;
-                            }
+                        //Verificar se a senha tem pelo menos 8 caracteres
+                        if(novaSenha.length() >= 8) {
+                            //Verificar se o telefone tem o formato correto
+                            if (novoPhone.matches(regexTelefone)) {
+                                int novoGenero = 0;
+                                if (selectedId == R.id.opcaoHomem) {
+                                    novoGenero = 2;
+                                } else if (selectedId == R.id.opcaoMulher) {
+                                    novoGenero = 1;
+                                }
 
-                            User novoUser = new User( novoNome, novoCPF, novoGenero,novaIdade,confirmCostureira,0, novoPhone, null,novaSenha, novoEmail, null, 0, false);
-                            Log.e("novoUser", novoUser.toString());
-                            Log.d("User", new Gson().toJson(novoUser));
-                            cadastrarUsuarioAPI(novoUser);
+                                User novoUser = new User(novoNome, novoCPF, novoGenero, novaIdade, confirmCostureira, 0, novoPhone, null, novaSenha, novoEmail, null, 0, false);
+                                Log.e("novoUser", novoUser.toString());
+                                Log.d("User", new Gson().toJson(novoUser));
+                                cadastrarUsuarioAPI(novoUser);
+                            } else {
+                                Dialog dialog = new Dialog(tela_cadastro.this);
+                                LayoutInflater inflater = getLayoutInflater();
+                                View popupView = inflater.inflate(R.layout.popup_mensagem, null);
+                                TextView msgPopup = popupView.findViewById(R.id.msg_popup);
+                                msgPopup.setText("Por favor, digite um telefone valido no formato DDXXXXXXXXX.");
+                                ImageView imgPopup = popupView.findViewById(R.id.img_popup);
+                                imgPopup.setImageResource(R.drawable.icon_pop_alert);
+                                Button btnPopup = popupView.findViewById(R.id.btn_popup);
+                                btnPopup.setOnClickListener(new View.OnClickListener() {
+                                    @Override
+                                    public void onClick(View v) {
+                                        dialog.cancel();
+                                    }
+                                });
+                                dialog.setContentView(popupView);
+                                dialog.setCancelable(true);
+                                dialog.show();
+                            }
                         } else{
                             Dialog dialog = new Dialog(tela_cadastro.this);
                             LayoutInflater inflater = getLayoutInflater();
                             View popupView = inflater.inflate(R.layout.popup_mensagem, null);
                             TextView msgPopup = popupView.findViewById(R.id.msg_popup);
-                            msgPopup.setText("Por favor, digite um telefone valido no formato DDXXXXXXXXX.");
+                            msgPopup.setText("A senha deve conter pelo menos 8 caracteres.");
                             ImageView imgPopup = popupView.findViewById(R.id.img_popup);
                             imgPopup.setImageResource(R.drawable.icon_pop_alert);
                             Button btnPopup = popupView.findViewById(R.id.btn_popup);

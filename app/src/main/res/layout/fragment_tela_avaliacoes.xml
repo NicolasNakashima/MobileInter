@@ -71,6 +71,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
+            android:isIndicator="true"
             android:scaleX="1"
             android:scaleY="1"
             app:layout_constraintEnd_toEndOf="parent"
