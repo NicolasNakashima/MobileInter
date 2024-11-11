@@ -95,12 +95,16 @@ public class fragment_tela_home extends Fragment {
     ImageView btn_pesquisa, btn_carrinho;
     List<String> userPreferences = new ArrayList();
     private Retrofit retrofit;
+    String userName;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_tela_home, container, false);
+
+        //Carregar o nome do usuário
+        buscarNomeDoUsuario(FirebaseAuth.getInstance().getCurrentUser().getEmail());
 
         // Carregar a lista de costureiras recomendadas
         costureiras_recomendas = view.findViewById(R.id.costureiras_recomendas);
@@ -224,6 +228,71 @@ public class fragment_tela_home extends Fragment {
         });
     }
 
+    //Método para buscar o nome do usuário
+    private void buscarNomeDoUsuario(String userEmail) {
+        String API_BASE_URL = "https://apikhiata.onrender.com/";
+        retrofit = new Retrofit.Builder()
+                .baseUrl(API_BASE_URL)
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+        UserApi userApi = retrofit.create(UserApi.class);
+        Call<User> call = userApi.buscarUsuarioPorEmail(userEmail);
+        call.enqueue(new Callback<User>() {
+            @Override
+            public void onResponse(Call<User> call, Response<User> response) {
+                if (response.isSuccessful() && response.body() != null) {
+                    User userResponse = response.body();
+                    userName = userResponse.getName();
+                    Log.d("UserName", userName);
+                } else {
+                    Dialog dialog = new Dialog(getActivity());
+                    LayoutInflater inflater = getLayoutInflater();
+                    View popupView = inflater.inflate(R.layout.popup_mensagem, null);
+
+                    TextView msgPopup = popupView.findViewById(R.id.msg_popup);
+                    msgPopup.setText("Erro:" + response.message());
+                    ImageView imgPopup = popupView.findViewById(R.id.img_popup);
+                    imgPopup.setImageResource(R.drawable.icon_pop_alert);
+                    Button btnPopup = popupView.findViewById(R.id.btn_popup);
+                    btnPopup.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            dialog.cancel();
+                        }
+                    });
+
+                    dialog.setContentView(popupView);
+                    dialog.setCancelable(true);
+                    dialog.show();
+                    Log.e("API Error", "Response code: " + response.code() + " | Error body: " + response.errorBody());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<User> call, Throwable throwable) {
+                Dialog dialog = new Dialog(getActivity());
+                LayoutInflater inflater = getLayoutInflater();
+                View popupView = inflater.inflate(R.layout.popup_mensagem, null);
+
+                TextView msgPopup = popupView.findViewById(R.id.msg_popup);
+                msgPopup.setText("Erro:" + throwable.getMessage());
+                ImageView imgPopup = popupView.findViewById(R.id.img_popup);
+                imgPopup.setImageResource(R.drawable.icon_pop_alert);
+                Button btnPopup = popupView.findViewById(R.id.btn_popup);
+                btnPopup.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        dialog.cancel();
+                    }
+                });
+
+                dialog.setContentView(popupView);
+                dialog.setCancelable(true);
+                dialog.show();
+            }
+        });
+    }
+
     //Método para buscar as preferências do usuário
     private void  buscarPreferenciasUsuario(String userEmail) {
         String API_BASE_URL = "https://apikhiata.onrender.com/";
@@ -318,7 +387,18 @@ public class fragment_tela_home extends Fragment {
                         List<Product> productList = response.body();
 
                         if (productList != null && !productList.isEmpty()) {
-                            produtos.addAll(productList);  // Adicione os produtos à lista
+                            //produtos.addAll(productList);// Adicione os produtos à lista
+                            //Vendo o DressMakerName de cada um
+                            for (Product product : productList) {
+                                if (product.getDressMarkerName() != null) {
+                                    Log.d("ProductDressMaker", product.getDressMarkerName());
+                                    if(product.getDressMarkerName()!=userName){
+                                        produtos.add(product);
+                                    }
+                                } else {
+                                    Log.d("ProductDressMaker", "Nome do costureiro não disponível");
+                                }
+                            }
                         } else {
                             Dialog dialog = new Dialog(getActivity());
                             LayoutInflater inflater = getLayoutInflater();

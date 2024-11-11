@@ -375,6 +375,7 @@ public class fragment_tela_produto extends Fragment {
                         }
                     });
                     Button btnSeguir = popupView.findViewById(R.id.btn_seguir);
+                    btnSeguir.setText("Carrinho");
                     btnSeguir.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {

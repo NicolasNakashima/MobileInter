@@ -9,7 +9,7 @@
     app:cardCornerRadius="10dp">
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="279dp"
+        android:layout_width="290dp"
         android:layout_height="match_parent"
         android:background="#FAC552">
 
@@ -41,7 +41,7 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/navigation_perfil"
             android:layout_width="254dp"
-            android:layout_height="86dp"
+            android:layout_height="wrap_content"
             android:layout_marginTop="15dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.441"
@@ -62,7 +62,7 @@
 
             <TextView
                 android:id="@+id/nome_user"
-                android:layout_width="wrap_content"
+                android:layout_width="80dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="14dp"
                 android:layout_marginTop="14dp"
@@ -78,7 +78,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="14dp"
-                android:layout_marginBottom="15dp"
+                android:layout_marginBottom="12dp"
                 android:text="Perfil"
                 android:textColor="#5A2D03"
                 android:textSize="19sp"
