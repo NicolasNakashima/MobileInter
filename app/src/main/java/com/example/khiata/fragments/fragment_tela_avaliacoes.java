@@ -25,6 +25,7 @@ import android.widget.Toast;
 import com.example.khiata.R;
 import com.example.khiata.adapters.AdapterAvaliacoesUsuario;
 import com.example.khiata.apis.UserApi;
+import com.example.khiata.classes.TratamentoErros;
 import com.example.khiata.classes.tela_login;
 import com.example.khiata.models.Avaliation;
 import com.example.khiata.models.User;
@@ -91,6 +92,7 @@ public class fragment_tela_avaliacoes extends Fragment {
     RecyclerView lista_avaliacoes_usuario;
     List<Avaliation> avaliacoes = new ArrayList();
     private Retrofit retrofit;
+    TratamentoErros tratamentoErros = new TratamentoErros();
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -146,7 +148,7 @@ public class fragment_tela_avaliacoes extends Fragment {
                     View popupView = inflater.inflate(R.layout.popup_mensagem, null);
 
                     TextView msgPopup = popupView.findViewById(R.id.msg_popup);
-                    msgPopup.setText("Erro: " + response.errorBody());
+                    msgPopup.setText("Erro: " + tratamentoErros.tratandoErroApi(response));
                     ImageView imgPopup = popupView.findViewById(R.id.img_popup);
                     imgPopup.setImageResource(R.drawable.icon_pop_alert);
                     Button btnPopup = popupView.findViewById(R.id.btn_popup);
@@ -172,7 +174,7 @@ public class fragment_tela_avaliacoes extends Fragment {
                 View popupView = inflater.inflate(R.layout.popup_mensagem, null);
 
                 TextView msgPopup = popupView.findViewById(R.id.msg_popup);
-                msgPopup.setText("Erro: " + throwable.getMessage());
+                msgPopup.setText("Erro: " + tratamentoErros.tratandoErroThrowable(throwable));
                 ImageView imgPopup = popupView.findViewById(R.id.img_popup);
                 imgPopup.setImageResource(R.drawable.icon_pop_alert);
                 Button btnPopup = popupView.findViewById(R.id.btn_popup);

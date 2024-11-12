@@ -32,6 +32,7 @@ import android.widget.Toast;
 import com.example.khiata.R;
 import com.example.khiata.apis.UserApi;
 import com.example.khiata.classes.NotificationReceiver;
+import com.example.khiata.classes.TratamentoErros;
 import com.example.khiata.classes.tela_inicial;
 import com.google.firebase.auth.FirebaseAuth;
 
@@ -93,6 +94,7 @@ public class fragment_tela_pagamento_plan_premium extends Fragment {
 
     ImageView voltar_resumo_dados_pagamento;
     Button btn_pagar, btn_cancelar_pagamento;
+    TratamentoErros tratamentoErros = new TratamentoErros();
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -224,7 +226,7 @@ public class fragment_tela_pagamento_plan_premium extends Fragment {
                 View popupView = inflater.inflate(R.layout.popup_mensagem, null);
 
                 TextView msgPopup = popupView.findViewById(R.id.msg_popup);
-                msgPopup.setText("Erro:" + t.getMessage());
+                msgPopup.setText("Erro: " + tratamentoErros.tratandoErroThrowable(t));
                 ImageView imgPopup = popupView.findViewById(R.id.img_popup);
                 imgPopup.setImageResource(R.drawable.icon_pop_alert);
                 Button btnPopup = popupView.findViewById(R.id.btn_popup);

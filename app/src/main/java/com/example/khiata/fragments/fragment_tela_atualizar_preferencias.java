@@ -24,6 +24,7 @@ import com.example.khiata.R;
 import com.example.khiata.apis.CategoryApi;
 import com.example.khiata.apis.UserApi;
 import com.example.khiata.classes.MainActivity;
+import com.example.khiata.classes.TratamentoErros;
 import com.example.khiata.classes.tela_cadastro_preferencias_usuario;
 import com.example.khiata.classes.tela_login;
 import com.example.khiata.models.Category;
@@ -96,6 +97,7 @@ public class fragment_tela_atualizar_preferencias extends Fragment {
     LinearLayout lista_categorias;
     int userId;
     private Retrofit retrofit;
+    TratamentoErros tratamentoErros = new TratamentoErros();
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -192,7 +194,7 @@ public class fragment_tela_atualizar_preferencias extends Fragment {
                 View popupView = inflater.inflate(R.layout.popup_mensagem, null);
 
                 TextView msgPopup = popupView.findViewById(R.id.msg_popup);
-                msgPopup.setText("Erro: " + throwable.getMessage());
+                msgPopup.setText("Erro: " + tratamentoErros.tratandoErroThrowable(throwable));
                 ImageView imgPopup = popupView.findViewById(R.id.img_popup);
                 imgPopup.setImageResource(R.drawable.icon_pop_alert);
                 Button btnPopup = popupView.findViewById(R.id.btn_popup);
@@ -296,7 +298,7 @@ public class fragment_tela_atualizar_preferencias extends Fragment {
                 View popupView = inflater.inflate(R.layout.popup_mensagem, null);
 
                 TextView msgPopup = popupView.findViewById(R.id.msg_popup);
-                msgPopup.setText("Erro: " + throwable.getMessage());
+                msgPopup.setText("Erro: " + tratamentoErros.tratandoErroThrowable(throwable));
                 ImageView imgPopup = popupView.findViewById(R.id.img_popup);
                 imgPopup.setImageResource(R.drawable.icon_pop_alert);
                 Button btnPopup = popupView.findViewById(R.id.btn_popup);
@@ -350,7 +352,7 @@ public class fragment_tela_atualizar_preferencias extends Fragment {
                     View popupView = inflater.inflate(R.layout.popup_mensagem, null);
 
                     TextView msgPopup = popupView.findViewById(R.id.msg_popup);
-                    msgPopup.setText("Erro: " + errorMessage);
+                    msgPopup.setText("Erro: " + tratamentoErros.tratandoErroApi(response));
                     ImageView imgPopup = popupView.findViewById(R.id.img_popup);
                     imgPopup.setImageResource(R.drawable.icon_pop_alert);
                     Button btnPopup = popupView.findViewById(R.id.btn_popup);
@@ -401,7 +403,7 @@ public class fragment_tela_atualizar_preferencias extends Fragment {
                 View popupView = inflater.inflate(R.layout.popup_mensagem, null);
 
                 TextView msgPopup = popupView.findViewById(R.id.msg_popup);
-                msgPopup.setText("Erro: " + t.getMessage());
+                msgPopup.setText("Erro: " + tratamentoErros.tratandoErroThrowable(t));
                 ImageView imgPopup = popupView.findViewById(R.id.img_popup);
                 imgPopup.setImageResource(R.drawable.icon_pop_alert);
                 Button btnPopup = popupView.findViewById(R.id.btn_popup);

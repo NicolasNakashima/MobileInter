@@ -109,7 +109,7 @@ public class tela_nova_senha extends AppCompatActivity {
                 ImageView imgPopup = popupView.findViewById(R.id.img_popup);
                 imgPopup.setImageResource(imageResId);
                 Button btnPopup = popupView.findViewById(R.id.btn_popup);
-                btnPopup.setText(redirectToLogin ? "Login" : "Ok");
+                btnPopup.setText(redirectToLogin ? "Login" : "Fechar");
 
                 btnPopup.setOnClickListener(new View.OnClickListener() {
                     @Override

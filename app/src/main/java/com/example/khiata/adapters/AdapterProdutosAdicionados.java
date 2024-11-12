@@ -21,6 +21,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.example.khiata.R;
 import com.example.khiata.apis.ProductApi;
+import com.example.khiata.classes.TratamentoErros;
 import com.example.khiata.classes.tela_login;
 import com.example.khiata.fragments.fragment_tela_produto;
 import com.example.khiata.models.Product;
@@ -50,6 +51,7 @@ public class AdapterProdutosAdicionados extends RecyclerView.Adapter<AdapterProd
     private Retrofit retrofit;
     FirebaseStorage storage = FirebaseStorage.getInstance();
     StorageReference storageRef = storage.getReference();
+    TratamentoErros tratamentoErros = new TratamentoErros();
     @NonNull
     @Override
     public AdapterProdutosAdicionados.MeuViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -236,7 +238,7 @@ public class AdapterProdutosAdicionados extends RecyclerView.Adapter<AdapterProd
                 View popupView = inflater.inflate(R.layout.popup_mensagem, null);
 
                 TextView msgPopup = popupView.findViewById(R.id.msg_popup);
-                msgPopup.setText("Erro:"+throwable.getMessage());
+                msgPopup.setText("Erro: "+tratamentoErros.tratandoErroThrowable(throwable));
                 ImageView imgPopup = popupView.findViewById(R.id.img_popup);
                 imgPopup.setImageResource(R.drawable.icon_pop_alert);
                 Button btnPopup = popupView.findViewById(R.id.btn_popup);

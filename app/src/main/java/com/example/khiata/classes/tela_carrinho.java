@@ -52,6 +52,7 @@ public class tela_carrinho extends AppCompatActivity {
     List<String> itensNames = new ArrayList();
     private Retrofit retrofit;
     String userCpf;
+    TratamentoErros tratamentoErros = new TratamentoErros();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -119,14 +120,13 @@ public class tela_carrinho extends AppCompatActivity {
             public void onResponse(Call<List<List<String>>> call, Response<List<List<String>>> response) {
                 if (response.isSuccessful() && response.body() != null) {
                     List<List<String>> responseBody = response.body();
-
-                    // Logando a resposta completa da API
                     Log.d("API Response", responseBody.toString());
 
                     List<CartItem> items = new ArrayList<>();
                     String cartId = "";
                     String total = "";
                     List<String> itemNames = new ArrayList<>();
+                    List<String> itensNames = new ArrayList<>();
 
                     // Processa a resposta da API e cria o objeto Cart
                     for (List<String> item : responseBody) {
@@ -138,18 +138,21 @@ public class tela_carrinho extends AppCompatActivity {
                                 cartId = value;
                             } else if (key.equals("Total")) {
                                 total = value;
+                            } else if (key.startsWith("quantity_")) {
+                                String productName = key.replace("quantity_", "");
+                                items.add(new CartItem(productName, value)); // Aqui, o valor será a quantidade
+                                itemNames.add(productName);
+                                itensNames.add(productName);
                             } else {
                                 items.add(new CartItem(key, value));
-                                itemNames.add(key); // Adiciona apenas o nome do item à lista
+                                itemNames.add(key);
                                 itensNames.add(key);
                             }
                         }
                     }
 
-                    // Cria o objeto Cart e exibe os itens no Adapter
                     Cart cart = new Cart(items, cartId, total);
 
-                    // Logando as variáveis separadas
                     Log.d("Cart ID", cartId);
                     Log.d("Total Value", total);
                     valor_total.setText("R$ " + total);
@@ -157,65 +160,28 @@ public class tela_carrinho extends AppCompatActivity {
                     if (!items.isEmpty()) {
                         Log.d("Item Names", itemNames.toString());
                         Log.d("Cart", cart.toString());
-                        pegarProdutosDoCarrinho(itensNames);
+                        pegarProdutosDoCarrinho(items); // Envia o objeto CartItem, que agora inclui a quantidade
                     } else {
                         Log.e("Error", "Nenhum item no carrinho encontrado.");
                     }
 
                 } else {
-                    //Pop-up de falha
-                    Dialog dialog = new Dialog(tela_carrinho.this);
-                    LayoutInflater inflater = getLayoutInflater();
-                    View popupView = inflater.inflate(R.layout.popup_mensagem, null);
-
-                    TextView msgPopup = popupView.findViewById(R.id.msg_popup);
-                    msgPopup.setText("Falha ao carregar o carrinho, tente novamente mais tarde.");
-                    ImageView imgPopup = popupView.findViewById(R.id.img_popup);
-                    imgPopup.setImageResource(R.drawable.icon_pop_alert);
-                    Button btnPopup = popupView.findViewById(R.id.btn_popup);
-                    btnPopup.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            dialog.cancel();
-                        }
-                    });
-
-                    dialog.setContentView(popupView);
-                    dialog.setCancelable(true);
-                    dialog.show();
+                    showErrorDialog("Falha ao carregar o carrinho, tente novamente mais tarde.");
                     Log.e("Error", "Falha ao carregar o carrinho: " + response.code());
                 }
             }
 
             @Override
             public void onFailure(Call<List<List<String>>> call, Throwable throwable) {
-                Dialog dialog = new Dialog(tela_carrinho.this);
-
-                LayoutInflater inflater = getLayoutInflater();
-                View popupView = inflater.inflate(R.layout.popup_mensagem, null);
-
-                TextView msgPopup = popupView.findViewById(R.id.msg_popup);
-                msgPopup.setText("Erro:" + throwable.getMessage());
-                ImageView imgPopup = popupView.findViewById(R.id.img_popup);
-                imgPopup.setImageResource(R.drawable.icon_pop_alert);
-                Button btnPopup = popupView.findViewById(R.id.btn_popup);
-                btnPopup.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        dialog.cancel();
-                    }
-                });
-
-                dialog.setContentView(popupView);
-                dialog.setCancelable(true);
-                dialog.show();
+                showErrorDialog("Erro:" + tratamentoErros.tratandoErroThrowable(throwable));
                 Log.e("Error", throwable.getMessage());
             }
         });
     }
 
+
     //Método para buscar os produtos com base nos itens do carrinho
-    private void pegarProdutosDoCarrinho(List<String> itensNames) {
+    private void pegarProdutosDoCarrinho(List<CartItem> itensCarrinho) {
         String API_BASE_URL = "https://api-khiata.onrender.com/";
         retrofit = new Retrofit.Builder()
                 .baseUrl(API_BASE_URL)
@@ -225,8 +191,8 @@ public class tela_carrinho extends AppCompatActivity {
         ProductApi productApi = retrofit.create(ProductApi.class);
         produtos.clear();  // Limpe a lista antes de iniciar o loop
 
-        for (String productName : itensNames) {
-            Call<List<Product>> call = productApi.getByName(productName);
+        for (CartItem cartItem : itensCarrinho) {
+            Call<List<Product>> call = productApi.getByName(cartItem.getName());
 
             call.enqueue(new Callback<List<Product>>() {
                 @Override
@@ -235,31 +201,12 @@ public class tela_carrinho extends AppCompatActivity {
                         List<Product> productList = response.body();
 
                         if (productList != null && !productList.isEmpty()) {
-                            produtos.addAll(productList);  // Adicione os produtos à lista
-                        } else {
-                            Dialog dialog = new Dialog(getApplicationContext());
-                            LayoutInflater inflater = getLayoutInflater();
-                            View popupView = inflater.inflate(R.layout.popup_mensagem, null);
-
-                            TextView msgPopup = popupView.findViewById(R.id.msg_popup);
-                            msgPopup.setText("Você não possuí produtos no carrinho.");
-                            ImageView imgPopup = popupView.findViewById(R.id.img_popup);
-                            imgPopup.setImageResource(R.drawable.icon_pop_alert);
-                            Button btnPopup = popupView.findViewById(R.id.btn_popup);
-                            btnPopup.setOnClickListener(new View.OnClickListener() {
-                                @Override
-                                public void onClick(View v) {
-                                    dialog.cancel();
-                                }
-                            });
-
-                            dialog.setContentView(popupView);
-                            dialog.setCancelable(true);
-                            dialog.show();
-                            Log.e("Error", "Sem produtos no carrinho.");
+                            for (Product product : productList) {
+                                product.setQuantity(Integer.parseInt(cartItem.getQuantity())); // Defina a quantidade no produto
+                                produtos.add(product);
+                            }
                         }
 
-                        // Atualize o adapter após cada adição
                         if (lista_produtos_carrinho.getAdapter() == null) {
                             AdapterProdutosCarrinho adapter = new AdapterProdutosCarrinho(getApplicationContext(), produtos);
                             lista_produtos_carrinho.setAdapter(adapter);
@@ -267,54 +214,43 @@ public class tela_carrinho extends AppCompatActivity {
                             lista_produtos_carrinho.getAdapter().notifyDataSetChanged();
                         }
                     } else {
-                        Dialog dialog = new Dialog(tela_carrinho.this);
-                        LayoutInflater inflater = getLayoutInflater();
-                        View popupView = inflater.inflate(R.layout.popup_mensagem, null);
-
-                        TextView msgPopup = popupView.findViewById(R.id.msg_popup);
-                        msgPopup.setText("Erro:" + response.message());
-                        ImageView imgPopup = popupView.findViewById(R.id.img_popup);
-                        imgPopup.setImageResource(R.drawable.icon_pop_alert);
-                        Button btnPopup = popupView.findViewById(R.id.btn_popup);
-                        btnPopup.setOnClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View v) {
-                                dialog.cancel();
-                            }
-                        });
-
-                        dialog.setContentView(popupView);
-                        dialog.setCancelable(true);
-                        dialog.show();
+                        showErrorDialog("Erro:" + tratamentoErros.tratandoErroApi(response));
                         Log.e("Error", response.message());
                     }
                 }
 
                 @Override
                 public void onFailure(Call<List<Product>> call, Throwable throwable) {
-                    Dialog dialog = new Dialog(tela_carrinho.this);
-                    LayoutInflater inflater = getLayoutInflater();
-                    View popupView = inflater.inflate(R.layout.popup_mensagem, null);
-
-                    TextView msgPopup = popupView.findViewById(R.id.msg_popup);
-                    msgPopup.setText("Erro:" + throwable.getMessage());
-                    ImageView imgPopup = popupView.findViewById(R.id.img_popup);
-                    imgPopup.setImageResource(R.drawable.icon_pop_alert);
-                    Button btnPopup = popupView.findViewById(R.id.btn_popup);
-                    btnPopup.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            dialog.cancel();
-                        }
-                    });
-
-                    dialog.setContentView(popupView);
-                    dialog.setCancelable(true);
-                    dialog.show();
+                    showErrorDialog("Erro:" + tratamentoErros.tratandoErroThrowable(throwable));
                 }
             });
         }
     }
+
+    //Método para mostrar uma mensagem de erro
+    private void showErrorDialog(String message) {
+        Dialog dialog = new Dialog(tela_carrinho.this);
+        LayoutInflater inflater = getLayoutInflater();
+        View popupView = inflater.inflate(R.layout.popup_mensagem, null);
+
+        TextView msgPopup = popupView.findViewById(R.id.msg_popup);
+        msgPopup.setText(message);
+        ImageView imgPopup = popupView.findViewById(R.id.img_popup);
+        imgPopup.setImageResource(R.drawable.icon_pop_alert);
+
+        Button btnPopup = popupView.findViewById(R.id.btn_popup);
+        btnPopup.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.cancel();
+            }
+        });
+
+        dialog.setContentView(popupView);
+        dialog.setCancelable(true);
+        dialog.show();
+    }
+
 
     //Método para buscar o CPF do usário
     private void buscarCPFDoUsuario(String userEmail) {
@@ -339,7 +275,7 @@ public class tela_carrinho extends AppCompatActivity {
                     View popupView = inflater.inflate(R.layout.popup_mensagem, null);
 
                     TextView msgPopup = popupView.findViewById(R.id.msg_popup);
-                    msgPopup.setText("Erro:"+response.errorBody());
+                    msgPopup.setText("Erro: "+tratamentoErros.tratandoErroApi(response));
                     ImageView imgPopup = popupView.findViewById(R.id.img_popup);
                     imgPopup.setImageResource(R.drawable.icon_pop_alert);
                     Button btnPopup = popupView.findViewById(R.id.btn_popup);
@@ -365,7 +301,7 @@ public class tela_carrinho extends AppCompatActivity {
                 View popupView = inflater.inflate(R.layout.popup_mensagem, null);
 
                 TextView msgPopup = popupView.findViewById(R.id.msg_popup);
-                msgPopup.setText("Erro:" + throwable.getMessage());
+                msgPopup.setText("Erro: " + tratamentoErros.tratandoErroThrowable(throwable));
                 ImageView imgPopup = popupView.findViewById(R.id.img_popup);
                 imgPopup.setImageResource(R.drawable.icon_pop_alert);
                 Button btnPopup = popupView.findViewById(R.id.btn_popup);

@@ -33,6 +33,7 @@ import com.example.khiata.apis.ProductApi;
 import com.example.khiata.apis.UserApi;
 import com.example.khiata.classes.CameraPerfil;
 import com.example.khiata.classes.CameraProduto;
+import com.example.khiata.classes.TratamentoErros;
 import com.example.khiata.models.Address;
 import com.example.khiata.models.Category;
 import com.example.khiata.models.Product;
@@ -114,6 +115,7 @@ public class fragment_tela_cadastrar_produto extends Fragment {
     String imgName;
     RadioGroup radioGroup;
     int categoriaSelecionada=0;
+    TratamentoErros tratamentoErros = new TratamentoErros();
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -269,7 +271,7 @@ public class fragment_tela_cadastrar_produto extends Fragment {
                     View popupView = inflater.inflate(R.layout.popup_mensagem, null);
 
                     TextView msgPopup = popupView.findViewById(R.id.msg_popup);
-                    msgPopup.setText("Erro: " + response.message());
+                    msgPopup.setText("Erro: " + tratamentoErros.tratandoErroApi(response));
                     ImageView imgPopup = popupView.findViewById(R.id.img_popup);
                     imgPopup.setImageResource(R.drawable.icon_pop_alert);
                     Button btnPopup = popupView.findViewById(R.id.btn_popup);
@@ -346,7 +348,7 @@ public class fragment_tela_cadastrar_produto extends Fragment {
                 View popupView = inflater.inflate(R.layout.popup_mensagem, null);
 
                 TextView msgPopup = popupView.findViewById(R.id.msg_popup);
-                msgPopup.setText("Erro: " + throwable.getMessage());
+                msgPopup.setText("Erro: " + tratamentoErros.tratandoErroThrowable(throwable));
                 ImageView imgPopup = popupView.findViewById(R.id.img_popup);
                 imgPopup.setImageResource(R.drawable.icon_pop_alert);
                 Button btnPopup = popupView.findViewById(R.id.btn_popup);
@@ -392,7 +394,7 @@ public class fragment_tela_cadastrar_produto extends Fragment {
                 View popupView = inflater.inflate(R.layout.popup_mensagem, null);
 
                 TextView msgPopup = popupView.findViewById(R.id.msg_popup);
-                msgPopup.setText("Erro: " + throwable.getMessage());
+                msgPopup.setText("Erro: " + tratamentoErros.tratandoErroThrowable(throwable));
                 ImageView imgPopup = popupView.findViewById(R.id.img_popup);
                 imgPopup.setImageResource(R.drawable.icon_pop_alert);
                 Button btnPopup = popupView.findViewById(R.id.btn_popup);
@@ -435,7 +437,7 @@ public class fragment_tela_cadastrar_produto extends Fragment {
                         View popupView = inflater.inflate(R.layout.popup_mensagem, null);
 
                         TextView msgPopup = popupView.findViewById(R.id.msg_popup);
-                        msgPopup.setText("Erro: " + errorBody);
+                        msgPopup.setText("Erro: " + tratamentoErros.tratandoErroApi(response));
                         ImageView imgPopup = popupView.findViewById(R.id.img_popup);
                         imgPopup.setImageResource(R.drawable.icon_pop_alert);
                         Button btnPopup = popupView.findViewById(R.id.btn_popup);
@@ -457,7 +459,7 @@ public class fragment_tela_cadastrar_produto extends Fragment {
                         View popupView = inflater.inflate(R.layout.popup_mensagem, null);
 
                         TextView msgPopup = popupView.findViewById(R.id.msg_popup);
-                        msgPopup.setText("Erro: " + e.getMessage());
+                        msgPopup.setText("Erro: " + tratamentoErros.tratandoErroThrowable(e));
                         ImageView imgPopup = popupView.findViewById(R.id.img_popup);
                         imgPopup.setImageResource(R.drawable.icon_pop_alert);
                         Button btnPopup = popupView.findViewById(R.id.btn_popup);
@@ -509,7 +511,7 @@ public class fragment_tela_cadastrar_produto extends Fragment {
                 View popupView = inflater.inflate(R.layout.popup_mensagem, null);
 
                 TextView msgPopup = popupView.findViewById(R.id.msg_popup);
-                msgPopup.setText("Erro: " + t.getMessage());
+                msgPopup.setText("Erro: " + tratamentoErros.tratandoErroThrowable(t));
                 ImageView imgPopup = popupView.findViewById(R.id.img_popup);
                 imgPopup.setImageResource(R.drawable.icon_pop_alert);
                 Button btnPopup = popupView.findViewById(R.id.btn_popup);

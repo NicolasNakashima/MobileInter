@@ -22,6 +22,7 @@ import com.example.khiata.R;
 import com.example.khiata.adapters.AdapterEnderecosUsuario;
 import com.example.khiata.apis.AddressApi;
 import com.example.khiata.apis.UserApi;
+import com.example.khiata.classes.TratamentoErros;
 import com.example.khiata.classes.tela_login;
 import com.example.khiata.models.Address;
 import com.example.khiata.models.User;
@@ -90,6 +91,7 @@ public class fragment_tela_enderecos extends Fragment {
     RecyclerView lista_enderecos;
     int userId;
     private Retrofit retrofit;
+    TratamentoErros tratamentoErros = new TratamentoErros();
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -151,7 +153,7 @@ public class fragment_tela_enderecos extends Fragment {
                 View popupView = inflater.inflate(R.layout.popup_mensagem, null);
 
                 TextView msgPopup = popupView.findViewById(R.id.msg_popup);
-                msgPopup.setText("Erro:" + throwable.getMessage());
+                msgPopup.setText("Erro: " + tratamentoErros.tratandoErroThrowable(throwable));
                 ImageView imgPopup = popupView.findViewById(R.id.img_popup);
                 imgPopup.setImageResource(R.drawable.icon_pop_alert);
                 Button btnPopup = popupView.findViewById(R.id.btn_popup);
@@ -243,7 +245,7 @@ public class fragment_tela_enderecos extends Fragment {
                 View popupView = inflater.inflate(R.layout.popup_mensagem, null);
 
                 TextView msgPopup = popupView.findViewById(R.id.msg_popup);
-                msgPopup.setText("Erro:" + throwable.getMessage());
+                msgPopup.setText("Erro: " + tratamentoErros.tratandoErroThrowable(throwable));
                 ImageView imgPopup = popupView.findViewById(R.id.img_popup);
                 imgPopup.setImageResource(R.drawable.icon_pop_alert);
                 Button btnPopup = popupView.findViewById(R.id.btn_popup);

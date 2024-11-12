@@ -44,6 +44,7 @@ import com.example.khiata.adapters.AdapterProdutosAdicionados;
 import com.example.khiata.adapters.AdapterProdutosCostureira;
 import com.example.khiata.apis.ProductApi;
 import com.example.khiata.apis.UserApi;
+import com.example.khiata.classes.TratamentoErros;
 import com.example.khiata.models.Product;
 import com.example.khiata.models.User;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -125,6 +126,7 @@ public class fragment_tela_perfil_costureira extends Fragment {
     StorageReference storageRef = storage.getReference();
     RecyclerView lista_produtos_costureira;
     List<Product> produtos = new ArrayList();
+    TratamentoErros tratamentoErros = new TratamentoErros();
     private static final String[] REQUIRED_PERMISSIONS;
     static {
         List<String> requiredPermissions = new ArrayList<>();
@@ -297,7 +299,7 @@ public class fragment_tela_perfil_costureira extends Fragment {
                     View popupView = inflater.inflate(R.layout.popup_mensagem, null);
 
                     TextView msgPopup = popupView.findViewById(R.id.msg_popup);
-                    msgPopup.setText("Erro:" + response.message());
+                    msgPopup.setText("Erro: " + tratamentoErros.tratandoErroApi(response));
                     ImageView imgPopup = popupView.findViewById(R.id.img_popup);
                     imgPopup.setImageResource(R.drawable.icon_pop_alert);
                     Button btnPopup = popupView.findViewById(R.id.btn_popup);
@@ -322,7 +324,7 @@ public class fragment_tela_perfil_costureira extends Fragment {
                 View popupView = inflater.inflate(R.layout.popup_mensagem, null);
 
                 TextView msgPopup = popupView.findViewById(R.id.msg_popup);
-                msgPopup.setText("Erro:" + throwable.getMessage());
+                msgPopup.setText("Erro: " + tratamentoErros.tratandoErroThrowable(throwable));
                 ImageView imgPopup = popupView.findViewById(R.id.img_popup);
                 imgPopup.setImageResource(R.drawable.icon_pop_alert);
                 Button btnPopup = popupView.findViewById(R.id.btn_popup);
@@ -362,7 +364,7 @@ public class fragment_tela_perfil_costureira extends Fragment {
                     View popupView = inflater.inflate(R.layout.popup_mensagem, null);
 
                     TextView msgPopup = popupView.findViewById(R.id.msg_popup);
-                    msgPopup.setText("Erro:" + response.message());
+                    msgPopup.setText("Erro: " + tratamentoErros.tratandoErroApi(response));
                     ImageView imgPopup = popupView.findViewById(R.id.img_popup);
                     imgPopup.setImageResource(R.drawable.icon_pop_alert);
                     Button btnPopup = popupView.findViewById(R.id.btn_popup);
@@ -387,7 +389,7 @@ public class fragment_tela_perfil_costureira extends Fragment {
                 View popupView = inflater.inflate(R.layout.popup_mensagem, null);
 
                 TextView msgPopup = popupView.findViewById(R.id.msg_popup);
-                msgPopup.setText("Erro:" + throwable.getMessage());
+                msgPopup.setText("Erro: " + tratamentoErros.tratandoErroThrowable(throwable));
                 ImageView imgPopup = popupView.findViewById(R.id.img_popup);
                 imgPopup.setImageResource(R.drawable.icon_pop_alert);
                 Button btnPopup = popupView.findViewById(R.id.btn_popup);
@@ -514,7 +516,7 @@ public class fragment_tela_perfil_costureira extends Fragment {
                 View popupView = inflater.inflate(R.layout.popup_mensagem, null);
 
                 TextView msgPopup = popupView.findViewById(R.id.msg_popup);
-                msgPopup.setText("Erro:" + throwable.getMessage());
+                msgPopup.setText("Erro: " + tratamentoErros.tratandoErroThrowable(throwable));
                 ImageView imgPopup = popupView.findViewById(R.id.img_popup);
                 imgPopup.setImageResource(R.drawable.icon_pop_alert);
                 Button btnPopup = popupView.findViewById(R.id.btn_popup);

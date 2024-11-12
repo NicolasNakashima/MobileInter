@@ -26,6 +26,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.example.khiata.R;
 import com.example.khiata.apis.UserApi;
+import com.example.khiata.classes.TratamentoErros;
 import com.example.khiata.classes.tela_login;
 import com.example.khiata.fragments.fragment_tela_curso;
 import com.example.khiata.models.Course;
@@ -52,6 +53,7 @@ public class AdapterCursos extends RecyclerView.Adapter<AdapterCursos.MeuViewHol
         this.email_usuario = email_usuario;
     }
     private Retrofit retrofit;
+    TratamentoErros tratamentoErros = new TratamentoErros();
 
     @NonNull
     @Override
@@ -149,7 +151,7 @@ public class AdapterCursos extends RecyclerView.Adapter<AdapterCursos.MeuViewHol
                     View popupView = inflater.inflate(R.layout.popup_mensagem, null);
 
                     TextView msgPopup = popupView.findViewById(R.id.msg_popup);
-                    msgPopup.setText("Erro:"+response.errorBody());
+                    msgPopup.setText("Erro: "+ tratamentoErros.tratandoErroApi(response));
                     ImageView imgPopup = popupView.findViewById(R.id.img_popup);
                     imgPopup.setImageResource(R.drawable.icon_pop_alert);
                     Button btnPopup = popupView.findViewById(R.id.btn_popup);
@@ -175,7 +177,7 @@ public class AdapterCursos extends RecyclerView.Adapter<AdapterCursos.MeuViewHol
                 View popupView = inflater.inflate(R.layout.popup_mensagem, null);
 
                 TextView msgPopup = popupView.findViewById(R.id.msg_popup);
-                msgPopup.setText("Erro:"+throwable.getMessage());
+                msgPopup.setText("Erro: "+tratamentoErros.tratandoErroThrowable(throwable));
                 ImageView imgPopup = popupView.findViewById(R.id.img_popup);
                 imgPopup.setImageResource(R.drawable.icon_pop_alert);
                 Button btnPopup = popupView.findViewById(R.id.btn_popup);

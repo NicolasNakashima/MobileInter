@@ -48,6 +48,7 @@ public class tela_cadastro_preferencias_usuario extends AppCompatActivity {
     LinearLayout lista_categorias;
     int userId;
     private Retrofit retrofit;
+    TratamentoErros tratamentoErros = new TratamentoErros();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -232,7 +233,25 @@ public class tela_cadastro_preferencias_usuario extends AppCompatActivity {
 
             @Override
             public void onFailure(Call<List<Category>> call, Throwable throwable) {
-                Toast.makeText(getApplicationContext(), throwable.getMessage(), Toast.LENGTH_SHORT).show();
+                Dialog dialog = new Dialog(tela_cadastro_preferencias_usuario.this);
+                LayoutInflater inflater = getLayoutInflater();
+                View popupView = inflater.inflate(R.layout.popup_mensagem, null);
+
+                TextView msgPopup = popupView.findViewById(R.id.msg_popup);
+                msgPopup.setText("Erro: "+tratamentoErros.tratandoErroThrowable(throwable));
+                ImageView imgPopup = popupView.findViewById(R.id.img_popup);
+                imgPopup.setImageResource(R.drawable.icon_pop_alert);
+                Button btnPopup = popupView.findViewById(R.id.btn_popup);
+                btnPopup.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        dialog.cancel();
+                    }
+                });
+
+                dialog.setContentView(popupView);
+                dialog.setCancelable(true);
+                dialog.show();
                 Log.e("Error", throwable.getMessage());
             }
         });
@@ -263,7 +282,7 @@ public class tela_cadastro_preferencias_usuario extends AppCompatActivity {
                 View popupView = inflater.inflate(R.layout.popup_mensagem, null);
 
                 TextView msgPopup = popupView.findViewById(R.id.msg_popup);
-                msgPopup.setText(throwable.getMessage());
+                msgPopup.setText("Erro: "+tratamentoErros.tratandoErroThrowable(throwable));
                 ImageView imgPopup = popupView.findViewById(R.id.img_popup);
                 imgPopup.setImageResource(R.drawable.icon_pop_alert);
                 Button btnPopup = popupView.findViewById(R.id.btn_popup);
@@ -315,7 +334,7 @@ public class tela_cadastro_preferencias_usuario extends AppCompatActivity {
                     LayoutInflater inflater = getLayoutInflater();
                     View popupView = inflater.inflate(R.layout.popup_mensagem, null);
                     TextView msgPopup = popupView.findViewById(R.id.msg_popup);
-                    msgPopup.setText("Erro ao cadastrar as preferências: " + errorMessage);
+                    msgPopup.setText("Erro " + tratamentoErros.tratandoErroApi(response));
                     ImageView imgPopup = popupView.findViewById(R.id.img_popup);
                     imgPopup.setImageResource(R.drawable.icon_pop_alert);
                     Button btnPopup = popupView.findViewById(R.id.btn_popup);
@@ -366,7 +385,7 @@ public class tela_cadastro_preferencias_usuario extends AppCompatActivity {
                 View popupView = inflater.inflate(R.layout.popup_mensagem, null);
 
                 TextView msgPopup = popupView.findViewById(R.id.msg_popup);
-                msgPopup.setText("Erro ao cadastrar preferências: " + t.getMessage());
+                msgPopup.setText("Erro: " + tratamentoErros.tratandoErroThrowable(t));
                 ImageView imgPopup = popupView.findViewById(R.id.img_popup);
                 imgPopup.setImageResource(R.drawable.icon_pop_alert);
                 Button btnPopup = popupView.findViewById(R.id.btn_popup);

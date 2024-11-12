@@ -48,6 +48,7 @@ public class tela_cadastro extends AppCompatActivity {
     Button btn_cadastrar, btn_ir_para_login;
 
     private Retrofit retrofit;
+    TratamentoErros tratamentoErros = new TratamentoErros();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -225,7 +226,7 @@ public class tela_cadastro extends AppCompatActivity {
                         View popupView = inflater.inflate(R.layout.popup_mensagem, null);
 
                         TextView msgPopup = popupView.findViewById(R.id.msg_popup);
-                        msgPopup.setText("Erro ao cadastrar: "+errorBody);
+                        msgPopup.setText("Erro: "+tratamentoErros.tratandoErroApi(response));
                         ImageView imgPopup = popupView.findViewById(R.id.img_popup);
                         imgPopup.setImageResource(R.drawable.icon_pop_alert);
                         Button btnPopup = popupView.findViewById(R.id.btn_popup);
@@ -258,7 +259,7 @@ public class tela_cadastro extends AppCompatActivity {
                 View popupView = inflater.inflate(R.layout.popup_mensagem, null);
 
                 TextView msgPopup = popupView.findViewById(R.id.msg_popup);
-                msgPopup.setText(t.getMessage());
+                msgPopup.setText("Erro: "+tratamentoErros.tratandoErroThrowable(t));
                 ImageView imgPopup = popupView.findViewById(R.id.img_popup);
                 imgPopup.setImageResource(R.drawable.icon_pop_alert);
                 Button btnPopup = popupView.findViewById(R.id.btn_popup);
@@ -326,7 +327,7 @@ public class tela_cadastro extends AppCompatActivity {
                                             View popupView = inflater.inflate(R.layout.popup_mensagem, null);
 
                                             TextView msgPopup = popupView.findViewById(R.id.msg_popup);
-                                            msgPopup.setText(task.getException().getMessage());
+                                            msgPopup.setText("Erro: "+tratamentoErros.tratandoErroFirebase(task.getException()));
                                             ImageView imgPopup = popupView.findViewById(R.id.img_popup);
                                             imgPopup.setImageResource(R.drawable.icon_pop_alert);
                                             Button btnPopup = popupView.findViewById(R.id.btn_popup);
@@ -350,7 +351,7 @@ public class tela_cadastro extends AppCompatActivity {
                         View popupView = inflater.inflate(R.layout.popup_mensagem, null);
 
                         TextView msgPopup = popupView.findViewById(R.id.msg_popup);
-                        msgPopup.setText(task.getException().getMessage());
+                        msgPopup.setText("Erro: "+tratamentoErros.tratandoErroFirebase(task.getException()));
                         ImageView imgPopup = popupView.findViewById(R.id.img_popup);
                         imgPopup.setImageResource(R.drawable.icon_pop_alert);
                         Button btnPopup = popupView.findViewById(R.id.btn_popup);

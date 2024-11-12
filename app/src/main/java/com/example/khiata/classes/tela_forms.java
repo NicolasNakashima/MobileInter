@@ -63,9 +63,9 @@ public class tela_forms extends AppCompatActivity {
                 View popup_opcao = inflater.inflate(R.layout.popup_opcao, null);
 
                 TextView msgPopup = popup_opcao.findViewById(R.id.msg_popup);
-                msgPopup.setText("Você pode seguir para o inicio se tiver terminado o forms.");
+                msgPopup.setText("Se tiver terminado o formulário, pode seguir para o inicio.");
                 ImageView imgPopup = popup_opcao.findViewById(R.id.img_popup);
-                imgPopup.setImageResource(R.drawable.icon_pop_alert);
+                imgPopup.setImageResource(R.drawable.icon_pop_sucesso);
                 Button btn_seguir = popup_opcao.findViewById(R.id.btn_seguir);
                 btn_seguir.setText("Terminei");
                 btn_seguir.setOnClickListener(new View.OnClickListener() {

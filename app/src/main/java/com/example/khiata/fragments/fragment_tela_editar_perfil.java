@@ -19,6 +19,7 @@ import android.widget.Toast;
 
 import com.example.khiata.R;
 import com.example.khiata.apis.UserApi;
+import com.example.khiata.classes.TratamentoErros;
 import com.example.khiata.classes.tela_cadastro;
 import com.google.firebase.auth.FirebaseAuth;
 
@@ -83,6 +84,7 @@ public class fragment_tela_editar_perfil extends Fragment {
     Button btn_cancelar_alteracoes, btn_salvar_alteracoes;
 //    private fragment_tela_perfil fragment_tela_perfil = new fragment_tela_perfil();
     private Retrofit retrofit;
+    TratamentoErros tratamentoErros = new TratamentoErros();
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -248,7 +250,7 @@ public class fragment_tela_editar_perfil extends Fragment {
                     View popupView = inflater.inflate(R.layout.popup_mensagem, null);
 
                     TextView msgPopup = popupView.findViewById(R.id.msg_popup);
-                    msgPopup.setText("Erro: " + errorMessage);
+                    msgPopup.setText("Erro: " + tratamentoErros.tratandoErroApi(response));
                     ImageView imgPopup = popupView.findViewById(R.id.img_popup);
                     imgPopup.setImageResource(R.drawable.icon_pop_alert);
                     Button btnPopup = popupView.findViewById(R.id.btn_popup);
@@ -298,7 +300,7 @@ public class fragment_tela_editar_perfil extends Fragment {
                 View popupView = inflater.inflate(R.layout.popup_mensagem, null);
 
                 TextView msgPopup = popupView.findViewById(R.id.msg_popup);
-                msgPopup.setText("Erro: " + t.getMessage());
+                msgPopup.setText("Erro: " + tratamentoErros.tratandoErroThrowable(t));
                 ImageView imgPopup = popupView.findViewById(R.id.img_popup);
                 imgPopup.setImageResource(R.drawable.icon_pop_alert);
                 Button btnPopup = popupView.findViewById(R.id.btn_popup);
