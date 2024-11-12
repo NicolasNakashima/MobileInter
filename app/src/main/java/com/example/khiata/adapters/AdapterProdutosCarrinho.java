@@ -65,6 +65,7 @@ public class AdapterProdutosCarrinho extends RecyclerView.Adapter<AdapterProduto
         TextView vendedor_produto = holder.vendedor_produto;
         TextView titulo_produto = holder.titulo_produto;
         TextView tamanho_produto = holder.tamanho_produto;
+        TextView quant_produto = holder.quant_produto;
 
         Product produto = produtos.get(position);
 
@@ -72,6 +73,7 @@ public class AdapterProdutosCarrinho extends RecyclerView.Adapter<AdapterProduto
         vendedor_produto.setText("Vendido por " + produto.getDressMarkerName());
         titulo_produto.setText(produto.getName());
         tamanho_produto.setText("Tamanho: " + produto.getSize());
+        quant_produto.setText("Quant: " + String.valueOf(produto.getQuantity()));
 
         StorageReference profileRef = storageRef.child("khiata_produtos/"+produto.getImageUrl()+".jpg");
         profileRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
@@ -114,7 +116,7 @@ public class AdapterProdutosCarrinho extends RecyclerView.Adapter<AdapterProduto
 
     public class MeuViewHolder extends RecyclerView.ViewHolder {
         ImageView img_produto;
-        TextView preco_produto, vendedor_produto, titulo_produto, tamanho_produto;
+        TextView preco_produto, vendedor_produto, titulo_produto, tamanho_produto, quant_produto;
 
         public MeuViewHolder(View view) {
             super(view);
@@ -123,6 +125,7 @@ public class AdapterProdutosCarrinho extends RecyclerView.Adapter<AdapterProduto
             vendedor_produto = view.findViewById(R.id.vendedor_produto);
             titulo_produto = view.findViewById(R.id.cart_id);
             tamanho_produto = view.findViewById(R.id.tamanho_produto);
+            quant_produto = view.findViewById(R.id.quant_produto);
         }
     }
 }

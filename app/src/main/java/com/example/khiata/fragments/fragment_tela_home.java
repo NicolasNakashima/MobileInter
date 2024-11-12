@@ -387,16 +387,18 @@ public class fragment_tela_home extends Fragment {
                         List<Product> productList = response.body();
 
                         if (productList != null && !productList.isEmpty()) {
-                            //produtos.addAll(productList);// Adicione os produtos à lista
-                            //Vendo o DressMakerName de cada um
+                            //Vendo o DressMakerName de cada um dos produtos
                             for (Product product : productList) {
-                                if (product.getDressMarkerName() != null) {
-                                    Log.d("ProductDressMaker", product.getDressMarkerName());
-                                    if(product.getDressMarkerName()!=userName){
+                                String dressMakerName = product.getDressMarkerName();
+                                if (dressMakerName != null) {
+                                    Log.d("ProductDressMaker", dressMakerName);
+                                    // Filtra produtos que não pertencem ao usuário logado
+                                    if (!dressMakerName.equals(userName)) {
                                         produtos.add(product);
                                     }
                                 } else {
                                     Log.d("ProductDressMaker", "Nome do costureiro não disponível");
+                                    produtos.add(product);
                                 }
                             }
                         } else {

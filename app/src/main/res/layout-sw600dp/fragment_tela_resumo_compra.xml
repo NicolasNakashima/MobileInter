@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     tools:context=".fragments.fragment_tela_resumo_compra"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:background="#FFFFFF">
+    android:background="#EBEBEB">
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar2"
@@ -46,9 +46,9 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/cardView13"
         android:layout_width="350dp"
-        android:layout_height="230dp"
+        android:layout_height="200dp"
         android:layout_marginTop="40dp"
-        android:background="@drawable/card_informacoes_compra"
+        android:background="@drawable/rounded_card"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView41">
@@ -60,7 +60,7 @@
             android:layout_marginStart="16dp"
             android:layout_marginTop="16dp"
             android:text="Dados do pedido"
-            android:textColor="#5A2D03"
+            android:textColor="#000000"
             android:textSize="17sp"
             android:textStyle="bold"
             app:layout_constraintStart_toStartOf="parent"
@@ -73,7 +73,7 @@
             android:layout_marginStart="16dp"
             android:layout_marginTop="15dp"
             android:text="ID:"
-            android:textColor="#5A2D03"
+            android:textColor="#000000"
             android:textSize="19sp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textView35" />
@@ -85,7 +85,7 @@
             android:layout_marginStart="16dp"
             android:layout_marginTop="8dp"
             android:text="Data:"
-            android:textColor="#5A2D03"
+            android:textColor="#000000"
             android:textSize="19sp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/cpf_usuario" />
@@ -97,7 +97,7 @@
             android:layout_marginStart="16dp"
             android:layout_marginTop="8dp"
             android:text="Forma de pagamento:"
-            android:textColor="#5A2D03"
+            android:textColor="#000000"
             android:textSize="19sp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/data_pedido" />
@@ -109,7 +109,7 @@
             android:layout_marginStart="16dp"
             android:layout_marginTop="8dp"
             android:text="CPF:"
-            android:textColor="#5A2D03"
+            android:textColor="#000000"
             android:textSize="19sp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/cart_id" />
@@ -121,23 +121,12 @@
             android:layout_marginStart="104dp"
             android:layout_marginTop="16dp"
             android:text="Status"
-            android:textColor="#5A2D03"
+            android:textColor="#000000"
             android:textSize="17sp"
             android:textStyle="bold"
             app:layout_constraintStart_toEndOf="@+id/textView35"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <TextView
-            android:id="@+id/total_pedido"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="8dp"
-            android:text="Total:"
-            android:textColor="#5A2D03"
-            android:textSize="19sp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/forma_pagamento" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <TextView

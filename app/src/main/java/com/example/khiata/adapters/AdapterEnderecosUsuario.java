@@ -91,10 +91,29 @@ public class AdapterEnderecosUsuario extends RecyclerView.Adapter<AdapterEnderec
         btn_excluir_endereco.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                int adapterPosition = holder.getAdapterPosition();
-                if (adapterPosition != RecyclerView.NO_POSITION) {
-                    deletarEnderecoDoUsuario(enderecoId, adapterPosition);
-                }
+//                int adapterPosition = holder.getAdapterPosition();
+//                if (adapterPosition != RecyclerView.NO_POSITION) {
+//                    deletarEnderecoDoUsuario(enderecoId, adapterPosition);
+//                }
+                Dialog dialog = new Dialog(context);
+                LayoutInflater inflater = LayoutInflater.from(context);
+                View popupView = inflater.inflate(R.layout.popup_mensagem, null);
+
+                TextView msgPopup = popupView.findViewById(R.id.msg_popup);
+                msgPopup.setText("Está funcionalidade estará disponível no futuro.");
+                ImageView imgPopup = popupView.findViewById(R.id.img_popup);
+                imgPopup.setImageResource(R.drawable.icon_pop_alert);
+                Button btnPopup = popupView.findViewById(R.id.btn_popup);
+                btnPopup.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        dialog.cancel();
+                    }
+                });
+
+                dialog.setContentView(popupView);
+                dialog.setCancelable(true);
+                dialog.show();
             }
         });
 
@@ -102,18 +121,37 @@ public class AdapterEnderecosUsuario extends RecyclerView.Adapter<AdapterEnderec
         btn_editar_endereco.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // Cria um novo fragmento de edição
-                fragment_tela_editar_endereco editarEnderecoFragment = new fragment_tela_editar_endereco();
+//                // Cria um novo fragmento de edição
+//                fragment_tela_editar_endereco editarEnderecoFragment = new fragment_tela_editar_endereco();
+//
+//                // Cria um Bundle para passar o enderecoId e ir para a tela de edição
+//                Bundle bundle = new Bundle();
+//                bundle.putInt("enderecoId", enderecoId);
+//                Log.d("TAG", "enderecoId: "+enderecoId);
+//                editarEnderecoFragment.setArguments(bundle);
+//                FragmentTransaction transaction = ((AppCompatActivity) context).getSupportFragmentManager().beginTransaction();
+//                transaction.replace(R.id.frame_conteudo, editarEnderecoFragment);
+//                transaction.addToBackStack(null);
+//                transaction.commit();
+                Dialog dialog = new Dialog(context);
+                LayoutInflater inflater = LayoutInflater.from(context);
+                View popupView = inflater.inflate(R.layout.popup_mensagem, null);
 
-                // Cria um Bundle para passar o enderecoId e ir para a tela de edição
-                Bundle bundle = new Bundle();
-                bundle.putInt("enderecoId", enderecoId);
-                Log.d("TAG", "enderecoId: "+enderecoId);
-                editarEnderecoFragment.setArguments(bundle);
-                FragmentTransaction transaction = ((AppCompatActivity) context).getSupportFragmentManager().beginTransaction();
-                transaction.replace(R.id.frame_conteudo, editarEnderecoFragment);
-                transaction.addToBackStack(null);
-                transaction.commit();
+                TextView msgPopup = popupView.findViewById(R.id.msg_popup);
+                msgPopup.setText("Está funcionalidade estará disponível no futuro.");
+                ImageView imgPopup = popupView.findViewById(R.id.img_popup);
+                imgPopup.setImageResource(R.drawable.icon_pop_alert);
+                Button btnPopup = popupView.findViewById(R.id.btn_popup);
+                btnPopup.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        dialog.cancel();
+                    }
+                });
+
+                dialog.setContentView(popupView);
+                dialog.setCancelable(true);
+                dialog.show();
             }
         });
     }

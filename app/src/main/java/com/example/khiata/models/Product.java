@@ -11,6 +11,7 @@ public class Product {
     private double avaliation;
     private String description;
     private String size;
+    private int quantity;
 
     //Construtor
     public Product(String name, double price, String imageUrl, int typeId, String dressMarkerName, double avaliation, String description, String size) {
@@ -22,6 +23,18 @@ public class Product {
         this.avaliation = avaliation;
         this.description = description;
         this.size = size;
+    }
+
+    public Product(String name, double price, String imageUrl, int typeId, String dressMarkerName, double avaliation, String description, String size, int quantity) {
+        this.name = name;
+        this.price = price;
+        this.imageUrl = imageUrl;
+        this.category = typeId;
+        this.dressMarkerName = dressMarkerName;
+        this.avaliation = avaliation;
+        this.description = description;
+        this.size = size;
+        this.quantity = quantity;
     }
 
     //Getters e Setters
@@ -95,6 +108,14 @@ public class Product {
 
     public void setSize(String size) {
         this.size = size;
+    }
+
+    public int getQuantity() {
+        return quantity;
+    }
+
+    public void setQuantity(int quantity) {
+        this.quantity = quantity;
     }
 
     //ToString

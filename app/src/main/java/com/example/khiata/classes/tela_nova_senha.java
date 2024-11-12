@@ -59,87 +59,75 @@ public class tela_nova_senha extends AppCompatActivity {
 
 
         //Botão para enviar um email de atualizar senha
-        btn_enviar_email= findViewById(R.id.btn_enviar_email);
+        btn_enviar_email = findViewById(R.id.btn_enviar_email);
         btn_enviar_email.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //Pegando o valor digitado pelo usuário
+                // Pegando o valor digitado pelo usuário
                 String userEmail = ((EditText) findViewById(R.id.editEmail)).getText().toString();
-                //Verificando se o campo foi preenchido
-                if(userEmail.isEmpty()){
-                    Dialog dialog = new Dialog(tela_nova_senha.this);
-                    LayoutInflater inflater = getLayoutInflater();
-                    View popupView = inflater.inflate(R.layout.popup_mensagem, null);
 
-                    //Captura os elementos do pop-up
-                    TextView msgPopup = popupView.findViewById(R.id.msg_popup);
-                    msgPopup.setText("Por favor, preencha o campo de email.");
-                    ImageView imgPopup = popupView.findViewById(R.id.img_popup);
-                    imgPopup.setImageResource(R.drawable.icon_pop_alert);
-                    Button btnPopup = popupView.findViewById(R.id.btn_popup);
-                    btnPopup.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            dialog.cancel();
+                // Verificando se o campo foi preenchido
+                if (userEmail.isEmpty()) {
+                    showDialog("Por favor, preencha o campo de email.", R.drawable.icon_pop_alert);
+                } else {
+                    auth.fetchSignInMethodsForEmail(userEmail).addOnCompleteListener(task -> {
+                        if (task.isSuccessful()) {
+                            boolean isEmailRegistered = task.getResult() != null && !task.getResult().getSignInMethods().isEmpty();
+
+                            if (isEmailRegistered) {
+                                // Se o e-mail existe, envia o e-mail de redefinição de senha
+                                auth.sendPasswordResetEmail(userEmail).addOnCompleteListener(sendTask -> {
+                                    if (sendTask.isSuccessful()) {
+                                        showDialog("Um e-mail de redefinição de senha foi enviado. Cheque sua caixa de entrada.", R.drawable.icon_pop_sucesso, true);
+                                    } else {
+                                        showDialog("Não foi possível enviar um email de redefinição de senha. Tente novamente mais tarde.", R.drawable.icon_pop_alert);
+                                    }
+                                });
+                            } else {
+                                // Mostra um pop-up indicando que o e-mail não está cadastrado
+                                showDialog("Este e-mail não está cadastrado. Verifique e tente novamente.", R.drawable.icon_pop_alert);
+                            }
+                        } else {
+                            // Caso ocorra um erro na verificação do e-mail
+                            showDialog("Erro ao verificar o e-mail. Tente novamente mais tarde.", R.drawable.icon_pop_alert);
                         }
                     });
-
-                    dialog.setContentView(popupView);
-                    dialog.setCancelable(true);
-                    dialog.show();
-                } else{
-                    auth.sendPasswordResetEmail(userEmail)
-                        .addOnCompleteListener(task -> {
-                            if(task.isSuccessful()){
-                                Dialog dialog = new Dialog(tela_nova_senha.this);
-                                LayoutInflater inflater = getLayoutInflater();
-                                View popupView = inflater.inflate(R.layout.popup_mensagem, null);
-
-                                //Captura os elementos do pop-up
-                                TextView msgPopup = popupView.findViewById(R.id.msg_popup);
-                                msgPopup.setText("Um e-mail de redefinição de senha foi enviado. Cheque sua caixa de entrada.");
-                                ImageView imgPopup = popupView.findViewById(R.id.img_popup);
-                                imgPopup.setImageResource(R.drawable.icon_pop_sucesso);
-                                Button btnPopup = popupView.findViewById(R.id.btn_popup);
-                                btnPopup.setText("Login");
-                                btnPopup.setOnClickListener(new View.OnClickListener() {
-                                    @Override
-                                    public void onClick(View v) {
-                                        Intent intent = new Intent(tela_nova_senha.this, tela_login.class);
-                                        startActivity(intent);
-                                        finish();
-                                        dialog.cancel();
-                                    }
-                                });
-
-                                dialog.setContentView(popupView);
-                                dialog.setCancelable(true);
-                                dialog.show();
-                            } else{
-                                Dialog dialog = new Dialog(tela_nova_senha.this);
-                                LayoutInflater inflater = getLayoutInflater();
-                                View popupView = inflater.inflate(R.layout.popup_mensagem, null);
-
-                                //Captura os elementos do pop-up
-                                TextView msgPopup = popupView.findViewById(R.id.msg_popup);
-                                msgPopup.setText("Não foi possível enviar um email de redefinição de senha. Tente novamente mais tarde.");
-                                ImageView imgPopup = popupView.findViewById(R.id.img_popup);
-                                imgPopup.setImageResource(R.drawable.icon_pop_alert);
-                                Button btnPopup = popupView.findViewById(R.id.btn_popup);
-                                btnPopup.setOnClickListener(new View.OnClickListener() {
-                                    @Override
-                                    public void onClick(View v) {
-                                        dialog.cancel();
-                                    }
-                                });
-
-                                dialog.setContentView(popupView);
-                                dialog.setCancelable(true);
-                                dialog.show();
-                            }
-                        });
                 }
             }
+
+            private void showDialog(String message, int imageResId) {
+                showDialog(message, imageResId, false);
+            }
+
+            private void showDialog(String message, int imageResId, boolean redirectToLogin) {
+                Dialog dialog = new Dialog(tela_nova_senha.this);
+                LayoutInflater inflater = getLayoutInflater();
+                View popupView = inflater.inflate(R.layout.popup_mensagem, null);
+
+                TextView msgPopup = popupView.findViewById(R.id.msg_popup);
+                msgPopup.setText(message);
+                ImageView imgPopup = popupView.findViewById(R.id.img_popup);
+                imgPopup.setImageResource(imageResId);
+                Button btnPopup = popupView.findViewById(R.id.btn_popup);
+                btnPopup.setText(redirectToLogin ? "Login" : "Ok");
+
+                btnPopup.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        if (redirectToLogin) {
+                            Intent intent = new Intent(tela_nova_senha.this, tela_login.class);
+                            startActivity(intent);
+                            finish();
+                        }
+                        dialog.cancel();
+                    }
+                });
+
+                dialog.setContentView(popupView);
+                dialog.setCancelable(true);
+                dialog.show();
+            }
         });
+
     }
 }

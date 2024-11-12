@@ -44,14 +44,12 @@ public class AdapterProdutosComprados extends RecyclerView.Adapter<AdapterProdut
     public void onBindViewHolder(@NonNull AdapterProdutosComprados.MeuViewHolder holder, int position) {
         TextView id_pedido = holder.id_pedido;
         TextView status_pedido = holder.status_pedido;
-        TextView total_pedido = holder.total_pedido;
         TextView forma_pagamento = holder.forma_pagamento;
         TextView data_pedido = holder.data_pedido;
 
         Order pedido = pedidos.get(position);
         id_pedido.setText("Cart ID: " + pedido.getCart_id());
         status_pedido.setText(pedido.getStatus());
-        total_pedido.setText("Total: R$ " + pedido.getFinalValue());
         forma_pagamento.setText("Forma de pagamento: " + pedido.getPaymentmethod());
         data_pedido.setText("Data: " + pedido.getOrderDate());
 
@@ -65,7 +63,6 @@ public class AdapterProdutosComprados extends RecyclerView.Adapter<AdapterProdut
                 bundle.putString("cart_id", String.valueOf(pedido.getCart_id()));
                 bundle.putString("forma_pagamento", pedido.getPaymentmethod());
                 bundle.putString("data_pedido", pedido.getOrderDate());
-                bundle.putString("total", String.valueOf(pedido.getFinalValue()));
                 bundle.putString("status", pedido.getStatus());
                 telaResumoCompraFragment.setArguments(bundle);
 
@@ -81,12 +78,11 @@ public class AdapterProdutosComprados extends RecyclerView.Adapter<AdapterProdut
     public int getItemCount() {return pedidos.size();}
 
     public class MeuViewHolder extends RecyclerView.ViewHolder {
-        TextView id_pedido, status_pedido, total_pedido, forma_pagamento, data_pedido;
+        TextView id_pedido, status_pedido, forma_pagamento, data_pedido;
         public MeuViewHolder(@NonNull View itemView) {
             super(itemView);
             id_pedido = itemView.findViewById(R.id.id_pedido);
             status_pedido = itemView.findViewById(R.id.status_pedido);
-            total_pedido = itemView.findViewById(R.id.total_pedido);
             forma_pagamento = itemView.findViewById(R.id.forma_pagamento);
             data_pedido = itemView.findViewById(R.id.data_pedido);
         }

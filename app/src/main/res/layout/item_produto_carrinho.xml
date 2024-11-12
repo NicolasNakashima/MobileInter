@@ -10,12 +10,12 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="385dp"
-        android:layout_height="150dp">
+        android:layout_height="wrap_content">
 
         <ImageView
             android:id="@+id/img_produto"
             android:layout_width="138dp"
-            android:layout_height="131dp"
+            android:layout_height="142dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.024"
@@ -28,16 +28,15 @@
             android:id="@+id/preco_produto"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
             android:text="R$ 00.00"
             android:textColor="#000000"
             android:textSize="17sp"
             android:textStyle="bold"
-            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.046"
             app:layout_constraintStart_toEndOf="@+id/img_produto"
-            app:layout_constraintTop_toBottomOf="@+id/tamanho_produto"
-            app:layout_constraintVertical_bias="0.526" />
+            app:layout_constraintTop_toBottomOf="@+id/tamanho_produto" />
 
         <TextView
             android:id="@+id/vendedor_produto"
@@ -79,6 +78,18 @@
             app:layout_constraintStart_toEndOf="@+id/img_produto"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0.096" />
+
+        <TextView
+            android:id="@+id/quant_produto"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="80dp"
+            android:layout_marginBottom="22dp"
+            android:text="Quant:"
+            android:textColor="#000000"
+            android:textSize="13sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/preco_produto" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </androidx.cardview.widget.CardView>

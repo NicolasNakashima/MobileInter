@@ -77,7 +77,7 @@ public class fragment_tela_resumo_compra extends Fragment {
 
     ImageView voltar_compras, btn_carrinho;
     private Retrofit retrofit;
-    TextView cart_id, cpf_usuario, data_pedido, forma_pagamento, status, total_pedido;
+    TextView cart_id, cpf_usuario, data_pedido, forma_pagamento, status;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -115,7 +115,6 @@ public class fragment_tela_resumo_compra extends Fragment {
             String forma_pagamento_txt = bundle.getString("forma_pagamento");
             String data_pedido_txt = bundle.getString("data_pedido");
             String status_txt = bundle.getString("status");
-            String total_pedido_txt = bundle.getString("total");
             if (cart_id_txt != null && forma_pagamento_txt != null && data_pedido_txt != null) {
                 cart_id = view.findViewById(R.id.cart_id);
                 cart_id.setText("ID: " + cart_id_txt);
@@ -125,8 +124,6 @@ public class fragment_tela_resumo_compra extends Fragment {
                 data_pedido.setText("Data: " + data_pedido_txt);
                 status = view.findViewById(R.id.status);
                 status.setText(status_txt);
-                total_pedido = view.findViewById(R.id.total_pedido);
-                total_pedido.setText("Total: " + total_pedido_txt);
             }
         }
         return view;
