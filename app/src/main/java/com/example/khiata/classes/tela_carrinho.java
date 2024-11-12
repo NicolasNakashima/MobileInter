@@ -208,7 +208,7 @@ public class tela_carrinho extends AppCompatActivity {
                         }
 
                         if (lista_produtos_carrinho.getAdapter() == null) {
-                            AdapterProdutosCarrinho adapter = new AdapterProdutosCarrinho(getApplicationContext(), produtos);
+                            AdapterProdutosCarrinho adapter = new AdapterProdutosCarrinho(getApplicationContext(), produtos, tela_carrinho.this);
                             lista_produtos_carrinho.setAdapter(adapter);
                         } else {
                             lista_produtos_carrinho.getAdapter().notifyDataSetChanged();

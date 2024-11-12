@@ -23,6 +23,6 @@ public interface CartApi {
     Call<Void> updateMongoCart(@Query("cpf") String cpf);
 
     @DELETE("/deleteCart")
-    Call<Void> deleteCart(@Query("cpf") String cpf, @Query("product") String product);
+    Call<String> deleteCart(@Query("cpf") String cpf, @Query("product") String product);
 
 }

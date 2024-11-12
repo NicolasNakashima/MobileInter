@@ -94,24 +94,7 @@ public class AdapterProdutosAdicionados extends RecyclerView.Adapter<AdapterProd
             @Override
             public void onClick(View v) {
                 Dialog dialog = new Dialog(context);
-//                LayoutInflater inflater = LayoutInflater.from(context);
-//                View popupView = inflater.inflate(R.layout.popup_mensagem, null);
-//
-//                TextView msgPopup = popupView.findViewById(R.id.msg_popup);
-//                msgPopup.setText("Está funcionalidade estará disponível no futuro.");
-//                ImageView imgPopup = popupView.findViewById(R.id.img_popup);
-//                imgPopup.setImageResource(R.drawable.icon_pop_alert);
-//                Button btnPopup = popupView.findViewById(R.id.btn_popup);
-//                btnPopup.setOnClickListener(new View.OnClickListener() {
-//                    @Override
-//                    public void onClick(View v) {
-//                        dialog.cancel();
-//                    }
-//                });
-//
-//                dialog.setContentView(popupView);
-//                dialog.setCancelable(true);
-//                dialog.show();
+
                 LayoutInflater inflater = LayoutInflater.from(context);
                 View popup_opcao = inflater.inflate(R.layout.popup_opcao, null);
 
@@ -178,82 +161,52 @@ public class AdapterProdutosAdicionados extends RecyclerView.Adapter<AdapterProd
                 .build();
         ProductApi productApi = retrofit.create(ProductApi.class);
         Call<String> call = productApi.deleteProduct(productId);
-        Log.e("produtoId", String.valueOf(productId));
-        Log.e("position", String.valueOf(position));
+
         call.enqueue(new Callback<String>() {
             @Override
             public void onResponse(Call<String> call, Response<String> response) {
-                if (response.isSuccessful()) {
+                if (response.isSuccessful()) { // Verifica sucesso e código HTTP
+                    // Somente remove e notifica após a confirmação de sucesso da API
                     produtos.remove(position);
                     notifyItemRemoved(position);
                     notifyItemRangeChanged(position, produtos.size());
 
-                    //Pop-up sucesso
-                    Dialog dialog = new Dialog(context);
-                    LayoutInflater inflater = LayoutInflater.from(context);
-                    View popupView = inflater.inflate(R.layout.popup_mensagem, null);
-                    TextView msgPopup = popupView.findViewById(R.id.msg_popup);
-                    msgPopup.setText("Produto excluído com sucesso");
-                    ImageView imgPopup = popupView.findViewById(R.id.img_popup);
-                    imgPopup.setImageResource(R.drawable.icon_pop_sucesso);
-                    Button btnPopup = popupView.findViewById(R.id.btn_popup);
-                    btnPopup.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            dialog.cancel();
-                        }
-                    });
-                    dialog.setContentView(popupView);
-                    dialog.setCancelable(true);
-                    dialog.show();
+                    mostrarDialogo("Produto excluído com sucesso", R.drawable.icon_pop_sucesso);
+                    Log.d("Sucesso", "Exclusão concluída");
                 } else {
-                    Log.e("Erro", response.message());
-
-                    //Pop-up falha
-                    Dialog dialog = new Dialog(context);
-                    LayoutInflater inflater = LayoutInflater.from(context);
-                    View popupView = inflater.inflate(R.layout.popup_mensagem, null);
-                    TextView msgPopup = popupView.findViewById(R.id.msg_popup);
-                    msgPopup.setText("Falha ao excluir o produto");
-                    ImageView imgPopup = popupView.findViewById(R.id.img_popup);
-                    imgPopup.setImageResource(R.drawable.icon_pop_alert);
-                    Button btnPopup = popupView.findViewById(R.id.btn_popup);
-                    btnPopup.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            dialog.cancel();
-                        }
-                    });
-                    dialog.setContentView(popupView);
-                    dialog.setCancelable(true);
-                    dialog.show();
+                    Log.e("Erro", "Falha na exclusão: " + response.message());
+                    mostrarDialogo("Falha ao excluir o produto", R.drawable.icon_pop_alert);
                 }
             }
 
             @Override
             public void onFailure(Call<String> call, Throwable throwable) {
-                Dialog dialog = new Dialog(context);
-
-                LayoutInflater inflater = LayoutInflater.from(context);
-                View popupView = inflater.inflate(R.layout.popup_mensagem, null);
-
-                TextView msgPopup = popupView.findViewById(R.id.msg_popup);
-                msgPopup.setText("Erro: "+tratamentoErros.tratandoErroThrowable(throwable));
-                ImageView imgPopup = popupView.findViewById(R.id.img_popup);
-                imgPopup.setImageResource(R.drawable.icon_pop_alert);
-                Button btnPopup = popupView.findViewById(R.id.btn_popup);
-                btnPopup.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        dialog.cancel();
-                    }
-                });
-
-                dialog.setContentView(popupView);
-                dialog.setCancelable(true);
-                dialog.show();
+                mostrarDialogo("Erro: " + tratamentoErros.tratandoErroThrowable(throwable), R.drawable.icon_pop_alert);
             }
         });
+    }
+
+    // Método para exibir o diálogo de mensagem
+    private void mostrarDialogo(String mensagem, int icone) {
+        Dialog dialog = new Dialog(context);
+        LayoutInflater inflater = LayoutInflater.from(context);
+        View popupView = inflater.inflate(R.layout.popup_mensagem, null);
+
+        TextView msgPopup = popupView.findViewById(R.id.msg_popup);
+        msgPopup.setText(mensagem);
+        ImageView imgPopup = popupView.findViewById(R.id.img_popup);
+        imgPopup.setImageResource(icone);
+        Button btnPopup = popupView.findViewById(R.id.btn_popup);
+        btnPopup.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.cancel();
+            }
+        });
+
+        dialog.setContentView(popupView);
+        dialog.setCancelable(true);
+        dialog.show();
     }
 
     @Override
