@@ -15,6 +15,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -370,7 +371,7 @@ public class fragment_tela_home extends Fragment {
 
     //Método para buscar os produtos com base na preferência do usuário
     private void pegarProdutosPreferenciais(List<String> userPreferences) {
-        String API_BASE_URL = "https://api-khiata.onrender.com/";
+        String API_BASE_URL = "https://api-khiata-feira.onrender.com/";
         retrofit = new Retrofit.Builder()
                 .baseUrl(API_BASE_URL)
                 .addConverterFactory(GsonConverterFactory.create())
@@ -404,26 +405,28 @@ public class fragment_tela_home extends Fragment {
                                 }
                             }
                         } else {
-                            Dialog dialog = new Dialog(getActivity());
-                            LayoutInflater inflater = getLayoutInflater();
-                            View popupView = inflater.inflate(R.layout.popup_mensagem, null);
+                            if(getActivity() != null) {
+                                Dialog dialog = new Dialog(getActivity());
+                                LayoutInflater inflater = getLayoutInflater();
+                                View popupView = inflater.inflate(R.layout.popup_mensagem, null);
 
-                            TextView msgPopup = popupView.findViewById(R.id.msg_popup);
-                            msgPopup.setText("Você não possuí produtos recomendados.");
-                            ImageView imgPopup = popupView.findViewById(R.id.img_popup);
-                            imgPopup.setImageResource(R.drawable.icon_pop_alert);
-                            Button btnPopup = popupView.findViewById(R.id.btn_popup);
-                            btnPopup.setOnClickListener(new View.OnClickListener() {
-                                @Override
-                                public void onClick(View v) {
-                                    dialog.cancel();
-                                }
-                            });
+                                TextView msgPopup = popupView.findViewById(R.id.msg_popup);
+                                msgPopup.setText("Você não possuí produtos recomendados.");
+                                ImageView imgPopup = popupView.findViewById(R.id.img_popup);
+                                imgPopup.setImageResource(R.drawable.icon_pop_alert);
+                                Button btnPopup = popupView.findViewById(R.id.btn_popup);
+                                btnPopup.setOnClickListener(new View.OnClickListener() {
+                                    @Override
+                                    public void onClick(View v) {
+                                        dialog.cancel();
+                                    }
+                                });
 
-                            dialog.setContentView(popupView);
-                            dialog.setCancelable(true);
-                            dialog.show();
-                            Log.e("Error", "Nenhum produto encontrado para a preferência: " + preference);
+                                dialog.setContentView(popupView);
+                                dialog.setCancelable(true);
+                                dialog.show();
+                                Log.e("Error", "Nenhum produto encontrado para a preferência: " + preference);
+                            }
                         }
 
                         // Atualize o adapter após cada adição

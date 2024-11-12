@@ -182,7 +182,7 @@ public class fragment_tela_area_costureira extends Fragment {
     //Método para buscar os produtos do usuário
     private void pegarProdutosDoUsuario(String userName) {
         Log.e("userName", userName);
-        String API_BASE_URL = "https://api-khiata.onrender.com/";
+        String API_BASE_URL = "https://api-khiata-feira.onrender.com/";
         retrofit = new Retrofit.Builder()
                 .baseUrl(API_BASE_URL)
                 .addConverterFactory(GsonConverterFactory.create())

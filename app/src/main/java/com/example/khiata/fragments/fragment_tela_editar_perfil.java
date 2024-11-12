@@ -121,7 +121,7 @@ public class fragment_tela_editar_perfil extends Fragment {
             @Override
             public void onClick(View v) {
                 String regexTelefone = "\\d{2}\\d{5}\\d{4}"; //Expressão regular para o formato DDXXXXXXXXX
-                String atualizarNome = ((EditText) view.findViewById(R.id.atualizarNome)).getText().toString();
+//                String atualizarNome = ((EditText) view.findViewById(R.id.atualizarNome)).getText().toString();
                 int atualizarIdade = 0;
                 String atualizarPhone = ((EditText) view.findViewById(R.id.atualizarPhone)).getText().toString();
                 String idadeTexto = ((EditText) view.findViewById(R.id.atualizarIdade)).getText().toString();
@@ -154,9 +154,9 @@ public class fragment_tela_editar_perfil extends Fragment {
                 int selectedId = opcoesGenero.getCheckedRadioButtonId();
 
                 Map<String, Object> atualizacoes = new HashMap<>();
-                if(!atualizarNome.isEmpty()){
-                    atualizacoes.put("name", atualizarNome);
-                }
+//                if(!atualizarNome.isEmpty()){
+//                    atualizacoes.put("name", atualizarNome);
+//                }
                 if(atualizarIdade > 0){
                     atualizacoes.put("age", atualizarIdade);
                 }

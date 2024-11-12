@@ -106,7 +106,7 @@ public class tela_carrinho extends AppCompatActivity {
     // Método para buscar os itens do carrinho do usuário
     private void pegarItensDoCarrinho(String userCpf) {
         Log.d("userCpf", userCpf);
-        String API_BASE_URL = "https://api-khiata.onrender.com/";
+        String API_BASE_URL = "https://api-khiata-feira.onrender.com/";
         retrofit = new Retrofit.Builder()
                 .baseUrl(API_BASE_URL)
                 .addConverterFactory(GsonConverterFactory.create())
@@ -182,7 +182,7 @@ public class tela_carrinho extends AppCompatActivity {
 
     //Método para buscar os produtos com base nos itens do carrinho
     private void pegarProdutosDoCarrinho(List<CartItem> itensCarrinho) {
-        String API_BASE_URL = "https://api-khiata.onrender.com/";
+        String API_BASE_URL = "https://api-khiata-feira.onrender.com/";
         retrofit = new Retrofit.Builder()
                 .baseUrl(API_BASE_URL)
                 .addConverterFactory(GsonConverterFactory.create())

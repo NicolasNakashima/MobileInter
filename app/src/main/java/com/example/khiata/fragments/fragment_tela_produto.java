@@ -247,7 +247,7 @@ public class fragment_tela_produto extends Fragment {
     // Método para buscar o carrinho do usuário
     private void pegarItensDoCarrinho(String userCpf, String productName) {
         Log.e("userCpf", userCpf);
-        String API_BASE_URL = "https://api-khiata.onrender.com/";
+        String API_BASE_URL = "https://api-khiata-feira.onrender.com/";
         retrofit = new Retrofit.Builder()
                 .baseUrl(API_BASE_URL)
                 .addConverterFactory(GsonConverterFactory.create())
@@ -345,7 +345,7 @@ public class fragment_tela_produto extends Fragment {
     private void inserirProdutoNoCarrinho(String userCpf, String productName) {
         Log.d("CPF", userCpf);
         Log.d("productName", productName);
-        String API_BASE_URL = "https://api-khiata.onrender.com/";
+        String API_BASE_URL = "https://api-khiata-feira.onrender.com/";
 
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(API_BASE_URL)
@@ -481,7 +481,7 @@ public class fragment_tela_produto extends Fragment {
 
     //Método para criar um novo carrinho/pedido
     private void criarNovoPedido(Order order, String userCpf, String productName) {
-        String API_BASE_URL = "https://api-khiata.onrender.com/";
+        String API_BASE_URL = "https://api-khiata-feira.onrender.com/";
         retrofit = new Retrofit.Builder()
                 .baseUrl(API_BASE_URL)
                 .addConverterFactory(ScalarsConverterFactory.create())

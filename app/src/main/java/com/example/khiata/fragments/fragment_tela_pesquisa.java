@@ -163,7 +163,7 @@ public class fragment_tela_pesquisa extends Fragment {
     //Método para buscar os produtos pesquisados
     private void pegarProdutosPesquisados(String productName) {
         Log.e("productName", productName);
-        String API_BASE_URL = "https://api-khiata.onrender.com/";
+        String API_BASE_URL = "https://api-khiata-feira.onrender.com/";
 
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(API_BASE_URL)

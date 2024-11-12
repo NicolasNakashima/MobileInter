@@ -214,7 +214,7 @@ public class fragment_tela_atualizar_preferencias extends Fragment {
 
     // Método para buscar as categorias e criar CheckBoxes
     private void buscarCategorias() {
-        String API_BASE_URL = "https://api-khiata.onrender.com/";
+        String API_BASE_URL = "https://api-khiata-feira.onrender.com/";
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(API_BASE_URL)
                 .addConverterFactory(GsonConverterFactory.create())

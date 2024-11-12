@@ -3,6 +3,7 @@ package com.example.khiata.apis;
 import java.util.List;
 
 import retrofit2.Call;
+import retrofit2.http.DELETE;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
 import retrofit2.http.PUT;
@@ -20,5 +21,8 @@ public interface CartApi {
     //Rota para lançar o carrinho no MongoDB
     @PUT("/updateMongoCart")
     Call<Void> updateMongoCart(@Query("cpf") String cpf);
+
+    @DELETE("/deleteCart")
+    Call<Void> deleteCart(@Query("cpf") String cpf, @Query("product") String product);
 
 }

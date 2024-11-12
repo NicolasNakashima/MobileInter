@@ -246,7 +246,7 @@ public class fragment_tela_pagamento_produto extends Fragment {
     //Método para salvar carrinho no Mongo
     private void salvarCarrinhoMongo(String userCpf) {
         Log.e("userCpf", userCpf);
-        String API_BASE_URL = "https://api-khiata.onrender.com/";
+        String API_BASE_URL = "https://api-khiata-feira.onrender.com/";
         retrofit = new Retrofit.Builder()
                 .baseUrl(API_BASE_URL)
                 .addConverterFactory(GsonConverterFactory.create())
@@ -314,7 +314,7 @@ public class fragment_tela_pagamento_produto extends Fragment {
     //Método para mudar o status do pedido
     private void mudarStatusDoPedido(String userCpf) {
         Log.e("userCpf", userCpf);
-        String API_BASE_URL = "https://api-khiata.onrender.com/";
+        String API_BASE_URL = "https://api-khiata-feira.onrender.com/";
         retrofit = new Retrofit.Builder()
                 .baseUrl(API_BASE_URL)
                 .addConverterFactory(GsonConverterFactory.create())

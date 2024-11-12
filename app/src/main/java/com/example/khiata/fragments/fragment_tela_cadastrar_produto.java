@@ -252,7 +252,7 @@ public class fragment_tela_cadastrar_produto extends Fragment {
 
     //Pegar a lista de categorias
     private void buscarCategorias() {
-        String API_BASE_URL = "https://api-khiata.onrender.com/";
+        String API_BASE_URL = "https://api-khiata-feira.onrender.com/";
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(API_BASE_URL)
                 .addConverterFactory(GsonConverterFactory.create())
@@ -415,7 +415,7 @@ public class fragment_tela_cadastrar_produto extends Fragment {
 
     //Método para cadastrar um novo produto
     private void cadastrarProdutoUsuario(String nome_usuario, String novoTitulo, double novoPreco, String novaDescricao, String imgName, String novoTamanho, int categoriaSelecionada) {
-        String API_BASE_URL = "https://api-khiata.onrender.com/";
+        String API_BASE_URL = "https://api-khiata-feira.onrender.com/";
         retrofit = new Retrofit.Builder()
                 .baseUrl(API_BASE_URL)
                 .addConverterFactory(ScalarsConverterFactory.create())

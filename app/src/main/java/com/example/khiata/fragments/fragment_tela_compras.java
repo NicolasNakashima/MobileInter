@@ -201,7 +201,7 @@ public class fragment_tela_compras extends Fragment {
     //Método para buscar os pedidos do usuário
     private void pegarPedidosDoUsuario(String userCpf) {
         Log.e("userCpf", userCpf);
-        String API_BASE_URL = "https://api-khiata.onrender.com/";
+        String API_BASE_URL = "https://api-khiata-feira.onrender.com/";
         retrofit = new Retrofit.Builder()
                 .baseUrl(API_BASE_URL)
                 .addConverterFactory(GsonConverterFactory.create())

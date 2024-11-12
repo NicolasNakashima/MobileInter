@@ -94,54 +94,54 @@ public class AdapterProdutosAdicionados extends RecyclerView.Adapter<AdapterProd
             @Override
             public void onClick(View v) {
                 Dialog dialog = new Dialog(context);
+//                LayoutInflater inflater = LayoutInflater.from(context);
+//                View popupView = inflater.inflate(R.layout.popup_mensagem, null);
+//
+//                TextView msgPopup = popupView.findViewById(R.id.msg_popup);
+//                msgPopup.setText("Está funcionalidade estará disponível no futuro.");
+//                ImageView imgPopup = popupView.findViewById(R.id.img_popup);
+//                imgPopup.setImageResource(R.drawable.icon_pop_alert);
+//                Button btnPopup = popupView.findViewById(R.id.btn_popup);
+//                btnPopup.setOnClickListener(new View.OnClickListener() {
+//                    @Override
+//                    public void onClick(View v) {
+//                        dialog.cancel();
+//                    }
+//                });
+//
+//                dialog.setContentView(popupView);
+//                dialog.setCancelable(true);
+//                dialog.show();
                 LayoutInflater inflater = LayoutInflater.from(context);
-                View popupView = inflater.inflate(R.layout.popup_mensagem, null);
+                View popup_opcao = inflater.inflate(R.layout.popup_opcao, null);
 
-                TextView msgPopup = popupView.findViewById(R.id.msg_popup);
-                msgPopup.setText("Está funcionalidade estará disponível no futuro.");
-                ImageView imgPopup = popupView.findViewById(R.id.img_popup);
-                imgPopup.setImageResource(R.drawable.icon_pop_alert);
-                Button btnPopup = popupView.findViewById(R.id.btn_popup);
-                btnPopup.setOnClickListener(new View.OnClickListener() {
+                TextView msgPopup = popup_opcao.findViewById(R.id.msg_popup);
+                msgPopup.setText("Deseja prosseguir com a exclusão do produto?");
+                ImageView imgPopup = popup_opcao.findViewById(R.id.img_popup);
+                imgPopup.setImageResource(R.drawable.icon_pop_delete);
+                Button btn_seguir = popup_opcao.findViewById(R.id.btn_seguir);
+                btn_seguir.setText("Excluir");
+                btn_seguir.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        dialog.cancel();
+                        int adapterPosition = holder.getAdapterPosition();
+                        if (adapterPosition != RecyclerView.NO_POSITION) {
+                            deletarProduto(produtos.get(adapterPosition).getId(), adapterPosition);
+                        }
+                        dialog.dismiss();
+                    }
+                });
+                Button btn_cancelar = popup_opcao.findViewById(R.id.btn_cancelar);
+                btn_cancelar.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        dialog.dismiss();
                     }
                 });
 
-                dialog.setContentView(popupView);
+                dialog.setContentView(popup_opcao);
                 dialog.setCancelable(true);
                 dialog.show();
-//                LayoutInflater inflater = LayoutInflater.from(context);
-//                View popup_opcao = inflater.inflate(R.layout.popup_opcao, null);
-//
-//                TextView msgPopup = popup_opcao.findViewById(R.id.msg_popup);
-//                msgPopup.setText("Você está prestes a excluir o produto \n" + produto.getName() + "\n. Deseja prosseguir?");
-//                ImageView imgPopup = popup_opcao.findViewById(R.id.img_popup);
-//                imgPopup.setImageResource(R.drawable.icon_pop_delete);
-//                Button btn_seguir = popup_opcao.findViewById(R.id.btn_seguir);
-//                btn_seguir.setText("Excluir");
-//                btn_seguir.setOnClickListener(new View.OnClickListener() {
-//                    @Override
-//                    public void onClick(View v) {
-//                        int adapterPosition = holder.getAdapterPosition();
-//                        if (adapterPosition != RecyclerView.NO_POSITION) {
-//                            deletarProduto(produtos.get(adapterPosition).getId(), adapterPosition);
-//                        }
-//                        dialog.dismiss();
-//                    }
-//                });
-//                Button btn_cancelar = popup_opcao.findViewById(R.id.btn_cancelar);
-//                btn_cancelar.setOnClickListener(new View.OnClickListener() {
-//                    @Override
-//                    public void onClick(View v) {
-//                        dialog.dismiss();
-//                    }
-//                });
-//
-//                dialog.setContentView(popup_opcao);
-//                dialog.setCancelable(true);
-//                dialog.show();
             }
         });
 
@@ -171,7 +171,7 @@ public class AdapterProdutosAdicionados extends RecyclerView.Adapter<AdapterProd
 
     //Método responsável por deletar um produto
     private void deletarProduto(int productId, int position) {
-        String API_BASE_URL = "https://khiata-api.onrender.com/";
+        String API_BASE_URL = "https://api-khiata-feira.onrender.com/";
         retrofit = new Retrofit.Builder()
                 .baseUrl(API_BASE_URL)
                 .addConverterFactory(GsonConverterFactory.create())
